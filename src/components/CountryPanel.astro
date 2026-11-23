@@ -1,0 +1,45 @@
+---
+// Side Dossier Panel (Slide-over Paper Sheet)
+---
+<aside id="country-panel" class="fixed top-0 right-0 h-full w-full md:w-[540px] lg:w-[600px] z-40 bg-paper-100 shadow-paper-drawer transform translate-x-full transition-transform duration-500 ease-out flex flex-col select-text">
+    <!-- Panel Sticky Header -->
+    <div class="p-5 sm:p-6 bg-paper-50 shadow-paper-sm flex items-start justify-between gap-4 shrink-0 z-10">
+        <div>
+            <div class="flex items-center gap-2.5 mb-1.5">
+                <span id="panel-icon" class="w-8 h-8 rounded-xl bg-[#98b9b4]/25 text-[#457268] flex items-center justify-center text-sm shadow-paper-sm">
+                    <i class="fa-solid fa-earth-americas"></i>
+                </span>
+                <span id="panel-region" class="text-xs font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#efe8dc] text-stone-600">Region</span>
+                <span id="panel-badge" class="hidden text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#dff0ea] text-[#457268]"><i class="fa-solid fa-circle-check mr-1"></i>Verified Local Guide</span>
+            </div>
+            <h2 id="panel-title" class="font-display text-2xl sm:text-3xl font-extrabold text-paper-900 tracking-tight">Country Name</h2>
+            <p id="panel-tagline" class="font-serif italic text-base text-stone-500 mt-1">"A brief summary of the vibe."</p>
+        </div>
+        <button id="close-panel-btn" class="p-2.5 rounded-xl bg-paper-100 hover:bg-paper-200 text-stone-500 hover:text-paper-900 transition-colors shrink-0 shadow-paper-sm">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Quick Metrics Bar (3 Elevated Pastel Index Cards) -->
+    <div id="panel-metrics" class="grid grid-cols-3 gap-3 px-5 sm:px-6 pt-5 shrink-0 text-center">
+        <div class="bg-[#fdf6ec] shadow-paper rounded-2xl p-3">
+            <div class="text-[10px] uppercase tracking-wider font-semibold text-stone-400">Monthly Cost</div>
+            <div id="metric-cost" class="text-xs sm:text-sm font-bold text-paper-900 mt-1">$1,800</div>
+        </div>
+        <div class="bg-[#eef6f4] shadow-paper rounded-2xl p-3">
+            <div class="text-[10px] uppercase tracking-wider font-semibold text-stone-400">Work-Life</div>
+            <div id="metric-wlb" class="text-xs sm:text-sm font-bold text-[#52827b] mt-1">8.5 / 10</div>
+        </div>
+        <div class="bg-[#f3f1fa] shadow-paper rounded-2xl p-3">
+            <div class="text-[10px] uppercase tracking-wider font-semibold text-stone-400">Safety</div>
+            <div id="metric-safety" class="text-xs sm:text-sm font-bold text-[#6c6394] mt-1">Very High</div>
+        </div>
+    </div>
+
+    <!-- Scrollable Dossier Content -->
+    <div id="panel-content" class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-5">
+        <!-- Dynamic Sections Injected via JS -->
+    </div>
+</aside>

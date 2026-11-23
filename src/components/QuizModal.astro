@@ -1,0 +1,49 @@
+---
+// Quiz Button & Modal
+---
+<!-- Floating Corner CTA: "Where Should I Live?" Quiz Button -->
+<button id="open-quiz-btn" class="fixed bottom-5 right-5 z-30 group flex items-center gap-3 bg-[#e8998d] hover:bg-[#df8577] text-white font-semibold px-5 py-3.5 rounded-2xl shadow-paper-lg transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0">
+    <span class="relative flex h-2.5 w-2.5">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-50"></span>
+    </span>
+    <span class="font-display text-sm sm:text-base tracking-tight">Find My Ideal Country</span>
+    <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+    </svg>
+</button>
+
+<!-- Quiz Modal Overlay -->
+<div id="quiz-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-stone-800/30 backdrop-blur-sm">
+    <div class="bg-paper-100 w-full max-w-2xl rounded-3xl shadow-paper-lg overflow-hidden flex flex-col max-h-[90vh] select-text">
+        <!-- Quiz Header -->
+        <div class="p-6 bg-paper-50 shadow-paper-sm flex items-center justify-between z-10">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-[#98b9b4] flex items-center justify-center text-white shadow-paper-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="font-display font-bold text-lg text-paper-900">Lifestyle & Relocation Matcher</h3>
+                    <p id="quiz-subtitle" class="text-xs text-stone-500">Answer 5 quick questions to find where you belong</p>
+                </div>
+            </div>
+            <button id="close-quiz-btn" class="p-2 rounded-xl bg-paper-100 hover:bg-paper-200 text-stone-500 hover:text-paper-900 transition-colors shadow-paper-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full h-1.5 bg-paper-200">
+            <div id="quiz-progress" class="h-full bg-[#e8998d] transition-all duration-300" style="width: 20%"></div>
+        </div>
+
+        <!-- Quiz Body -->
+        <div id="quiz-body" class="p-6 sm:p-8 overflow-y-auto flex-1">
+            <!-- Question or Result dynamically rendered here -->
+        </div>
+    </div>
+</div>

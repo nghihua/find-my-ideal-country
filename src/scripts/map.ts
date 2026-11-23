@@ -1,0 +1,141 @@
+import type { CountryData } from '../data/countries';
+
+declare const d3: any;
+declare const topojson: any;
+
+export let worldFeatures: any[] = [];
+export let svg: any, g: any, projection: any, path: any, zoom: any;
+
+/** Resolve display name from TopoJSON raw name */
+export function resolveDisplayName(rawName: string): string {
+  const nameMap: Record<string, string> = {
+    "United States of America": "United States",
+    "Korea": "South Korea",
+    "Republic of Korea": "South Korea",
+    "Viet Nam": "Vietnam",
+  };
+  return nameMap[rawName] || rawName;
+}
+
+/** Get fallback region from map centroid [lon, lat] */
+export function getFallbackRegion(centroid: [number, number]): string {
+  const [lon, lat] = centroid;
+  if (lon > -25 && lon < 45 && lat > 35) return "Europe";
+  if (lon >= 45 && lon < 150 && lat > -10) return "Asia";
+  if (lon >= 110 && lat <= -10) return "Oceania";
+  if (lon > -20 && lon < 55 && lat <= 35) return "Africa";
+  return "Americas";
+}
+
+export async function initWorldMap(
+  COUNTRY_DATABASE: Record<string, CountryData>,
+  onCountryClick: (feature: any) => void,
+  onMapClick: () => void,
+) {
+  const container = document.getElementById('map-container')!;
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  svg = d3.select("#world-map").attr("viewBox", [0, 0, width, height]);
+  g = svg.append("g");
+
+  projection = d3.geoNaturalEarth1()
+    .scale(width / 5.4)
+    .translate([width / 2, height / 1.85]);
+
+  path = d3.geoPath().projection(projection);
+
+  zoom = d3.zoom()
+    .scaleExtent([1, 10])
+    .on("zoom", (event: any) => {
+      g.attr("transform", event.transform);
+      g.selectAll(".country").style("stroke-width", `${0.75 / event.transform.k}px`);
+    });
+
+  svg.call(zoom);
+
+  try {
+    const response = await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json");
+    const worldData = await response.json();
+    worldFeatures = topojson.feature(worldData, worldData.objects.countries).features;
+    worldFeatures = worldFeatures.filter((f: any) => f.properties.name !== "Antarctica");
+
+    document.getElementById('map-loader')!.classList.add('hidden');
+    document.getElementById('world-map')!.classList.remove('hidden');
+
+    const tooltip = document.getElementById('map-tooltip')!;
+
+    g.selectAll("path")
+      .data(worldFeatures)
+      .join("path")
+      .attr("d", path)
+      .attr("class", (d: any) => {
+        const name = resolveDisplayName(d.properties.name);
+        return COUNTRY_DATABASE[name] ? "country featured" : "country";
+      })
+      .attr("fill", (d: any) => {
+        const name = resolveDisplayName(d.properties.name);
+        return COUNTRY_DATABASE[name] ? "#98b9b4" : "#e7dfd1";
+      })
+      .attr("stroke", "#fffdf9")
+      .attr("stroke-width", "0.75px")
+      .on("mousemove", (event: MouseEvent, d: any) => {
+        const displayName = resolveDisplayName(d.properties.name);
+        const isCurated = !!COUNTRY_DATABASE[displayName];
+        tooltip.innerHTML = `${displayName} ${isCurated ? '<span class="text-[#d47a6c] ml-1.5"><i class="fa-solid fa-star text-[10px] mr-0.5"></i>Guide</span>' : ''}`;
+        tooltip.style.left = `${event.clientX}px`;
+        tooltip.style.top = `${event.clientY}px`;
+        tooltip.classList.remove("hidden");
+      })
+      .on("mouseleave", () => {
+        tooltip.classList.add("hidden");
+      })
+      .on("click", (event: MouseEvent, d: any) => {
+        event.stopPropagation();
+        onCountryClick(d);
+      });
+
+    svg.on("click", () => { onMapClick(); });
+
+  } catch (err) {
+    console.error("Map load error:", err);
+    document.getElementById('map-loader')!.innerHTML = `
+      <p class="text-rose-600 font-medium">Unable to load map geometry. Please check your connection.</p>
+    `;
+  }
+}
+
+export function zoomToFeature(feature: any) {
+  const container = document.getElementById('map-container')!;
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+  const isMobile = width < 768;
+
+  g.selectAll(".country").classed("active", (d: any) => d === feature);
+
+  const [[x0, y0], [x1, y1]] = path.bounds(feature);
+  const dx = x1 - x0;
+  const dy = y1 - y0;
+  const x = (x0 + x1) / 2;
+  const y = (y0 + y1) / 2;
+
+  const availableWidth = isMobile ? width : width - 560;
+  const targetCenterX = isMobile ? width / 2 : availableWidth / 2;
+  const targetCenterY = height / 2;
+
+  const scale = Math.max(1.5, Math.min(6.5, 0.65 / Math.max(dx / availableWidth, dy / height)));
+  const translate = [targetCenterX - scale * x, targetCenterY - scale * y];
+
+  svg.transition()
+    .duration(850)
+    .ease(d3.easeCubicInOut)
+    .call(zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
+}
+
+export function resetZoomTransform() {
+  g.selectAll(".country").classed("active", false);
+  svg.transition()
+    .duration(750)
+    .ease(d3.easeCubicInOut)
+    .call(zoom.transform, d3.zoomIdentity);
+}

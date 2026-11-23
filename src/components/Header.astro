@@ -1,0 +1,37 @@
+---
+// Top-Left Header & Search Bar
+---
+<header class="fixed top-4 left-4 right-4 md:right-auto z-30 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pointer-events-none">
+    <div class="paper-card rounded-2xl px-4 py-3 pointer-events-auto flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-[#98b9b4] flex items-center justify-center shadow-paper-sm">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </div>
+            <div>
+                <h1 class="font-display font-bold text-base sm:text-lg tracking-tight text-paper-900 leading-tight">r/HowIsLivingThere</h1>
+                <p class="text-xs text-stone-500 hidden sm:block">Select a nation to open its field notes</p>
+            </div>
+        </div>
+
+        <!-- Reset Zoom Button -->
+        <button id="reset-zoom-btn" title="Reset World View" class="p-2 rounded-xl bg-paper-100 hover:bg-paper-200 text-stone-500 hover:text-paper-900 transition-all shadow-paper-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Quick Country Search / Jump -->
+    <div class="relative pointer-events-auto">
+        <div class="paper-card rounded-2xl px-3.5 py-2.5 flex items-center gap-2">
+            <svg class="w-4 h-4 text-stone-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input id="country-search" type="text" placeholder="Search a country (e.g., Japan, Vietnam)..." class="bg-transparent border-none outline-none text-sm text-paper-900 placeholder-stone-400 w-full sm:w-56">
+        </div>
+        <!-- Search Dropdown -->
+        <div id="search-results" class="hidden absolute top-full left-0 right-0 mt-2 paper-card rounded-2xl overflow-hidden max-h-64 overflow-y-auto z-50 space-y-0.5 p-1.5"></div>
+    </div>
+</header>

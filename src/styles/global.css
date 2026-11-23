@@ -1,0 +1,56 @@
+/* Subtle organic paper grain overlay */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    opacity: 0.32;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.14'/%3E%3C/svg%3E");
+}
+
+/* Custom Scrollbar for Paper Dossier */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #faf6ef;
+}
+::-webkit-scrollbar-thumb {
+    background: #dfd5c5;
+    border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #cbbda8;
+}
+
+/* Map Country Styling — Soft Pastel Atlas Cartography */
+.country {
+    transition: fill 0.25s ease, stroke 0.25s ease;
+    cursor: pointer;
+}
+.country:hover {
+    fill: #f6c28b !important; /* Pastel Apricot Hover */
+}
+.country.featured {
+    fill: #98b9b4; /* Muted Pastel Sage-Teal */
+}
+.country.featured:hover {
+    fill: #f6c28b !important;
+}
+.country.active {
+    fill: #e8998d !important; /* Pastel Dusty Coral Stamp */
+    stroke: #fffdf9 !important;
+    stroke-width: 1.4px !important;
+}
+
+/* Tactile Paper Card Surface (Borderless, Shadow-Driven) */
+.paper-card {
+    background-color: #fffdf9;
+    box-shadow: 0 8px 20px -4px rgba(63, 59, 55, 0.08), 0 3px 8px -2px rgba(63, 59, 55, 0.04);
+}
+.paper-sheet {
+    background-color: #faf6ef;
+    box-shadow: 0 4px 12px -2px rgba(63, 59, 55, 0.06), 0 2px 4px -1px rgba(63, 59, 55, 0.03);
+}
