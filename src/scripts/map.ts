@@ -1,5 +1,3 @@
-import type { CountryData } from '../data/countries';
-
 declare const d3: any;
 declare const topojson: any;
 
@@ -28,7 +26,6 @@ export function getFallbackRegion(centroid: [number, number]): string {
 }
 
 export async function initWorldMap(
-  COUNTRY_DATABASE: Record<string, CountryData>,
   onCountryClick: (feature: any) => void,
   onMapClick: () => void,
 ) {
@@ -49,7 +46,7 @@ export async function initWorldMap(
     .scaleExtent([1, 10])
     .on("zoom", (event: any) => {
       g.attr("transform", event.transform);
-      g.selectAll(".country").style("stroke-width", `${0.75 / event.transform.k}px`);
+      g.selectAll(".country").style("stroke-width", `${0.85 / event.transform.k}px`);
     });
 
   svg.call(zoom);
@@ -69,20 +66,13 @@ export async function initWorldMap(
       .data(worldFeatures)
       .join("path")
       .attr("d", path)
-      .attr("class", (d: any) => {
-        const name = resolveDisplayName(d.properties.name);
-        return COUNTRY_DATABASE[name] ? "country featured" : "country";
-      })
-      .attr("fill", (d: any) => {
-        const name = resolveDisplayName(d.properties.name);
-        return COUNTRY_DATABASE[name] ? "#98b9b4" : "#e7dfd1";
-      })
-      .attr("stroke", "#fffdf9")
-      .attr("stroke-width", "0.75px")
+      .attr("class", "country")
+      .attr("fill", "var(--color-map-country)")
+      .attr("stroke", "var(--color-map-stroke)")
+      .attr("stroke-width", "0.85px")
       .on("mousemove", (event: MouseEvent, d: any) => {
         const displayName = resolveDisplayName(d.properties.name);
-        const isCurated = !!COUNTRY_DATABASE[displayName];
-        tooltip.innerHTML = `${displayName} ${isCurated ? '<span class="text-[#d47a6c] ml-1.5"><i class="fa-solid fa-star text-[10px] mr-0.5"></i>Guide</span>' : ''}`;
+        tooltip.innerHTML = displayName;
         tooltip.style.left = `${event.clientX}px`;
         tooltip.style.top = `${event.clientY}px`;
         tooltip.classList.remove("hidden");

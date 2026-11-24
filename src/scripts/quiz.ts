@@ -47,12 +47,12 @@ function renderQuizStep() {
       </div>
       <div class="space-y-3.5">
         ${q.options.map(opt => `
-          <button data-quiz-tag="${opt.tag}" class="quiz-option w-full text-left p-4 rounded-2xl paper-card hover:bg-[#fffaf3] hover:-translate-y-0.5 hover:shadow-paper-lg transition-all group flex items-center gap-4">
-            <span class="text-lg sm:text-xl bg-[#f5efe6] text-[#52827b] group-hover:bg-[#fbe5e2] group-hover:text-[#c96e61] w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors shadow-paper-sm">
+          <button data-quiz-tag="${opt.tag}" class="quiz-option w-full text-left p-4 rounded-2xl paper-card hover:bg-hoverQuiz hover:-translate-y-0.5 hover:shadow-paper-lg transition-all group flex items-center gap-4">
+            <span class="text-lg sm:text-xl bg-quizIcon text-teal group-hover:bg-coral-light group-hover:text-coral w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors shadow-paper-sm">
               <i class="${opt.icon}"></i>
             </span>
             <div>
-              <div class="font-display font-bold text-base text-paper-900 group-hover:text-[#c96e61] transition-colors">${opt.label}</div>
+              <div class="font-display font-bold text-base text-paper-900 group-hover:text-coral transition-colors">${opt.label}</div>
               <div class="text-xs sm:text-sm text-stone-500 mt-0.5">${opt.desc}</div>
             </div>
           </button>
@@ -110,18 +110,18 @@ function calculateQuizResult() {
 
   document.getElementById('quiz-body')!.innerHTML = `
     <div class="text-center space-y-5">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#dff0ea] text-[#457268] text-xs font-bold uppercase tracking-wider shadow-paper-sm">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-teal-light text-teal-dark text-xs font-bold uppercase tracking-wider shadow-paper-sm">
         <i class="fa-solid fa-sparkles"></i> ${matchPercent}% Lifestyle Compatibility
       </div>
       <div>
-        <div class="w-16 h-16 mx-auto mb-3 rounded-2xl bg-[#fbe5e2] text-[#c96e61] flex items-center justify-center text-3xl shadow-paper">
+        <div class="w-16 h-16 mx-auto mb-3 rounded-2xl bg-coral-light text-coral flex items-center justify-center text-3xl shadow-paper">
           <i class="${bestMatch.icon}"></i>
         </div>
         <h3 class="font-display text-3xl font-extrabold text-paper-900">You Should Live in ${bestMatch.name}!</h3>
         <p class="font-serif italic text-base text-stone-500 max-w-lg mx-auto mt-2">"${bestMatch.tagline}"</p>
       </div>
       <div class="paper-card rounded-2xl p-5 text-left space-y-2">
-        <div class="text-xs font-bold uppercase tracking-wider text-[#52827b]">Why ${bestMatch.name} fits your answers:</div>
+        <div class="text-xs font-bold uppercase tracking-wider text-teal">Why ${bestMatch.name} fits your answers:</div>
         <p class="text-sm text-stone-700 leading-relaxed">${bestMatch.culture}</p>
         <div class="grid grid-cols-3 gap-2 pt-3 text-center mt-3 bg-paper-100 rounded-xl p-2.5">
           <div>
@@ -130,21 +130,21 @@ function calculateQuizResult() {
           </div>
           <div>
             <div class="text-[11px] text-stone-500">Work-Life</div>
-            <div class="text-xs font-bold text-[#52827b]">${bestMatch.wlb}</div>
+            <div class="text-xs font-bold text-teal">${bestMatch.wlb}</div>
           </div>
           <div>
             <div class="text-[11px] text-stone-500">Safety</div>
-            <div class="text-xs font-bold text-[#6c6394]">${bestMatch.safety}</div>
+            <div class="text-xs font-bold text-purple-accent">${bestMatch.safety}</div>
           </div>
         </div>
       </div>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-        <button id="fly-best-btn" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#e8998d] hover:bg-[#df8577] text-white font-display font-bold text-sm shadow-paper transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
+        <button id="fly-best-btn" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-primary hover:bg-primary-hover text-paper-900 font-display font-bold text-sm shadow-paper transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
           <span>Zoom to ${bestMatch.name} on Map</span>
           <i class="fa-solid fa-arrow-right"></i>
         </button>
         <button id="fly-runner-btn" class="w-full sm:w-auto px-4 py-3 rounded-xl paper-card hover:bg-paper-50 text-paper-900 font-medium text-sm transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
-          <i class="${runnerUp.icon} text-[#52827b]"></i>
+          <i class="${runnerUp.icon} text-teal"></i>
           <span>Runner-up: ${runnerUp.name}</span>
         </button>
       </div>

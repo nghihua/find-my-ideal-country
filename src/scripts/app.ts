@@ -16,13 +16,13 @@ import { showToast } from './toast';
 
 declare const d3: any;
 
-// Build complete dossier object (curated or intelligently synthesized)
-function getCountryProfile(feature: any): CountryData & { isCurated: boolean } {
+// Build complete dossier object
+function getCountryProfile(feature: any): CountryData {
   const rawName: string = feature.properties.name || "Unknown Territory";
   const name = resolveDisplayName(rawName);
 
   if (COUNTRY_DATABASE[name]) {
-    return { ...COUNTRY_DATABASE[name], isCurated: true };
+    return COUNTRY_DATABASE[name];
   }
 
   const centroid = d3.geoCentroid(feature);
@@ -49,18 +49,17 @@ function getCountryProfile(feature: any): CountryData & { isCurated: boolean } {
     videos: [
       {
         title: `What Living in ${name} is Actually Like (Local & Expat Stories)`,
-        channel: "YouTube Global Guides",
-        duration: "Curated Search",
+        channel: "YouTube",
+        duration: "Search",
         url: `https://www.youtube.com/results?search_query=what+living+in+${encodeURIComponent(name)}+is+actually+like`,
       },
       {
         title: `A Day in the Life in ${name} — Cost of Living & Culture`,
-        channel: "YouTube Street & Daily Life",
-        duration: "Curated Search",
+        channel: "YouTube",
+        duration: "Search",
         url: `https://www.youtube.com/results?search_query=day+in+the+life+living+in+${encodeURIComponent(name)}`,
       },
     ],
-    isCurated: false,
   };
 }
 
@@ -90,9 +89,9 @@ function flyToCountry(countryName: string) {
 window.addEventListener('load', async () => {
   // Init subsystems
   initQuiz(QUIZ_QUESTIONS, COUNTRY_DATABASE, flyToCountry);
-  initSearch(COUNTRY_DATABASE, () => worldFeatures, selectCountry);
+  initSearch(() => worldFeatures, selectCountry);
 
-  await initWorldMap(COUNTRY_DATABASE, selectCountry, resetZoom);
+  await initWorldMap(selectCountry, resetZoom);
 
   // Event listeners
   document.getElementById('close-panel-btn')!.addEventListener('click', closeCountryPanel);

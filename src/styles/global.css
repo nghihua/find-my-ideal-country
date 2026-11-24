@@ -1,3 +1,67 @@
+:root {
+    /* Paper & Background Neutral Palette - Ice Mist Ocean Wash */
+    --color-paper-50: #ffffff;
+    --color-paper-100: #edf3f8; /* Soft Ice Mist ocean backdrop */
+    --color-paper-200: #e2ebf2;
+    --color-paper-300: #d3dfeb;
+    --color-paper-800: #2c3642;
+    --color-paper-900: #1b232e;
+
+    /* Scrollbars */
+    --color-scrollbar-thumb: #cad7e3;
+    --color-scrollbar-thumb-hover: #b2c3d2;
+
+    /* Atlas & Map Cartography (Featuring #aad6ff, #fecee1, #feb6d2) */
+    --color-map-country: #ffffff; /* Crisp porcelain white landmasses that pop naturally on the ocean */
+    --color-map-featured: #feb6d2; /* Pastel Rose Pink */
+    --color-map-hover: #c1e3fe;    /* Pastel Baby Blue Hover */
+    --color-map-active: #aad6ff;   /* Selected Country: Pastel Sky Blue Stamp */
+    --color-map-stroke: #94abc0;   /* Darker muted slate-blue border for sharp country & coast contrast */
+    --color-map-active-stroke: #5b9ed6; /* Vibrant sky-blue outline for active country */
+    --color-map-spinner: #feb6d2;
+
+    /* Primary Accent / Pink (Featuring #feb6d2 & #fecee1) */
+    --color-primary: #feb6d2;
+    --color-primary-hover: #fa9ec2;
+    --color-coral: #cb4e81;        /* High-contrast readable rose for text/icons */
+    --color-coral-light: #fecee1;  /* User Pastel Blossom */
+    --color-coral-dark: #a93564;
+    --color-coral-muted: #d96f9a;
+    --color-coral-bg: #fff1f6;
+
+    /* Blue & Sky Accents (Featuring #aad6ff & #c1e3fe) */
+    --color-teal: #226b9e;         /* High-contrast blue for text */
+    --color-teal-dark: #174f76;
+    --color-teal-light: #c1e3fe;   /* User Pastel Baby Blue */
+    --color-teal-bg: #f0f7ff;
+    --color-green-accent: #2e75a7;
+    --color-green-bg: #f2f8fe;
+
+    /* Amber / Peach Warm Accents */
+    --color-amber-accent: #c47d3d;
+    --color-amber-dark: #a56124;
+    --color-amber-bg: #fffbf5;
+    --color-amber-light: #fdecd9;
+    --color-amber-soft: #fdf3e7;
+    --color-amber-card: #fff6ee;
+
+    /* Lavender / Lilac Accents (Featuring #d1bcdf) */
+    --color-purple-accent: #785a96; /* High-contrast readable purple */
+    --color-purple-dark: #61437e;
+    --color-purple-light: #d1bcdf;  /* User Pastel Lavender */
+    --color-purple-bg: #f7f2fa;
+    --color-purple-card: #f9f4fc;
+
+    /* UI Details & Card Hover States */
+    --color-badge-bg: #e2ebf4;
+    --color-hover-card: #f8f2fc;
+    --color-hover-quiz: #fdf5f9;
+    --color-quiz-icon-bg: #edf5fc;
+
+    /* Shadow RGB Values */
+    --shadow-paper-rgb: 35, 45, 60;
+}
+
 /* Subtle organic paper grain overlay */
 body::before {
     content: "";
@@ -5,7 +69,7 @@ body::before {
     inset: 0;
     pointer-events: none;
     z-index: 60;
-    opacity: 0.32;
+    opacity: 0.16;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.14'/%3E%3C/svg%3E");
 }
 
@@ -15,14 +79,14 @@ body::before {
     height: 6px;
 }
 ::-webkit-scrollbar-track {
-    background: #faf6ef;
+    background: var(--color-paper-100);
 }
 ::-webkit-scrollbar-thumb {
-    background: #dfd5c5;
+    background: var(--color-scrollbar-thumb);
     border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #cbbda8;
+    background: var(--color-scrollbar-thumb-hover);
 }
 
 /* Map Country Styling — Soft Pastel Atlas Cartography */
@@ -31,26 +95,20 @@ body::before {
     cursor: pointer;
 }
 .country:hover {
-    fill: #f6c28b !important; /* Pastel Apricot Hover */
-}
-.country.featured {
-    fill: #98b9b4; /* Muted Pastel Sage-Teal */
-}
-.country.featured:hover {
-    fill: #f6c28b !important;
+    fill: var(--color-map-hover) !important; /* Pastel Blossom Pink Hover */
 }
 .country.active {
-    fill: #e8998d !important; /* Pastel Dusty Coral Stamp */
-    stroke: #fffdf9 !important;
-    stroke-width: 1.4px !important;
+    fill: var(--color-map-active) !important; /* Pastel Sky Blue Stamp */
+    stroke: var(--color-map-active-stroke) !important;
+    stroke-width: 1.6px !important;
 }
 
 /* Tactile Paper Card Surface (Borderless, Shadow-Driven) */
 .paper-card {
-    background-color: #fffdf9;
-    box-shadow: 0 8px 20px -4px rgba(63, 59, 55, 0.08), 0 3px 8px -2px rgba(63, 59, 55, 0.04);
+    background-color: var(--color-paper-50);
+    box-shadow: 0 8px 20px -4px rgba(var(--shadow-paper-rgb), 0.08), 0 3px 8px -2px rgba(var(--shadow-paper-rgb), 0.04);
 }
 .paper-sheet {
-    background-color: #faf6ef;
-    box-shadow: 0 4px 12px -2px rgba(63, 59, 55, 0.06), 0 2px 4px -1px rgba(63, 59, 55, 0.03);
+    background-color: var(--color-paper-100);
+    box-shadow: 0 4px 12px -2px rgba(var(--shadow-paper-rgb), 0.06), 0 2px 4px -1px rgba(var(--shadow-paper-rgb), 0.03);
 }

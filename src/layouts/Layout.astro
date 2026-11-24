@@ -36,19 +36,63 @@ const { title = "How Is Living There? — Interactive Global Lifestyle & Relocat
                     },
                     colors: {
                         paper: {
-                            50: '#fffdf9',
-                            100: '#faf6ef',
-                            200: '#f3ece0',
-                            300: '#e8decb',
-                            800: '#3f3b37',
-                            900: '#2d2a27',
-                        }
+                            50: 'var(--color-paper-50)',
+                            100: 'var(--color-paper-100)',
+                            200: 'var(--color-paper-200)',
+                            300: 'var(--color-paper-300)',
+                            800: 'var(--color-paper-800)',
+                            900: 'var(--color-paper-900)',
+                        },
+                        primary: {
+                            DEFAULT: 'var(--color-primary)',
+                            hover: 'var(--color-primary-hover)',
+                        },
+                        sage: {
+                            DEFAULT: 'var(--color-map-featured)',
+                            spinner: 'var(--color-map-spinner)',
+                        },
+                        teal: {
+                            DEFAULT: 'var(--color-teal)',
+                            dark: 'var(--color-teal-dark)',
+                            light: 'var(--color-teal-light)',
+                            bg: 'var(--color-teal-bg)',
+                        },
+                        coral: {
+                            DEFAULT: 'var(--color-coral)',
+                            light: 'var(--color-coral-light)',
+                            dark: 'var(--color-coral-dark)',
+                            muted: 'var(--color-coral-muted)',
+                            bg: 'var(--color-coral-bg)',
+                        },
+                        amber: {
+                            accent: 'var(--color-amber-accent)',
+                            dark: 'var(--color-amber-dark)',
+                            bg: 'var(--color-amber-bg)',
+                            light: 'var(--color-amber-light)',
+                            soft: 'var(--color-amber-soft)',
+                            card: 'var(--color-amber-card)',
+                        },
+                        purple: {
+                            accent: 'var(--color-purple-accent)',
+                            dark: 'var(--color-purple-dark)',
+                            light: 'var(--color-purple-light)',
+                            bg: 'var(--color-purple-bg)',
+                            card: 'var(--color-purple-card)',
+                        },
+                        green: {
+                            accent: 'var(--color-green-accent)',
+                            bg: 'var(--color-green-bg)',
+                        },
+                        badge: 'var(--color-badge-bg)',
+                        hoverCard: 'var(--color-hover-card)',
+                        hoverQuiz: 'var(--color-hover-quiz)',
+                        quizIcon: 'var(--color-quiz-icon-bg)',
                     },
                     boxShadow: {
-                        'paper-sm': '0 2px 6px -1px rgba(63, 59, 55, 0.05), 0 1px 3px -1px rgba(63, 59, 55, 0.03)',
-                        'paper': '0 8px 20px -4px rgba(63, 59, 55, 0.08), 0 3px 8px -2px rgba(63, 59, 55, 0.04)',
-                        'paper-lg': '0 20px 35px -8px rgba(63, 59, 55, 0.12), 0 8px 16px -6px rgba(63, 59, 55, 0.06)',
-                        'paper-drawer': '-12px 0 36px -6px rgba(63, 59, 55, 0.11)',
+                        'paper-sm': '0 2px 6px -1px rgba(var(--shadow-paper-rgb), 0.05), 0 1px 3px -1px rgba(var(--shadow-paper-rgb), 0.03)',
+                        'paper': '0 8px 20px -4px rgba(var(--shadow-paper-rgb), 0.08), 0 3px 8px -2px rgba(var(--shadow-paper-rgb), 0.04)',
+                        'paper-lg': '0 20px 35px -8px rgba(var(--shadow-paper-rgb), 0.12), 0 8px 16px -6px rgba(var(--shadow-paper-rgb), 0.06)',
+                        'paper-drawer': '-12px 0 36px -6px rgba(var(--shadow-paper-rgb), 0.11)',
                     }
                 }
             }
@@ -56,11 +100,6 @@ const { title = "How Is Living There? — Interactive Global Lifestyle & Relocat
     </script>
 </head>
 <body class="bg-paper-100 text-paper-900 overflow-hidden select-none h-screen w-screen relative font-sans">
-    <!-- Subtle Pastel Vignette on Atlas Canvas -->
-    <div class="pointer-events-none fixed inset-0 overflow-hidden z-0">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_50%,rgba(232,222,203,0.45)_100%)]"></div>
-    </div>
-
     <slot />
 
     <script src="../scripts/app.ts"></script>

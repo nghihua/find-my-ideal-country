@@ -1,7 +1,6 @@
-import type { CountryData } from '../data/countries';
+import { resolveDisplayName } from './map';
 
 export function initSearch(
-  COUNTRY_DATABASE: Record<string, CountryData>,
   getWorldFeatures: () => any[],
   onSelect: (feature: any) => void,
 ) {
@@ -16,7 +15,11 @@ export function initSearch(
     }
 
     const matches = getWorldFeatures()
-      .filter(f => (f.properties.name || "").toLowerCase().includes(query))
+      .filter(f => {
+        const rawName = f.properties.name || "";
+        const displayName = resolveDisplayName(rawName);
+        return rawName.toLowerCase().includes(query) || displayName.toLowerCase().includes(query);
+      })
       .slice(0, 8);
 
     if (matches.length === 0) {
@@ -24,12 +27,10 @@ export function initSearch(
     } else {
       searchResults.innerHTML = matches.map(f => {
         const rawName: string = f.properties.name;
-        const displayName = rawName === "Viet Nam" ? "Vietnam" : rawName;
-        const isCurated = !!COUNTRY_DATABASE[displayName];
+        const displayName = resolveDisplayName(rawName);
         return `
           <button class="w-full text-left px-3.5 py-2.5 text-sm rounded-xl hover:bg-paper-100 flex items-center justify-between transition-colors" data-country="${rawName}">
             <span class="text-paper-900 font-medium">${displayName}</span>
-            ${isCurated ? '<span class="text-[11px] text-[#d47a6c] font-semibold">Full Guide</span>' : '<span class="text-[11px] text-stone-400">Overview</span>'}
           </button>
         `;
       }).join('');
