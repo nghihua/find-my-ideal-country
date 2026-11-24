@@ -1,4 +1,5 @@
 import type { CountryData } from '../data/countries';
+import { describeClimateProfilePoints } from '../data/climateProfiles';
 
 export function renderCountryDossier(data: CountryData) {
   document.getElementById('panel-icon')!.innerHTML = `<i class="${data.icon}"></i>`;
@@ -108,14 +109,19 @@ function buildDossierHTML(data: CountryData): string {
           </div>
         </div>
 
-        <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#f8f9fa] border border-[#f1f3f4]">
-          <span class="w-8 h-8 rounded-full bg-[#fef7e0] text-[#b06000] flex items-center justify-center shrink-0 text-xs">
-            <i class="${climate.icon}"></i>
-          </span>
-          <div class="min-w-0">
-            <div class="text-[10px] text-[#5f6368] uppercase font-medium">Climate Reality</div>
-            <div class="font-medium text-[#202124] truncate">${climate.label}</div>
+        <div class="sm:col-span-2 p-3 rounded-xl bg-[#f8f9fa] border border-[#f1f3f4]">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-full bg-[#fef7e0] text-[#b06000] flex items-center justify-center shrink-0 text-xs">
+              <i class="${climate.icon}"></i>
+            </span>
+            <div class="min-w-0">
+              <div class="text-[10px] text-[#5f6368] uppercase font-medium">Climate Reality</div>
+              <div class="font-medium text-[#202124]">${climate.label}</div>
+            </div>
           </div>
+          <ul class="mt-2 pl-12 space-y-1.5 list-disc text-[10px] leading-relaxed text-[#5f6368]">
+            ${describeClimateProfilePoints(data.climateProfile).map(detail => `<li>${detail}</li>`).join('')}
+          </ul>
         </div>
 
         <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#f8f9fa] border border-[#f1f3f4]">
@@ -155,6 +161,8 @@ function buildDossierHTML(data: CountryData): string {
         <span class="text-[#5f6368]">Tax profile</span><span>${practicalValue(practical?.taxProfile)}</span>
       </div>
       ${practical?.healthcareNote ? `<p class="text-xs text-[#5f6368] leading-relaxed">${practical.healthcareNote}</p>` : ''}
+      ${practical?.englishEaseNote ? `<p class="text-xs text-[#5f6368] leading-relaxed">${practical.englishEaseNote}</p>` : ''}
+      ${practical?.taxProfileNote ? `<p class="text-xs text-[#5f6368] leading-relaxed">${practical.taxProfileNote}</p>` : ''}
       ${practical?.tapWaterNote ? `<p class="text-xs text-[#5f6368] leading-relaxed">${practical.tapWaterNote}</p>` : ''}
       ${practical?.airQualityNote ? `<p class="text-xs text-[#5f6368] leading-relaxed">${practical.airQualityNote}</p>` : ''}
       ${practical?.hazardNote ? `<p class="text-xs text-[#5f6368] leading-relaxed">${practical.hazardNote}</p>` : ''}

@@ -1,5 +1,6 @@
 import type { CountryData, LifestyleDimensions, RegionalTemplate } from './countries';
 import { COUNTRY_DATABASE, REGIONAL_TEMPLATES } from './countries';
+import { COUNTRY_CLIMATE_PROFILES, estimateClimateProfile } from './climateProfiles';
 import { PRACTICAL_FACTORS } from './practicalFactors';
 
 export interface CountryMetadata {
@@ -682,6 +683,7 @@ export function getCompleteCountryProfile(
     const country = COUNTRY_DATABASE[name];
     return {
       ...country,
+      climateProfile: COUNTRY_CLIMATE_PROFILES[name] ?? estimateClimateProfile(country.dimensions.climate),
       practical: {
         continent: continentFromRegion(country.region),
         timezoneRegion: timezoneFromRegion(country.region),
@@ -726,6 +728,7 @@ export function getCompleteCountryProfile(
       ],
       tags: meta.tags,
       dimensions: meta.dimensions,
+      climateProfile: COUNTRY_CLIMATE_PROFILES[name] ?? estimateClimateProfile(meta.dimensions.climate),
       practical: { continent: continentFromRegion(meta.region), timezoneRegion: timezoneFromRegion(meta.region), ...PRACTICAL_FACTORS[name] },
       realityCheck: meta.realityCheck
     };
@@ -740,6 +743,7 @@ export function getCompleteCountryProfile(
   if (Math.abs(lat) <= 23.5) estClimate = 'tropical';
   else if (Math.abs(lat) > 50) estClimate = 'cold-winter';
   else if (Math.abs(lat) > 23.5 && Math.abs(lat) <= 38) estClimate = 'warm-sun';
+  const estimatedWeather = estimateClimateProfile(estClimate, lon !== 0 || lat !== 0 ? lat : undefined);
 
   return {
     id: name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
@@ -770,6 +774,7 @@ export function getCompleteCountryProfile(
       ...tpl.dimensions,
       climate: estClimate
     },
+    climateProfile: estimatedWeather,
     practical: { continent: continentFromRegion(fallbackRegion), timezoneRegion: timezoneFromRegion(fallbackRegion) },
     realityCheck: tpl.realityCheck
   };

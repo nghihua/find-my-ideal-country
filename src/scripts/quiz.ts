@@ -1,5 +1,6 @@
 import type { CountryData, QuizQuestion } from '../data/countries';
 import { getAllGlobalCountries } from '../data/globalCountries';
+import { describeClimateProfile } from '../data/climateProfiles';
 import { setMatchColors } from './map';
 
 let currentQuizStep = 0;
@@ -292,6 +293,43 @@ function calculateQuizResult() {
       }
     }
 
+    // Country-level weather preferences: each selected detail contributes up to five points.
+    const temperatureAnswer = userAnswers.temperature;
+    const temperatureRange = country.climateProfile?.temperatureRangeCelsius;
+    if (typeof temperatureAnswer === 'string' && temperatureAnswer !== 'no-preference' && temperatureRange) {
+      const preferredTemperatureBands: Record<string, [number, number]> = {
+        'very-cold': [-Infinity, 10],
+        cool: [10, 18],
+        temperate: [18, 25],
+        warm: [25, 31],
+        hot: [31, Infinity],
+      };
+      const preferredBand = preferredTemperatureBands[temperatureAnswer];
+      if (preferredBand) {
+        const countryMidpoint = (temperatureRange[0] + temperatureRange[1]) / 2;
+        const distanceFromBand = countryMidpoint < preferredBand[0]
+          ? preferredBand[0] - countryMidpoint
+          : countryMidpoint > preferredBand[1] ? countryMidpoint - preferredBand[1] : 0;
+        maxPossible += 5;
+        totalScore += Math.max(0, 5 - distanceFromBand * 0.5);
+      }
+    }
+
+    const weatherPreferences = [
+      { key: 'humidity', value: country.climateProfile?.humidity, scale: ['dry', 'moderate', 'humid'] },
+      { key: 'rainfall', value: country.climateProfile?.rainfall, scale: ['low', 'seasonal', 'frequent'] },
+      { key: 'snowfall', value: country.climateProfile?.snowfall, scale: ['rare', 'seasonal', 'frequent'] },
+    ];
+    weatherPreferences.forEach(({ key, value, scale }) => {
+      const answer = userAnswers[key];
+      if (typeof answer !== 'string' || answer === 'no-preference' || !value) return;
+      const preferredLevel = scale.indexOf(answer);
+      const countryLevel = scale.indexOf(value);
+      if (preferredLevel < 0 || countryLevel < 0) return;
+      maxPossible += 5;
+      totalScore += 5 * (1 - Math.abs(preferredLevel - countryLevel) / (scale.length - 1));
+    });
+
     // Dimension 7: Religion & Secularity
     if (userAnswers['religion'] && userAnswers['religion'] !== 'no-preference') {
       maxPossible += 10;
@@ -389,7 +427,9 @@ function calculateQuizResult() {
         maxPossible += 10;
         const points = route === 'available' ? 10 : 6;
         totalScore += points;
-        if (points === 10) reasons.push('An official route exists for this relocation path; eligibility still depends on your circumstances');
+        reasons.push(route === 'available'
+          ? 'An official route exists for this relocation path; eligibility still depends on your circumstances'
+          : 'A restricted route exists for some applicants; check passport, age, income, and sponsor requirements');
       } else if (practical.visaFit && practical.visaFit !== 'unknown') {
         maxPossible += 10;
         totalScore += practical.visaFit === 'easy' ? 10 : practical.visaFit === 'moderate' ? 6 : 2;
@@ -478,6 +518,7 @@ function summarizeTradeoff(a: CountryData, b: CountryData): string {
 function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard: ScoredCountry) {
   const c = best.country;
   const dim = c.dimensions;
+  const weatherSummary = describeClimateProfile(c.climateProfile);
 
   document.getElementById('quiz-body')!.innerHTML = `
     <div class="space-y-5">
@@ -510,6 +551,12 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
           <div class="text-[10px] uppercase font-medium text-[#5f6368]">Safety Score</div>
           <div class="text-xs sm:text-sm font-semibold text-[#1a73e8] mt-0.5">${c.safety}</div>
         </div>
+      </div>
+
+      <div class="bg-[#f8f9fa] border border-[#dadce0] rounded-2xl px-4 py-3">
+        <div class="text-[10px] uppercase font-medium text-[#5f6368]">Typical weather in ${c.name}</div>
+        <p class="text-xs sm:text-sm font-medium text-[#202124] mt-1">${weatherSummary}</p>
+        <p class="text-[10px] text-[#5f6368] mt-1">Approximate seasonal range; conditions vary by region, elevation, and season.</p>
       </div>
 
       <!-- Why It Fits Section -->
@@ -577,6 +624,7 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
             <span>Monthly cost</span><span>${c.cost}</span><span>${runner.country.cost}</span>
             <span>Transit</span><span>${readableFactor(c.dimensions.transit)}</span><span>${readableFactor(runner.country.dimensions.transit)}</span>
             <span>Sunday rhythm</span><span>${readableFactor(c.dimensions.weekendRhythm)}</span><span>${readableFactor(runner.country.dimensions.weekendRhythm)}</span>
+            <span>Typical weather</span><span>${describeClimateProfile(c.climateProfile)}</span><span>${describeClimateProfile(runner.country.climateProfile)}</span>
             <span>Healthcare</span><span>${readableFactor(c.practical?.healthcare)}</span><span>${readableFactor(runner.country.practical?.healthcare)}</span>
             <span>Visa route</span><span>${c.practical?.visaRoutes?.[userAnswers.visaPath as 'remote' | 'mobility' | 'sponsored'] || c.practical?.visaFit || 'Not sourced'}</span><span>${runner.country.practical?.visaRoutes?.[userAnswers.visaPath as 'remote' | 'mobility' | 'sponsored'] || runner.country.practical?.visaFit || 'Not sourced'}</span>
             <span>Tax profile</span><span>${readableFactor(c.practical?.taxProfile)}</span><span>${readableFactor(runner.country.practical?.taxProfile)}</span>

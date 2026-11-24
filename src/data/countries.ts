@@ -6,6 +6,18 @@ export interface Video {
 }
 
 export type ClimateCategory = 'tropical' | 'warm-sun' | 'four-seasons' | 'mild-coastal' | 'cold-winter';
+export type ClimateTemperature = 'very-cold' | 'cool' | 'temperate' | 'warm' | 'hot';
+export type ClimateHumidity = 'dry' | 'moderate' | 'humid';
+export type ClimateRainfall = 'low' | 'seasonal' | 'frequent';
+export type ClimateSnowfall = 'rare' | 'seasonal' | 'frequent';
+export interface CountryClimateProfile {
+  temperature: ClimateTemperature;
+  /** Approximate cool-season to warm-season typical daytime highs, in Celsius. */
+  temperatureRangeCelsius: [number, number];
+  humidity: ClimateHumidity;
+  rainfall: ClimateRainfall;
+  snowfall: ClimateSnowfall;
+}
 export type TransitArchetype = 'walkable-rail' | 'motorbike-active' | 'car-dependent' | 'mixed-transit';
 export type WeekendRhythm = 'vibrant-24-7' | 'standard' | 'quiet-sunday';
 export type ReligionRole = 'secular' | 'cultural-tradition' | 'moderate' | 'prominent';
@@ -30,6 +42,7 @@ export interface PracticalFactors {
   healthcare?: 'public' | 'private-required' | 'affordable-private' | 'mixed' | 'unknown';
   healthcareNote?: string;
   englishEase?: 1 | 2 | 3 | 4 | 5;
+  englishEaseNote?: string;
   tapWater?: 'generally-potable' | 'regional' | 'generally-not-potable' | 'unknown';
   tapWaterNote?: string;
   airQuality?: 'good' | 'seasonal-issues' | 'frequent-issues' | 'unknown';
@@ -38,6 +51,7 @@ export interface PracticalFactors {
   hazardTypes?: Partial<Record<'earthquake' | 'tropical-cyclone' | 'flood' | 'coastal-flood' | 'landslide' | 'tsunami' | 'volcano' | 'extreme-heat' | 'water-scarcity' | 'wildfire', 'high' | 'medium' | 'low' | 'very-low' | 'no-hazard'>>;
   hazardNote?: string;
   taxProfile?: 'higher-services' | 'lower-territorial' | 'mixed' | 'unknown';
+  taxProfileNote?: string;
   continent?: 'Africa' | 'Asia' | 'Europe' | 'North America' | 'South America' | 'Oceania';
   timezoneRegion?: 'Americas' | 'Europe/Africa' | 'Asia/Oceania';
   sources?: string[];
@@ -63,6 +77,7 @@ export interface CountryData {
   videos: Video[];
   tags: string[];
   dimensions: LifestyleDimensions;
+  climateProfile?: CountryClimateProfile;
   practical?: PracticalFactors;
   realityCheck: string;
   highlights?: string[];
@@ -1165,7 +1180,7 @@ export interface QuizQuestion {
   stageName: string;
   question: string;
   subtitle: string;
-  category: 'budget' | 'lgbtq' | 'transit' | 'convenience' | 'weekend' | 'climate' | 'religion' | 'openness' | 'density' | 'career' | 'priority';
+  category: 'budget' | 'lgbtq' | 'transit' | 'convenience' | 'weekend' | 'climate' | 'temperature' | 'humidity' | 'rainfall' | 'snowfall' | 'religion' | 'openness' | 'density' | 'career' | 'priority';
   options: QuizOption[];
 }
 
@@ -1317,6 +1332,48 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       { label: "Crisp Four Seasons & Snowy Winters", desc: "Cherry blossoms, golden autumn foliage, and cozy fireplace winters.", value: "four-seasons", icon: "fa-solid fa-snowflake" },
       { label: "Mild Coastal Air & Low Humidity", desc: "Temperate ocean breeze, low mugginess, and comfortable year-round days.", value: "mild-coastal", icon: "fa-solid fa-water" },
       { label: "No Preference / Weather Doesn't Bother Me", desc: "Comfortable in cold, heat, humidity, or seasonal rain.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
+    ]
+  },
+  {
+    id: 'temperature', stage: 2, stageName: 'Weather Preferences', question: 'Which daytime temperature range feels best?',
+    subtitle: 'Choose the typical daytime temperature you would be most comfortable in.', category: 'temperature',
+    options: [
+      { label: 'Really cold · below 10°C (50°F)', desc: 'I feel at home in long, cold winters.', value: 'very-cold', icon: 'fa-solid fa-temperature-low' },
+      { label: 'Cool · 10–17°C (50–63°F)', desc: 'I prefer crisp air and mild summers.', value: 'cool', icon: 'fa-solid fa-cloud' },
+      { label: 'Temperate · 18–24°C (64–75°F)', desc: 'Mostly mild weather suits me best.', value: 'temperate', icon: 'fa-solid fa-cloud-sun' },
+      { label: 'Warm · 25–30°C (77–86°F)', desc: 'I like warm days and gentle winters.', value: 'warm', icon: 'fa-solid fa-sun' },
+      { label: 'Hot · 31°C+ (88°F+)', desc: 'Give me heat and very mild winters.', value: 'hot', icon: 'fa-solid fa-temperature-high' },
+      { label: 'No preference', desc: 'Temperature should not affect my matches.', value: 'no-preference', icon: 'fa-solid fa-asterisk', isNoPreference: true }
+    ]
+  },
+  {
+    id: 'humidity', stage: 2, stageName: 'Weather Preferences', question: 'How much humidity feels comfortable?',
+    subtitle: 'Country-level patterns are broad; coasts, mountains, and seasons can feel very different.', category: 'humidity',
+    options: [
+      { label: 'Dry air', desc: 'I prefer little muggy or sticky weather.', value: 'dry', icon: 'fa-solid fa-wind' },
+      { label: 'Balanced', desc: 'Some humidity is fine, as long as it is not constant.', value: 'moderate', icon: 'fa-solid fa-cloud-sun' },
+      { label: 'Humid air', desc: 'I am comfortable with warm, moisture-rich air.', value: 'humid', icon: 'fa-solid fa-droplet' },
+      { label: 'No preference', desc: 'Humidity should not affect my matches.', value: 'no-preference', icon: 'fa-solid fa-asterisk', isNoPreference: true }
+    ]
+  },
+  {
+    id: 'rainfall', stage: 2, stageName: 'Weather Preferences', question: 'How much rain do you like?',
+    subtitle: 'Think about the overall pattern, including wet seasons.', category: 'rainfall',
+    options: [
+      { label: 'Mostly dry', desc: 'I prefer places with little rain through the year.', value: 'low', icon: 'fa-solid fa-sun' },
+      { label: 'Seasonal rain', desc: 'Wet seasons are fine if there are drier parts of the year.', value: 'seasonal', icon: 'fa-solid fa-cloud-sun-rain' },
+      { label: 'Frequent rain', desc: 'Regular showers and lush, rainy weather suit me.', value: 'frequent', icon: 'fa-solid fa-cloud-showers-heavy' },
+      { label: 'No preference', desc: 'Rainfall should not affect my matches.', value: 'no-preference', icon: 'fa-solid fa-asterisk', isNoPreference: true }
+    ]
+  },
+  {
+    id: 'snowfall', stage: 2, stageName: 'Weather Preferences', question: 'How do you feel about snow?',
+    subtitle: 'This describes a typical national pattern; local elevation and region matter a lot.', category: 'snowfall',
+    options: [
+      { label: 'I would rather avoid it', desc: 'I prefer places where snow is rare.', value: 'rare', icon: 'fa-solid fa-sun' },
+      { label: 'Some snow is nice', desc: 'A little seasonal snow is welcome.', value: 'seasonal', icon: 'fa-solid fa-cloud-snow' },
+      { label: 'Bring on snowy winters', desc: 'I enjoy places with regular, snowy winters.', value: 'frequent', icon: 'fa-solid fa-snowflake' },
+      { label: 'No preference', desc: 'Snow should not affect my matches.', value: 'no-preference', icon: 'fa-solid fa-asterisk', isNoPreference: true }
     ]
   },
   {
