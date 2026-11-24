@@ -634,8 +634,8 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
             <span>Trade-off</span><span class="col-span-2">${summarizeTradeoff(c, runner.country)}</span>
             <span>Reality check</span><span>${c.realityCheck}</span><span>${runner.country.realityCheck}</span>
           </div>
-          <p class="text-[10px] text-[#5f6368] mt-3">Visa route availability is not individual eligibility. Always confirm current requirements with the destination authority.</p>
-          <div class="text-[10px] mt-2 space-y-1">${[...new Set([...(c.practical?.sources || []), ...(runner.country.practical?.sources || [])])].map((source, i) => `<a class="block text-[#1a73e8] underline" href="${source}" target="_blank" rel="noopener noreferrer">Official source ${i + 1}</a>`).join('')}</div>
+          <p class="text-[10px] text-[#5f6368] mt-3">Country-level screening only: visa eligibility, tax treatment, healthcare access, and environmental conditions vary by person and location. Confirm current details for your situation and destination.</p>
+          <div class="text-[10px] mt-2 space-y-1">${[...new Set([...(c.practical?.sources || []), ...(runner.country.practical?.sources || [])])].map((source, i) => `<a class="block text-[#1a73e8] underline" href="${source}" target="_blank" rel="noopener noreferrer">Source ${i + 1}</a>`).join('')}</div>
         </div>
         <button id="retake-quiz-btn" class="text-xs font-medium text-[#1a73e8] hover:underline">
           Retake Quiz with Different Preferences

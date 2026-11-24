@@ -124,7 +124,7 @@ function buildDossierHTML(data: CountryData): string {
           </ul>
         </div>
 
-        <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#f8f9fa] border border-[#f1f3f4]">
+        <div class="sm:col-span-2 flex items-center gap-2.5 p-2.5 rounded-xl bg-[#f8f9fa] border border-[#f1f3f4]">
           <span class="w-8 h-8 rounded-full bg-[#e8f0fe] text-[#1a73e8] flex items-center justify-center shrink-0 text-xs">
             <i class="${weekend.icon}"></i>
           </span>
@@ -151,6 +151,7 @@ function buildDossierHTML(data: CountryData): string {
         <h3 class="font-display font-medium text-xs uppercase tracking-wider text-[#1a73e8]">Practical relocation factors</h3>
         <span class="text-[10px] text-[#5f6368]">${practical?.verifiedAt ? `Checked ${practical.verifiedAt}` : 'Data needs sourcing'}</span>
       </div>
+      <p class="text-[10px] text-[#5f6368] leading-relaxed">Country-level screening information only. Eligibility, costs, services, and environmental conditions can vary by person and location; confirm details for your situation and destination.</p>
       <div class="grid grid-cols-2 gap-2 text-xs">
         <span class="text-[#5f6368]">Visa routes</span><span>${practicalValue(practical?.visaRoutes ? Object.entries(practical.visaRoutes).map(([route, status]) => `${route}: ${status}`).join(', ') : practical?.visaFit)}</span>
         <span class="text-[#5f6368]">Healthcare</span><span>${practicalValue(practical?.healthcare)}</span>
