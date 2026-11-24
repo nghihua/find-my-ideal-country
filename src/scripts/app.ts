@@ -14,6 +14,7 @@ import { renderCountryDossier, closeCountryPanel } from './dossier';
 import { initQuiz, openQuiz, closeQuiz } from './quiz';
 import { initSearch } from './search';
 import { showToast } from './toast';
+import { initAuthorModal } from './author';
 
 declare const d3: any;
 
@@ -55,6 +56,8 @@ function flyToCountry(countryName: string) {
 }
 
 window.addEventListener('load', async () => {
+  initAuthorModal();
+
   // Init subsystems
   initQuiz(QUIZ_QUESTIONS, () => {
     const catalog = getAllGlobalCountries();

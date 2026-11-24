@@ -1,4 +1,4 @@
-# Astro Starter Kit: Basics
+# Find My Ideal Country — Global Lifestyle & Relocation Atlas
 
 ```sh
 npm create astro@latest -- --template basics
