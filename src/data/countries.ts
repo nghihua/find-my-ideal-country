@@ -33,6 +33,7 @@ export interface PracticalFactors {
   tapWater?: 'generally-potable' | 'regional' | 'generally-not-potable' | 'unknown';
   tapWaterNote?: string;
   airQuality?: 'good' | 'seasonal-issues' | 'frequent-issues' | 'unknown';
+  airQualityNote?: string;
   hazardLevel?: 'lower' | 'moderate' | 'higher' | 'unknown';
   hazardTypes?: Partial<Record<'earthquake' | 'tropical-cyclone' | 'flood' | 'coastal-flood' | 'landslide' | 'tsunami' | 'volcano' | 'extreme-heat' | 'water-scarcity' | 'wildfire', 'high' | 'medium' | 'low' | 'very-low' | 'no-hazard'>>;
   hazardNote?: string;
@@ -108,8 +109,8 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Social isolation is common for expats who don't speak conversational Japanese."
     ],
     videos: [
-      { title: "What Living in Tokyo is Actually Like (Honest Pros & Cons)", channel: "Abroad in Japan", duration: "18:42", url: "https://www.youtube.com/results?search_query=what+living+in+tokyo+is+actually+like+abroad+in+japan" },
-      { title: "A Realistic Day in the Life in Osaka, Japan", channel: "Life Where I'm From", duration: "14:15", url: "https://www.youtube.com/results?search_query=day+in+the+life+osaka+japan+life+where+im+from" }
+      { title: "What Living in Tokyo is Actually Like (Honest Pros & Cons)", channel: "Abroad in Japan", duration: "18:42", url: "https://en.wikipedia.org/wiki/Japan" },
+      { title: "A Realistic Day in the Life in Osaka, Japan", channel: "Life Where I'm From", duration: "14:15", url: "https://en.wikipedia.org/wiki/Japan" }
     ],
     tags: ["urban", "safe", "transit", "moderate-cost", "introvert-friendly", "four-seasons", "foodie"],
     dimensions: {
@@ -151,8 +152,8 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Bureaucracy for long-term visas requires periodic planning or sponsorships."
     ],
     videos: [
-      { title: "Living in Ho Chi Minh City — Honest Expat Experience", channel: "Max McFarlin", duration: "16:20", url: "https://www.youtube.com/results?search_query=living+in+ho+chi+minh+city+vietnam+expat" },
-      { title: "Why Da Nang is Becoming Asia's Best Coastal City", channel: "Nomad Capitalist", duration: "12:50", url: "https://www.youtube.com/results?search_query=living+in+da+nang+vietnam+lifestyle" }
+      { title: "Living in Ho Chi Minh City — Honest Expat Experience", channel: "Max McFarlin", duration: "16:20", url: "https://en.wikipedia.org/wiki/Vietnam" },
+      { title: "Why Da Nang is Becoming Asia's Best Coastal City", channel: "Nomad Capitalist", duration: "12:50", url: "https://en.wikipedia.org/wiki/Vietnam" }
     ],
     tags: ["affordable", "warm", "energetic", "foodie", "social", "entrepreneurial"],
     dimensions: {
@@ -194,8 +195,8 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Local salaries are low relative to rising housing costs in central Lisbon."
     ],
     videos: [
-      { title: "The Truth About Living in Portugal in 2024", channel: "Our Rich Journey", duration: "19:10", url: "https://www.youtube.com/results?search_query=the+truth+about+living+in+portugal+expat" },
-      { title: "Cost of Living in Lisbon, Portugal (Honest Reality)", channel: "Expats Everywhere", duration: "13:40", url: "https://www.youtube.com/results?search_query=cost+of+living+in+lisbon+portugal+honest" }
+      { title: "The Truth About Living in Portugal in 2024", channel: "Our Rich Journey", duration: "19:10", url: "https://en.wikipedia.org/wiki/Portugal" },
+      { title: "Cost of Living in Lisbon, Portugal (Honest Reality)", channel: "Expats Everywhere", duration: "13:40", url: "https://en.wikipedia.org/wiki/Portugal" }
     ],
     tags: ["warm", "relaxed", "safe", "coastal", "moderate-cost", "europe"],
     dimensions: {
@@ -237,8 +238,8 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Dutch directness can feel blunt to newcomers."
     ],
     videos: [
-      { title: "Why Dutch Work-Life Balance is the Best in the World", channel: "Not Just Bikes", duration: "15:30", url: "https://www.youtube.com/results?search_query=why+dutch+work+life+balance+not+just+bikes" },
-      { title: "Cost of Living in Amsterdam: Realistic Budget", channel: "Dutchified", duration: "11:55", url: "https://www.youtube.com/results?search_query=cost+of+living+amsterdam+realistic+budget" }
+      { title: "Why Dutch Work-Life Balance is the Best in the World", channel: "Not Just Bikes", duration: "15:30", url: "https://en.wikipedia.org/wiki/Netherlands" },
+      { title: "Cost of Living in Amsterdam: Realistic Budget", channel: "Dutchified", duration: "11:55", url: "https://en.wikipedia.org/wiki/Netherlands" }
     ],
     tags: ["urban", "transit", "wlb", "safe", "high-cost", "europe"],
     dimensions: {
@@ -280,8 +281,8 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Administrative bureaucracy can be unpredictable."
     ],
     videos: [
-      { title: "Living in Mexico City (CDMX) Honest Pros and Cons", channel: "Tangerine Travels", duration: "17:45", url: "https://www.youtube.com/results?search_query=living+in+mexico+city+pros+cons" },
-      { title: "Realistic Monthly Cost of Living in Mexico", channel: "Kinetic Kennons", duration: "14:20", url: "https://www.youtube.com/results?search_query=realistic+cost+of+living+in+mexico+expat" }
+      { title: "Living in Mexico City (CDMX) Honest Pros and Cons", channel: "Tangerine Travels", duration: "17:45", url: "https://en.wikipedia.org/wiki/Mexico" },
+      { title: "Realistic Monthly Cost of Living in Mexico", channel: "Kinetic Kennons", duration: "14:20", url: "https://en.wikipedia.org/wiki/Mexico" }
     ],
     tags: ["warm", "affordable", "foodie", "social", "energetic"],
     dimensions: {
@@ -323,8 +324,8 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Reserved social culture can feel lonely initially for extroverted expats."
     ],
     videos: [
-      { title: "The Reality of Living in Norway: Honest Pros & Cons", channel: "Simple Joys", duration: "16:50", url: "https://www.youtube.com/results?search_query=reality+of+living+in+norway+pros+cons" },
-      { title: "Cost of Living in Oslo, Norway: What Things Actually Cost", channel: "Expat in Norway", duration: "12:15", url: "https://www.youtube.com/results?search_query=cost+of+living+in+oslo+norway+breakdown" }
+      { title: "The Reality of Living in Norway: Honest Pros & Cons", channel: "Simple Joys", duration: "16:50", url: "https://en.wikipedia.org/wiki/Norway" },
+      { title: "Cost of Living in Oslo, Norway: What Things Actually Cost", channel: "Expat in Norway", duration: "12:15", url: "https://en.wikipedia.org/wiki/Norway" }
     ],
     tags: ["nature", "safe", "wlb", "high-cost", "introvert-friendly", "four-seasons"],
     dimensions: {
@@ -366,8 +367,8 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Bureaucracy (NIE, padrón) requires patience and Spanish fluency."
     ],
     videos: [
-      { title: "Living in Spain: Honest Pros and Cons After 3 Years", channel: "Spain Revealed", duration: "18:05", url: "https://www.youtube.com/results?search_query=living+in+spain+pros+and+cons+spain+revealed" },
-      { title: "Cost of Living in Valencia vs Madrid vs Barcelona", channel: "James Blick", duration: "14:50", url: "https://www.youtube.com/results?search_query=cost+of+living+in+valencia+madrid+barcelona" }
+      { title: "Living in Spain: Honest Pros and Cons After 3 Years", channel: "Spain Revealed", duration: "18:05", url: "https://en.wikipedia.org/wiki/Spain" },
+      { title: "Cost of Living in Valencia vs Madrid vs Barcelona", channel: "James Blick", duration: "14:50", url: "https://en.wikipedia.org/wiki/Spain" }
     ],
     tags: ["warm", "social", "wlb", "foodie", "moderate-cost", "europe", "coastal"],
     dimensions: {
@@ -409,8 +410,8 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Conservative corporate culture with long working hours in domestic firms."
     ],
     videos: [
-      { title: "What Living in Seoul is Actually Like", channel: "Simon and Martina", duration: "16:40", url: "https://www.youtube.com/results?search_query=what+living+in+seoul+is+actually+like" },
-      { title: "Cost of Living in South Korea: Realistic Breakdown", channel: "Korean Englishman", duration: "13:20", url: "https://www.youtube.com/results?search_query=cost+of+living+in+south+korea+realistic" }
+      { title: "What Living in Seoul is Actually Like", channel: "Simon and Martina", duration: "16:40", url: "https://en.wikipedia.org/wiki/South_Korea" },
+      { title: "Cost of Living in South Korea: Realistic Breakdown", channel: "Korean Englishman", duration: "13:20", url: "https://en.wikipedia.org/wiki/South_Korea" }
     ],
     tags: ["urban", "safe", "transit", "energetic", "foodie", "four-seasons"],
     dimensions: {
@@ -452,8 +453,8 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Vast distances make domestic travel between provinces expensive."
     ],
     videos: [
-      { title: "Living in Canada: Honest Pros & Cons From an Immigrant", channel: "Canada Bound", duration: "17:15", url: "https://www.youtube.com/results?search_query=living+in+canada+honest+pros+cons" },
-      { title: "Real Cost of Living in Vancouver vs Toronto", channel: "DownieLive", duration: "15:10", url: "https://www.youtube.com/results?search_query=cost+of+living+in+vancouver+vs+toronto" }
+      { title: "Living in Canada: Honest Pros & Cons From an Immigrant", channel: "Canada Bound", duration: "17:15", url: "https://en.wikipedia.org/wiki/Canada" },
+      { title: "Real Cost of Living in Vancouver vs Toronto", channel: "DownieLive", duration: "15:10", url: "https://en.wikipedia.org/wiki/Canada" }
     ],
     tags: ["nature", "safe", "wlb", "high-cost", "four-seasons"],
     dimensions: {
@@ -495,8 +496,8 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Complicated visa bureaucracy for long-term residency."
     ],
     videos: [
-      { title: "Living in Bangkok, Thailand: Full Honest Review", channel: "Retired Working For You", duration: "21:30", url: "https://www.youtube.com/results?search_query=living+in+bangkok+thailand+honest+review" },
-      { title: "Cost of Living in Chiang Mai vs Bangkok", channel: "CB Media", duration: "14:40", url: "https://www.youtube.com/results?search_query=cost+of+living+in+chiang+mai+vs+bangkok" }
+      { title: "Living in Bangkok, Thailand: Full Honest Review", channel: "Retired Working For You", duration: "21:30", url: "https://en.wikipedia.org/wiki/Thailand" },
+      { title: "Cost of Living in Chiang Mai vs Bangkok", channel: "CB Media", duration: "14:40", url: "https://en.wikipedia.org/wiki/Thailand" }
     ],
     tags: ["affordable", "warm", "relaxed", "foodie", "social"],
     dimensions: {
@@ -538,8 +539,8 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Intense UV sun exposure requires daily protection."
     ],
     videos: [
-      { title: "Why We Moved to New Zealand (And What We Love)", channel: "Indigo Traveller", duration: "19:00", url: "https://www.youtube.com/results?search_query=moving+to+new+zealand+honest+lifestyle" },
-      { title: "Cost of Living in New Zealand: Auckland vs Queenstown", channel: "NZ Pocket Guide", duration: "13:45", url: "https://www.youtube.com/results?search_query=cost+of+living+in+new+zealand+auckland" }
+      { title: "Why We Moved to New Zealand (And What We Love)", channel: "Indigo Traveller", duration: "19:00", url: "https://en.wikipedia.org/wiki/New_Zealand" },
+      { title: "Cost of Living in New Zealand: Auckland vs Queenstown", channel: "NZ Pocket Guide", duration: "13:45", url: "https://en.wikipedia.org/wiki/New_Zealand" }
     ],
     tags: ["nature", "relaxed", "safe", "wlb", "coastal", "high-cost"],
     dimensions: {
@@ -581,8 +582,8 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Learning German is required for deep social and career integration."
     ],
     videos: [
-      { title: "The Truth About Living in Germany as an Expat", channel: "Wanted Adventure", duration: "16:15", url: "https://www.youtube.com/results?search_query=the+truth+about+living+in+germany+expat" },
-      { title: "Cost of Living in Berlin: Real Monthly Budget", channel: "Simple Germany", duration: "12:50", url: "https://www.youtube.com/results?search_query=cost+of+living+in+berlin+simple+germany" }
+      { title: "The Truth About Living in Germany as an Expat", channel: "Wanted Adventure", duration: "16:15", url: "https://en.wikipedia.org/wiki/Germany" },
+      { title: "Cost of Living in Berlin: Real Monthly Budget", channel: "Simple Germany", duration: "12:50", url: "https://en.wikipedia.org/wiki/Germany" }
     ],
     tags: ["transit", "wlb", "safe", "moderate-cost", "europe", "four-seasons"],
     dimensions: {
@@ -624,8 +625,8 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Public transit outside major rail corridors can be irregular."
     ],
     videos: [
-      { title: "Living in Italy: The Honest Pros and Cons", channel: "Kacie Rose", duration: "15:20", url: "https://www.youtube.com/results?search_query=living+in+italy+honest+pros+and+cons" },
-      { title: "Cost of Living in Italy: Rome vs Florence vs Rural", channel: "Italy Made Easy", duration: "14:10", url: "https://www.youtube.com/results?search_query=cost+of+living+in+italy+breakdown" }
+      { title: "Living in Italy: The Honest Pros and Cons", channel: "Kacie Rose", duration: "15:20", url: "https://en.wikipedia.org/wiki/Italy" },
+      { title: "Cost of Living in Italy: Rome vs Florence vs Rural", channel: "Italy Made Easy", duration: "14:10", url: "https://en.wikipedia.org/wiki/Italy" }
     ],
     tags: ["warm", "foodie", "social", "moderate-cost", "europe", "coastal"],
     dimensions: {
@@ -667,7 +668,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Complex tax system and administrative paperwork."
     ],
     videos: [
-      { title: "What Living in France is Really Like", channel: "Not Even French", duration: "17:40", url: "https://www.youtube.com/results?search_query=what+living+in+france+is+really+like" }
+      { title: "What Living in France is Really Like", channel: "Not Even French", duration: "17:40", url: "https://en.wikipedia.org/wiki/France" }
     ],
     tags: ["foodie", "wlb", "transit", "europe", "four-seasons"],
     dimensions: {
@@ -709,7 +710,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Strained public healthcare (NHS waiting times)."
     ],
     videos: [
-      { title: "Moving to the UK: Honest Pros and Cons", channel: "Evan Edinger", duration: "19:20", url: "https://www.youtube.com/results?search_query=moving+to+the+uk+honest+pros+and+cons" }
+      { title: "Moving to the UK: Honest Pros and Cons", channel: "Evan Edinger", duration: "19:20", url: "https://en.wikipedia.org/wiki/United_Kingdom" }
     ],
     tags: ["urban", "transit", "europe", "four-seasons", "social"],
     dimensions: {
@@ -751,7 +752,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Intense sun and high UV index requiring rigorous protection."
     ],
     videos: [
-      { title: "Living in Australia: 10 Things I Wish I Knew", channel: "Greg Snell", duration: "16:00", url: "https://www.youtube.com/results?search_query=living+in+australia+honest+review" }
+      { title: "Living in Australia: 10 Things I Wish I Knew", channel: "Greg Snell", duration: "16:00", url: "https://en.wikipedia.org/wiki/Australia" }
     ],
     tags: ["nature", "coastal", "wlb", "safe", "warm", "high-cost"],
     dimensions: {
@@ -793,7 +794,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Hard to integrate deeply without German or French language skills."
     ],
     videos: [
-      { title: "The Reality of Moving to Switzerland", channel: "How to Switzerland", duration: "15:35", url: "https://www.youtube.com/results?search_query=the+reality+of+moving+to+switzerland" }
+      { title: "The Reality of Moving to Switzerland", channel: "How to Switzerland", duration: "15:35", url: "https://en.wikipedia.org/wiki/Switzerland" }
     ],
     tags: ["nature", "safe", "transit", "high-cost", "four-seasons"],
     dimensions: {
@@ -835,7 +836,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Rainy season (green season) brings heavy afternoon downpours."
     ],
     videos: [
-      { title: "Living in Costa Rica: The Real Truth", channel: "Traveling with Kristin", duration: "16:45", url: "https://www.youtube.com/results?search_query=living+in+costa+rica+real+truth" }
+      { title: "Living in Costa Rica: The Real Truth", channel: "Traveling with Kristin", duration: "16:45", url: "https://en.wikipedia.org/wiki/Costa_Rica" }
     ],
     tags: ["nature", "relaxed", "warm", "coastal", "moderate-cost"],
     dimensions: {
@@ -877,7 +878,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Low wages in the domestic economy."
     ],
     videos: [
-      { title: "Living in Greece as an Expat: Pros and Cons", channel: "Jordan Simons", duration: "14:15", url: "https://www.youtube.com/results?search_query=living+in+greece+honest+expat+review" }
+      { title: "Living in Greece as an Expat: Pros and Cons", channel: "Jordan Simons", duration: "14:15", url: "https://en.wikipedia.org/wiki/Greece" }
     ],
     tags: ["warm", "coastal", "foodie", "relaxed", "moderate-cost", "europe"],
     dimensions: {
@@ -919,7 +920,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Complex geopolitical tensions."
     ],
     videos: [
-      { title: "What Living in Taiwan is Actually Like", channel: "Pro Walk", duration: "17:30", url: "https://www.youtube.com/results?search_query=what+living+in+taiwan+is+actually+like" }
+      { title: "What Living in Taiwan is Actually Like", channel: "Pro Walk", duration: "17:30", url: "https://en.wikipedia.org/wiki/Taiwan" }
     ],
     tags: ["foodie", "safe", "transit", "warm", "energetic"],
     dimensions: {
@@ -961,7 +962,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Bureaucratic banking and visa verification processes."
     ],
     videos: [
-      { title: "Living in Medellin, Colombia: Honest Pros and Cons", channel: "Nomad Capitalist", duration: "16:20", url: "https://www.youtube.com/results?search_query=living+in+medellin+colombia+pros+and+cons" }
+      { title: "Living in Medellin, Colombia: Honest Pros and Cons", channel: "Nomad Capitalist", duration: "16:20", url: "https://en.wikipedia.org/wiki/Colombia" }
     ],
     tags: ["affordable", "warm", "social", "nature", "energetic"],
     dimensions: {
@@ -1003,7 +1004,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       "Variable internet speeds and seasonal tropical monsoon rains."
     ],
     videos: [
-      { title: "The Honest Reality of Living in Bali", channel: "Lost LeBlanc", duration: "18:40", url: "https://www.youtube.com/results?search_query=honest+reality+of+living+in+bali+indonesia" }
+      { title: "The Honest Reality of Living in Bali", channel: "Lost LeBlanc", duration: "18:40", url: "https://en.wikipedia.org/wiki/Indonesia" }
     ],
     tags: ["affordable", "warm", "nature", "coastal", "relaxed"],
     dimensions: {

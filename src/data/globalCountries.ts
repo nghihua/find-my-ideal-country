@@ -721,7 +721,7 @@ export function getCompleteCountryProfile(
           title: `What Living in ${meta.name} is Actually Like`,
           channel: "YouTube",
           duration: "Search",
-          url: `https://www.youtube.com/results?search_query=what+living+in+${encodeURIComponent(meta.name)}+is+actually+like`
+          url: `https://en.wikipedia.org/wiki/${encodeURIComponent(meta.name.replace(/ /g, '_'))}`
         }
       ],
       tags: meta.tags,
@@ -762,7 +762,7 @@ export function getCompleteCountryProfile(
         title: `What Living in ${name} is Actually Like (Local & Expat Stories)`,
         channel: "YouTube",
         duration: "Search",
-        url: `https://www.youtube.com/results?search_query=what+living+in+${encodeURIComponent(name)}+is+actually+like`,
+        url: `https://en.wikipedia.org/wiki/${encodeURIComponent(name.replace(/ /g, '_'))}`,
       }
     ],
     tags: [fallbackRegion.toLowerCase(), estClimate],

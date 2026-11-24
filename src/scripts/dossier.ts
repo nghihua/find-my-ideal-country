@@ -156,6 +156,7 @@ function buildDossierHTML(data: CountryData): string {
       </div>
       ${practical?.healthcareNote ? `<p class="text-xs text-[#5f6368] leading-relaxed">${practical.healthcareNote}</p>` : ''}
       ${practical?.tapWaterNote ? `<p class="text-xs text-[#5f6368] leading-relaxed">${practical.tapWaterNote}</p>` : ''}
+      ${practical?.airQualityNote ? `<p class="text-xs text-[#5f6368] leading-relaxed">${practical.airQualityNote}</p>` : ''}
       ${practical?.hazardNote ? `<p class="text-xs text-[#5f6368] leading-relaxed">${practical.hazardNote}</p>` : ''}
       ${practical?.sources?.length ? `<div class="flex flex-wrap gap-x-3 gap-y-1 text-[10px]">${practical.sources.map((source, index) => `<a class="text-[#1a73e8] underline" href="${source}" target="_blank" rel="noopener noreferrer">Source ${index + 1}</a>`).join('')}</div>` : ''}
     </section>
@@ -244,33 +245,13 @@ function buildDossierHTML(data: CountryData): string {
       </div>
     </section>
 
-    <!-- External Videos Section (YouTube / Google Video Styling) -->
     <section class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
-      <div class="flex items-center justify-between mb-3.5">
-        <h3 class="font-display font-medium text-xs uppercase tracking-wider text-[#ea4335] flex items-center gap-2">
-          <svg class="w-4 h-4 text-[#ea4335]" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-          Watch: Day in the Life &amp; Street Walks
-        </h3>
-        <span class="text-[11px] text-[#5f6368] font-normal">YouTube</span>
-      </div>
-      <div class="space-y-2">
-        ${data.videos.map(v => `
-          <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 p-3 rounded-xl bg-[#f8f9fa] hover:bg-[#f1f3f4] border border-[#dadce0] transition-all">
-            <div class="flex items-center gap-3 min-w-0">
-              <div class="w-8 h-8 rounded-full bg-[#fce8e6] text-[#ea4335] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              </div>
-              <div class="truncate">
-                <div class="text-sm font-medium text-[#202124] group-hover:text-[#1a73e8] truncate transition-colors">${v.title}</div>
-                <div class="text-xs text-[#5f6368]">${v.channel} • ${v.duration}</div>
-              </div>
-            </div>
-            <svg class="w-4 h-4 text-[#5f6368] group-hover:text-[#1a73e8] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-            </svg>
-          </a>
-        `).join('')}
-      </div>
+      <h3 class="font-display font-medium text-xs uppercase tracking-wider text-[#5f6368] mb-3.5">Learn more about ${data.name}</h3>
+      <a href="${data.videos[0].url}" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-3 p-3 rounded-xl bg-[#f8f9fa] hover:bg-[#f1f3f4] border border-[#dadce0] transition-colors">
+        <span class="w-8 h-8 rounded-full bg-[#e8f0fe] text-[#1a73e8] flex items-center justify-center font-serif text-lg">W</span>
+        <span class="text-sm font-medium text-[#202124] group-hover:text-[#1a73e8] transition-colors">${data.name} on Wikipedia</span>
+        <span aria-hidden="true" class="text-[#5f6368]">↗</span>
+      </a>
     </section>
   `;
 }
