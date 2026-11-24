@@ -23,14 +23,17 @@ export function initSearch(
       .slice(0, 8);
 
     if (matches.length === 0) {
-      searchResults.innerHTML = `<div class="px-4 py-3 text-xs text-stone-500">No matching country found</div>`;
+      searchResults.innerHTML = `<div class="px-4 py-3 text-xs text-[#5f6368] font-sans">No matching country found</div>`;
     } else {
       searchResults.innerHTML = matches.map(f => {
         const rawName: string = f.properties.name;
         const displayName = resolveDisplayName(rawName);
         return `
-          <button class="w-full text-left px-3.5 py-2.5 text-sm rounded-xl hover:bg-paper-100 flex items-center justify-between transition-colors" data-country="${rawName}">
-            <span class="text-paper-900 font-medium">${displayName}</span>
+          <button class="w-full text-left px-3.5 py-2.5 text-sm rounded-xl hover:bg-[#f1f3f4] active:bg-[#e8eaed] flex items-center gap-3 transition-colors text-[#202124] group" data-country="${rawName}">
+            <div class="w-6 h-6 rounded-full bg-[#f1f3f4] group-hover:bg-[#e8f0fe] text-[#5f6368] group-hover:text-[#1a73e8] flex items-center justify-center shrink-0 transition-colors">
+              <i class="fa-solid fa-location-dot text-xs"></i>
+            </div>
+            <span class="font-medium truncate">${displayName}</span>
           </button>
         `;
       }).join('');

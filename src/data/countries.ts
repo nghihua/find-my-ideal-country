@@ -1143,7 +1143,7 @@ export interface QuizQuestion {
   stageName: string;
   question: string;
   subtitle: string;
-  category: 'budget' | 'lgbtq' | 'transit' | 'convenience' | 'weekend' | 'climate' | 'priority';
+  category: 'budget' | 'lgbtq' | 'transit' | 'convenience' | 'weekend' | 'climate' | 'religion' | 'openness' | 'density' | 'career' | 'priority';
   options: QuizOption[];
 }
 
@@ -1230,9 +1230,63 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     ]
   },
   {
-    id: "priority",
+    id: "religion",
     stage: 3,
-    stageName: "Core Priority",
+    stageName: "Society, Religion & People",
+    question: "How should religion fit into society and everyday life?",
+    subtitle: "Tolerance for atheists, public prayer facilities, and religious presence vary widely.",
+    category: "religion",
+    options: [
+      { label: "Secular Society & Freedom from Religion", desc: "Religion is strictly private/separated from laws; fully welcoming to atheists and diverse beliefs.", value: "secular", icon: "fa-solid fa-scale-balanced" },
+      { label: "Cultural Heritage & Folk Traditions", desc: "Historic temples, pagodas, or cathedrals celebrated culturally, but low daily religious pressure.", value: "cultural-tradition", icon: "fa-solid fa-torii-gate" },
+      { label: "Active Spiritual Community & Facilities", desc: "Faith is vibrant, with accessible prayer facilities, mosques/churches, and deep spiritual community.", value: "prominent", icon: "fa-solid fa-hands-praying" },
+      { label: "Flexible / No Preference", desc: "Comfortable in secular, traditional, or actively religious societies.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
+    ]
+  },
+  {
+    id: "openness",
+    stage: 3,
+    stageName: "Society, Religion & People",
+    question: "What social climate and openness to foreigners do you seek?",
+    subtitle: "Ease of making friends, English proficiency, and multicultural acceptance.",
+    category: "openness",
+    options: [
+      { label: "Cosmopolitan, Diverse & High English Ease", desc: "Multicultural cities where English is widely spoken, low microaggressions, and foreigners integrate easily.", value: "cosmopolitan", icon: "fa-solid fa-globe" },
+      { label: "Quiet, Polite & Respectful Distance", desc: "Locals give you privacy and respect personal boundaries; quiet courtesy without intrusive small talk.", value: "reserved", icon: "fa-solid fa-user-shield" },
+      { label: "Flexible / No Preference", desc: "Happy to adapt to extroverted expat hubs or reserved homogeneous cultures.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
+    ]
+  },
+  {
+    id: "density",
+    stage: 3,
+    stageName: "Society, Religion & People",
+    question: "What population density and demographic energy suits you?",
+    subtitle: "From dense bustling skylines to tranquil, spacious countryside.",
+    category: "density",
+    options: [
+      { label: "Bustling, Dense & Youthful Dynamism", desc: "High energy, crowded street life, young population, and fast-paced city vibes.", value: "bustling", icon: "fa-solid fa-city" },
+      { label: "Spacious, Uncrowded & Low Density", desc: "Wide open nature, peaceful residential neighborhoods, zero crowd anxiety.", value: "spacious", icon: "fa-solid fa-mountain-sun" },
+      { label: "Flexible / No Preference", desc: "Comfortable in bustling capitals or quiet open valleys.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
+    ]
+  },
+  {
+    id: "career",
+    stage: 4,
+    stageName: "Work & Core Priority",
+    question: "What is your primary career or work arrangement?",
+    subtitle: "Visa rules, local industry strength, and expat job realism.",
+    category: "career",
+    options: [
+      { label: "Remote Worker / Digital Nomad", desc: "Friendly nomad visas, abundant cafes/coworking, reliable fast Wi-Fi, low local tax.", value: "nomad", icon: "fa-solid fa-laptop-code" },
+      { label: "High-Wage Corporate & Tech Hub", desc: "Major multinationals, high salaries, English-speaking white-collar job market.", value: "corporate", icon: "fa-solid fa-briefcase" },
+      { label: "Local Immersion / Flexible", desc: "Willing to learn the local language for local businesses, teaching, or entrepreneurship.", value: "local", icon: "fa-solid fa-language" },
+      { label: "Flexible / No Preference", desc: "Not seeking local employment or work-dependent relocation.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
+    ]
+  },
+  {
+    id: "priority",
+    stage: 4,
+    stageName: "Work & Core Priority",
     question: "What is your #1 non-negotiable priority? (Boosted 2.5×)",
     subtitle: "The single dealbreaker that turns a foreign country into home.",
     category: "priority",

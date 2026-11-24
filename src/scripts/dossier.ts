@@ -37,11 +37,11 @@ function getConvenienceBadge(c?: number) {
 }
 
 function getLgbtqBadge(t?: number) {
-  if (!t || t >= 5) return { label: 'World-Leading Equality', icon: 'fa-solid fa-rainbow', color: 'text-teal' };
-  if (t === 4) return { label: 'Legally Protected & Safe', icon: 'fa-solid fa-shield-heart', color: 'text-teal' };
-  if (t === 3) return { label: 'Socially Tolerant & Safe', icon: 'fa-solid fa-hand-holding-heart', color: 'text-stone-700' };
-  if (t === 2) return { label: 'Conservative Legal Norms', icon: 'fa-solid fa-scale-unbalanced', color: 'text-amber-accent' };
-  return { label: 'Restricted Legal Status', icon: 'fa-solid fa-triangle-exclamation', color: 'text-coral' };
+  if (!t || t >= 5) return { label: 'World-Leading Equality', icon: 'fa-solid fa-rainbow', color: 'text-[#137333]' };
+  if (t === 4) return { label: 'Legally Protected & Safe', icon: 'fa-solid fa-shield-heart', color: 'text-[#1a73e8]' };
+  if (t === 3) return { label: 'Socially Tolerant & Safe', icon: 'fa-solid fa-hand-holding-heart', color: 'text-[#3c4043]' };
+  if (t === 2) return { label: 'Conservative Legal Norms', icon: 'fa-solid fa-scale-unbalanced', color: 'text-[#b06000]' };
+  return { label: 'Restricted Legal Status', icon: 'fa-solid fa-triangle-exclamation', color: 'text-[#c5221f]' };
 }
 
 function getClimateBadge(cl?: string) {
@@ -72,165 +72,175 @@ function buildDossierHTML(data: CountryData): string {
   const weekend = getWeekendBadge(dim?.weekendRhythm);
 
   return `
-    <!-- Lifestyle Scorecard Strip -->
-    <section class="paper-card rounded-2xl p-4 sm:p-5 space-y-3">
+    <!-- Lifestyle Scorecard Strip (Google Travel Metric Card) -->
+    <section class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 space-y-3 shadow-[0_1px_2px_rgba(60,64,67,0.1)]">
       <div class="flex items-center justify-between">
-        <h3 class="font-display font-bold text-xs uppercase tracking-wider text-teal flex items-center gap-2">
-          <i class="fa-solid fa-sliders text-primary"></i>
+        <h3 class="font-display font-medium text-xs uppercase tracking-wider text-[#1a73e8] flex items-center gap-2">
+          <i class="fa-solid fa-sliders text-[#1a73e8]"></i>
           Lifestyle & Living Factor Scorecard
         </h3>
-        <span class="text-[10px] text-stone-400 font-medium">Real-World Rhythms</span>
+        <span class="text-[10px] text-[#5f6368] font-normal">Real-World Rhythms</span>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-xs">
-        <div class="flex items-center gap-2.5 p-2 rounded-xl bg-paper-100">
-          <span class="w-7 h-7 rounded-lg bg-teal-light text-teal flex items-center justify-center shrink-0">
+        <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#f8f9fa] border border-[#f1f3f4]">
+          <span class="w-8 h-8 rounded-full bg-[#e8f0fe] text-[#1a73e8] flex items-center justify-center shrink-0 text-xs">
             <i class="${transit.icon}"></i>
           </span>
-          <div>
-            <div class="text-[10px] text-stone-400 uppercase font-semibold">Mobility</div>
-            <div class="font-medium text-paper-900">${transit.label}</div>
+          <div class="min-w-0">
+            <div class="text-[10px] text-[#5f6368] uppercase font-medium">Mobility</div>
+            <div class="font-medium text-[#202124] truncate">${transit.label}</div>
           </div>
         </div>
 
-        <div class="flex items-center gap-2.5 p-2 rounded-xl bg-paper-100">
-          <span class="w-7 h-7 rounded-lg bg-coral-light text-coral flex items-center justify-center shrink-0">
+        <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#f8f9fa] border border-[#f1f3f4]">
+          <span class="w-8 h-8 rounded-full bg-[#fce8e6] text-[#ea4335] flex items-center justify-center shrink-0 text-xs">
             <i class="${convenience.icon}"></i>
           </span>
-          <div>
-            <div class="text-[10px] text-stone-400 uppercase font-semibold">Daily Convenience</div>
-            <div class="font-medium text-paper-900">${convenience.label}</div>
+          <div class="min-w-0">
+            <div class="text-[10px] text-[#5f6368] uppercase font-medium">Daily Convenience</div>
+            <div class="font-medium text-[#202124] truncate">${convenience.label}</div>
           </div>
         </div>
 
-        <div class="flex items-center gap-2.5 p-2 rounded-xl bg-paper-100">
-          <span class="w-7 h-7 rounded-lg bg-amber-soft text-amber-accent flex items-center justify-center shrink-0">
+        <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#f8f9fa] border border-[#f1f3f4]">
+          <span class="w-8 h-8 rounded-full bg-[#fef7e0] text-[#b06000] flex items-center justify-center shrink-0 text-xs">
             <i class="${climate.icon}"></i>
           </span>
-          <div>
-            <div class="text-[10px] text-stone-400 uppercase font-semibold">Climate Reality</div>
-            <div class="font-medium text-paper-900">${climate.label}</div>
+          <div class="min-w-0">
+            <div class="text-[10px] text-[#5f6368] uppercase font-medium">Climate Reality</div>
+            <div class="font-medium text-[#202124] truncate">${climate.label}</div>
           </div>
         </div>
 
-        <div class="flex items-center gap-2.5 p-2 rounded-xl bg-paper-100">
-          <span class="w-7 h-7 rounded-lg bg-purple-light text-purple-dark flex items-center justify-center shrink-0">
+        <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#f8f9fa] border border-[#f1f3f4]">
+          <span class="w-8 h-8 rounded-full bg-[#e8f0fe] text-[#1a73e8] flex items-center justify-center shrink-0 text-xs">
             <i class="${weekend.icon}"></i>
           </span>
-          <div>
-            <div class="text-[10px] text-stone-400 uppercase font-semibold">Weekend & Sunday</div>
-            <div class="font-medium text-paper-900">${weekend.label}</div>
+          <div class="min-w-0">
+            <div class="text-[10px] text-[#5f6368] uppercase font-medium">Weekend & Sunday</div>
+            <div class="font-medium text-[#202124] truncate">${weekend.label}</div>
           </div>
         </div>
 
-        <div class="sm:col-span-2 flex items-center gap-2.5 p-2 rounded-xl bg-paper-100">
-          <span class="w-7 h-7 rounded-lg bg-badge text-stone-700 flex items-center justify-center shrink-0">
+        <div class="sm:col-span-2 flex items-center gap-2.5 p-2.5 rounded-xl bg-[#f8f9fa] border border-[#f1f3f4]">
+          <span class="w-8 h-8 rounded-full bg-[#e8f0fe] text-[#1a73e8] flex items-center justify-center shrink-0 text-xs">
             <i class="${lgbtq.icon}"></i>
           </span>
-          <div>
-            <div class="text-[10px] text-stone-400 uppercase font-semibold">Social Rights & Safety</div>
-            <div class="font-medium ${lgbtq.color}">${lgbtq.label}</div>
+          <div class="min-w-0">
+            <div class="text-[10px] text-[#5f6368] uppercase font-medium">Social Rights & Safety</div>
+            <div class="font-medium ${lgbtq.color} truncate">${lgbtq.label}</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- The Honest Reality Check Section -->
-    <section class="bg-amber-bg shadow-paper rounded-2xl p-4 sm:p-5 border-l-4 border-amber-accent space-y-1.5">
-      <div class="text-xs font-bold uppercase tracking-wider text-amber-dark flex items-center gap-1.5">
-        <i class="fa-solid fa-triangle-exclamation text-amber-accent"></i> The Reality Check & Trade-offs:
+    <!-- The Honest Reality Check Section (Google Warning Banner) -->
+    <section class="bg-[#fef7e0] border border-[#fce8b2] border-l-4 border-l-[#fbbc04] rounded-2xl p-4 sm:p-5 space-y-1.5 shadow-[0_1px_2px_rgba(60,64,67,0.06)]">
+      <div class="text-xs font-semibold uppercase tracking-wider text-[#b06000] flex items-center gap-1.5">
+        <i class="fa-solid fa-triangle-exclamation text-[#f29900]"></i> The Reality Check & Trade-offs:
       </div>
-      <p class="text-xs sm:text-sm text-stone-700 leading-relaxed">
+      <p class="text-xs sm:text-sm text-[#3c4043] leading-relaxed">
         ${data.realityCheck || "Paperwork, language adjustments, and regional cultural customs require patience and local learning."}
       </p>
     </section>
 
-    <!-- Upsides & Downsides Grid -->
-    <section class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div class="bg-green-bg shadow-paper rounded-2xl p-5">
-        <h4 class="font-display font-bold text-sm text-teal-dark flex items-center gap-2 mb-3">
-          <i class="fa-solid fa-circle-arrow-up text-green-accent"></i> The Upsides
+    <!-- Upsides & Downsides Grid (Google Green & Red Containers) -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+      <div class="bg-[#e6f4ea] border border-[#ceead6] rounded-2xl p-4 sm:p-5 shadow-[0_1px_2px_rgba(60,64,67,0.06)]">
+        <h4 class="font-display font-medium text-sm text-[#137333] flex items-center gap-2 mb-3">
+          <i class="fa-solid fa-circle-check text-[#34a853]"></i> The Upsides
         </h4>
-        <ul class="space-y-2.5 text-xs sm:text-sm text-stone-700 leading-relaxed">
-          ${data.upsides.map(item => `<li class="flex items-start gap-2.5"><i class="fa-solid fa-check text-green-accent text-xs mt-1 shrink-0"></i><span>${item}</span></li>`).join('')}
+        <ul class="space-y-2.5 text-xs sm:text-sm text-[#202124] leading-relaxed">
+          ${data.upsides.map(item => `<li class="flex items-start gap-2"><i class="fa-solid fa-check text-[#34a853] text-xs mt-1 shrink-0"></i><span>${item}</span></li>`).join('')}
         </ul>
       </div>
-      <div class="bg-coral-bg shadow-paper rounded-2xl p-5">
-        <h4 class="font-display font-bold text-sm text-coral-dark flex items-center gap-2 mb-3">
-          <i class="fa-solid fa-circle-arrow-down text-coral-muted"></i> The Downsides
+      <div class="bg-[#fce8e6] border border-[#fad2cf] rounded-2xl p-4 sm:p-5 shadow-[0_1px_2px_rgba(60,64,67,0.06)]">
+        <h4 class="font-display font-medium text-sm text-[#c5221f] flex items-center gap-2 mb-3">
+          <i class="fa-solid fa-circle-exclamation text-[#ea4335]"></i> The Downsides
         </h4>
-        <ul class="space-y-2.5 text-xs sm:text-sm text-stone-700 leading-relaxed">
-          ${data.downsides.map(item => `<li class="flex items-start gap-2.5"><i class="fa-solid fa-minus text-coral-muted text-xs mt-1 shrink-0"></i><span>${item}</span></li>`).join('')}
+        <ul class="space-y-2.5 text-xs sm:text-sm text-[#202124] leading-relaxed">
+          ${data.downsides.map(item => `<li class="flex items-start gap-2"><i class="fa-solid fa-minus text-[#ea4335] text-xs mt-1 shrink-0"></i><span>${item}</span></li>`).join('')}
         </ul>
       </div>
     </section>
 
-    <!-- Daily Rhythm: Workday & Evening -->
-    <section class="space-y-4">
-      <div class="bg-amber-bg shadow-paper rounded-2xl p-5">
-        <h4 class="font-display font-bold text-base text-paper-900 flex items-center gap-2.5 mb-2">
-          <span class="w-7 h-7 rounded-lg bg-amber-light text-amber-accent flex items-center justify-center text-xs"><i class="fa-solid fa-sun"></i></span>
+    <!-- Daily Rhythm: Workday & Evening (Clean Google Cards) -->
+    <section class="space-y-3.5">
+      <div class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
+        <h4 class="font-display font-medium text-sm sm:text-base text-[#202124] flex items-center gap-2.5 mb-2">
+          <span class="w-7 h-7 rounded-full bg-[#fef7e0] text-[#b06000] flex items-center justify-center text-xs">
+            <i class="fa-solid fa-sun"></i>
+          </span>
           What a Typical Workday is Like
         </h4>
-        <p class="text-sm text-stone-700 leading-relaxed">${data.workday}</p>
+        <p class="text-xs sm:text-sm text-[#3c4043] leading-relaxed">${data.workday}</p>
       </div>
 
-      <div class="bg-purple-card shadow-paper rounded-2xl p-5">
-        <h4 class="font-display font-bold text-base text-paper-900 flex items-center gap-2.5 mb-2">
-          <span class="w-7 h-7 rounded-lg bg-purple-light text-purple-dark flex items-center justify-center text-xs"><i class="fa-solid fa-moon"></i></span>
+      <div class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
+        <h4 class="font-display font-medium text-sm sm:text-base text-[#202124] flex items-center gap-2.5 mb-2">
+          <span class="w-7 h-7 rounded-full bg-[#e8f0fe] text-[#1a73e8] flex items-center justify-center text-xs">
+            <i class="fa-solid fa-moon"></i>
+          </span>
           What a Typical Evening is Like
         </h4>
-        <p class="text-sm text-stone-700 leading-relaxed">${data.evening}</p>
+        <p class="text-xs sm:text-sm text-[#3c4043] leading-relaxed">${data.evening}</p>
       </div>
     </section>
 
     <!-- Culture, People, Cost of Living -->
-    <section class="space-y-4">
-      <div class="paper-card rounded-2xl p-5">
-        <h4 class="font-display font-bold text-base text-paper-900 flex items-center gap-2.5 mb-2">
-          <span class="w-7 h-7 rounded-lg bg-coral-light text-coral flex items-center justify-center text-xs"><i class="fa-solid fa-masks-theater"></i></span>
+    <section class="space-y-3.5">
+      <div class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
+        <h4 class="font-display font-medium text-sm sm:text-base text-[#202124] flex items-center gap-2.5 mb-2">
+          <span class="w-7 h-7 rounded-full bg-[#fce8e6] text-[#ea4335] flex items-center justify-center text-xs">
+            <i class="fa-solid fa-masks-theater"></i>
+          </span>
           The Culture
         </h4>
-        <p class="text-sm text-stone-700 leading-relaxed">${data.culture}</p>
+        <p class="text-xs sm:text-sm text-[#3c4043] leading-relaxed">${data.culture}</p>
       </div>
-      <div class="paper-card rounded-2xl p-5">
-        <h4 class="font-display font-bold text-base text-paper-900 flex items-center gap-2.5 mb-2">
-          <span class="w-7 h-7 rounded-lg bg-teal-light text-teal-dark flex items-center justify-center text-xs"><i class="fa-solid fa-people-group"></i></span>
+      <div class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
+        <h4 class="font-display font-medium text-sm sm:text-base text-[#202124] flex items-center gap-2.5 mb-2">
+          <span class="w-7 h-7 rounded-full bg-[#e8f0fe] text-[#1a73e8] flex items-center justify-center text-xs">
+            <i class="fa-solid fa-people-group"></i>
+          </span>
           The People &amp; Social Vibe
         </h4>
-        <p class="text-sm text-stone-700 leading-relaxed">${data.people}</p>
+        <p class="text-xs sm:text-sm text-[#3c4043] leading-relaxed">${data.people}</p>
       </div>
-      <div class="paper-card rounded-2xl p-5">
-        <h4 class="font-display font-bold text-base text-paper-900 flex items-center gap-2.5 mb-2">
-          <span class="w-7 h-7 rounded-lg bg-amber-soft text-amber-dark flex items-center justify-center text-xs"><i class="fa-solid fa-coins"></i></span>
+      <div class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
+        <h4 class="font-display font-medium text-sm sm:text-base text-[#202124] flex items-center gap-2.5 mb-2">
+          <span class="w-7 h-7 rounded-full bg-[#fef7e0] text-[#b06000] flex items-center justify-center text-xs">
+            <i class="fa-solid fa-coins"></i>
+          </span>
           Cost of Living Breakdown
         </h4>
-        <p class="text-sm text-stone-700 leading-relaxed">${data.costOfLiving}</p>
+        <p class="text-xs sm:text-sm text-[#3c4043] leading-relaxed">${data.costOfLiving}</p>
       </div>
     </section>
 
-    <!-- External Videos Section -->
-    <section class="paper-card rounded-2xl p-5 pb-6">
+    <!-- External Videos Section (YouTube / Google Video Styling) -->
+    <section class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
       <div class="flex items-center justify-between mb-3.5">
-        <h3 class="font-display font-bold text-xs uppercase tracking-wider text-teal flex items-center gap-2">
-          <svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        <h3 class="font-display font-medium text-xs uppercase tracking-wider text-[#ea4335] flex items-center gap-2">
+          <svg class="w-4 h-4 text-[#ea4335]" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
           Watch: Day in the Life &amp; Street Walks
         </h3>
-        <span class="text-[11px] text-stone-400 font-medium">External Links</span>
+        <span class="text-[11px] text-[#5f6368] font-normal">YouTube</span>
       </div>
-      <div class="space-y-2.5">
+      <div class="space-y-2">
         ${data.videos.map(v => `
-          <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 p-3 rounded-xl bg-paper-100 hover:bg-hoverCard shadow-paper-sm hover:shadow-paper transition-all">
+          <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 p-3 rounded-xl bg-[#f8f9fa] hover:bg-[#f1f3f4] border border-[#dadce0] transition-all">
             <div class="flex items-center gap-3 min-w-0">
-              <div class="w-9 h-9 rounded-lg bg-coral-light text-coral flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <div class="w-8 h-8 rounded-full bg-[#fce8e6] text-[#ea4335] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
               </div>
               <div class="truncate">
-                <div class="text-sm font-semibold text-paper-900 group-hover:text-coral truncate transition-colors">${v.title}</div>
-                <div class="text-xs text-stone-500">${v.channel} • ${v.duration}</div>
+                <div class="text-sm font-medium text-[#202124] group-hover:text-[#1a73e8] truncate transition-colors">${v.title}</div>
+                <div class="text-xs text-[#5f6368]">${v.channel} • ${v.duration}</div>
               </div>
             </div>
-            <svg class="w-4 h-4 text-stone-400 group-hover:text-coral shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 text-[#5f6368] group-hover:text-[#1a73e8] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
             </svg>
           </a>

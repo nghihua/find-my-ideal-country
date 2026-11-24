@@ -49,18 +49,18 @@ function renderQuizStep() {
   const currentSelection = userAnswers[q.id];
 
   document.getElementById('quiz-body')!.innerHTML = `
-    <div class="space-y-6">
+    <div class="space-y-5">
       <div class="flex items-start justify-between gap-4">
         <div>
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-primary/20 text-paper-900 mb-2">
+          <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium tracking-wide bg-[#e8f0fe] text-[#1a73e8] mb-2">
             ${q.stageName}
           </span>
-          <h4 class="font-display text-xl sm:text-2xl font-bold text-paper-900">${q.question}</h4>
-          <p class="text-xs sm:text-sm text-stone-500 mt-1">${q.subtitle}</p>
+          <h4 class="font-display text-xl sm:text-2xl font-medium text-[#202124]">${q.question}</h4>
+          <p class="text-xs sm:text-sm text-[#5f6368] mt-1">${q.subtitle}</p>
         </div>
       </div>
 
-      <div class="space-y-3">
+      <div class="space-y-2.5">
         ${q.options.map(opt => {
           const isSelected = currentSelection === opt.value;
           const isNoPref = opt.isNoPreference;
@@ -68,33 +68,33 @@ function renderQuizStep() {
           return `
             <button 
               data-quiz-value="${opt.value}" 
-              class="quiz-option w-full text-left p-3.5 sm:p-4 rounded-2xl paper-card transition-all group flex items-center gap-4 ${
+              class="quiz-option w-full text-left p-3.5 sm:p-4 rounded-2xl transition-all group flex items-center gap-3.5 ${
                 isSelected 
-                  ? 'ring-2 ring-primary bg-primary/10 shadow-paper-lg -translate-y-0.5' 
+                  ? 'border-2 border-[#1a73e8] bg-[#e8f0fe] shadow-[0_1px_3px_rgba(26,115,232,0.2)]' 
                   : isNoPref
-                    ? 'border border-dashed border-stone-300 hover:border-stone-400 hover:bg-paper-50'
-                    : 'hover:bg-hoverQuiz hover:-translate-y-0.5 hover:shadow-paper-lg'
+                    ? 'bg-white border border-dashed border-[#dadce0] hover:border-[#bdc1c6] hover:bg-[#f8f9fa]'
+                    : 'bg-white border border-[#dadce0] hover:bg-[#f8f9fa] hover:border-[#1a73e8]/40 shadow-[0_1px_2px_rgba(60,64,67,0.06)]'
               }"
             >
-              <span class="text-lg sm:text-xl w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-colors shadow-paper-sm ${
+              <span class="text-base sm:text-lg w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors ${
                 isSelected
-                  ? 'bg-primary text-paper-900 font-bold'
+                  ? 'bg-[#1a73e8] text-white font-medium'
                   : isNoPref
-                    ? 'bg-stone-200 text-stone-600 group-hover:bg-stone-300'
-                    : 'bg-quizIcon text-teal group-hover:bg-coral-light group-hover:text-coral'
+                    ? 'bg-[#f1f3f4] text-[#5f6368] group-hover:bg-[#e8eaed]'
+                    : 'bg-[#f1f3f4] text-[#5f6368] group-hover:bg-[#e8f0fe] group-hover:text-[#1a73e8]'
               }">
                 <i class="${opt.icon}"></i>
               </span>
               <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-2">
-                  <span class="font-display font-bold text-sm sm:text-base text-paper-900 group-hover:text-coral transition-colors">
+                  <span class="font-display font-medium text-sm sm:text-base text-[#202124] group-hover:text-[#1a73e8] transition-colors">
                     ${opt.label}
                   </span>
-                  ${isNoPref ? '<span class="text-[10px] px-2 py-0.5 rounded bg-stone-200 text-stone-600 font-medium">Skip Filter</span>' : ''}
+                  ${isNoPref ? '<span class="text-[10px] px-2 py-0.5 rounded-full bg-[#f1f3f4] text-[#5f6368] font-normal">Skip Filter</span>' : ''}
                 </div>
-                <div class="text-xs sm:text-sm text-stone-500 mt-0.5 leading-snug">${opt.desc}</div>
+                <div class="text-xs sm:text-sm text-[#5f6368] mt-0.5 leading-snug">${opt.desc}</div>
               </div>
-              ${isSelected ? '<span class="text-primary text-lg"><i class="fa-solid fa-circle-check"></i></span>' : ''}
+              ${isSelected ? '<span class="text-[#1a73e8] text-lg"><i class="fa-solid fa-circle-check"></i></span>' : ''}
             </button>
           `;
         }).join('')}
@@ -102,7 +102,7 @@ function renderQuizStep() {
 
       ${currentQuizStep > 0 ? `
         <div class="pt-2 flex justify-start">
-          <button id="prev-quiz-btn" class="text-xs font-semibold text-stone-500 hover:text-paper-900 flex items-center gap-1.5 transition-colors">
+          <button id="prev-quiz-btn" class="text-xs font-medium text-[#5f6368] hover:text-[#1a73e8] flex items-center gap-1.5 transition-colors">
             <i class="fa-solid fa-arrow-left"></i> Previous Question
           </button>
         </div>
@@ -271,6 +271,71 @@ function calculateQuizResult() {
       }
     }
 
+    // Dimension 7: Religion & Secularity
+    if (userAnswers['religion'] && userAnswers['religion'] !== 'no-preference') {
+      maxPossible += 10;
+      const rAns = userAnswers['religion'];
+      if (rAns === 'secular') {
+        if (dim.religionRole === 'secular') { totalScore += 10; reasons.push(`Secular society with freedom from religious pressure`); }
+        else if (dim.religionRole === 'cultural-tradition') { totalScore += 7; }
+      } else if (rAns === 'cultural-tradition') {
+        if (dim.religionRole === 'cultural-tradition') { totalScore += 10; reasons.push(`Rich cultural traditions and festivals with low religious enforcement`); }
+        else if (dim.religionRole === 'secular') { totalScore += 7; }
+        else if (dim.religionRole === 'moderate') { totalScore += 6; }
+      } else if (rAns === 'prominent') {
+        if (dim.religionRole === 'prominent' || dim.religionRole === 'moderate') { totalScore += 10; reasons.push(`Active spiritual community with accessible religious facilities`); }
+        else { totalScore += 3; }
+      }
+    }
+
+    // Dimension 8: Social Openness & Expat Ease
+    if (userAnswers['openness'] && userAnswers['openness'] !== 'no-preference') {
+      maxPossible += 10;
+      const oAns = userAnswers['openness'];
+      if (oAns === 'cosmopolitan') {
+        if (dim.foreignerOpenness >= 5) { totalScore += 10; reasons.push(`Cosmopolitan society with high English fluency and welcoming integration`); }
+        else if (dim.foreignerOpenness === 4) { totalScore += 8; }
+        else if (dim.foreignerOpenness === 3) { totalScore += 4; }
+      } else if (oAns === 'reserved') {
+        if (dim.foreignerOpenness <= 3 || ['Japan', 'Norway', 'Finland', 'Switzerland', 'Germany'].includes(country.name)) {
+          totalScore += 10;
+          reasons.push(`Polite culture that respects personal boundaries and private space`);
+        } else { totalScore += 6; }
+      }
+    }
+
+    // Dimension 9: Population Density & Demographic Vibe
+    if (userAnswers['density'] && userAnswers['density'] !== 'no-preference') {
+      maxPossible += 10;
+      const dAns = userAnswers['density'];
+      if (dAns === 'bustling') {
+        if (dim.paceScore >= 4) { totalScore += 10; reasons.push(`Bustling, dense urban dynamism and youthful street life`); }
+        else if (dim.paceScore === 3) { totalScore += 6; }
+      } else if (dAns === 'spacious') {
+        if (dim.paceScore <= 3 && dim.natureScore >= 4) { totalScore += 10; reasons.push(`Peaceful, uncrowded landscapes with plenty of breathing room`); }
+        else if (dim.paceScore <= 3) { totalScore += 8; }
+      }
+    }
+
+    // Dimension 10: Career & Work Market
+    if (userAnswers['career'] && userAnswers['career'] !== 'no-preference') {
+      maxPossible += 10;
+      const cAns = userAnswers['career'];
+      if (cAns === 'nomad') {
+        if (dim.costIndex <= 3 && (dim.convenienceScore >= 4 || ['Portugal', 'Spain', 'Thailand', 'Vietnam', 'Mexico', 'Costa Rica', 'Indonesia', 'Colombia'].includes(country.name))) {
+          totalScore += 10;
+          reasons.push(`Top-tier digital nomad hub with great cafes and remote work lifestyle`);
+        } else { totalScore += 6; }
+      } else if (cAns === 'corporate') {
+        if (dim.costIndex >= 3 && ['Netherlands', 'Germany', 'United Kingdom', 'United States', 'Singapore', 'Switzerland', 'Australia', 'Canada'].includes(country.name)) {
+          totalScore += 10;
+          reasons.push(`Major international corporate hub with high-wage career prospects`);
+        } else if (dim.costIndex >= 3) { totalScore += 7; }
+      } else if (cAns === 'local') {
+        totalScore += 8;
+      }
+    }
+
     // Dimension 7: Priority Boost (2.5x Multiplier = 25 pts)
     const priority = userAnswers['priority'];
     if (priority && priority !== 'no-preference') {
@@ -324,54 +389,54 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
   const dim = c.dimensions;
 
   document.getElementById('quiz-body')!.innerHTML = `
-    <div class="space-y-6">
-      <!-- Match Header Banner -->
-      <div class="text-center space-y-3">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-teal-light text-teal-dark text-xs font-bold uppercase tracking-wider shadow-paper-sm">
-          <i class="fa-solid fa-sparkles"></i> ${best.matchPercent}% Relocation Compatibility
+    <div class="space-y-5">
+      <!-- Match Header Banner (Google Flights / Travel Styled Summary) -->
+      <div class="text-center space-y-2.5">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#e6f4ea] text-[#137333] border border-[#ceead6] text-xs font-semibold">
+          <i class="fa-solid fa-sparkles text-[#34a853]"></i> ${best.matchPercent}% Relocation Compatibility
         </div>
         <div>
-          <div class="w-16 h-16 mx-auto mb-2 rounded-2xl bg-coral-light text-coral flex items-center justify-center text-3xl shadow-paper">
+          <div class="w-14 h-14 mx-auto mb-2 rounded-full bg-[#e8f0fe] text-[#1a73e8] flex items-center justify-center text-2xl shadow-[0_1px_3px_rgba(60,64,67,0.15)]">
             <i class="${c.icon}"></i>
           </div>
-          <span class="text-xs font-semibold uppercase tracking-wider text-stone-500">${c.region}</span>
-          <h3 class="font-display text-3xl font-extrabold text-paper-900 mt-0.5">You Should Live in ${c.name}!</h3>
-          <p class="font-serif italic text-sm sm:text-base text-stone-600 max-w-lg mx-auto mt-1">"${c.tagline}"</p>
+          <span class="text-[11px] font-medium tracking-wide uppercase text-[#5f6368]">${c.region}</span>
+          <h3 class="font-display text-2xl sm:text-3xl font-medium text-[#202124] mt-0.5">You Should Live in ${c.name}!</h3>
+          <p class="text-xs sm:text-sm text-[#5f6368] max-w-lg mx-auto mt-1 font-normal leading-relaxed">"${c.tagline}"</p>
         </div>
       </div>
 
       <!-- Quick Metrics Strip -->
-      <div class="grid grid-cols-3 gap-2.5 bg-paper-50 rounded-2xl p-3 shadow-paper-sm text-center">
+      <div class="grid grid-cols-3 gap-2.5 bg-[#f8f9fa] border border-[#dadce0] rounded-2xl p-3 text-center">
         <div>
-          <div class="text-[10px] uppercase font-semibold text-stone-400">Monthly Budget</div>
-          <div class="text-xs sm:text-sm font-bold text-paper-900 mt-0.5">${c.cost}</div>
+          <div class="text-[10px] uppercase font-medium text-[#5f6368]">Monthly Budget</div>
+          <div class="text-xs sm:text-sm font-semibold text-[#202124] mt-0.5">${c.cost}</div>
         </div>
         <div>
-          <div class="text-[10px] uppercase font-semibold text-stone-400">Work-Life</div>
-          <div class="text-xs sm:text-sm font-bold text-teal mt-0.5">${c.wlb}</div>
+          <div class="text-[10px] uppercase font-medium text-[#5f6368]">Work-Life</div>
+          <div class="text-xs sm:text-sm font-semibold text-[#137333] mt-0.5">${c.wlb}</div>
         </div>
         <div>
-          <div class="text-[10px] uppercase font-semibold text-stone-400">Safety Score</div>
-          <div class="text-xs sm:text-sm font-bold text-purple-accent mt-0.5">${c.safety}</div>
+          <div class="text-[10px] uppercase font-medium text-[#5f6368]">Safety Score</div>
+          <div class="text-xs sm:text-sm font-semibold text-[#1a73e8] mt-0.5">${c.safety}</div>
         </div>
       </div>
 
       <!-- Why It Fits Section -->
-      <div class="paper-card rounded-2xl p-4 sm:p-5 space-y-3">
-        <div class="text-xs font-bold uppercase tracking-wider text-teal flex items-center gap-1.5">
-          <i class="fa-solid fa-check-double text-teal"></i> Why ${c.name} fits your lifestyle:
+      <div class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 space-y-2.5 shadow-[0_1px_2px_rgba(60,64,67,0.06)]">
+        <div class="text-xs font-medium uppercase tracking-wider text-[#1a73e8] flex items-center gap-1.5">
+          <i class="fa-solid fa-check-double text-[#1a73e8]"></i> Why ${c.name} fits your lifestyle:
         </div>
-        <ul class="space-y-2 text-xs sm:text-sm text-stone-700">
+        <ul class="space-y-2 text-xs sm:text-sm text-[#3c4043]">
           ${best.reasons.length > 0 
             ? best.reasons.map(r => `
                 <li class="flex items-start gap-2.5">
-                  <i class="fa-solid fa-circle-check text-teal mt-0.5 text-xs shrink-0"></i>
+                  <i class="fa-solid fa-circle-check text-[#34a853] mt-0.5 text-xs shrink-0"></i>
                   <span>${r}</span>
                 </li>
               `).join('')
             : `
                 <li class="flex items-start gap-2.5">
-                  <i class="fa-solid fa-circle-check text-teal mt-0.5 text-xs shrink-0"></i>
+                  <i class="fa-solid fa-circle-check text-[#34a853] mt-0.5 text-xs shrink-0"></i>
                   <span>Balanced quality of life matching your lifestyle priorities</span>
                 </li>
               `
@@ -380,37 +445,37 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
       </div>
 
       <!-- The Honest Reality Check Callout -->
-      <div class="bg-amber-bg shadow-paper rounded-2xl p-4 sm:p-5 border-l-4 border-amber-accent space-y-1.5">
-        <div class="text-xs font-bold uppercase tracking-wider text-amber-dark flex items-center gap-1.5">
-          <i class="fa-solid fa-triangle-exclamation text-amber-accent"></i> The Reality Check & Trade-offs:
+      <div class="bg-[#fef7e0] border border-[#fce8b2] border-l-4 border-l-[#fbbc04] rounded-2xl p-4 space-y-1.5 text-[#3c4043]">
+        <div class="text-xs font-semibold uppercase tracking-wider text-[#b06000] flex items-center gap-1.5">
+          <i class="fa-solid fa-triangle-exclamation text-[#f29900]"></i> The Reality Check & Trade-offs:
         </div>
-        <p class="text-xs sm:text-sm text-stone-700 leading-relaxed">
+        <p class="text-xs sm:text-sm text-[#3c4043] leading-relaxed">
           ${best.realityCheck}
         </p>
       </div>
 
       <!-- Action Buttons -->
       <div class="space-y-2.5 pt-1">
-        <button id="fly-best-btn" class="w-full py-3.5 px-6 rounded-2xl bg-primary hover:bg-primary-hover text-paper-900 font-display font-bold text-sm shadow-paper transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
-          <span>Zoom to ${c.name} & Open Full Dossier</span>
+        <button id="fly-best-btn" class="w-full py-3 px-6 rounded-full bg-[#1a73e8] hover:bg-[#1557b0] active:bg-[#174ea6] text-white font-medium text-sm shadow-[0_1px_2px_rgba(60,64,67,0.3)] transition-all flex items-center justify-center gap-2">
+          <span>Explore ${c.name} on Map</span>
           <i class="fa-solid fa-arrow-right"></i>
         </button>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <button id="fly-runner-btn" class="py-2.5 px-3 rounded-xl paper-card hover:bg-paper-50 text-paper-900 font-medium text-xs sm:text-sm transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
-            <i class="${runner.country.icon} text-teal"></i>
+          <button id="fly-runner-btn" class="py-2.5 px-3 rounded-full bg-white hover:bg-[#f8f9fa] border border-[#dadce0] text-[#202124] font-medium text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(60,64,67,0.06)]">
+            <i class="${runner.country.icon} text-[#1a73e8]"></i>
             <span>Runner-up: ${runner.country.name} (${runner.matchPercent}%)</span>
           </button>
           
-          <button id="fly-wildcard-btn" class="py-2.5 px-3 rounded-xl paper-card hover:bg-paper-50 text-paper-900 font-medium text-xs sm:text-sm transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
-            <i class="fa-solid fa-compass text-coral"></i>
+          <button id="fly-wildcard-btn" class="py-2.5 px-3 rounded-full bg-white hover:bg-[#f8f9fa] border border-[#dadce0] text-[#202124] font-medium text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(60,64,67,0.06)]">
+            <i class="fa-solid fa-compass text-[#ea4335]"></i>
             <span>Wildcard: ${wildcard.country.name} (${wildcard.matchPercent}%)</span>
           </button>
         </div>
       </div>
 
       <div class="text-center pt-1">
-        <button id="retake-quiz-btn" class="text-xs font-medium text-stone-500 hover:text-paper-900 underline">
+        <button id="retake-quiz-btn" class="text-xs font-medium text-[#1a73e8] hover:underline">
           Retake Quiz with Different Preferences
         </button>
       </div>

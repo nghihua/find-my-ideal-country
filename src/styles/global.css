@@ -1,114 +1,145 @@
 :root {
-    /* Paper & Background Neutral Palette - Ice Mist Ocean Wash */
+    /* Google Material 3 & Neutral Palette */
     --color-paper-50: #ffffff;
-    --color-paper-100: #edf3f8; /* Soft Ice Mist ocean backdrop */
-    --color-paper-200: #e2ebf2;
-    --color-paper-300: #d3dfeb;
-    --color-paper-800: #2c3642;
-    --color-paper-900: #1b232e;
+    --color-paper-100: #eef3fc; /* Google Maps clean water / ocean backdrop */
+    --color-paper-200: #e3e8ee;
+    --color-paper-300: #dadce0; /* Google standard outline grey */
+    --color-paper-800: #3c4043; /* Google secondary text grey */
+    --color-paper-900: #202124; /* Google primary text grey */
 
     /* Scrollbars */
-    --color-scrollbar-thumb: #cad7e3;
-    --color-scrollbar-thumb-hover: #b2c3d2;
+    --color-scrollbar-thumb: #dadce0;
+    --color-scrollbar-thumb-hover: #bdc1c6;
 
-    /* Atlas & Map Cartography (Featuring #aad6ff, #fecee1, #feb6d2) */
-    --color-map-country: #ffffff; /* Crisp porcelain white landmasses that pop naturally on the ocean */
-    --color-map-featured: #feb6d2; /* Pastel Rose Pink */
-    --color-map-hover: #c1e3fe;    /* Pastel Baby Blue Hover */
-    --color-map-active: #aad6ff;   /* Selected Country: Pastel Sky Blue Stamp */
-    --color-map-stroke: #94abc0;   /* Darker muted slate-blue border for sharp country & coast contrast */
-    --color-map-active-stroke: #5b9ed6; /* Vibrant sky-blue outline for active country */
-    --color-map-spinner: #feb6d2;
+    /* Google Maps Cartography Palette */
+    --color-map-country: #ffffff; /* Clean white landmass */
+    --color-map-featured: #e8f0fe; /* Google Blue 50 */
+    --color-map-hover: #e8f0fe;    /* Google Blue surface hover */
+    --color-map-active: #c2e7ff;   /* Google Material 3 active container */
+    --color-map-stroke: #dadce0;   /* Google Map standard border */
+    --color-map-active-stroke: #1a73e8; /* Signature Google Blue stroke */
+    --color-map-spinner: #1a73e8;
 
-    /* Primary Accent / Pink (Featuring #feb6d2 & #fecee1) */
-    --color-primary: #feb6d2;
-    --color-primary-hover: #fa9ec2;
-    --color-coral: #cb4e81;        /* High-contrast readable rose for text/icons */
-    --color-coral-light: #fecee1;  /* User Pastel Blossom */
-    --color-coral-dark: #a93564;
-    --color-coral-muted: #d96f9a;
-    --color-coral-bg: #fff1f6;
+    /* Primary Accent — Google Blue (#1a73e8) */
+    --color-primary: #1a73e8;
+    --color-primary-hover: #1557b0;
+    --color-primary-container: #e8f0fe;
+    --color-primary-text: #174ea6;
 
-    /* Blue & Sky Accents (Featuring #aad6ff & #c1e3fe) */
-    --color-teal: #226b9e;         /* High-contrast blue for text */
-    --color-teal-dark: #174f76;
-    --color-teal-light: #c1e3fe;   /* User Pastel Baby Blue */
-    --color-teal-bg: #f0f7ff;
-    --color-green-accent: #2e75a7;
-    --color-green-bg: #f2f8fe;
+    /* Google Red (#ea4335) */
+    --color-coral: #ea4335;
+    --color-coral-light: #fce8e6;
+    --color-coral-dark: #c5221f;
+    --color-coral-muted: #e06d63;
+    --color-coral-bg: #fdf2f2;
 
-    /* Amber / Peach Warm Accents */
-    --color-amber-accent: #c47d3d;
-    --color-amber-dark: #a56124;
-    --color-amber-bg: #fffbf5;
-    --color-amber-light: #fdecd9;
-    --color-amber-soft: #fdf3e7;
-    --color-amber-card: #fff6ee;
+    /* Google Blue (#1a73e8) Semantic / Teal replacement */
+    --color-teal: #1a73e8;
+    --color-teal-dark: #174ea6;
+    --color-teal-light: #e8f0fe;
+    --color-teal-bg: #f0f6ff;
+    --color-green-accent: #34a853;
+    --color-green-bg: #e6f4ea;
+    --color-green-text: #137333;
 
-    /* Lavender / Lilac Accents (Featuring #d1bcdf) */
-    --color-purple-accent: #785a96; /* High-contrast readable purple */
-    --color-purple-dark: #61437e;
-    --color-purple-light: #d1bcdf;  /* User Pastel Lavender */
-    --color-purple-bg: #f7f2fa;
-    --color-purple-card: #f9f4fc;
+    /* Google Yellow / Amber (#fbbc04 / #f29900) */
+    --color-amber-accent: #e37400;
+    --color-amber-dark: #b06000;
+    --color-amber-bg: #fef7e0;
+    --color-amber-light: #feeed1;
+    --color-amber-soft: #fff9e6;
+    --color-amber-card: #fef9ea;
+
+    /* Google Purple / Indigo (#8430ce) */
+    --color-purple-accent: #7627bb;
+    --color-purple-dark: #581691;
+    --color-purple-light: #f3e8fd;
+    --color-purple-bg: #f8f2fd;
+    --color-purple-card: #faf5fe;
 
     /* UI Details & Card Hover States */
-    --color-badge-bg: #e2ebf4;
-    --color-hover-card: #f8f2fc;
-    --color-hover-quiz: #fdf5f9;
-    --color-quiz-icon-bg: #edf5fc;
+    --color-badge-bg: #e8eaed;
+    --color-hover-card: #f1f3f4;
+    --color-hover-quiz: #f8f9fa;
+    --color-quiz-icon-bg: #e8f0fe;
 
-    /* Shadow RGB Values */
-    --shadow-paper-rgb: 35, 45, 60;
+    /* Google Elevation Shadow Constants */
+    --shadow-google-1: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+    --shadow-google-2: 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15);
+    --shadow-google-3: 0 4px 8px 3px rgba(60,64,67,0.15), 0 1px 3px 0 rgba(60,64,67,0.3);
+    --shadow-google-4: 0 6px 12px 4px rgba(60,64,67,0.15), 0 2px 4px 0 rgba(60,64,67,0.3);
 }
 
-/* Subtle organic paper grain overlay */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 60;
-    opacity: 0.16;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.14'/%3E%3C/svg%3E");
+/* Base Body Styles */
+body {
+    background-color: var(--color-paper-100);
+    color: var(--color-paper-900);
+    font-family: 'Google Sans Text', 'Google Sans', Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Scrollbar for Paper Dossier */
+/* Custom Scrollbar for Google Material Look */
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: var(--color-paper-100);
+    background: transparent;
 }
 ::-webkit-scrollbar-thumb {
     background: var(--color-scrollbar-thumb);
     border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
 }
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-scrollbar-thumb-hover);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
 }
 
-/* Map Country Styling — Soft Pastel Atlas Cartography */
+/* Map Country Styling — Google Maps Clean Styling */
 .country {
-    transition: fill 0.25s ease, stroke 0.25s ease;
+    transition: fill 0.2s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
 }
 .country:hover {
-    fill: var(--color-map-hover) !important; /* Pastel Blossom Pink Hover */
+    fill: var(--color-map-hover) !important;
+    stroke: #8ab4f8 !important;
 }
 .country.active {
-    fill: var(--color-map-active) !important; /* Pastel Sky Blue Stamp */
+    fill: var(--color-map-active) !important;
     stroke: var(--color-map-active-stroke) !important;
-    stroke-width: 1.6px !important;
+    stroke-width: 1.8px !important;
 }
 
-/* Tactile Paper Card Surface (Borderless, Shadow-Driven) */
+/* Google Material Elevated Card Surfaces */
 .paper-card {
     background-color: var(--color-paper-50);
-    box-shadow: 0 8px 20px -4px rgba(var(--shadow-paper-rgb), 0.08), 0 3px 8px -2px rgba(var(--shadow-paper-rgb), 0.04);
+    border: 1px solid rgba(218, 220, 224, 0.7);
+    box-shadow: var(--shadow-google-1);
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.paper-card:hover {
+    box-shadow: var(--shadow-google-2);
 }
 .paper-sheet {
-    background-color: var(--color-paper-100);
-    box-shadow: 0 4px 12px -2px rgba(var(--shadow-paper-rgb), 0.06), 0 2px 4px -1px rgba(var(--shadow-paper-rgb), 0.03);
+    background-color: var(--color-paper-50);
+    border: 1px solid var(--color-paper-300);
+    box-shadow: var(--shadow-google-2);
+}
+
+/* Google 4-Color Accent Border */
+.google-accent-bar {
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(to right, #4285F4 25%, #EA4335 25% 50%, #FBBC05 50% 75%, #34A853 75%);
+}
+
+/* Material Symbols alignment helper */
+.material-symbols-rounded {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
 }

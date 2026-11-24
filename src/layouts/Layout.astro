@@ -19,20 +19,22 @@ const { title = "How Is Living There? — Interactive Global Lifestyle & Relocat
     <!-- D3.js & TopoJSON for Interactive World Map -->
     <script is:inline src="https://d3js.org/d3.v7.min.js"></script>
     <script is:inline src="https://unpkg.com/topojson-client@3"></script>
-    <!-- Font Awesome 6 Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Google Fonts: Inter, Plus Jakarta Sans & Newsreader (Editorial Serif) -->
+    <!-- Google Fonts: Google Sans Text, Roboto, Roboto Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Google Material Symbols Rounded -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script is:inline>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Plus Jakarta Sans', 'sans-serif'],
-                        serif: ['Newsreader', 'serif'],
+                        sans: ["'Google Sans Text'", "'Google Sans'", 'Roboto', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        display: ["'Google Sans'", "'Google Sans Text'", 'Roboto', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        mono: ["'Roboto Mono'", 'monospace'],
                     },
                     colors: {
                         paper: {
@@ -43,12 +45,33 @@ const { title = "How Is Living There? — Interactive Global Lifestyle & Relocat
                             800: 'var(--color-paper-800)',
                             900: 'var(--color-paper-900)',
                         },
+                        google: {
+                            blue: '#1a73e8',
+                            'blue-hover': '#1557b0',
+                            'blue-light': '#e8f0fe',
+                            'blue-border': '#d2e3fc',
+                            red: '#ea4335',
+                            'red-hover': '#d93025',
+                            'red-light': '#fce8e6',
+                            yellow: '#fbbc04',
+                            'yellow-light': '#fef7e0',
+                            'yellow-dark': '#b06000',
+                            green: '#34a853',
+                            'green-hover': '#1e8e3e',
+                            'green-light': '#e6f4ea',
+                            'green-dark': '#137333',
+                            grey: '#5f6368',
+                            'grey-light': '#f1f3f4',
+                            'grey-border': '#dadce0',
+                        },
                         primary: {
                             DEFAULT: 'var(--color-primary)',
                             hover: 'var(--color-primary-hover)',
+                            container: 'var(--color-primary-container)',
+                            text: 'var(--color-primary-text)',
                         },
                         sage: {
-                            DEFAULT: 'var(--color-map-featured)',
+                            DEFAULT: 'var(--color-primary)',
                             spinner: 'var(--color-map-spinner)',
                         },
                         teal: {
@@ -82,6 +105,7 @@ const { title = "How Is Living There? — Interactive Global Lifestyle & Relocat
                         green: {
                             accent: 'var(--color-green-accent)',
                             bg: 'var(--color-green-bg)',
+                            dark: 'var(--color-green-text)',
                         },
                         badge: 'var(--color-badge-bg)',
                         hoverCard: 'var(--color-hover-card)',
@@ -89,10 +113,15 @@ const { title = "How Is Living There? — Interactive Global Lifestyle & Relocat
                         quizIcon: 'var(--color-quiz-icon-bg)',
                     },
                     boxShadow: {
-                        'paper-sm': '0 2px 6px -1px rgba(var(--shadow-paper-rgb), 0.05), 0 1px 3px -1px rgba(var(--shadow-paper-rgb), 0.03)',
-                        'paper': '0 8px 20px -4px rgba(var(--shadow-paper-rgb), 0.08), 0 3px 8px -2px rgba(var(--shadow-paper-rgb), 0.04)',
-                        'paper-lg': '0 20px 35px -8px rgba(var(--shadow-paper-rgb), 0.12), 0 8px 16px -6px rgba(var(--shadow-paper-rgb), 0.06)',
-                        'paper-drawer': '-12px 0 36px -6px rgba(var(--shadow-paper-rgb), 0.11)',
+                        'google-1': '0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15)',
+                        'google-2': '0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15)',
+                        'google-3': '0 4px 8px 3px rgba(60,64,67,0.15), 0 1px 3px 0 rgba(60,64,67,0.3)',
+                        'google-modal': '0 12px 28px 0 rgba(60,64,67,0.28), 0 4px 8px 3px rgba(60,64,67,0.15)',
+                        'google-drawer': '-2px 0 12px 0 rgba(60,64,67,0.12), -4px 0 24px 0 rgba(60,64,67,0.08)',
+                        'paper-sm': '0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15)',
+                        'paper': '0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15)',
+                        'paper-lg': '0 4px 8px 3px rgba(60,64,67,0.15), 0 1px 3px 0 rgba(60,64,67,0.3)',
+                        'paper-drawer': '-2px 0 12px 0 rgba(60,64,67,0.12), -4px 0 24px 0 rgba(60,64,67,0.08)',
                     }
                 }
             }

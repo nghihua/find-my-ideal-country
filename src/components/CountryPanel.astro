@@ -1,44 +1,53 @@
 ---
-// Side Dossier Panel (Slide-over Paper Sheet)
+// Side Dossier Panel (Google Maps & Travel Styled Place Sheet)
 ---
-<aside id="country-panel" class="fixed top-0 right-0 h-full w-full md:w-[540px] lg:w-[600px] z-40 bg-paper-100 shadow-paper-drawer transform translate-x-full transition-transform duration-500 ease-out flex flex-col select-text">
+<aside id="country-panel" class="fixed top-0 right-0 h-full w-full md:w-[540px] lg:w-[600px] z-40 bg-[#f8f9fa] shadow-[-4px_0_24px_rgba(60,64,67,0.18)] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col select-text border-l border-[#dadce0]">
+    <!-- Google 4-Color Accent Strip at Top -->
+    <div class="google-accent-bar shrink-0"></div>
+
     <!-- Panel Sticky Header -->
-    <div class="p-5 sm:p-6 bg-paper-50 shadow-paper-sm flex items-start justify-between gap-4 shrink-0 z-10">
+    <div class="p-5 sm:p-6 bg-white border-b border-[#dadce0] flex items-start justify-between gap-4 shrink-0 z-10 shadow-[0_1px_2px_rgba(60,64,67,0.06)]">
         <div>
-            <div class="flex items-center gap-2.5 mb-1.5">
-                <span id="panel-icon" class="w-8 h-8 rounded-xl bg-sage/25 text-teal-dark flex items-center justify-center text-sm shadow-paper-sm">
+            <div class="flex items-center gap-2 mb-2">
+                <span id="panel-icon" class="w-7 h-7 rounded-full bg-[#e8f0fe] text-[#1a73e8] flex items-center justify-center text-xs">
                     <i class="fa-solid fa-earth-americas"></i>
                 </span>
-                <span id="panel-region" class="text-xs font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-badge text-stone-600">Region</span>
+                <span id="panel-region" class="text-[11px] font-medium tracking-wide px-2.5 py-0.5 rounded-full bg-[#e8f0fe] text-[#1a73e8]">
+                    Region
+                </span>
             </div>
-            <h2 id="panel-title" class="font-display text-2xl sm:text-3xl font-extrabold text-paper-900 tracking-tight">Country Name</h2>
-            <p id="panel-tagline" class="font-serif italic text-base text-stone-500 mt-1">"A brief summary of the vibe."</p>
+            <h2 id="panel-title" class="font-display text-2xl sm:text-3xl font-medium text-[#202124] tracking-tight">
+                Country Name
+            </h2>
+            <p id="panel-tagline" class="text-sm text-[#5f6368] mt-1 font-normal leading-relaxed">
+                "A brief summary of the vibe."
+            </p>
         </div>
-        <button id="close-panel-btn" class="p-2.5 rounded-xl bg-paper-100 hover:bg-paper-200 text-stone-500 hover:text-paper-900 transition-colors shrink-0 shadow-paper-sm">
+        <button id="close-panel-btn" title="Close panel" class="w-9 h-9 rounded-full bg-transparent hover:bg-[#f1f3f4] active:bg-[#e8eaed] text-[#5f6368] hover:text-[#202124] flex items-center justify-center transition-colors shrink-0">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
         </button>
     </div>
 
-    <!-- Quick Metrics Bar (3 Elevated Pastel Index Cards) -->
-    <div id="panel-metrics" class="grid grid-cols-3 gap-3 px-5 sm:px-6 pt-5 shrink-0 text-center">
-        <div class="bg-amber-card shadow-paper rounded-2xl p-3">
-            <div class="text-[10px] uppercase tracking-wider font-semibold text-stone-400">Monthly Cost</div>
-            <div id="metric-cost" class="text-xs sm:text-sm font-bold text-paper-900 mt-1">$1,800</div>
+    <!-- Quick Metrics Bar (3 Google Material 3 Metric Tiles) -->
+    <div id="panel-metrics" class="grid grid-cols-3 gap-2.5 px-5 sm:px-6 pt-4 shrink-0 text-center">
+        <div class="bg-[#fef7e0] border border-[#fce8b2] rounded-2xl p-3 shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
+            <div class="text-[10px] uppercase tracking-wider font-medium text-[#b06000]">Monthly Cost</div>
+            <div id="metric-cost" class="text-xs sm:text-sm font-semibold text-[#202124] mt-0.5">$1,800</div>
         </div>
-        <div class="bg-teal-bg shadow-paper rounded-2xl p-3">
-            <div class="text-[10px] uppercase tracking-wider font-semibold text-stone-400">Work-Life</div>
-            <div id="metric-wlb" class="text-xs sm:text-sm font-bold text-teal mt-1">8.5 / 10</div>
+        <div class="bg-[#e6f4ea] border border-[#ceead6] rounded-2xl p-3 shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
+            <div class="text-[10px] uppercase tracking-wider font-medium text-[#137333]">Work-Life</div>
+            <div id="metric-wlb" class="text-xs sm:text-sm font-semibold text-[#137333] mt-0.5">8.5 / 10</div>
         </div>
-        <div class="bg-purple-bg shadow-paper rounded-2xl p-3">
-            <div class="text-[10px] uppercase tracking-wider font-semibold text-stone-400">Safety</div>
-            <div id="metric-safety" class="text-xs sm:text-sm font-bold text-purple-accent mt-1">Very High</div>
+        <div class="bg-[#e8f0fe] border border-[#d2e3fc] rounded-2xl p-3 shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
+            <div class="text-[10px] uppercase tracking-wider font-medium text-[#1a73e8]">Safety</div>
+            <div id="metric-safety" class="text-xs sm:text-sm font-semibold text-[#1a73e8] mt-0.5">Very High</div>
         </div>
     </div>
 
     <!-- Scrollable Dossier Content -->
-    <div id="panel-content" class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-5">
+    <div id="panel-content" class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-4">
         <!-- Dynamic Sections Injected via JS -->
     </div>
 </aside>

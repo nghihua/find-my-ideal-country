@@ -1,17 +1,17 @@
 ---
-// Map Container, Loader, Tooltip, and Legend
+// Map Container, Loader, Tooltip (Google Maps & Earth Cartography)
 ---
 <!-- Main Interactive Map Container -->
 <div id="map-container" class="relative w-full h-full z-10 flex items-center justify-center">
-    <!-- Loading State -->
-    <div id="map-loader" class="flex flex-col items-center gap-3 text-stone-500">
-        <div class="w-10 h-10 border-4 border-stone-200 border-t-sage-spinner rounded-full animate-spin"></div>
-        <p class="text-sm font-medium tracking-wide">Unfolding Pastel World Atlas...</p>
+    <!-- Loading State (Google Style Spinner) -->
+    <div id="map-loader" class="flex flex-col items-center gap-3 text-[#5f6368]">
+        <div class="w-10 h-10 border-4 border-[#dadce0] border-t-[#1a73e8] rounded-full animate-spin"></div>
+        <p class="text-xs sm:text-sm font-medium tracking-normal text-[#202124]">Loading World Atlas...</p>
     </div>
     <svg id="world-map" class="w-full h-full hidden"></svg>
 </div>
 
-<!-- Hover Tooltip -->
-<div id="map-tooltip" class="fixed pointer-events-none z-40 hidden paper-card px-3 py-1.5 rounded-xl text-xs font-semibold text-paper-900 transform -translate-x-1/2 -translate-y-full mt-[-10px]">
+<!-- Hover Tooltip (Google Maps Location Pill) -->
+<div id="map-tooltip" class="fixed pointer-events-none z-40 hidden bg-white border border-[#dadce0] px-3 py-1.5 rounded-full text-xs font-medium text-[#202124] shadow-[0_2px_8px_rgba(60,64,67,0.2)] transform -translate-x-1/2 -translate-y-full mt-[-10px] flex items-center gap-1.5">
     Country Name
 </div>
