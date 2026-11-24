@@ -1,5 +1,6 @@
-import { COUNTRY_DATABASE, REGIONAL_TEMPLATES, QUIZ_QUESTIONS } from '../data/countries';
+import { QUIZ_QUESTIONS } from '../data/countries';
 import type { CountryData } from '../data/countries';
+import { getCompleteCountryProfile, getAllGlobalCountries } from '../data/globalCountries';
 import {
   initWorldMap,
   zoomToFeature,
@@ -16,51 +17,13 @@ import { showToast } from './toast';
 
 declare const d3: any;
 
-// Build complete dossier object
+// Build complete dossier object using global profile engine
 function getCountryProfile(feature: any): CountryData {
   const rawName: string = feature.properties.name || "Unknown Territory";
   const name = resolveDisplayName(rawName);
-
-  if (COUNTRY_DATABASE[name]) {
-    return COUNTRY_DATABASE[name];
-  }
-
   const centroid = d3.geoCentroid(feature);
   const region = getFallbackRegion(centroid);
-  const tpl = REGIONAL_TEMPLATES[region];
-
-  return {
-    id: "",
-    name,
-    icon: "fa-solid fa-location-dot",
-    region,
-    tagline: `Everyday rhythms, local traditions, and real-world living insights in ${name}.`,
-    cost: tpl.cost,
-    wlb: tpl.wlb,
-    safety: tpl.safety,
-    culture: `Living in ${name} offers an authentic immersion into ${region}'s cultural fabric—shaped by local language, regional cuisine, and historic traditions. ${tpl.culture}`,
-    people: `Residents of ${name} take strong pride in their heritage and local hospitality. ${tpl.people}`,
-    costOfLiving: `In ${name}, day-to-day affordability depends heavily on whether you live in the capital city or secondary towns. ${tpl.costOfLiving}`,
-    workday: `A typical weekday in ${name} blends local business customs with modern urban routines. ${tpl.workday}`,
-    evening: `When the workday winds down in ${name}, locals head out to neighborhood gathering spots. ${tpl.evening}`,
-    upsides: tpl.upsides,
-    downsides: tpl.downsides,
-    tags: [],
-    videos: [
-      {
-        title: `What Living in ${name} is Actually Like (Local & Expat Stories)`,
-        channel: "YouTube",
-        duration: "Search",
-        url: `https://www.youtube.com/results?search_query=what+living+in+${encodeURIComponent(name)}+is+actually+like`,
-      },
-      {
-        title: `A Day in the Life in ${name} — Cost of Living & Culture`,
-        channel: "YouTube",
-        duration: "Search",
-        url: `https://www.youtube.com/results?search_query=day+in+the+life+living+in+${encodeURIComponent(name)}`,
-      },
-    ],
-  };
+  return getCompleteCountryProfile(name, region, centroid);
 }
 
 function selectCountry(feature: any) {
@@ -83,12 +46,34 @@ function flyToCountry(countryName: string) {
   if (feature) {
     selectCountry(feature);
     showToast(`Zooming into ${countryName}...`);
+  } else {
+    // If not on map geometry, still open the country profile
+    const profile = getCompleteCountryProfile(countryName);
+    renderCountryDossier(profile);
+    showToast(`Showing profile for ${countryName}`);
   }
 }
 
 window.addEventListener('load', async () => {
   // Init subsystems
-  initQuiz(QUIZ_QUESTIONS, COUNTRY_DATABASE, flyToCountry);
+  initQuiz(QUIZ_QUESTIONS, () => {
+    const catalog = getAllGlobalCountries();
+    const catalogNames = new Set(catalog.map(c => c.name));
+    
+    // Merge any additional map features loaded from world-atlas
+    if (worldFeatures && worldFeatures.length > 0) {
+      worldFeatures.forEach((f: any) => {
+        const name = resolveDisplayName(f.properties.name || "");
+        if (name && !catalogNames.has(name)) {
+          catalog.push(getCountryProfile(f));
+          catalogNames.add(name);
+        }
+      });
+    }
+
+    return catalog;
+  }, flyToCountry);
+
   initSearch(() => worldFeatures, selectCountry);
 
   await initWorldMap(selectCountry, resetZoom);

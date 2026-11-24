@@ -5,6 +5,24 @@ export interface Video {
   url: string;
 }
 
+export type ClimateCategory = 'tropical' | 'warm-sun' | 'four-seasons' | 'mild-coastal' | 'cold-winter';
+export type TransitArchetype = 'walkable-rail' | 'motorbike-active' | 'car-dependent' | 'mixed-transit';
+export type WeekendRhythm = 'vibrant-24-7' | 'standard' | 'quiet-sunday';
+export type ReligionRole = 'secular' | 'cultural-tradition' | 'moderate' | 'prominent';
+
+export interface LifestyleDimensions {
+  costIndex: number; // 1 (<$1.2k), 2 ($1.2k-1.8k), 3 ($1.8k-2.8k), 4 ($2.8k-4k), 5 ($4k+)
+  climate: ClimateCategory;
+  transit: TransitArchetype;
+  convenienceScore: number; // 1 (strict DIY, expensive labor) to 5 (24/7 delivery, ultra-convenient)
+  weekendRhythm: WeekendRhythm; // vibrant-24-7, standard, quiet-sunday
+  natureScore: number; // 1-5 outdoor & nature accessibility
+  lgbtqTier: number; // 1 (criminalized/hostile), 2 (restricted), 3 (moderate/tolerated), 4 (protected/welcoming), 5 (world leader)
+  religionRole: ReligionRole;
+  foreignerOpenness: number; // 1-5 expat ease / English / friendliness
+  paceScore: number; // 1 (slow/rural/aging) to 5 (energetic/youthful/hustle)
+}
+
 export interface CountryData {
   id: string;
   name: string;
@@ -23,6 +41,9 @@ export interface CountryData {
   downsides: string[];
   videos: Video[];
   tags: string[];
+  dimensions: LifestyleDimensions;
+  realityCheck: string;
+  highlights?: string[];
 }
 
 export interface RegionalTemplate {
@@ -36,6 +57,8 @@ export interface RegionalTemplate {
   evening: string;
   upsides: string[];
   downsides: string[];
+  dimensions: LifestyleDimensions;
+  realityCheck: string;
 }
 
 export const COUNTRY_DATABASE: Record<string, CountryData> = {
@@ -67,7 +90,20 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       { title: "What Living in Tokyo is Actually Like (Honest Pros & Cons)", channel: "Abroad in Japan", duration: "18:42", url: "https://www.youtube.com/results?search_query=what+living+in+tokyo+is+actually+like+abroad+in+japan" },
       { title: "A Realistic Day in the Life in Osaka, Japan", channel: "Life Where I'm From", duration: "14:15", url: "https://www.youtube.com/results?search_query=day+in+the+life+osaka+japan+life+where+im+from" }
     ],
-    tags: ["urban", "safe", "transit", "moderate-cost", "introvert-friendly", "four-seasons"]
+    tags: ["urban", "safe", "transit", "moderate-cost", "introvert-friendly", "four-seasons", "foodie"],
+    dimensions: {
+      costIndex: 3,
+      climate: 'four-seasons',
+      transit: 'walkable-rail',
+      convenienceScore: 5,
+      weekendRhythm: 'vibrant-24-7',
+      natureScore: 4,
+      lgbtqTier: 3,
+      religionRole: 'secular',
+      foreignerOpenness: 3,
+      paceScore: 4,
+    },
+    realityCheck: "Rigid administrative bureaucracy (hanko stamps and in-person paperwork), a steep language barrier outside major hubs, and intense unspoken social etiquettes."
   },
   "Vietnam": {
     id: "704",
@@ -91,313 +127,877 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
     downsides: [
       "Chaotic motorbike traffic and loud noise levels in major cities.",
       "Seasonal air pollution in Hanoi and tropical humidity/rainy seasons.",
-      "Bureaucracy for long-term visas requires periodic border runs or sponsorships."
+      "Bureaucracy for long-term visas requires periodic planning or sponsorships."
     ],
     videos: [
       { title: "Living in Ho Chi Minh City — Honest Expat Experience", channel: "Max McFarlin", duration: "16:20", url: "https://www.youtube.com/results?search_query=living+in+ho+chi+minh+city+vietnam+expat" },
       { title: "Why Da Nang is Becoming Asia's Best Coastal City", channel: "Nomad Capitalist", duration: "12:50", url: "https://www.youtube.com/results?search_query=living+in+da+nang+vietnam+lifestyle" }
     ],
-    tags: ["affordable", "warm", "energetic", "foodie", "social", "entrepreneurial"]
+    tags: ["affordable", "warm", "energetic", "foodie", "social", "entrepreneurial"],
+    dimensions: {
+      costIndex: 1,
+      climate: 'tropical',
+      transit: 'motorbike-active',
+      convenienceScore: 5,
+      weekendRhythm: 'vibrant-24-7',
+      natureScore: 4,
+      lgbtqTier: 3,
+      religionRole: 'secular',
+      foreignerOpenness: 4,
+      paceScore: 5,
+    },
+    realityCheck: "Chaotic motorbike traffic and horn noise, seasonal tropical humidity/air quality dips in big cities, and evolving visa policies."
   },
   "Portugal": {
     id: "620",
     name: "Portugal",
-    icon: "fa-solid fa-sun",
+    icon: "fa-solid fa-umbrella-beach",
     region: "Southern Europe",
-    tagline: "Sun-drenched Atlantic cliffs, slow-paced café mornings, and soulful European charm.",
-    cost: "$1,900 – $2,800/mo",
+    tagline: "Sun-drenched Atlantic coastlines, gentle social warmth, and Europe's most relaxed daily pace.",
+    cost: "$1,600 – $2,300/mo",
     wlb: "8.8 / 10",
-    safety: "9.2 / 10",
-    culture: "Relaxed, nostalgic ('saudade'), and deeply tied to the ocean, family meals, and neighborhood life. Time moves slower here than in Northern Europe—rushing is frowned upon.",
-    people: "Kind, gentle, and remarkably fluent in English compared to neighbors. Portuguese people are modest and welcoming, though local wages vs. rising foreign rents have created mixed feelings in Lisbon and Porto.",
-    costOfLiving: "Historically Western Europe's bargain, though housing in Lisbon and Porto has surged ($1,200–$1,800 for a 1-bedroom). Groceries, local wine ($4 for great bottles), espresso ($1), and healthcare remain very reasonable.",
-    workday: "Starts around 9:30 AM with an espresso and a pastel de nata. Lunch is a proper sit-down affair—often 1 to 2 hours with colleagues. Afternoon productivity flows calmly until 6:00 PM.",
-    evening: "Dinner starts late (8:30–9:30 PM). Evenings are spent watching the sunset from a 'miradouro' (viewpoint) with a glass of vinho verde, strolling cobblestone plazas, or listening to live Fado music.",
+    safety: "9.3 / 10",
+    culture: "Anchored by 'saudade' (poetic nostalgia), coastal fishing heritage, and café terraces filled with espresso (bica) and pastéis de nata. Life moves at an unhurried, human pace where lunch breaks are genuinely respected.",
+    people: "Unusually welcoming, soft-spoken, and humble. English proficiency is among the highest in Southern Europe, and locals treat respectful visitors with patience and genuine warmth.",
+    costOfLiving: "Moderate compared to Western Europe, though Lisbon and Porto rents have surged. Smaller coastal towns like Nazaré, Ericeira, or Silver Coast remain high-value, with fresh seafood meals costing $10–$14 and local wine under $4.",
+    workday: "Starts calmly between 9:00 and 9:30 AM. Afternoons include a 1–2 hour lunch break often taken outside with colleagues. The hustle mentality is culturally frowned upon in favor of steady consistency.",
+    evening: "Locals gather at neighborhood 'miradouros' (viewpoint plazas) with cold beers to watch the sunset over the ocean, followed by grilled sardines, caldo verde, and conversation lingering until midnight.",
     upsides: [
-      "Over 300 days of sunshine a year and breathtaking Atlantic beaches.",
-      "Consistently ranked among the top 10 safest countries globally.",
-      "Easy gateway to the rest of Europe with clear residency pathways (D7/Digital Nomad)."
+      "Over 300 days of sunshine per year and world-class surfing coastlines.",
+      "Ranked among the top 5 safest countries on Earth.",
+      "High English fluency and very expat-friendly social environment."
     ],
     downsides: [
-      "Older apartments often lack central heating or insulation—winters feel surprisingly cold indoors.",
-      "Slow public administration (AIMA/immigration) requires immense patience.",
-      "Local salaries are low if you aren't earning foreign/remote income."
+      "Extremely slow government bureaucracy (SEF/AIMA residency appointments).",
+      "Older European apartments often lack central heating or insulation for winter dampness.",
+      "Local salaries are low relative to rising housing costs in central Lisbon."
     ],
     videos: [
-      { title: "The Truth About Moving to Portugal in 2025/2026", channel: "expatsi", duration: "15:10", url: "https://www.youtube.com/results?search_query=truth+about+living+in+portugal+expat" },
-      { title: "A Day in the Life in Lisbon, Portugal", channel: "Yes Theory / Local", duration: "13:45", url: "https://www.youtube.com/results?search_query=day+in+the+life+lisbon+portugal" }
+      { title: "The Truth About Living in Portugal in 2024", channel: "Our Rich Journey", duration: "19:10", url: "https://www.youtube.com/results?search_query=the+truth+about+living+in+portugal+expat" },
+      { title: "Cost of Living in Lisbon, Portugal (Honest Reality)", channel: "Expats Everywhere", duration: "13:40", url: "https://www.youtube.com/results?search_query=cost+of+living+in+lisbon+portugal+honest" }
     ],
-    tags: ["warm", "relaxed", "safe", "coastal", "moderate-cost", "europe"]
+    tags: ["warm", "relaxed", "safe", "coastal", "moderate-cost", "europe"],
+    dimensions: {
+      costIndex: 2,
+      climate: 'mild-coastal',
+      transit: 'walkable-rail',
+      convenienceScore: 3,
+      weekendRhythm: 'standard',
+      natureScore: 5,
+      lgbtqTier: 5,
+      religionRole: 'cultural-tradition',
+      foreignerOpenness: 5,
+      paceScore: 2,
+    },
+    realityCheck: "Government administrative processes (AIMA immigration, utilities, banking) can be painstakingly slow, and older apartments lack central heating for damp winters."
   },
   "Netherlands": {
     id: "528",
     name: "Netherlands",
     icon: "fa-solid fa-bicycle",
     region: "Western Europe",
-    tagline: "Pragmatic, bike-first egalitarianism where efficiency meets cozy 'gezelligheid'.",
-    cost: "$2,600 – $3,600/mo",
+    tagline: "Egalitarian, bike-powered, direct, and masterfully engineered for balanced human living.",
+    cost: "$2,400 – $3,600/mo",
     wlb: "9.4 / 10",
-    safety: "9.0 / 10",
-    culture: "Direct, flat-hierarchy, and hyper-organized. The Dutch value modesty ('doe normaal' — just act normal), sustainability, and scheduling social plans weeks in advance in a shared calendar.",
-    people: "Famous for radical honesty—they won't sugarcoat feedback, which feels refreshing once you adjust. Nearly everyone speaks near-native English, making daily navigation effortless.",
-    costOfLiving: "High, primarily driven by a severe housing shortage ($1,600–$2,400/mo for an apartment in Amsterdam or Utrecht). Health insurance is mandatory (~$150/mo), while cycling eliminates car expenses completely.",
-    workday: "Starts at 9:00 AM via a brisk bike commute along dedicated cycle highways. Meetings are direct and egalitarian—interns freely debate CEOs. At 5:00 PM sharp, laptops close; working overtime is seen as poor time management.",
-    evening: "Dinner is early (6:00–6:30 PM). Evenings revolve around 'gezelligheid'—cozy drinks (borrel) at a brown café, canal-side walks in summer, or indoor board games and candles during grey winters.",
+    safety: "9.1 / 10",
+    culture: "Guided by 'gezelligheid' (cozy conviviality), egalitarian flat hierarchies, and pragmatic consensus ('polder model'). Public infrastructure is prioritized for bicycles and pedestrians over cars.",
+    people: "Direct, articulate, and fiercely egalitarian. Dutch honesty is not rude—it is considered respectful not to waste anyone's time. Virtually everyone speaks fluent English.",
+    costOfLiving: "High, driven primarily by acute housing shortages in the Randstad (Amsterdam, Utrecht, Rotterdam). However, you never need to own a car, public healthcare is top-tier, and fresh groceries at Albert Heijn are reasonably priced.",
+    workday: "The gold standard of work-life balance. Over 50% of the working population works part-time (32–36 hours/week). Leaving at 5:00 PM sharp is the norm.",
+    evening: "Streets fill with cyclists ringing bells heading home. Evenings are spent sharing 'borrel' (beers, bitterballen, and cheese) at brown cafes, canal-side picnics in summer, or cozy dinner at home.",
     upsides: [
-      "World-leading work-life balance and part-time work culture.",
-      "Unrivaled cycling infrastructure and seamless train connections across Europe.",
-      "Almost zero language barrier for English speakers in daily life."
+      "Best cycling and urban design infrastructure in the entire world.",
+      "Unmatched work-life balance with legally protected flexible hours.",
+      "Near-universal English fluency makes initial relocation seamless."
     ],
     downsides: [
-      "Severe housing crisis makes finding an apartment fiercely competitive.",
-      "Grey, rainy, and windy weather from October through March.",
-      "Making close Dutch friends takes time since social circles are formed early in life."
+      "Severe national housing crisis with fierce competition for rentals.",
+      "Grey, rainy, and windy weather for roughly 5 months of the year.",
+      "Dutch directness can feel blunt to newcomers."
     ],
     videos: [
-      { title: "Why Dutch Work-Life Balance is Unbeatable", channel: "Not Just Bikes", duration: "17:05", url: "https://www.youtube.com/results?search_query=living+in+the+netherlands+not+just+bikes" },
-      { title: "Honest Pros & Cons of Living in Amsterdam", channel: "Damian & The Netherlands", duration: "14:30", url: "https://www.youtube.com/results?search_query=pros+and+cons+living+in+netherlands+expat" }
+      { title: "Why Dutch Work-Life Balance is the Best in the World", channel: "Not Just Bikes", duration: "15:30", url: "https://www.youtube.com/results?search_query=why+dutch+work+life+balance+not+just+bikes" },
+      { title: "Cost of Living in Amsterdam: Realistic Budget", channel: "Dutchified", duration: "11:55", url: "https://www.youtube.com/results?search_query=cost+of+living+amsterdam+realistic+budget" }
     ],
-    tags: ["urban", "transit", "wlb", "safe", "high-cost", "europe"]
+    tags: ["urban", "transit", "wlb", "safe", "high-cost", "europe"],
+    dimensions: {
+      costIndex: 4,
+      climate: 'four-seasons',
+      transit: 'walkable-rail',
+      convenienceScore: 3,
+      weekendRhythm: 'standard',
+      natureScore: 3,
+      lgbtqTier: 5,
+      religionRole: 'secular',
+      foreignerOpenness: 5,
+      paceScore: 3,
+    },
+    realityCheck: "Severe nationwide housing shortage making finding rentals intensely competitive, combined with grey, windy winter weather."
   },
   "Mexico": {
     id: "484",
     name: "Mexico",
     icon: "fa-solid fa-pepper-hot",
     region: "North America",
-    tagline: "Vibrant colors, world-heritage gastronomy, and deeply warm community spirit.",
-    cost: "$1,300 – $2,200/mo",
-    wlb: "8.2 / 10",
-    safety: "6.5 / 10",
-    culture: "Rich, expressive, and celebratory. Family and community bonds sit at the center of life, expressed through long Sunday lunches, neighborhood markets (tianguis), and vibrant art and music.",
-    people: "Incredibly warm, generous, and expressive. Saying 'buen provecho' to strangers eating at a restaurant is standard courtesy. Learning Spanish unlocks deep friendships and genuine integration.",
-    costOfLiving: "Varies widely by neighborhood. Trendy Mexico City areas (Roma/Condesa) now rival US prices ($1,400+ rent), while Oaxaca, Mérida, or Guadalajara offer gorgeous apartments for $600–$950/mo and street tacos for $1.",
-    workday: "Starts around 9:00 AM. The main meal of the day ('la comida') happens between 2:00 PM and 4:00 PM, often as a multi-course 'menú del día' with coworkers before wrapping up work around 6:30 PM.",
-    evening: "Plazas fill with street musicians, families eating churros or esquites, and friends gathering at mezcalerias or rooftop terraces under mild highland evenings.",
+    tagline: "Vibrant color, immense warmth, world-heritage culinary mastery, and relentless joie de vivre.",
+    cost: "$1,100 – $1,900/mo",
+    wlb: "8.0 / 10",
+    safety: "6.8 / 10",
+    culture: "An intoxicating blend of ancient Mesoamerican civilizations and Spanish baroque heritage. Family, art, music (mariachi, son jarocho), and celebrations are at the core of everyday existence.",
+    people: "Warm, expressive, generous, and proud of their rich traditions. Hospitality is a foundational virtue—foreigners are welcomed into conversations and festivities effortlessly.",
+    costOfLiving: "Exceptional lifestyle value outside luxury tourist strips. Delicious street tacos are $1–$1.50, vibrant local tianguis produce markets are ultra-cheap, and stylish colonial or modern apartments cost $600–$1,100/mo.",
+    workday: "Vibrant and relationship-driven. Working days feature lively mid-morning breakfasts ('desayunos') and late sit-down lunches ('comidas') with colleagues around 2:00–4:00 PM.",
+    evening: "Plazas (zocalos) come alive with children playing, couples dancing, street churro vendors, and neighborhood mezcalerias serving craft cocktails late into the night.",
     upsides: [
-      "Unbelievable culinary diversity, fresh produce, and year-round spring climate in highland cities.",
-      "Warm, welcoming culture that prioritizes joy, relationships, and living in the moment.",
-      "Same time zones as North America, ideal for remote workers."
+      "Incredible culture, biodiversity, and UNESCO-recognized cuisine.",
+      "High affordability allowing comfortable living and frequent travel.",
+      "Year-round pleasant weather in central highlands (spring-like climate)."
     ],
     downsides: [
-      "Safety requires regional awareness and street smarts—varies drastically by state and neighborhood.",
-      "Traffic congestion in Mexico City and infrastructure quirks (water pressure, noise).",
-      "Gentrification tensions in popular expat neighborhoods."
+      "Safety is highly regional and requires neighborhood awareness.",
+      "Tap water is not drinkable anywhere in the country.",
+      "Administrative bureaucracy can be unpredictable."
     ],
     videos: [
-      { title: "What Living in Mexico City is Really Like", channel: "Kinging-It", duration: "19:12", url: "https://www.youtube.com/results?search_query=what+living+in+mexico+city+is+really+like" },
-      { title: "Living in Oaxaca vs Mérida — Expat Breakdown", channel: "Backpacker Steve", duration: "15:40", url: "https://www.youtube.com/results?search_query=living+in+oaxaca+mexico+expat+life" }
+      { title: "Living in Mexico City (CDMX) Honest Pros and Cons", channel: "Tangerine Travels", duration: "17:45", url: "https://www.youtube.com/results?search_query=living+in+mexico+city+pros+cons" },
+      { title: "Realistic Monthly Cost of Living in Mexico", channel: "Kinetic Kennons", duration: "14:20", url: "https://www.youtube.com/results?search_query=realistic+cost+of+living+in+mexico+expat" }
     ],
-    tags: ["warm", "affordable", "foodie", "social", "energetic"]
+    tags: ["warm", "affordable", "foodie", "social", "energetic"],
+    dimensions: {
+      costIndex: 2,
+      climate: 'warm-sun',
+      transit: 'mixed-transit',
+      convenienceScore: 4,
+      weekendRhythm: 'vibrant-24-7',
+      natureScore: 5,
+      lgbtqTier: 4,
+      religionRole: 'cultural-tradition',
+      foreignerOpenness: 5,
+      paceScore: 4,
+    },
+    realityCheck: "Safety varies significantly by neighborhood and region requiring local vigilance, and municipal tap water is not potable."
   },
   "Norway": {
     id: "578",
     name: "Norway",
-    icon: "fa-solid fa-mountain-sun",
+    icon: "fa-solid fa-mountain",
     region: "Northern Europe",
-    tagline: "Dramatic fjords, high-trust society, and an outdoorsy 'friluftsliv' philosophy.",
-    cost: "$3,000 – $4,200/mo",
-    wlb: "9.5 / 10",
+    tagline: "Dramatic fjords, midnight sun, high-trust social equity, and outdoor devotion.",
+    cost: "$2,800 – $4,200/mo",
+    wlb: "9.6 / 10",
     safety: "9.7 / 10",
-    culture: "Rooted in 'friluftsliv' (open-air living) and egalitarian trust. There is no bad weather, only bad clothing. Wealth is understated, and nature belongs equally to everyone via the right to roam (Allemannsretten).",
-    people: "Polite, outdoorsy, and respectful of personal space. Norwegians seem reserved on the commuter train, yet warm up immediately on a mountain trail or at a weekend cabin ('hytte').",
-    costOfLiving: "Among the highest in the world—restaurant meals easily cost $30–$50 per person, and alcohol is heavily taxed. However, high local wages, free healthcare, and subsidized childcare balance the equation for residents.",
-    workday: "Starts early (8:00 AM) with a packed open-faced sandwich ('matpakke') for lunch at 11:30 AM. By 4:00 PM, offices empty out so people can pick up kids or hit cross-country ski trails and hiking paths.",
-    evening: "Quiet and home-centered during dark winter months—cozy lighting ('kos'), home-cooked dinners, and sauna sessions followed by cold fjord plunges.",
+    culture: "Centered on 'friluftsliv' (open-air living) and 'kos' (warm coziness). Nature is not a weekend trip—it is a spiritual right protected by 'allemannsretten' (right to roam anywhere in the wilderness).",
+    people: "Egalitarian, humble (rooted in the Jante Law), respectful of privacy, and intensely outdoorsy. While forming initial deep friendships requires joining sports clubs or hobby groups, relationships once made are lifelong.",
+    costOfLiving: "Among the highest on Earth. Dining out, alcohol, and fresh groceries command steep prices. However, high wages, free university tuition, and universal social security balance out the cost for residents.",
+    workday: "37.5 hours per week with rigid adherence. Leaving the office by 4:00 PM is standard so families can hike, ski, or be together. Trust between managers and employees is near 100%.",
+    evening: "In summer, the sun barely sets; people kayak and swim at 10 PM. In winter, evenings turn cozy with wood stoves, wool blankets, candlelit dinners, and cross-country skiing under lit trails.",
     upsides: [
-      "Jaw-dropping natural beauty right outside your doorstep in every city.",
-      "Unmatched social safety net, high trust, and superb work-life balance.",
-      "Clean air, pure tap water, and zero traffic stress."
+      "Stunning fjords, waterfalls, and access to pristine wilderness.",
+      "Unmatched social safety net, gender equality, and high public trust.",
+      "Virtually everyone speaks near-native English."
     ],
     downsides: [
-      "Long, dark winters in the north and very high cost of dining out.",
-      "Social circles can feel closed off unless you join sports or outdoor clubs.",
-      "Limited culinary variety compared to major global metropolises."
+      "Very high taxes and expensive daily dining/groceries.",
+      "Long, dark, freezing winter months north of the Arctic circle.",
+      "Reserved social culture can feel lonely initially for extroverted expats."
     ],
     videos: [
-      { title: "Why Norwegians Are So Happy (Despite Dark Winters)", channel: "Life in Norway", duration: "13:55", url: "https://www.youtube.com/results?search_query=what+living+in+norway+is+actually+like" },
-      { title: "A Realistic Day in Oslo, Norway", channel: "Simple Happy Zen", duration: "11:30", url: "https://www.youtube.com/results?search_query=day+in+the+life+oslo+norway" }
+      { title: "The Reality of Living in Norway: Honest Pros & Cons", channel: "Simple Joys", duration: "16:50", url: "https://www.youtube.com/results?search_query=reality+of+living+in+norway+pros+cons" },
+      { title: "Cost of Living in Oslo, Norway: What Things Actually Cost", channel: "Expat in Norway", duration: "12:15", url: "https://www.youtube.com/results?search_query=cost+of+living+in+oslo+norway+breakdown" }
     ],
-    tags: ["nature", "safe", "wlb", "high-cost", "introvert-friendly", "four-seasons"]
+    tags: ["nature", "safe", "wlb", "high-cost", "introvert-friendly", "four-seasons"],
+    dimensions: {
+      costIndex: 5,
+      climate: 'cold-winter',
+      transit: 'walkable-rail',
+      convenienceScore: 1,
+      weekendRhythm: 'quiet-sunday',
+      natureScore: 5,
+      lgbtqTier: 5,
+      religionRole: 'secular',
+      foreignerOpenness: 4,
+      paceScore: 2,
+    },
+    realityCheck: "Prohibitive dining and alcohol costs, strict DIY culture with zero cheap service labor, and dark, freezing sub-zero winter months."
   },
   "Spain": {
     id: "724",
     name: "Spain",
-    icon: "fa-solid fa-wine-glass",
+    icon: "fa-solid fa-sun",
     region: "Southern Europe",
-    tagline: "Vibrant late-night plazas, Mediterranean sun, and a culture built around living well.",
-    cost: "$1,800 – $2,600/mo",
+    tagline: "Late-night plazas, vibrant tapas culture, Mediterranean warmth, and life lived outdoors.",
+    cost: "$1,700 – $2,500/mo",
     wlb: "9.0 / 10",
-    safety: "8.9 / 10",
-    culture: "Social, expressive, and proudly regional—Catalonia, Andalusia, and the Basque Country each feel like distinct worlds. Life revolves around shared public spaces, tapas, and multi-generational family gatherings.",
-    people: "Warm, loud, humorous, and deeply social. Spaniards work to live, not live to work. Neighborhood bars act as community living rooms where toddlers and grandparents mingle at 10 PM.",
-    costOfLiving: "Great value for Western Europe. Rent in Madrid or Barcelona is $1,100–$1,600, while Valencia, Seville, or Malaga sit around $850–$1,200. Fresh market produce, olive oil, and tapas culture keep daily costs low.",
-    workday: "Starts around 9:00–9:30 AM with a mid-morning coffee and tortilla break. Traditional shops still close from 2:00 PM to 5:00 PM, though modern corporate offices work straight through until 6:00 PM.",
-    evening: "The magic hour begins at 8:00 PM with the 'paseo' (evening stroll), followed by tapas hopping at 9:30 PM and lively conversation spilling onto warm terraces well past midnight.",
+    safety: "9.0 / 10",
+    culture: "Passionate, family-centered, and outdoor-oriented. Meal times are social events lasting hours, and public plazas are the living rooms of every town.",
+    people: "Vibrant, expressive, and welcoming. Socializing with multi-generational groups is the norm, and life is oriented around friends, food, and festivals.",
+    costOfLiving: "Moderate compared to Northern Europe. Excellent regional produce, affordable wine ($3–$6), and inexpensive healthcare make daily life comfortable.",
+    workday: "Traditionally structured around a split shift with late lunches (2:00–4:00 PM), though modern corporate offices follow standard 9-to-6 routines with strict disconnect rights.",
+    evening: "Starts late—dinner rarely happens before 9:30 or 10:00 PM. Tapas crawl ('tapear') through bustling historic streets, followed by gelato and strolls (el paseo).",
     upsides: [
-      "Incredible Mediterranean climate, beaches, and world-class high-speed rail (AVE).",
-      "Deeply social street life—it is almost impossible to feel lonely outside.",
-      "Top-tier public healthcare and rich cultural heritage."
+      "Superb Mediterranean climate with abundant annual sunshine.",
+      "World-class public healthcare and safe, walkable historic cities.",
+      "Rich cultural tapestry from Andalusia to the Basque Country."
     ],
     downsides: [
-      "High youth unemployment and low local salaries if not working remotely.",
-      "Spanish bureaucracy ('papeleo') and appointment systems (cita previa) can be frustrating.",
-      "Intense summer heatwaves in southern and central cities."
+      "High local youth unemployment and slow domestic career progression.",
+      "Summer heatwaves in Andalusia and Madrid can exceed 40°C (104°F).",
+      "Bureaucracy (NIE, padrón) requires patience and Spanish fluency."
     ],
     videos: [
-      { title: "Living in Valencia vs Madrid — What Nobody Tells You", channel: "Spain Revealed", duration: "16:45", url: "https://www.youtube.com/results?search_query=living+in+spain+spain+revealed+pros+cons" },
-      { title: "A Typical Evening in Madrid, Spain", channel: "James Blick", duration: "12:18", url: "https://www.youtube.com/results?search_query=typical+day+living+in+madrid+spain" }
+      { title: "Living in Spain: Honest Pros and Cons After 3 Years", channel: "Spain Revealed", duration: "18:05", url: "https://www.youtube.com/results?search_query=living+in+spain+pros+and+cons+spain+revealed" },
+      { title: "Cost of Living in Valencia vs Madrid vs Barcelona", channel: "James Blick", duration: "14:50", url: "https://www.youtube.com/results?search_query=cost+of+living+in+valencia+madrid+barcelona" }
     ],
-    tags: ["warm", "social", "wlb", "foodie", "moderate-cost", "europe", "coastal"]
+    tags: ["warm", "social", "wlb", "foodie", "moderate-cost", "europe", "coastal"],
+    dimensions: {
+      costIndex: 2,
+      climate: 'warm-sun',
+      transit: 'walkable-rail',
+      convenienceScore: 3,
+      weekendRhythm: 'vibrant-24-7',
+      natureScore: 5,
+      lgbtqTier: 5,
+      religionRole: 'cultural-tradition',
+      foreignerOpenness: 4,
+      paceScore: 3,
+    },
+    realityCheck: "Stubbornly high domestic unemployment rates for local jobs, extreme summer heatwaves inland, and notoriously slow bureaucratic paperwork."
   },
   "South Korea": {
     id: "410",
     name: "South Korea",
-    icon: "fa-solid fa-city",
+    icon: "fa-solid fa-bolt",
     region: "East Asia",
-    tagline: "Hyper-fast 24/7 innovation, mountain hikes inside megacities, and electric nightlife.",
-    cost: "$1,500 – $2,300/mo",
+    tagline: "Hyper-connected, lightning-fast innovation, vibrant night energy, and ancient palace pride.",
+    cost: "$1,700 – $2,600/mo",
     wlb: "6.2 / 10",
     safety: "9.5 / 10",
-    culture: "Driven by 'ppalli-ppalli' (hurry-hurry) efficiency, cutting-edge tech, and deep respect for elders. Despite ultra-modern skyscrapers, weekend hiking in national parks is practically a national religion.",
-    people: "Passionate, stylish, and loyal once trust is built. Koreans take immense pride in hospitality ('jeong')—friends will insist on paying for dinner and making sure your glass is never empty.",
-    costOfLiving: "Dining out at local Korean restaurants ($7–$10), fast fiber internet, and subway rides ($1.10) are cheap. However, housing deposits ('jeonse' or 'wolse') in Seoul require upfront capital, and fruit/groceries can be expensive.",
-    workday: "Fast-paced and competitive. Mornings start with an iced Americano (even in freezing winter). Lunches are quick and communal, and work often extends into team dinners (hoesik).",
-    evening: "Seoul never sleeps—24-hour cafes, late-night Korean BBQ, karaoke rooms (noraebang), PC bangs, and Han River park picnics with fried chicken and beer (chimaek).",
+    culture: "Defined by 'Ppalli-ppalli' (hurry, hurry) efficiency, cutting-edge K-culture, and deep Confucian respect for age and education.",
+    people: "Hardworking, trend-conscious, and generous once personal rapport is built. Highly civic-minded with extreme respect for public order and safety.",
+    costOfLiving: "Moderate. Public transit is cheap, dining out at Korean BBQ and soup joints is affordable, but apartment deposit systems ('jeonse') can be complex.",
+    workday: "Dynamic and fast-paced. High-speed fiber internet everywhere, bustling business districts, and team lunch deliveries.",
+    evening: "Cities never sleep. Evenings involve Korean fried chicken and beer ('chimaek'), pojangmacha tent street food, PC bangs, coin karaoke (noraebang), and 24/7 cafes.",
     upsides: [
-      "Fastest internet, seamless digital infrastructure, and ultra-safe streets at all hours.",
-      "Incredible food, café aesthetics, and skincare/healthcare accessibility.",
-      "Easy access to scenic mountains and coastal islands."
+      "Ultra-fast internet, modern transit, and exceptional personal safety.",
+      "24/7 convenience with rocket delivery on virtually any product.",
+      "Rich history seamlessly coexisting with futuristic technology."
     ],
     downsides: [
-      "Intense work/academic pressure and competitive social expectations.",
-      "Spring fine dust (yellow dust) and humid monsoon summers.",
-      "Learning Hangul and basic Korean is essential for deep social integration."
+      "High-pressure societal expectations and competitive atmosphere.",
+      "Extreme seasonal weather swings: hot humid summers, freezing sub-zero winters.",
+      "Conservative corporate culture with long working hours in domestic firms."
     ],
     videos: [
-      { title: "What Living in Seoul is Really Like as a Foreigner", channel: "Cari Cakes", duration: "17:30", url: "https://www.youtube.com/results?search_query=living+in+seoul+south+korea+honest+experience" },
-      { title: "Day in the Life in Busan, South Korea", channel: "Q2HAN", duration: "14:05", url: "https://www.youtube.com/results?search_query=day+in+the+life+busan+korea" }
+      { title: "What Living in Seoul is Actually Like", channel: "Simon and Martina", duration: "16:40", url: "https://www.youtube.com/results?search_query=what+living+in+seoul+is+actually+like" },
+      { title: "Cost of Living in South Korea: Realistic Breakdown", channel: "Korean Englishman", duration: "13:20", url: "https://www.youtube.com/results?search_query=cost+of+living+in+south+korea+realistic" }
     ],
-    tags: ["urban", "safe", "transit", "energetic", "foodie", "four-seasons"]
+    tags: ["urban", "safe", "transit", "energetic", "foodie", "four-seasons"],
+    dimensions: {
+      costIndex: 3,
+      climate: 'four-seasons',
+      transit: 'walkable-rail',
+      convenienceScore: 5,
+      weekendRhythm: 'vibrant-24-7',
+      natureScore: 4,
+      lgbtqTier: 2,
+      religionRole: 'moderate',
+      foreignerOpenness: 3,
+      paceScore: 5,
+    },
+    realityCheck: "High-pressure societal conformity expectations, conservative legal attitudes toward LGBTQ+ rights, and intense summer humidity followed by sub-zero winters."
   },
   "Canada": {
     id: "124",
     name: "Canada",
-    icon: "fa-brands fa-canadian-maple-leaf",
+    icon: "fa-solid fa-leaf",
     region: "North America",
-    tagline: "Multicultural cities framed by vast wilderness, polite neighbors, and crisp winters.",
-    cost: "$2,500 – $3,600/mo",
-    wlb: "8.3 / 10",
-    safety: "8.8 / 10",
-    culture: "Multicultural mosaic rather than a melting pot—Toronto and Vancouver feature world-class diversity. Outside cities, outdoor sports (hockey, skiing, canoeing) define national identity.",
-    people: "Polite, progressive, and welcoming to newcomers. Canadians value inclusivity, personal space, and friendly small talk in coffee lines.",
-    costOfLiving: "High in Vancouver and Toronto due to steep housing costs ($1,800–$2,500/mo for a 1-bedroom) and telecom/grocery prices. Montreal and Calgary offer noticeably better affordability.",
-    workday: "9:00 AM to 5:00 PM North American rhythm, casual office environments, and strong emphasis on diversity and remote/hybrid flexibility.",
-    evening: "Summer evenings stretch past 9:30 PM with lakeside patios and park gatherings; winter evenings are cozy with indoor sports, home cooking, and neighborhood pubs.",
+    tagline: "Vast pristine wilderness, progressive civic trust, multicultural warmth, and crisp alpine air.",
+    cost: "$2,500 – $3,800/mo",
+    wlb: "8.5 / 10",
+    safety: "9.2 / 10",
+    culture: "Polite, multicultural, outdoors-loving, and civic-minded. Canadian mosaic culture celebrates immigrant identities alongside indigenous traditions.",
+    people: "Famously friendly, considerate, and helpful. Diversity is embraced as a national strength, especially in major cities.",
+    costOfLiving: "High, especially in Vancouver and Toronto housing markets. Groceries, domestic air travel, and cellular plans are costly, balanced by stable public services.",
+    workday: "Collaborative and structured around standard 8:30–5:00 hours with growing hybrid remote flexibility. Strong emphasis on employee wellness.",
+    evening: "In winter, ice hockey, craft brewery catchups, and cozy home gatherings; in summer, lake cabin trips, patio dining, and hiking until twilight.",
     upsides: [
-      "Immense natural beauty—Rockies, coastal rainforests, and thousands of lakes.",
-      "Truly multicultural cuisine and welcoming immigrant communities.",
-      "High safety, stability, and clean cities."
+      "Breathtaking Rocky Mountains, national parks, and endless clean water.",
+      "Inclusive, safe, and progressive society welcoming to newcomers.",
+      "High quality of public education and universal healthcare."
     ],
     downsides: [
-      "Housing affordability crisis in major metro areas.",
-      "Long, cold winters across most of the country (except coastal BC's rain).",
-      "Vast distances make domestic flights expensive."
+      "Severe winter temperatures (-15°C to -30°C in inland regions) for months.",
+      "High housing costs and high income taxation.",
+      "Vast distances make domestic travel between provinces expensive."
     ],
     videos: [
-      { title: "Honest Pros & Cons of Moving to Canada", channel: "DownieLive", duration: "15:22", url: "https://www.youtube.com/results?search_query=pros+and+cons+living+in+canada" },
-      { title: "Living in Vancouver vs Montreal", channel: "Paige Pritchard", duration: "13:10", url: "https://www.youtube.com/results?search_query=living+in+vancouver+vs+montreal" }
+      { title: "Living in Canada: Honest Pros & Cons From an Immigrant", channel: "Canada Bound", duration: "17:15", url: "https://www.youtube.com/results?search_query=living+in+canada+honest+pros+cons" },
+      { title: "Real Cost of Living in Vancouver vs Toronto", channel: "DownieLive", duration: "15:10", url: "https://www.youtube.com/results?search_query=cost+of+living+in+vancouver+vs+toronto" }
     ],
-    tags: ["nature", "safe", "wlb", "high-cost", "four-seasons"]
+    tags: ["nature", "safe", "wlb", "high-cost", "four-seasons"],
+    dimensions: {
+      costIndex: 4,
+      climate: 'cold-winter',
+      transit: 'mixed-transit',
+      convenienceScore: 3,
+      weekendRhythm: 'standard',
+      natureScore: 5,
+      lgbtqTier: 5,
+      religionRole: 'secular',
+      foreignerOpenness: 5,
+      paceScore: 3,
+    },
+    realityCheck: "Severe, prolonged winter sub-zero temperatures, intense housing affordability pressures in major cities, and vast car-dependent suburban expanses."
   },
   "Thailand": {
     id: "764",
     name: "Thailand",
-    icon: "fa-solid fa-umbrella-beach",
+    icon: "fa-solid fa-water",
     region: "Southeast Asia",
-    tagline: "Effortless daily convenience, tropical warmth, and the 'Mai Pen Rai' (no worries) spirit.",
-    cost: "$1,000 – $1,800/mo",
-    wlb: "8.6 / 10",
-    safety: "8.4 / 10",
-    culture: "Guided by Theravada Buddhism, respect for elders, and 'sanuk' (finding joy in whatever you do). Confrontation is avoided; a calm smile solves almost every hiccup.",
-    people: "Gentle, tolerant, and welcoming. Thailand has hosted travelers and expats for decades, creating an easygoing atmosphere in Bangkok, Chiang Mai, and southern islands.",
-    costOfLiving: "Remarkable flexibility—you can live comfortably on $1,100/mo in Chiang Mai or live a luxury condo lifestyle in Bangkok for $2,200/mo. Street food is $2, and private healthcare is world-class and affordable.",
-    workday: "Flexible and relaxed, especially for remote workers in bustling coworking cafes. Locals start with iced Thai tea or coffee and enjoy social lunches at bustling food courts.",
-    evening: "Night markets glow with sizzling woks, rooftop bars overlook Bangkok's skyline, or beachside fire shows light up Phuket and Koh Phangan.",
+    tagline: "Golden temples, legendary culinary passion, tropical island bliss, and the Land of Smiles.",
+    cost: "$900 – $1,600/mo",
+    wlb: "8.2 / 10",
+    safety: "8.3 / 10",
+    culture: "Guided by 'Sabai-Sabai' (contentment and ease) and 'Sanuk' (fun in daily life). Theravada Buddhism deeply informs respectful social etiquette and temple festivals.",
+    people: "Incredibly gracious, smiling, and respectful. Locals go out of their way to make guests feel at home.",
+    costOfLiving: "Remarkably high lifestyle value. Pad Thai and Tom Yum at night stalls cost $1.50–$3, high-rise luxury condos with rooftop pools rent for $500–$850/mo.",
+    workday: "Begins early before the heat peaks, punctuated by iced Thai milk tea and street food snacks. A relaxed, polite workplace environment.",
+    evening: "Street food night markets come alive with aromas of lemongrass and chili, rooftop sky bars buzz with travelers, and beach towns enjoy acoustic fire shows.",
     upsides: [
-      "Unbeatable comfort, modern condos, and elite private hospitals at low cost.",
-      "Incredible food, tropical islands, and easy travel hub for all of Asia.",
-      "Low-stress, tolerant daily social environment."
+      "Sensational food culture recognized as one of the best in the world.",
+      "Affordable luxury living with high quality private hospitals.",
+      "Vibrant expat and digital nomad communities in Bangkok, Chiang Mai, and Phuket."
     ],
     downsides: [
-      "Seasonal burning season smoke in Northern Thailand (Feb–April).",
-      "Intense year-round heat and Bangkok traffic congestion.",
-      "Strict visa rules if you don't qualify for DTV/Elite/retirement visas."
+      "Midday tropical heat and humidity can be draining.",
+      "Seasonal air pollution (burning season in Chiang Mai/Northern Thailand from Feb–April).",
+      "Complicated visa bureaucracy for long-term residency."
     ],
     videos: [
-      { title: "What Living in Bangkok is Really Like", channel: "Retired Working For You", duration: "16:15", url: "https://www.youtube.com/results?search_query=what+living+in+bangkok+is+really+like" },
-      { title: "Chiang Mai Lifestyle & Cost of Living Breakdown", channel: "Paddy Doyle", duration: "14:40", url: "https://www.youtube.com/results?search_query=living+in+chiang+mai+thailand+cost+of+living" }
+      { title: "Living in Bangkok, Thailand: Full Honest Review", channel: "Retired Working For You", duration: "21:30", url: "https://www.youtube.com/results?search_query=living+in+bangkok+thailand+honest+review" },
+      { title: "Cost of Living in Chiang Mai vs Bangkok", channel: "CB Media", duration: "14:40", url: "https://www.youtube.com/results?search_query=cost+of+living+in+chiang+mai+vs+bangkok" }
     ],
-    tags: ["affordable", "warm", "relaxed", "foodie", "social"]
+    tags: ["affordable", "warm", "relaxed", "foodie", "social"],
+    dimensions: {
+      costIndex: 1,
+      climate: 'tropical',
+      transit: 'motorbike-active',
+      convenienceScore: 5,
+      weekendRhythm: 'vibrant-24-7',
+      natureScore: 5,
+      lgbtqTier: 5,
+      religionRole: 'cultural-tradition',
+      foreignerOpenness: 5,
+      paceScore: 4,
+    },
+    realityCheck: "Intense tropical midday heat and humidity, seasonal agricultural smoke in the north, and complex long-term visa renewals."
   },
   "New Zealand": {
     id: "554",
     name: "New Zealand",
-    icon: "fa-solid fa-compass",
+    icon: "fa-solid fa-kiwi-bird",
     region: "Oceania",
-    tagline: "Laid-back Kiwi friendliness surrounded by cinematic mountains, beaches, and sheep.",
-    cost: "$2,400 – $3,300/mo",
-    wlb: "9.2 / 10",
-    safety: "9.3 / 10",
-    culture: "Unpretentious, egalitarian ('tall poppy syndrome' discourages bragging), and deeply connected to Māori heritage and outdoor conservation.",
-    people: "Friendly, relaxed, and barefoot-casual. Strangers chat easily at farmers' markets, and people genuinely value free time over status symbols.",
-    costOfLiving: "High due to island import costs and housing prices ($1,500–$2,100/mo in Auckland or Wellington). Groceries and petrol are pricey, though outdoor recreation is completely free.",
-    workday: "Starts with top-tier flat white coffee. Workplaces are informal and supportive, wrapping up promptly at 5:00 PM so everyone can surf, trail run, or barbecue.",
-    evening: "Quiet and peaceful—fish and chips on the beach at sunset, backyard BBQs, or stargazing under some of the clearest dark skies in the world.",
+    tagline: "Spectacular alpine wilderness, Māori cultural respect, unhurried coastal pace, and pure air.",
+    cost: "$2,600 – $3,900/mo",
+    wlb: "9.5 / 10",
+    safety: "9.6 / 10",
+    culture: "Grounded in Māori concept of 'Kaitiakitanga' (guardianship of nature), egalitarian camaraderie, and a DIY 'number 8 wire' ingenuity.",
+    people: "Down-to-earth, friendly, and unpretentious. Kiwis value modesty, outdoor adventures, and taking care of their communities.",
+    costOfLiving: "High due to island geography and imported goods. Groceries and petrol are pricey, but quality of life and clean environment are peerless.",
+    workday: "Prompt 8:30–5:00 day where overtime is discouraged. Colleagues chat over flat whites in the morning and head outdoors straight after work.",
+    evening: "Sunset surf sessions, barbecues in backyards, peaceful coastal walks, and dark-sky stargazing.",
     upsides: [
-      "Extraordinary outdoor lifestyle, clean air, and dramatic landscapes.",
-      "Friendly English-speaking culture with genuine work-life balance.",
-      "Safe, stable, and peaceful pace of life."
+      "Some of the most spectacular, pristine landscapes on Earth.",
+      "Top-tier safety, transparent government, and low crime.",
+      "High work-life balance and deep outdoor culture."
     ],
     downsides: [
-      "Geographic isolation—long, expensive flights to anywhere else.",
-      "High cost of groceries, housing, and older poorly insulated homes.",
-      "Small job market with lower salaries than neighboring Australia."
+      "Geographic isolation makes international travel long and expensive.",
+      "High cost of housing and consumer goods.",
+      "Intense UV sun exposure requires daily protection."
     ],
     videos: [
-      { title: "Pros and Cons of Living in New Zealand", channel: "Kiwi Life", duration: "15:02", url: "https://www.youtube.com/results?search_query=pros+and+cons+living+in+new+zealand" },
-      { title: "Day in the Life in Wellington, New Zealand", channel: "Wanderlust NZ", duration: "12:48", url: "https://www.youtube.com/results?search_query=day+in+the+life+wellington+new+zealand" }
+      { title: "Why We Moved to New Zealand (And What We Love)", channel: "Indigo Traveller", duration: "19:00", url: "https://www.youtube.com/results?search_query=moving+to+new+zealand+honest+lifestyle" },
+      { title: "Cost of Living in New Zealand: Auckland vs Queenstown", channel: "NZ Pocket Guide", duration: "13:45", url: "https://www.youtube.com/results?search_query=cost+of+living+in+new+zealand+auckland" }
     ],
-    tags: ["nature", "relaxed", "safe", "wlb", "coastal", "high-cost"]
+    tags: ["nature", "relaxed", "safe", "wlb", "coastal", "high-cost"],
+    dimensions: {
+      costIndex: 4,
+      climate: 'mild-coastal',
+      transit: 'car-dependent',
+      convenienceScore: 2,
+      weekendRhythm: 'quiet-sunday',
+      natureScore: 5,
+      lgbtqTier: 5,
+      religionRole: 'secular',
+      foreignerOpenness: 5,
+      paceScore: 2,
+    },
+    realityCheck: "Extreme geographic isolation making flights back to Europe/Asia costly, heavy car dependency, and strong UV sun exposure."
   },
   "Germany": {
     id: "276",
     name: "Germany",
-    icon: "fa-solid fa-train-subway",
+    icon: "fa-solid fa-beer-mug-empty",
     region: "Central Europe",
-    tagline: "Structured, green, rule-loving reliability paired with eclectic Berlin arts and beer gardens.",
-    cost: "$2,100 – $3,000/mo",
-    wlb: "8.9 / 10",
-    safety: "8.8 / 10",
-    culture: "Values privacy, punctuality, environmentalism, and clear rules. Sundays ('Ruhetag') are legally protected rest days—all supermarkets close so people can walk in forests or relax with family.",
-    people: "Direct, dependable, and loyal. Germans respect boundaries and rules, and once you're considered a friend, they are fiercely reliable.",
-    costOfLiving: "More affordable than London, Paris, or Amsterdam. Rent in Berlin or Munich ranges from $1,100–$1,800/mo; groceries at Aldi/Lidl are inexpensive, and the €58 Deutschland-Ticket covers regional transit nationwide.",
-    workday: "Starts early (8:00–8:30 AM), focused and structured with minimal small talk, and ends cleanly around 5:00 PM with strong labor protections and 30 vacation days.",
-    evening: "Summer evenings shine in leafy beer gardens ('Biergärten') with pretzels and Radlers, or riverside walks; Berlin offers unmatched underground music and arts.",
+    tagline: "Engineered efficiency, vibrant green spaces, sacred work-life balance, and rich history.",
+    cost: "$2,000 – $2,900/mo",
+    wlb: "9.3 / 10",
+    safety: "9.1 / 10",
+    culture: "Values reliability, punctuality, and environmental consciousness. Social life flourishes in beer gardens, urban parks, and cultural centers.",
+    people: "Direct, orderly, and respectful of public rules. While private initially, Germans form sincere and dependable friendships once trust is established.",
+    costOfLiving: "Reasonable compared to London or Paris. Supermarket prices (Aldi, Lidl) are very affordable, public transit is heavily subsidized, and healthcare is comprehensive.",
+    workday: "Highly focused and productive. The 35–38 hour workweek is strictly observed, with generous 30 days of paid vacation per year.",
+    evening: "Quiet residential evenings, summer evenings lingering in neighborhood beer gardens (Biergarten), and weekend train excursions into forests.",
     upsides: [
-      "Strong worker protections, generous vacation, and central European travel access.",
-      "Abundant green parks, forests, and affordable groceries.",
-      "Vibrant contrast between traditional Bavarian towns and creative Berlin."
+      "Extensive public transit and high-speed rail connections across Europe.",
+      "Generous worker protections and strict work-life separation.",
+      "Lively arts, music, and club culture in cities like Berlin."
     ],
     downsides: [
-      "Notorious paper-heavy bureaucracy and slow digitalization.",
-      "German language is essential for dealing with landlords and government offices.",
-      "Grey winters and everything being closed on Sundays takes adjustment."
+      "Heavy reliance on paper bureaucracy and slow administrative digitisation.",
+      "Strict Sunday shop closures (stores and supermarkets shut completely).",
+      "Learning German is required for deep social and career integration."
     ],
     videos: [
-      { title: "What Living in Germany is Actually Like", channel: "Wanted Adventure", duration: "16:33", url: "https://www.youtube.com/results?search_query=what+living+in+germany+is+actually+like+wanted+adventure" },
-      { title: "Berlin vs Munich — Where Should You Live?", channel: "Simple Germany", duration: "14:12", url: "https://www.youtube.com/results?search_query=living+in+berlin+vs+munich+expat" }
+      { title: "The Truth About Living in Germany as an Expat", channel: "Wanted Adventure", duration: "16:15", url: "https://www.youtube.com/results?search_query=the+truth+about+living+in+germany+expat" },
+      { title: "Cost of Living in Berlin: Real Monthly Budget", channel: "Simple Germany", duration: "12:50", url: "https://www.youtube.com/results?search_query=cost+of+living+in+berlin+simple+germany" }
     ],
-    tags: ["transit", "wlb", "safe", "moderate-cost", "europe", "four-seasons"]
+    tags: ["transit", "wlb", "safe", "moderate-cost", "europe", "four-seasons"],
+    dimensions: {
+      costIndex: 3,
+      climate: 'four-seasons',
+      transit: 'walkable-rail',
+      convenienceScore: 2,
+      weekendRhythm: 'quiet-sunday',
+      natureScore: 4,
+      lgbtqTier: 5,
+      religionRole: 'secular',
+      foreignerOpenness: 4,
+      paceScore: 3,
+    },
+    realityCheck: "Strict Sunday store closures (supermarkets completely shut), cumbersome physical paper bureaucracy (Anmeldung), and high DIY culture with costly domestic services."
+  },
+  "Italy": {
+    id: "380",
+    name: "Italy",
+    icon: "fa-solid fa-pizza-slice",
+    region: "Southern Europe",
+    tagline: "Living art, gastronomic devotion, historic piazzas, and the timeless art of dolce far niente.",
+    cost: "$1,800 – $2,700/mo",
+    wlb: "8.7 / 10",
+    safety: "8.9 / 10",
+    culture: "Deeply historical, passionate, and family-oriented. Daily life revolves around food quality, local markets, architectural beauty, and savoring the present moment.",
+    people: "Warm, animated, expressive, and deeply proud of their hometowns (campanilismo). Conversation and connection come alive over coffee and wine.",
+    costOfLiving: "Moderate. Fresh market ingredients, espresso ($1.20), and local dining are remarkably affordable outside prime tourist alleys.",
+    workday: "Begins with a quick espresso at the local bar. Workdays blend professional pride with social connection, with proper lunch pauses.",
+    evening: "Aperitivo hour from 6:30 PM with spritz and snacks, followed by evening strolls (passeggiata) through cobblestone streets and dinner at 8:30–9:30 PM.",
+    upsides: [
+      "Incomparable cultural heritage, museums, and historical beauty.",
+      "World-standard food culture with obsession over fresh ingredients.",
+      "Diverse landscapes from the Dolomites to the Amalfi Coast."
+    ],
+    downsides: [
+      "Bureaucracy is notoriously slow and convoluted.",
+      "Job opportunities and local salaries in the south are limited.",
+      "Public transit outside major rail corridors can be irregular."
+    ],
+    videos: [
+      { title: "Living in Italy: The Honest Pros and Cons", channel: "Kacie Rose", duration: "15:20", url: "https://www.youtube.com/results?search_query=living+in+italy+honest+pros+and+cons" },
+      { title: "Cost of Living in Italy: Rome vs Florence vs Rural", channel: "Italy Made Easy", duration: "14:10", url: "https://www.youtube.com/results?search_query=cost+of+living+in+italy+breakdown" }
+    ],
+    tags: ["warm", "foodie", "social", "moderate-cost", "europe", "coastal"],
+    dimensions: {
+      costIndex: 3,
+      climate: 'warm-sun',
+      transit: 'walkable-rail',
+      convenienceScore: 3,
+      weekendRhythm: 'vibrant-24-7',
+      natureScore: 5,
+      lgbtqTier: 4,
+      religionRole: 'cultural-tradition',
+      foreignerOpenness: 4,
+      paceScore: 3,
+    },
+    realityCheck: "Convoluted and notoriously slow public administration, limited local career mobility outside multinational hubs, and language barrier outside cities."
+  },
+  "France": {
+    id: "250",
+    name: "France",
+    icon: "fa-solid fa-wine-glass",
+    region: "Western Europe",
+    tagline: "Culinary heritage, literary cafés, 35-hour workweeks, and fierce devotion to the art of living.",
+    cost: "$2,200 – $3,400/mo",
+    wlb: "9.2 / 10",
+    safety: "8.7 / 10",
+    culture: "Celebrates 'l'art de vivre'—the pleasure of literature, wine, intellectual debate, and gastronomy. Strong civic pride in social safety nets and cultural funding.",
+    people: "Cultured, articulate, and respectful. Politeness formulas (always saying 'Bonjour madame/monsieur') are crucial social gatekeepers.",
+    costOfLiving: "Moderate in regional cities (Lyon, Bordeaux, Montpellier) to very high in central Paris. Outstanding public transit and subsidized cultural events.",
+    workday: "Protected by strict 35-hour week legislation. Two-hour lunch breaks with hot meals are culturally respected.",
+    evening: "Terrace bistros filled with wine and charcuterie boards, strolls along riverbanks, and vibrant theater and cinema scenes.",
+    upsides: [
+      "Extraordinary food, wine, bakeries, and cheese culture.",
+      "High-speed TGV rail network connecting cities effortlessly.",
+      "Generous annual leave (5 weeks minimum) and labor protections."
+    ],
+    downsides: [
+      "French language fluency is non-negotiable for real integration.",
+      "Frequent labor strikes affecting public transportation.",
+      "Complex tax system and administrative paperwork."
+    ],
+    videos: [
+      { title: "What Living in France is Really Like", channel: "Not Even French", duration: "17:40", url: "https://www.youtube.com/results?search_query=what+living+in+france+is+really+like" }
+    ],
+    tags: ["foodie", "wlb", "transit", "europe", "four-seasons"],
+    dimensions: {
+      costIndex: 3,
+      climate: 'four-seasons',
+      transit: 'walkable-rail',
+      convenienceScore: 3,
+      weekendRhythm: 'standard',
+      natureScore: 4,
+      lgbtqTier: 5,
+      religionRole: 'secular',
+      foreignerOpenness: 4,
+      paceScore: 3,
+    },
+    realityCheck: "French fluency is strictly necessary for daily life and administration, and recurring transit/labor strikes can disrupt routines."
+  },
+  "United Kingdom": {
+    id: "826",
+    name: "United Kingdom",
+    icon: "fa-solid fa-landmark",
+    region: "Western Europe",
+    tagline: "Cozy pub culture, historic countryside, razor-sharp wit, and global cosmopolitan energy.",
+    cost: "$2,500 – $3,800/mo",
+    wlb: "8.4 / 10",
+    safety: "8.8 / 10",
+    culture: "A rich blend of centuries-old traditions and cutting-edge global arts, comedy, and music. The local pub is the heart of community life.",
+    people: "Polite, self-deprecating, and humorous. Queuing etiquette and banter are cultural staples.",
+    costOfLiving: "High in London and the Southeast; significantly more affordable in Scotland, Wales, and Northern England.",
+    workday: "9 to 5:30 with Friday afternoon pub gatherings being an enduring tradition across all industries.",
+    evening: "Meeting friends for pints of ale, cozy curry nights, West End theater, and neighborhood football matches.",
+    upsides: [
+      "World-capital cultural scene in London with free national museums.",
+      "English-speaking environment making day-one communication effortless.",
+      "Walkable towns and picturesque countryside walks (public footpaths)."
+    ],
+    downsides: [
+      "Frequent overcast, grey skies and unpredictable drizzle.",
+      "High train ticket prices and expensive housing.",
+      "Strained public healthcare (NHS waiting times)."
+    ],
+    videos: [
+      { title: "Moving to the UK: Honest Pros and Cons", channel: "Evan Edinger", duration: "19:20", url: "https://www.youtube.com/results?search_query=moving+to+the+uk+honest+pros+and+cons" }
+    ],
+    tags: ["urban", "transit", "europe", "four-seasons", "social"],
+    dimensions: {
+      costIndex: 4,
+      climate: 'four-seasons',
+      transit: 'walkable-rail',
+      convenienceScore: 4,
+      weekendRhythm: 'standard',
+      natureScore: 4,
+      lgbtqTier: 5,
+      religionRole: 'secular',
+      foreignerOpenness: 5,
+      paceScore: 4,
+    },
+    realityCheck: "Persistent grey and overcast weather throughout autumn and winter, high rail and housing costs, and strained public healthcare waiting times."
+  },
+  "Australia": {
+    id: "036",
+    name: "Australia",
+    icon: "fa-solid fa-kangaroo",
+    region: "Oceania",
+    tagline: "Golden beaches, outdoor lifestyle, world-leading coffee culture, and easygoing mateship.",
+    cost: "$2,700 – $4,000/mo",
+    wlb: "9.1 / 10",
+    safety: "9.3 / 10",
+    culture: "Devoted to the outdoors, surf breaks, and fitness. 'No worries' is not just a catchphrase—it defines the egalitarian social philosophy.",
+    people: "Warm, informal, humorous, and straightforward. People judge you on character, not titles or pretension.",
+    costOfLiving: "High, particularly in Sydney and Melbourne, but balanced by some of the world's highest minimum and professional wages.",
+    workday: "Starts early around 8:00 AM fueled by artisanal flat whites, finishing promptly at 4:30 or 5:00 PM for gym, beach, or park visits.",
+    evening: "Sunset coastal walks, barbecues with craft beer, and casual dining in multicultural neighborhoods.",
+    upsides: [
+      "Sensational beaches, sunshine, and pristine outdoor environment.",
+      "High wages and exceptional overall standard of living.",
+      "Phenomenal café and specialty coffee culture."
+    ],
+    downsides: [
+      "High cost of housing and consumer goods.",
+      "Long flight distances to the rest of the world.",
+      "Intense sun and high UV index requiring rigorous protection."
+    ],
+    videos: [
+      { title: "Living in Australia: 10 Things I Wish I Knew", channel: "Greg Snell", duration: "16:00", url: "https://www.youtube.com/results?search_query=living+in+australia+honest+review" }
+    ],
+    tags: ["nature", "coastal", "wlb", "safe", "warm", "high-cost"],
+    dimensions: {
+      costIndex: 4,
+      climate: 'warm-sun',
+      transit: 'mixed-transit',
+      convenienceScore: 3,
+      weekendRhythm: 'standard',
+      natureScore: 5,
+      lgbtqTier: 5,
+      religionRole: 'secular',
+      foreignerOpenness: 5,
+      paceScore: 3,
+    },
+    realityCheck: "Vast geographic isolation making international travel costly, high urban housing prices, and strict DIY/high labor rates for home services."
+  },
+  "Switzerland": {
+    id: "756",
+    name: "Switzerland",
+    icon: "fa-solid fa-mountain-sun",
+    region: "Central Europe",
+    tagline: "Pristine alpine precision, crystal lakes, spotless public order, and top-tier prosperity.",
+    cost: "$3,500 – $5,200/mo",
+    wlb: "9.0 / 10",
+    safety: "9.9 / 10",
+    culture: "Built on direct democracy, neutrality, quiet civic respect, and meticulous craftsmanship. Peace, cleanliness, and punctuality reign supreme.",
+    people: "Reserved, courteous, and respectful of public rules. Friendships are built slowly through shared activities like hiking and skiing.",
+    costOfLiving: "The highest in Europe. However, Swiss wages are world-leading, income taxes are relatively low, and public infrastructure is immaculate.",
+    workday: "40–42 hours with absolute punctuality. Commutes on Swiss Federal Railways (SBB) run with watch-like precision.",
+    evening: "Swimming in crystal-clear rivers (like the Aare in Bern) in summer, fondue dinners, and hiking into alpine trails on weekends.",
+    upsides: [
+      "Highest standard of living, public safety, and infrastructure in Europe.",
+      "Magnificent alpine peaks, lakes, and clean mountain air.",
+      "Reliable, punctual, and spotless public transit network."
+    ],
+    downsides: [
+      "Extremely expensive daily expenses, dining out, and mandatory health insurance.",
+      "Strict social rules and quiet hours (Ruhezeit) enforced by neighbors.",
+      "Hard to integrate deeply without German or French language skills."
+    ],
+    videos: [
+      { title: "The Reality of Moving to Switzerland", channel: "How to Switzerland", duration: "15:35", url: "https://www.youtube.com/results?search_query=the+reality+of+moving+to+switzerland" }
+    ],
+    tags: ["nature", "safe", "transit", "high-cost", "four-seasons"],
+    dimensions: {
+      costIndex: 5,
+      climate: 'four-seasons',
+      transit: 'walkable-rail',
+      convenienceScore: 2,
+      weekendRhythm: 'quiet-sunday',
+      natureScore: 5,
+      lgbtqTier: 5,
+      religionRole: 'secular',
+      foreignerOpenness: 4,
+      paceScore: 2,
+    },
+    realityCheck: "Extremely high cost of living (mandatory private health insurance, $30+ casual meals), strict quiet hours (Ruhezeit), and complete Sunday store closures."
+  },
+  "Costa Rica": {
+    id: "188",
+    name: "Costa Rica",
+    icon: "fa-solid fa-seedling",
+    region: "Central America",
+    tagline: "Pura Vida living, world-leading biodiversity, cloud forests, and peaceful eco-paradise.",
+    cost: "$1,400 – $2,200/mo",
+    wlb: "9.2 / 10",
+    safety: "8.2 / 10",
+    culture: "Defined by 'Pura Vida' (pure life)—a philosophy of gratitude, community, and low stress. The country famously dissolved its military in 1948 to fund healthcare and education.",
+    people: "Warm, peace-loving, and environmentally aware. Ticos are gentle and non-confrontational, valuing social harmony.",
+    costOfLiving: "Moderate. Higher than neighbouring Central American states due to eco-taxes and stability, but very affordable compared to North America.",
+    workday: "Starts early around 7:00 AM with fresh tropical fruit and Gallo Pinto, finishing with daylight for outdoor pursuits.",
+    evening: "Watching Pacific ocean sunsets, listening to jungle wildlife, and enjoying community sodas (local family diners).",
+    upsides: [
+      "Over 25% of the national territory is protected national parks.",
+      "Democratic stability and high human development index.",
+      "World-class surfing, rainforests, and year-round green environment."
+    ],
+    downsides: [
+      "Potholed roads and slower transportation between regions.",
+      "High import duties on electronics and cars.",
+      "Rainy season (green season) brings heavy afternoon downpours."
+    ],
+    videos: [
+      { title: "Living in Costa Rica: The Real Truth", channel: "Traveling with Kristin", duration: "16:45", url: "https://www.youtube.com/results?search_query=living+in+costa+rica+real+truth" }
+    ],
+    tags: ["nature", "relaxed", "warm", "coastal", "moderate-cost"],
+    dimensions: {
+      costIndex: 2,
+      climate: 'tropical',
+      transit: 'mixed-transit',
+      convenienceScore: 3,
+      weekendRhythm: 'standard',
+      natureScore: 5,
+      lgbtqTier: 5,
+      religionRole: 'cultural-tradition',
+      foreignerOpenness: 5,
+      paceScore: 2,
+    },
+    realityCheck: "Slow pace of infrastructure maintenance (potholed rural roads), heavy rainy season downpours, and high import tariffs on electronics."
+  },
+  "Greece": {
+    id: "300",
+    name: "Greece",
+    icon: "fa-solid fa-landmark-dome",
+    region: "Southern Europe",
+    tagline: "Turquoise Aegean waters, ancient philosophical roots, Mediterranean diet, and endless blue skies.",
+    cost: "$1,300 – $2,000/mo",
+    wlb: "8.6 / 10",
+    safety: "8.8 / 10",
+    culture: "Passionate, philosophical, and intensely social. Life happens in the open air—around taverna tables, seaside promenades, and island squares.",
+    people: "Genuinely welcoming and hospitable (Philoxenia). Conversation is animated and emotional, and guests are treated like family.",
+    costOfLiving: "One of the most affordable countries in Western/Southern Europe. Fresh olives, feta, seafood, and island rentals offer great value.",
+    workday: "Relaxed morning starts, midday break during summer heat, and productive afternoon sessions.",
+    evening: "Late dinners at 9:30 PM under bougainvillea vines, savoring grilled octopus, tzatziki, and local wine with live rembetiko music.",
+    upsides: [
+      "Thousands of stunning islands with crystal-clear Aegean and Ionian waters.",
+      "Low cost of living and rich historical heritage.",
+      "Warm, sunny Mediterranean climate for over 250 days a year."
+    ],
+    downsides: [
+      "Bureaucracy can be chaotic and paper-heavy.",
+      "Intense summer tourist crowds on popular islands like Santorini and Mykonos.",
+      "Low wages in the domestic economy."
+    ],
+    videos: [
+      { title: "Living in Greece as an Expat: Pros and Cons", channel: "Jordan Simons", duration: "14:15", url: "https://www.youtube.com/results?search_query=living+in+greece+honest+expat+review" }
+    ],
+    tags: ["warm", "coastal", "foodie", "relaxed", "moderate-cost", "europe"],
+    dimensions: {
+      costIndex: 2,
+      climate: 'mild-coastal',
+      transit: 'mixed-transit',
+      convenienceScore: 3,
+      weekendRhythm: 'vibrant-24-7',
+      natureScore: 5,
+      lgbtqTier: 5,
+      religionRole: 'cultural-tradition',
+      foreignerOpenness: 5,
+      paceScore: 2,
+    },
+    realityCheck: "Slow and complicated governmental bureaucracy, intense summer heat and tourist overcrowding in peak months, and modest domestic wages."
+  },
+  "Taiwan": {
+    id: "158",
+    name: "Taiwan",
+    icon: "fa-solid fa-mug-saucer",
+    region: "East Asia",
+    tagline: "World-class night markets, mountain railways, hyper-safe communities, and legendary friendliness.",
+    cost: "$1,400 – $2,200/mo",
+    wlb: "7.8 / 10",
+    safety: "9.7 / 10",
+    culture: "A harmonious fusion of traditional Taiwanese, Hakka, indigenous, and Japanese colonial influences. Food, kindness, and civic responsibility are paramount.",
+    people: "Widely regarded as some of the friendliest and most helpful people on Earth. Strangers will walk blocks out of their way to give directions.",
+    costOfLiving: "Excellent value. High-speed rail is affordable, delicious night market meals cost $3–$6, and public national health insurance (NHI) is world-renowned.",
+    workday: "Industrious and tech-focused, balanced by ubiquitous bubble tea and convenience store breaks.",
+    evening: "Bustling night markets packed with stinky tofu, scallion pancakes, and fresh fruit, followed by thermal hot springs in Beitou.",
+    upsides: [
+      "First country in Asia to legalize marriage equality with vibrant Pride.",
+      "Exceptionally high public safety and world-best universal healthcare.",
+      "Incredible street food and lush mountain nature accessible right from Taipei."
+    ],
+    downsides: [
+      "Humid, muggy summers with seasonal typhoons and earthquakes.",
+      "High housing costs in central Taipei compared to local wages.",
+      "Complex geopolitical tensions."
+    ],
+    videos: [
+      { title: "What Living in Taiwan is Actually Like", channel: "Pro Walk", duration: "17:30", url: "https://www.youtube.com/results?search_query=what+living+in+taiwan+is+actually+like" }
+    ],
+    tags: ["foodie", "safe", "transit", "warm", "energetic"],
+    dimensions: {
+      costIndex: 2,
+      climate: 'tropical',
+      transit: 'walkable-rail',
+      convenienceScore: 5,
+      weekendRhythm: 'vibrant-24-7',
+      natureScore: 5,
+      lgbtqTier: 5,
+      religionRole: 'cultural-tradition',
+      foreignerOpenness: 5,
+      paceScore: 4,
+    },
+    realityCheck: "Intense tropical summer humidity with seasonal typhoon risks, older housing stock lacking modern insulation, and complex geopolitical status."
+  },
+  "Colombia": {
+    id: "170",
+    name: "Colombia",
+    icon: "fa-solid fa-mountain",
+    region: "South America",
+    tagline: "Eternal spring weather, rhythmic salsa energy, dramatic Andes peaks, and welcoming warmth.",
+    cost: "$1,000 – $1,700/mo",
+    wlb: "8.1 / 10",
+    safety: "6.9 / 10",
+    culture: "Vibrant, musical, and expressive. From Caribbean salsa in Cali to Andean coffee culture in the Eje Cafetero, life is lived with rhythm and resilience.",
+    people: "Epitome of warmth, politeness, and joy. Colombians are famously conversational and take pride in showcasing their country's transformation.",
+    costOfLiving: "Very affordable. Fine dining in Medellín or Bogotá costs a fraction of North American prices, and modern high-rise apartments rent for $500–$800/mo.",
+    workday: "Starts early fueled by strong tinto coffee. Warm interpersonal relationships precede business transactions.",
+    evening: "Lively salsa clubs, craft coffee shops in El Poblado, and outdoor plazas buzzing with live music and street snacks.",
+    upsides: [
+      "Medellín offers a year-round temperate 'City of Eternal Spring' climate.",
+      "Remarkable affordability and high standard of living for remote earners.",
+      "Warm, engaging locals making Spanish immersion effortless."
+    ],
+    downsides: [
+      "Safety requires mindfulness ('no dar papaya'—don't flaunt wealth).",
+      "Street noise and pollution in dense urban traffic corridors.",
+      "Bureaucratic banking and visa verification processes."
+    ],
+    videos: [
+      { title: "Living in Medellin, Colombia: Honest Pros and Cons", channel: "Nomad Capitalist", duration: "16:20", url: "https://www.youtube.com/results?search_query=living+in+medellin+colombia+pros+and+cons" }
+    ],
+    tags: ["affordable", "warm", "social", "nature", "energetic"],
+    dimensions: {
+      costIndex: 1,
+      climate: 'warm-sun',
+      transit: 'mixed-transit',
+      convenienceScore: 4,
+      weekendRhythm: 'vibrant-24-7',
+      natureScore: 5,
+      lgbtqTier: 4,
+      religionRole: 'cultural-tradition',
+      foreignerOpenness: 5,
+      paceScore: 4,
+    },
+    realityCheck: "Urban safety requires constant street smarts and situational awareness, domestic flights are needed to cross mountain ranges, and traffic congestion is heavy."
+  },
+  "Indonesia": {
+    id: "360",
+    name: "Indonesia",
+    icon: "fa-solid fa-volcano",
+    region: "Southeast Asia",
+    tagline: "Volcanic islands, tropical surf breaks, spiritual wellness traditions, and rich island cultures.",
+    cost: "$900 – $1,600/mo",
+    wlb: "8.4 / 10",
+    safety: "8.1 / 10",
+    culture: "An archipelago of over 17,000 islands with profound diversity—from Balinese Hindu temple rituals to Javanese arts and coastal seafaring traditions.",
+    people: "Gracious, smiling, and community-minded (Gotong Royong). Respect for elders, visitors, and traditions runs deep.",
+    costOfLiving: "Very affordable. Private villas with pools in Bali rent for $700–$1,200/mo, local warung meals (Nasi Goreng) cost $1.50–$3.",
+    workday: "Relaxed tropical pace, especially in coastal and nomad hubs like Canggu and Ubud, surrounded by lush rice terraces.",
+    evening: "Watching fiery Indian Ocean sunsets at beach clubs, fresh seafood beach barbecues, and yoga or acoustic sessions.",
+    upsides: [
+      "Incredible tropical nature, world-class surfing, and diving spots.",
+      "High affordability allowing villa living and personal wellness.",
+      "Vibrant global remote worker and wellness community in Bali."
+    ],
+    downsides: [
+      "Heavy motorbike traffic and narrow infrastructure in popular Bali corridors.",
+      "Conservative national laws outside Bali.",
+      "Variable internet speeds and seasonal tropical monsoon rains."
+    ],
+    videos: [
+      { title: "The Honest Reality of Living in Bali", channel: "Lost LeBlanc", duration: "18:40", url: "https://www.youtube.com/results?search_query=honest+reality+of+living+in+bali+indonesia" }
+    ],
+    tags: ["affordable", "warm", "nature", "coastal", "relaxed"],
+    dimensions: {
+      costIndex: 1,
+      climate: 'tropical',
+      transit: 'motorbike-active',
+      convenienceScore: 5,
+      weekendRhythm: 'vibrant-24-7',
+      natureScore: 5,
+      lgbtqTier: 2,
+      religionRole: 'prominent',
+      foreignerOpenness: 5,
+      paceScore: 3,
+    },
+    realityCheck: "Motorbike traffic bottlenecks in tourist areas, conservative legal reforms at the national level, and heavy tropical monsoon downpours."
   }
 };
 
@@ -412,7 +1012,20 @@ export const REGIONAL_TEMPLATES: Record<string, RegionalTemplate> = {
     workday: "Structured around a balanced 37–40 hour week, generous annual leave (25–30 days), and proper sit-down lunch breaks away from desks.",
     evening: "Unfolds in pedestrianized old towns, neighborhood bistros, parks, and cultural venues well into the evening.",
     upsides: ["Walkable cities and rich historical architecture.", "Strong labor rights, healthcare, and public transit.", "Easy weekend travel to neighboring countries."],
-    downsides: ["Slower administrative and banking bureaucracy.", "Higher income and VAT taxes.", "Seasonal winter gloom in northern latitudes."]
+    downsides: ["Slower administrative and banking bureaucracy.", "Higher income and VAT taxes.", "Seasonal winter gloom in northern latitudes."],
+    dimensions: {
+      costIndex: 3,
+      climate: 'four-seasons',
+      transit: 'walkable-rail',
+      convenienceScore: 3,
+      weekendRhythm: 'standard',
+      natureScore: 4,
+      lgbtqTier: 5,
+      religionRole: 'secular',
+      foreignerOpenness: 4,
+      paceScore: 3,
+    },
+    realityCheck: "Administrative bureaucracy can move slowly, older properties often lack modern air-conditioning, and winter daylight hours shorten dramatically."
   },
   "Asia": {
     cost: "$1,100 – $2,000/mo",
@@ -424,7 +1037,20 @@ export const REGIONAL_TEMPLATES: Record<string, RegionalTemplate> = {
     workday: "Energetic and fast-paced, often starting early with communal lunches and strong digital connectivity.",
     evening: "Bustling night markets, late-night cafes, family park strolls, and lively street food scenes.",
     upsides: ["Incredible culinary diversity and affordability.", "Rapidly modernizing infrastructure and warm hospitality.", "Safe, vibrant evening street life."],
-    downsides: ["Tropical heat, monsoon seasons, or urban air quality.", "Language barriers outside major commercial hubs.", "Dense traffic in megacities."]
+    downsides: ["Tropical heat, monsoon seasons, or urban air quality.", "Language barriers outside major commercial hubs.", "Dense traffic in megacities."],
+    dimensions: {
+      costIndex: 2,
+      climate: 'tropical',
+      transit: 'mixed-transit',
+      convenienceScore: 5,
+      weekendRhythm: 'vibrant-24-7',
+      natureScore: 4,
+      lgbtqTier: 3,
+      religionRole: 'cultural-tradition',
+      foreignerOpenness: 4,
+      paceScore: 4,
+    },
+    realityCheck: "Tropical humidity or monsoon seasons require adjustment, and local language proficiency is often needed outside tourist corridors."
   },
   "Americas": {
     cost: "$1,400 – $2,600/mo",
@@ -436,7 +1062,20 @@ export const REGIONAL_TEMPLATES: Record<string, RegionalTemplate> = {
     workday: "Standard 9-to-5 or 9-to-6 schedules with growing adoption of remote/hybrid work and lively midday lunch spots.",
     evening: "Socializing over local food, live music, neighborhood parks, and weekend road trips into dramatic landscapes.",
     upsides: ["Warm, approachable social culture.", "Vast geographic diversity from mountains to coastlines.", "Shared time zones for remote work across the continent."],
-    downsides: ["Public transit is often limited outside major cities.", "Safety and infrastructure vary significantly by neighborhood.", "Higher reliance on private healthcare or cars in many areas."]
+    downsides: ["Public transit is often limited outside major cities.", "Safety and infrastructure vary significantly by neighborhood.", "Higher reliance on private healthcare or cars in many areas."],
+    dimensions: {
+      costIndex: 2,
+      climate: 'warm-sun',
+      transit: 'mixed-transit',
+      convenienceScore: 3,
+      weekendRhythm: 'vibrant-24-7',
+      natureScore: 5,
+      lgbtqTier: 4,
+      religionRole: 'cultural-tradition',
+      foreignerOpenness: 4,
+      paceScore: 3,
+    },
+    realityCheck: "Public transit is limited outside central metro areas requiring driving, and safety varies notably across neighborhoods."
   },
   "Africa": {
     cost: "$950 – $1,800/mo",
@@ -448,7 +1087,20 @@ export const REGIONAL_TEMPLATES: Record<string, RegionalTemplate> = {
     workday: "Starts early, fueled by local tea or coffee, with strong interpersonal relationship-building before business.",
     evening: "Community gatherings, outdoor dining, live music, and early sunsets near the equator.",
     upsides: ["Extraordinary wildlife, landscapes, and warm human connection.", "Affordable cost of living and growing tech hubs.", "Rich musical and artistic traditions."],
-    downsides: ["Infrastructure reliability (power/transit) varies by city.", "Safety requires local awareness and neighborhood selection.", "Bureaucracy can move at an unhurried pace."]
+    downsides: ["Infrastructure reliability (power/transit) varies by city.", "Safety requires local awareness and neighborhood selection.", "Bureaucracy can move at an unhurried pace."],
+    dimensions: {
+      costIndex: 1,
+      climate: 'warm-sun',
+      transit: 'mixed-transit',
+      convenienceScore: 3,
+      weekendRhythm: 'vibrant-24-7',
+      natureScore: 5,
+      lgbtqTier: 2,
+      religionRole: 'prominent',
+      foreignerOpenness: 4,
+      paceScore: 3,
+    },
+    realityCheck: "Public infrastructure (transport and electricity grids) can face periodic disruptions, and local community guidance is essential for navigation."
   },
   "Oceania": {
     cost: "$2,300 – $3,400/mo",
@@ -460,67 +1112,136 @@ export const REGIONAL_TEMPLATES: Record<string, RegionalTemplate> = {
     workday: "Starts with specialty coffee and wraps up promptly so people can enjoy beaches, parks, and sports.",
     evening: "Coastal sunsets, backyard barbecues, and relaxed neighborhood dining.",
     upsides: ["World-class beaches, nature, and clean air.", "High standard of living and laid-back culture.", "Strong work-life balance."],
-    downsides: ["Long flight distances to Europe, Asia, or the Americas.", "High urban housing costs.", "Strong UV sun exposure."]
+    downsides: ["Long flight distances to Europe, Asia, or the Americas.", "High urban housing costs.", "Strong UV sun exposure."],
+    dimensions: {
+      costIndex: 4,
+      climate: 'mild-coastal',
+      transit: 'mixed-transit',
+      convenienceScore: 3,
+      weekendRhythm: 'standard',
+      natureScore: 5,
+      lgbtqTier: 5,
+      religionRole: 'secular',
+      foreignerOpenness: 5,
+      paceScore: 2,
+    },
+    realityCheck: "High flight costs to visit other continents, expensive consumer goods, and strong solar UV index requiring sun awareness."
   }
 };
 
 export interface QuizOption {
   label: string;
   desc: string;
-  tag: string;
+  value: string;
   icon: string;
+  isNoPreference?: boolean;
 }
 
 export interface QuizQuestion {
+  id: string;
+  stage: number;
+  stageName: string;
   question: string;
   subtitle: string;
+  category: 'budget' | 'lgbtq' | 'transit' | 'convenience' | 'weekend' | 'climate' | 'priority';
   options: QuizOption[];
 }
 
 export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
-    question: "What does your ideal monthly budget look like?",
-    subtitle: "Including rent for a comfortable 1-bedroom apartment, dining out, and daily transit.",
+    id: "budget",
+    stage: 1,
+    stageName: "Essentials & Dealbreakers",
+    question: "What is your monthly budget ceiling?",
+    subtitle: "Includes rent for a comfortable 1-bedroom flat, daily meals out, and transit.",
+    category: "budget",
     options: [
-      { label: "Lean & High-Value ($900 – $1,500/mo)", desc: "Eat out daily, live in a modern condo, stretch every dollar.", tag: "affordable", icon: "fa-solid fa-wallet" },
-      { label: "Balanced Comfort ($1,600 – $2,500/mo)", desc: "Solid infrastructure, great food, moderate European/Asian pricing.", tag: "moderate-cost", icon: "fa-solid fa-scale-balanced" },
-      { label: "Premium & High-Trust ($2,600+/mo)", desc: "Top-tier public services, high salaries, pristine infrastructure.", tag: "high-cost", icon: "fa-solid fa-landmark" }
+      { label: "Lean & High-Value (<$1,500/mo)", desc: "Dine out daily, live in a modern flat, stretch every dollar.", value: "lean", icon: "fa-solid fa-wallet" },
+      { label: "Comfortable Mid-Range ($1,500 – $2,800/mo)", desc: "Solid European or Asian living standard, quality healthcare, dining freedom.", value: "moderate", icon: "fa-solid fa-scale-balanced" },
+      { label: "Premium & High-Income ($2,800+/mo)", desc: "Spotless infrastructure, world-class public services, top salaries.", value: "premium", icon: "fa-solid fa-landmark" },
+      { label: "Flexible / No Preference", desc: "Open to anywhere that fits the lifestyle, regardless of price tier.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
     ]
   },
   {
+    id: "lgbtq",
+    stage: 1,
+    stageName: "Essentials & Dealbreakers",
+    question: "What level of LGBTQ+ rights and social safety is required?",
+    subtitle: "Legal protections and public acceptance vary drastically across borders.",
+    category: "lgbtq",
+    options: [
+      { label: "Must be Legally Protected & Celebrated", desc: "Full marriage equality, anti-discrimination laws, vibrant open community.", value: "protected", icon: "fa-solid fa-rainbow" },
+      { label: "Moderate Acceptance / Safe", desc: "General social tolerance and safety, even if conservative customs linger.", value: "tolerant", icon: "fa-solid fa-shield-heart" },
+      { label: "No Preference / Not a Personal Priority", desc: "Do not filter out countries based on LGBTQ+ policies or social norms.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
+    ]
+  },
+  {
+    id: "transit",
+    stage: 1,
+    stageName: "Essentials & Dealbreakers",
+    question: "How do you want to get around every day?",
+    subtitle: "Commute style dictates daily fitness, freedom, and stress levels.",
+    category: "transit",
+    options: [
+      { label: "Walkable Towns & Punctual Rail", desc: "Hate driving. I want trains, trams, and pedestrian cobblestone avenues.", value: "walkable-rail", icon: "fa-solid fa-train-subway" },
+      { label: "Bustling Street Movement & Cheap Taxis", desc: "Scooters, motorbikes, ride-hailing apps, and dynamic street energy.", value: "motorbike-active", icon: "fa-solid fa-motorcycle" },
+      { label: "Wide Open Roads & Car Freedom", desc: "Scenic road trips, spacious parking, and freedom behind the wheel.", value: "car-dependent", icon: "fa-solid fa-car" },
+      { label: "Flexible / No Preference", desc: "Willing to adapt to whatever transit style the country offers.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
+    ]
+  },
+  {
+    id: "convenience",
+    stage: 2,
+    stageName: "Daily Lifestyle & Rhythms",
+    question: "What is your expectation for daily services and convenience?",
+    subtitle: "Labor costs and cultural norms shape whether you can outsource chores or DIY.",
+    category: "convenience",
+    options: [
+      { label: "Ultra-High Convenience & 24/7 Delivery", desc: "Inexpensive laundry, 24/7 convenience stores, instant delivery apps.", value: "high-convenience", icon: "fa-solid fa-basket-shopping" },
+      { label: "Quiet Self-Reliance & High-Wage DIY Culture", desc: "I enjoy cooking, fixing things myself, and respecting service workers' rest.", value: "diy", icon: "fa-solid fa-screwdriver-wrench" },
+      { label: "No Preference / Comfortable with Both", desc: "Can DIY happily, but also appreciate convenience when available.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
+    ]
+  },
+  {
+    id: "weekend",
+    stage: 2,
+    stageName: "Daily Lifestyle & Rhythms",
+    question: "What should a typical weekend and evening feel like?",
+    subtitle: "From 24/7 neon night markets to sacred Sunday shutdowns.",
+    category: "weekend",
+    options: [
+      { label: "Buzzing Street Life & Open Sundays", desc: "Night markets, vibrant plazas, late cafe culture, active 7-day commerce.", value: "vibrant-24-7", icon: "fa-solid fa-martini-glass-citrus" },
+      { label: "Sacred Sunday Rest & Peaceful Evenings", desc: "Stores shut on Sundays, quiet residential evenings, peaceful silence.", value: "quiet-sunday", icon: "fa-solid fa-bed" },
+      { label: "No Preference / Happy with Either Vibe", desc: "Enjoy lively nights out as well as calm weekends at home.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
+    ]
+  },
+  {
+    id: "climate",
+    stage: 2,
+    stageName: "Daily Lifestyle & Rhythms",
     question: "What climate makes you feel most alive?",
-    subtitle: "Weather shapes daily routines more than almost anything else.",
+    subtitle: "Weather shapes wardrobe, seasonal stamina, and outdoor activities.",
+    category: "climate",
     options: [
-      { label: "Year-Round Warmth & Sunshine", desc: "Tropical breezes, outdoor cafes, never needing a heavy winter coat.", tag: "warm", icon: "fa-solid fa-sun" },
-      { label: "Distinct Four Seasons", desc: "Cherry blossoms, crisp autumn leaves, and cozy snowy winters.", tag: "four-seasons", icon: "fa-solid fa-leaf" },
-      { label: "Coastal & Mild", desc: "Ocean air, dramatic cliffs, and temperate days.", tag: "coastal", icon: "fa-solid fa-water" }
+      { label: "Tropical Warmth & Sunshine", desc: "No winter coats, lush tropical breezes, and year-round outdoor dining.", value: "tropical", icon: "fa-solid fa-sun" },
+      { label: "Crisp Four Seasons & Snowy Winters", desc: "Cherry blossoms, golden autumn foliage, and cozy fireplace winters.", value: "four-seasons", icon: "fa-solid fa-snowflake" },
+      { label: "Mild Coastal Air & Low Humidity", desc: "Temperate ocean breeze, low mugginess, and comfortable year-round days.", value: "mild-coastal", icon: "fa-solid fa-water" },
+      { label: "No Preference / Weather Doesn't Bother Me", desc: "Comfortable in cold, heat, humidity, or seasonal rain.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
     ]
   },
   {
-    question: "How do you want your typical evening to feel?",
-    subtitle: "Picture a random Tuesday at 8:30 PM.",
+    id: "priority",
+    stage: 3,
+    stageName: "Core Priority",
+    question: "What is your #1 non-negotiable priority? (Boosted 2.5×)",
+    subtitle: "The single dealbreaker that turns a foreign country into home.",
+    category: "priority",
     options: [
-      { label: "Buzzing Street Life & Late Dinners", desc: "Night markets, lively plazas, tapas, and neon-lit alleys.", tag: "energetic", icon: "fa-solid fa-martini-glass-citrus" },
-      { label: "Peaceful Nature & Quiet Comfort", desc: "Mountain trails, sunset walks, cozy home evenings, and zero noise.", tag: "nature", icon: "fa-solid fa-tree" },
-      { label: "Hyper-Safe Urban Convenience", desc: "24/7 cafes, spotless trains, and effortless city exploration.", tag: "urban", icon: "fa-solid fa-train" }
-    ]
-  },
-  {
-    question: "What social dynamic suits your personality best?",
-    subtitle: "Every culture has its own unspoken social rhythm.",
-    options: [
-      { label: "Warm, Expressive & Spontaneous", desc: "Easy conversations with strangers, communal dining, lively energy.", tag: "social", icon: "fa-solid fa-champagne-glasses" },
-      { label: "Polite, Respectful & Low-Pressure", desc: "People give you space, value quiet courtesy, and respect boundaries.", tag: "introvert-friendly", icon: "fa-solid fa-mug-saucer" },
-      { label: "Direct, Egalitarian & Structured", desc: "Clear communication, flat hierarchies, and strict work-life boundaries.", tag: "wlb", icon: "fa-solid fa-bicycle" }
-    ]
-  },
-  {
-    question: "What is your #1 non-negotiable priority?",
-    subtitle: "The dealbreaker that makes a place feel like home.",
-    options: [
-      { label: "World-Class Food Culture", desc: "Street food legends, fresh markets, and culinary obsession.", tag: "foodie", icon: "fa-solid fa-utensils" },
-      { label: "Top-Tier Safety & Public Transit", desc: "No car needed, safe walks at 2 AM, punctual trains.", tag: "safe", icon: "fa-solid fa-shield-halved" },
-      { label: "Slow Pace & Work-Life Balance", desc: "Logging off at 5 PM sharp, zero hustle-culture guilt.", tag: "relaxed", icon: "fa-solid fa-spa" }
+      { label: "World-Class Public Safety (Safe at 3 AM)", desc: "Zero fear walking alone at night, pristine civic order and high trust.", value: "safety", icon: "fa-solid fa-shield-halved" },
+      { label: "Culinary Mastery & Fresh Street Markets", desc: "Passionate food culture, fresh markets, and incredible dining at all prices.", value: "foodie", icon: "fa-solid fa-utensils" },
+      { label: "Strict Work-Life Balance & Generous Time Off", desc: "Hard stop at 5 PM, 30 days holiday, and zero hustle-culture guilt.", value: "wlb", icon: "fa-solid fa-spa" },
+      { label: "Immediate Access to Mountains & Nature", desc: "Living near dramatic trails, surf breaks, or alpine wilderness.", value: "nature", icon: "fa-solid fa-tree" },
+      { label: "Balanced Life / No Single Obsession", desc: "Value an overall healthy balance across all areas equally.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
     ]
   }
 ];

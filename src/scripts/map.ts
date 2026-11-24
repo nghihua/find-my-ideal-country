@@ -10,7 +10,22 @@ export function resolveDisplayName(rawName: string): string {
     "United States of America": "United States",
     "Korea": "South Korea",
     "Republic of Korea": "South Korea",
+    "Dem. Rep. Korea": "North Korea",
     "Viet Nam": "Vietnam",
+    "Czech Rep.": "Czech Republic",
+    "Dominican Rep.": "Dominican Republic",
+    "Central African Rep.": "Central African Republic",
+    "Dem. Rep. Congo": "DR Congo",
+    "Congo": "Republic of the Congo",
+    "Bosnia and Herz.": "Bosnia and Herzegovina",
+    "Macedonia": "North Macedonia",
+    "Solomon Is.": "Solomon Islands",
+    "Falkland Is.": "Falkland Islands",
+    "eSwatini": "Eswatini",
+    "W. Sahara": "Western Sahara",
+    "Fr. S. Antarctic Lands": "French Southern Territories",
+    "S. Sudan": "South Sudan",
+    "Eq. Guinea": "Equatorial Guinea",
   };
   return nameMap[rawName] || rawName;
 }
