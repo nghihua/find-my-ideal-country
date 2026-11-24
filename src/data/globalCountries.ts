@@ -1,5 +1,6 @@
 import type { CountryData, LifestyleDimensions, RegionalTemplate } from './countries';
 import { COUNTRY_DATABASE, REGIONAL_TEMPLATES } from './countries';
+import { PRACTICAL_FACTORS } from './practicalFactors';
 
 export interface CountryMetadata {
   name: string;
@@ -678,7 +679,15 @@ export function getCompleteCountryProfile(
 ): CountryData {
   // 1. If curated in Tier 1 database, return directly
   if (COUNTRY_DATABASE[name]) {
-    return COUNTRY_DATABASE[name];
+    const country = COUNTRY_DATABASE[name];
+    return {
+      ...country,
+      practical: {
+        continent: continentFromRegion(country.region),
+        timezoneRegion: timezoneFromRegion(country.region),
+        ...PRACTICAL_FACTORS[name],
+      },
+    };
   }
 
   // 2. If structured metadata exists in GLOBAL_COUNTRY_METADATA, construct rich profile
@@ -717,6 +726,7 @@ export function getCompleteCountryProfile(
       ],
       tags: meta.tags,
       dimensions: meta.dimensions,
+      practical: { continent: continentFromRegion(meta.region), timezoneRegion: timezoneFromRegion(meta.region), ...PRACTICAL_FACTORS[name] },
       realityCheck: meta.realityCheck
     };
   }
@@ -760,8 +770,27 @@ export function getCompleteCountryProfile(
       ...tpl.dimensions,
       climate: estClimate
     },
+    practical: { continent: continentFromRegion(fallbackRegion), timezoneRegion: timezoneFromRegion(fallbackRegion) },
     realityCheck: tpl.realityCheck
   };
+}
+
+function continentFromRegion(region: string): NonNullable<CountryData['practical']>['continent'] | undefined {
+  if (/europe/i.test(region)) return 'Europe';
+  if (/asia|middle east|caucasus|eurasia/i.test(region)) return 'Asia';
+  if (/africa/i.test(region)) return 'Africa';
+  if (/north america|central america|caribbean/i.test(region)) return 'North America';
+  if (/south america/i.test(region)) return 'South America';
+  if (/oceania/i.test(region)) return 'Oceania';
+  return undefined;
+}
+
+function timezoneFromRegion(region: string): 'Americas' | 'Europe/Africa' | 'Asia/Oceania' | undefined {
+  const continent = continentFromRegion(region);
+  if (continent === 'North America' || continent === 'South America') return 'Americas';
+  if (continent === 'Europe' || continent === 'Africa') return 'Europe/Africa';
+  if (continent === 'Asia' || continent === 'Oceania') return 'Asia/Oceania';
+  return undefined;
 }
 
 /**
@@ -771,8 +800,8 @@ export function getAllGlobalCountries(): CountryData[] {
   const map = new Map<string, CountryData>();
   
   // Insert Tier 1
-  for (const [name, data] of Object.entries(COUNTRY_DATABASE)) {
-    map.set(name, data);
+  for (const name of Object.keys(COUNTRY_DATABASE)) {
+    map.set(name, getCompleteCountryProfile(name));
   }
 
   // Insert Tier 2

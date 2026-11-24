@@ -3,6 +3,24 @@ declare const topojson: any;
 
 export let worldFeatures: any[] = [];
 export let svg: any, g: any, projection: any, path: any, zoom: any;
+let activeMatchColors = new Map<string, string>();
+
+/** Apply quiz match colors while preserving the map's existing pan/zoom state. */
+export function setMatchColors(colors: Map<string, string>) {
+  activeMatchColors = colors;
+  document.getElementById('map-legend')?.classList.remove('hidden');
+  if (!g) return;
+  g.selectAll(".country").attr("fill", (feature: any) => {
+    const name = resolveDisplayName(feature.properties.name || "");
+    return activeMatchColors.get(name) || "#f1f3f4";
+  });
+}
+
+export function clearMatchColors() {
+  activeMatchColors.clear();
+  document.getElementById('map-legend')?.classList.add('hidden');
+  if (g) g.selectAll(".country").attr("fill", "var(--color-map-country)");
+}
 
 /** Resolve display name from TopoJSON raw name */
 export function resolveDisplayName(rawName: string): string {
@@ -51,9 +69,15 @@ export async function initWorldMap(
   svg = d3.select("#world-map").attr("viewBox", [0, 0, width, height]);
   g = svg.append("g");
 
+  const isSmallScreen = width < 768;
+  // Portrait screens leave a lot of unused vertical space with a width-fitted globe.
+  // Fit more closely to height there; desktop keeps the full-world framing.
+  const initialScale = isSmallScreen
+    ? Math.max(width / 5.4, height / 3.5)
+    : width / 5.4;
   projection = d3.geoNaturalEarth1()
-    .scale(width / 5.4)
-    .translate([width / 2, height / 1.85]);
+    .scale(initialScale)
+    .translate([width / 2, height / 2]);
 
   path = d3.geoPath().projection(projection);
 
@@ -82,7 +106,7 @@ export async function initWorldMap(
       .join("path")
       .attr("d", path)
       .attr("class", "country")
-      .attr("fill", "var(--color-map-country)")
+      .attr("fill", (feature: any) => activeMatchColors.get(resolveDisplayName(feature.properties.name || "")) || "var(--color-map-country)")
       .attr("stroke", "var(--color-map-stroke)")
       .attr("stroke-width", "0.85px")
       .on("mousemove", (event: MouseEvent, d: any) => {

@@ -11,6 +11,13 @@
     <svg id="world-map" class="w-full h-full hidden"></svg>
 </div>
 
+<div id="map-legend" class="hidden fixed left-4 bottom-5 z-30 rounded-xl border border-[#dadce0] bg-white/95 px-3 py-2 text-[11px] text-[#202124] shadow-lg" aria-label="Quiz match map legend">
+    <div class="font-semibold mb-1">Your country matches</div>
+    <div class="flex items-center gap-2"><i class="w-3 h-3 rounded-sm bg-[#d9f2e3]"></i>Top 5 matches</div>
+    <div class="flex items-center gap-2"><i class="w-3 h-3 rounded-sm bg-[#fff0c2]"></i>80%+ matches</div>
+    <div class="flex items-center gap-2"><i class="w-3 h-3 rounded-sm bg-[#f1f3f4]"></i>Neutral / filtered</div>
+</div>
+
 <!-- Hover Tooltip (Google Maps Location Pill) -->
 <div id="map-tooltip" class="fixed pointer-events-none z-40 hidden bg-white border border-[#dadce0] px-3 py-1.5 rounded-full text-xs font-medium text-[#202124] shadow-[0_2px_8px_rgba(60,64,67,0.2)] transform -translate-x-1/2 -translate-y-full mt-[-10px] flex items-center gap-1.5">
     Country Name

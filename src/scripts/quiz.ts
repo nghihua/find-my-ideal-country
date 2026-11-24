@@ -1,8 +1,9 @@
 import type { CountryData, QuizQuestion } from '../data/countries';
 import { getAllGlobalCountries } from '../data/globalCountries';
+import { setMatchColors } from './map';
 
 let currentQuizStep = 0;
-let userAnswers: Record<string, string> = {};
+let userAnswers: Record<string, string | string[]> = {};
 let QUIZ_QUESTIONS_REF: QuizQuestion[] = [];
 let getCountriesCatalog: () => CountryData[] = () => getAllGlobalCountries();
 let onFlyToCountry: (name: string) => void = () => {};
@@ -62,7 +63,7 @@ function renderQuizStep() {
 
       <div class="space-y-2.5">
         ${q.options.map(opt => {
-          const isSelected = currentSelection === opt.value;
+          const isSelected = Array.isArray(currentSelection) ? currentSelection.includes(opt.value) : currentSelection === opt.value;
           const isNoPref = opt.isNoPreference;
           
           return `
@@ -107,6 +108,7 @@ function renderQuizStep() {
           </button>
         </div>
       ` : ''}
+      ${q.id === 'continent' ? '<div class="space-y-2"><button id="continue-region-btn" class="w-full py-3 rounded-full bg-[#1a73e8] text-white">Continue with selected continents</button><button id="skip-practical-btn" class="w-full py-2 text-xs text-[#5f6368] hover:text-[#1a73e8]">Skip optional practical filters</button></div>' : ''}
     </div>
   `;
 
@@ -115,9 +117,24 @@ function renderQuizStep() {
     btn.addEventListener('click', () => handleQuizAnswer(q.id, btn.dataset.quizValue!));
   });
   document.getElementById('prev-quiz-btn')?.addEventListener('click', prevQuizStep);
+  document.getElementById('continue-region-btn')?.addEventListener('click', () => { currentQuizStep++; renderQuizStep(); });
+  document.getElementById('skip-practical-btn')?.addEventListener('click', () => {
+    currentQuizStep = Math.max(0, QUIZ_QUESTIONS_REF.findIndex(question => question.id === 'visaPath'));
+    renderQuizStep();
+  });
 }
 
 function handleQuizAnswer(questionId: string, value: string) {
+  if (questionId === 'continent') {
+    const selected = Array.isArray(userAnswers.continent) ? [...userAnswers.continent] : [];
+    if (value === 'all') userAnswers.continent = ['all'];
+    else {
+      const withoutAll = selected.filter((item: string) => item !== 'all');
+      userAnswers.continent = withoutAll.includes(value) ? withoutAll.filter((item: string) => item !== value) : [...withoutAll, value];
+    }
+    renderQuizStep();
+    return;
+  }
   userAnswers[questionId] = value;
   
   if (currentQuizStep < QUIZ_QUESTIONS_REF.length - 1) {
@@ -154,6 +171,10 @@ function calculateQuizResult() {
   const eligibleCountries = allCountries.filter(c => {
     const dim = c.dimensions;
     if (!dim) return true;
+    const region = c.practical?.continent || inferContinent(c.region);
+    if (Array.isArray(userAnswers.continent) && !userAnswers.continent.includes('all') && userAnswers.continent.length && region && !userAnswers.continent.includes(region)) return false;
+    const tz = c.practical?.timezoneRegion || (region === 'North America' || region === 'South America' ? 'Americas' : region === 'Europe' || region === 'Africa' ? 'Europe/Africa' : region ? 'Asia/Oceania' : undefined);
+    if (userAnswers.timezoneOverlap && userAnswers.timezoneOverlap !== 'all' && tz && tz !== userAnswers.timezoneOverlap) return false;
 
     // LGBTQ+ Filter
     if (userAnswers['lgbtq'] === 'protected' && dim.lgbtqTier < 4) {
@@ -180,7 +201,7 @@ function calculateQuizResult() {
   });
 
   // Fallback if filters were too restrictive
-  const candidates = eligibleCountries.length >= 3 ? eligibleCountries : allCountries;
+  const candidates = eligibleCountries;
 
   // 2. Phase 2: Multi-Dimensional Soft Scoring
   candidates.forEach(country => {
@@ -357,13 +378,49 @@ function calculateQuizResult() {
       }
     }
 
-    // Foreigner openness baseline bonus
+    // Include the baseline openness score in the denominator for a truthful percentage.
+    maxPossible += 4;
     totalScore += dim.foreignerOpenness * 0.8;
 
+    const practical = country.practical;
+    if (userAnswers.visaPath && userAnswers.visaPath !== 'no-preference' && practical) {
+      const route = practical.visaRoutes?.[userAnswers.visaPath as 'remote' | 'mobility' | 'sponsored'];
+      if (route === 'available' || route === 'limited') {
+        maxPossible += 10;
+        const points = route === 'available' ? 10 : 6;
+        totalScore += points;
+        if (points === 10) reasons.push('An official route exists for this relocation path; eligibility still depends on your circumstances');
+      } else if (practical.visaFit && practical.visaFit !== 'unknown') {
+        maxPossible += 10;
+        totalScore += practical.visaFit === 'easy' ? 10 : practical.visaFit === 'moderate' ? 6 : 2;
+      }
+    }
+    if (userAnswers.languageComfort && userAnswers.languageComfort !== 'no-preference' && practical?.englishEase) {
+      maxPossible += 10;
+      totalScore += userAnswers.languageComfort === 'english' ? practical.englishEase * 2 : (6 - practical.englishEase) * 2;
+    }
+    if (userAnswers.healthcarePreference && userAnswers.healthcarePreference !== 'no-preference' && practical?.healthcare && practical.healthcare !== 'unknown') {
+      maxPossible += 8;
+      const preference = userAnswers.healthcarePreference;
+      totalScore += practical.healthcare === preference ? 8 : practical.healthcare === 'mixed' ? 5 : 2;
+    }
+    if (userAnswers.taxPreference && userAnswers.taxPreference !== 'no-preference' && practical?.taxProfile && practical.taxProfile !== 'unknown') {
+      maxPossible += 8;
+      totalScore += practical.taxProfile === userAnswers.taxPreference ? 8 : practical.taxProfile === 'mixed' ? 5 : 2;
+    }
+    if (userAnswers.environmentPreference && userAnswers.environmentPreference !== 'no-preference' && practical) {
+      const indicators = [practical.tapWater, practical.airQuality, practical.hazardLevel];
+      const known = indicators.filter(value => value && value !== 'unknown');
+      const issues = Number(practical.tapWater === 'regional' || practical.tapWater === 'generally-not-potable') + Number(practical.airQuality === 'seasonal-issues' || practical.airQuality === 'frequent-issues') + Number(practical.hazardLevel === 'higher');
+      if (known.length) {
+        const knownWeight = 8 / indicators.length;
+        maxPossible += knownWeight * known.length;
+        totalScore += userAnswers.environmentPreference === 'lower' ? knownWeight * (known.length - issues) : knownWeight * known.length;
+      }
+    }
+
     // Calculate normalized percentage
-    const matchPercent = maxPossible > 0 
-      ? Math.min(98, Math.max(76, Math.round((totalScore / maxPossible) * 100)))
-      : 92;
+    const matchPercent = maxPossible > 0 ? Math.min(100, Math.round((totalScore / maxPossible) * 100)) : 0;
 
     scoredCountries.push({
       country,
@@ -377,11 +434,45 @@ function calculateQuizResult() {
   // Sort descending by score
   scoredCountries.sort((a, b) => b.score - a.score);
 
+  const colors = new Map<string, string>();
+  scoredCountries.forEach((item, index) => colors.set(item.country.name, index < 5 ? '#d9f2e3' : item.matchPercent >= 80 ? '#fff0c2' : '#f1f3f4'));
+  setMatchColors(colors);
+  if (!scoredCountries.length) {
+    document.getElementById('quiz-body')!.innerHTML = '<p>No destinations match those filters. Retake the quiz and relax one or more dealbreakers.</p>';
+    return;
+  }
+
   const bestMatch = scoredCountries[0];
   const runnerUp = scoredCountries[1] || bestMatch;
   const wildcard = scoredCountries.find((item, idx) => idx > 1 && item.country.region !== bestMatch.country.region) || scoredCountries[2] || runnerUp;
 
   renderResultsView(bestMatch, runnerUp, wildcard);
+}
+
+function inferContinent(region: string): string | undefined {
+  if (/europe/i.test(region)) return 'Europe';
+  if (/asia|middle east|caucasus|eurasia/i.test(region)) return 'Asia';
+  if (/africa/i.test(region)) return 'Africa';
+  if (/north america|central america|caribbean/i.test(region)) return 'North America';
+  if (/south america/i.test(region)) return 'South America';
+  if (/oceania/i.test(region)) return 'Oceania';
+  return undefined;
+}
+
+function readableFactor(value?: string): string {
+  return value ? value.replace(/-/g, ' ').replace(/\b\w/g, letter => letter.toUpperCase()) : 'Not sourced';
+}
+
+function summarizeTradeoff(a: CountryData, b: CountryData): string {
+  const lowerCost = a.dimensions.costIndex <= b.dimensions.costIndex ? a : b;
+  const higherCost = lowerCost === a ? b : a;
+  const costNote = a.dimensions.costIndex === b.dimensions.costIndex
+    ? 'Similar cost tiers'
+    : `${lowerCost.name} is in a lower cost tier; ${higherCost.name} costs more`;
+  const transitNote = a.dimensions.transit === b.dimensions.transit
+    ? `Both have ${readableFactor(a.dimensions.transit).toLowerCase()}`
+    : `${a.name}: ${readableFactor(a.dimensions.transit)}; ${b.name}: ${readableFactor(b.dimensions.transit)}`;
+  return `${costNote}. ${transitNote}.`;
 }
 
 function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard: ScoredCountry) {
@@ -475,6 +566,29 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
       </div>
 
       <div class="text-center pt-1">
+        <div class="flex flex-wrap gap-2 justify-center mb-3">
+          <button id="compare-btn" class="text-xs px-3 py-2 rounded-full border border-[#dadce0]">Compare top two</button>
+          <button id="share-card-btn" class="text-xs px-3 py-2 rounded-full border border-[#dadce0]">Download persona card</button>
+          <button id="explore-results-btn" class="text-xs px-3 py-2 rounded-full bg-[#e8f0fe] text-[#1a73e8]">Explore all matches on map</button>
+        </div>
+        <div id="comparison-card" class="hidden text-left bg-[#f8f9fa] border border-[#dadce0] rounded-2xl p-4 mb-3">
+          <h4 class="font-medium text-sm mb-2">${c.name} vs. ${runner.country.name}</h4>
+          <div class="grid grid-cols-3 gap-2 text-xs"><b>Factor</b><b>${c.name}</b><b>${runner.country.name}</b>
+            <span>Monthly cost</span><span>${c.cost}</span><span>${runner.country.cost}</span>
+            <span>Transit</span><span>${readableFactor(c.dimensions.transit)}</span><span>${readableFactor(runner.country.dimensions.transit)}</span>
+            <span>Sunday rhythm</span><span>${readableFactor(c.dimensions.weekendRhythm)}</span><span>${readableFactor(runner.country.dimensions.weekendRhythm)}</span>
+            <span>Healthcare</span><span>${readableFactor(c.practical?.healthcare)}</span><span>${readableFactor(runner.country.practical?.healthcare)}</span>
+            <span>Visa route</span><span>${c.practical?.visaRoutes?.[userAnswers.visaPath as 'remote' | 'mobility' | 'sponsored'] || c.practical?.visaFit || 'Not sourced'}</span><span>${runner.country.practical?.visaRoutes?.[userAnswers.visaPath as 'remote' | 'mobility' | 'sponsored'] || runner.country.practical?.visaFit || 'Not sourced'}</span>
+            <span>Tax profile</span><span>${readableFactor(c.practical?.taxProfile)}</span><span>${readableFactor(runner.country.practical?.taxProfile)}</span>
+            <span>Tap water</span><span>${readableFactor(c.practical?.tapWater)}</span><span>${readableFactor(runner.country.practical?.tapWater)}</span>
+            <span>Air quality</span><span>${readableFactor(c.practical?.airQuality)}</span><span>${readableFactor(runner.country.practical?.airQuality)}</span>
+            <span>Natural hazards</span><span>${readableFactor(c.practical?.hazardLevel)}</span><span>${readableFactor(runner.country.practical?.hazardLevel)}</span>
+            <span>Trade-off</span><span class="col-span-2">${summarizeTradeoff(c, runner.country)}</span>
+            <span>Reality check</span><span>${c.realityCheck}</span><span>${runner.country.realityCheck}</span>
+          </div>
+          <p class="text-[10px] text-[#5f6368] mt-3">Visa route availability is not individual eligibility. Always confirm current requirements with the destination authority.</p>
+          <div class="text-[10px] mt-2 space-y-1">${[...new Set([...(c.practical?.sources || []), ...(runner.country.practical?.sources || [])])].map((source, i) => `<a class="block text-[#1a73e8] underline" href="${source}" target="_blank" rel="noopener noreferrer">Official source ${i + 1}</a>`).join('')}</div>
+        </div>
         <button id="retake-quiz-btn" class="text-xs font-medium text-[#1a73e8] hover:underline">
           Retake Quiz with Different Preferences
         </button>
@@ -485,5 +599,18 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
   document.getElementById('fly-best-btn')!.addEventListener('click', () => onFlyToCountry(c.name));
   document.getElementById('fly-runner-btn')!.addEventListener('click', () => onFlyToCountry(runner.country.name));
   document.getElementById('fly-wildcard-btn')!.addEventListener('click', () => onFlyToCountry(wildcard.country.name));
+  document.getElementById('explore-results-btn')!.addEventListener('click', closeQuiz);
+  document.getElementById('compare-btn')!.addEventListener('click', () => document.getElementById('comparison-card')!.classList.toggle('hidden'));
+  document.getElementById('share-card-btn')!.addEventListener('click', async () => {
+    const svgCard = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="100%" height="100%" fill="#e8f0fe"/><text x="70" y="150" font-size="34" font-family="Arial" fill="#5f6368">MY GLOBAL MATCH</text><text x="70" y="280" font-size="72" font-family="Arial" font-weight="bold" fill="#202124">${c.name} · ${best.matchPercent}%</text><text x="70" y="370" font-size="32" font-family="Arial" fill="#1a73e8">The ${c.dimensions.transit === 'walkable-rail' ? 'Car-Free Urbanite' : c.dimensions.transit === 'motorbike-active' ? 'Street-Life Explorer' : 'Global Citizen'} profile</text></svg>`;
+    const file = new File([svgCard], 'global-match.svg', { type: 'image/svg+xml' });
+    const browser = navigator as any;
+    if (browser.share && browser.canShare?.({ files: [file] })) {
+      await browser.share({ title: `My global match: ${c.name}`, text: `${best.matchPercent}% match — ${c.name}`, files: [file] });
+    } else {
+      const link = document.createElement('a'); link.href = URL.createObjectURL(file); link.download = file.name; link.click();
+      window.setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+    }
+  });
   document.getElementById('retake-quiz-btn')!.addEventListener('click', openQuiz);
 }

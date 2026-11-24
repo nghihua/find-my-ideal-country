@@ -70,6 +70,11 @@ function buildDossierHTML(data: CountryData): string {
   const lgbtq = getLgbtqBadge(dim?.lgbtqTier);
   const climate = getClimateBadge(dim?.climate);
   const weekend = getWeekendBadge(dim?.weekendRhythm);
+  const practical = data.practical;
+  const practicalValue = (value?: string) => value ? value.replace(/-/g, ' ').replace(/\b\w/g, letter => letter.toUpperCase()) : 'Not sourced';
+  const hazardSummary = practical?.hazardTypes
+    ? Object.entries(practical.hazardTypes).map(([type, level]) => `${type}: ${level}`).join(', ')
+    : practical?.hazardLevel;
 
   return `
     <!-- Lifestyle Scorecard Strip (Google Travel Metric Card) -->
@@ -133,6 +138,26 @@ function buildDossierHTML(data: CountryData): string {
           </div>
         </div>
       </div>
+    </section>
+
+    <section class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 space-y-3 shadow-[0_1px_2px_rgba(60,64,67,0.1)]">
+      <div class="flex items-center justify-between gap-3">
+        <h3 class="font-display font-medium text-xs uppercase tracking-wider text-[#1a73e8]">Practical relocation factors</h3>
+        <span class="text-[10px] text-[#5f6368]">${practical?.verifiedAt ? `Checked ${practical.verifiedAt}` : 'Data needs sourcing'}</span>
+      </div>
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <span class="text-[#5f6368]">Visa routes</span><span>${practicalValue(practical?.visaRoutes ? Object.entries(practical.visaRoutes).map(([route, status]) => `${route}: ${status}`).join(', ') : practical?.visaFit)}</span>
+        <span class="text-[#5f6368]">Healthcare</span><span>${practicalValue(practical?.healthcare)}</span>
+        <span class="text-[#5f6368]">English independence</span><span>${practicalValue(practical?.englishEase ? `${practical.englishEase}/5` : undefined)}</span>
+        <span class="text-[#5f6368]">Tap water</span><span>${practicalValue(practical?.tapWater)}</span>
+        <span class="text-[#5f6368]">Air quality</span><span>${practicalValue(practical?.airQuality)}</span>
+        <span class="text-[#5f6368]">Natural hazards</span><span>${practicalValue(hazardSummary)}</span>
+        <span class="text-[#5f6368]">Tax profile</span><span>${practicalValue(practical?.taxProfile)}</span>
+      </div>
+      ${practical?.healthcareNote ? `<p class="text-xs text-[#5f6368] leading-relaxed">${practical.healthcareNote}</p>` : ''}
+      ${practical?.tapWaterNote ? `<p class="text-xs text-[#5f6368] leading-relaxed">${practical.tapWaterNote}</p>` : ''}
+      ${practical?.hazardNote ? `<p class="text-xs text-[#5f6368] leading-relaxed">${practical.hazardNote}</p>` : ''}
+      ${practical?.sources?.length ? `<div class="flex flex-wrap gap-x-3 gap-y-1 text-[10px]">${practical.sources.map((source, index) => `<a class="text-[#1a73e8] underline" href="${source}" target="_blank" rel="noopener noreferrer">Source ${index + 1}</a>`).join('')}</div>` : ''}
     </section>
 
     <!-- The Honest Reality Check Section (Google Warning Banner) -->

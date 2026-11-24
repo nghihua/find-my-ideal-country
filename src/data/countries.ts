@@ -23,6 +23,26 @@ export interface LifestyleDimensions {
   paceScore: number; // 1 (slow/rural/aging) to 5 (energetic/youthful/hustle)
 }
 
+/** Practical relocation indicators. Missing values remain unknown instead of being regionally inferred. */
+export interface PracticalFactors {
+  visaFit?: 'easy' | 'moderate' | 'difficult' | 'unknown';
+  visaRoutes?: Partial<Record<'remote' | 'mobility' | 'sponsored', 'available' | 'limited' | 'unknown'>>;
+  healthcare?: 'public' | 'private-required' | 'affordable-private' | 'mixed' | 'unknown';
+  healthcareNote?: string;
+  englishEase?: 1 | 2 | 3 | 4 | 5;
+  tapWater?: 'generally-potable' | 'regional' | 'generally-not-potable' | 'unknown';
+  tapWaterNote?: string;
+  airQuality?: 'good' | 'seasonal-issues' | 'frequent-issues' | 'unknown';
+  hazardLevel?: 'lower' | 'moderate' | 'higher' | 'unknown';
+  hazardTypes?: Partial<Record<'earthquake' | 'tropical-cyclone' | 'flood' | 'coastal-flood' | 'landslide' | 'tsunami' | 'volcano' | 'extreme-heat' | 'water-scarcity' | 'wildfire', 'high' | 'medium' | 'low' | 'very-low' | 'no-hazard'>>;
+  hazardNote?: string;
+  taxProfile?: 'higher-services' | 'lower-territorial' | 'mixed' | 'unknown';
+  continent?: 'Africa' | 'Asia' | 'Europe' | 'North America' | 'South America' | 'Oceania';
+  timezoneRegion?: 'Americas' | 'Europe/Africa' | 'Asia/Oceania';
+  sources?: string[];
+  verifiedAt?: string;
+}
+
 export interface CountryData {
   id: string;
   name: string;
@@ -42,6 +62,7 @@ export interface CountryData {
   videos: Video[];
   tags: string[];
   dimensions: LifestyleDimensions;
+  practical?: PracticalFactors;
   realityCheck: string;
   highlights?: string[];
 }
@@ -1148,6 +1169,74 @@ export interface QuizQuestion {
 }
 
 export const QUIZ_QUESTIONS: QuizQuestion[] = [
+  {
+    id: 'continent', stage: 1, stageName: 'Location & Practical Fit', question: 'Which continent is open to you?',
+    subtitle: 'Select any continents you would consider. Leave everything unselected to include all regions.', category: 'openness',
+    options: [
+      { label: 'Anywhere', desc: 'Keep every region in the results.', value: 'all', icon: 'fa-solid fa-earth-americas', isNoPreference: true },
+      ...['Europe','Asia','Africa','North America','South America','Oceania'].map((region, i) => ({ label: region, desc: `Include ${region} destinations.`, value: region, icon: ['fa-solid fa-landmark','fa-solid fa-torii-gate','fa-solid fa-mountain-sun','fa-solid fa-city','fa-solid fa-leaf','fa-solid fa-water'][i] }))
+    ]
+  },
+  {
+    id: 'timezoneOverlap', stage: 1, stageName: 'Location & Practical Fit', question: 'Where are your clients or collaborators?',
+    subtitle: 'A broad timezone-region filter; countries can span multiple time zones.', category: 'openness',
+    options: [
+      { label: 'No timezone constraint', desc: 'Keep all destinations.', value: 'all', icon: 'fa-solid fa-clock', isNoPreference: true },
+      { label: 'Americas', desc: 'Prefer overlap with the Americas.', value: 'Americas', icon: 'fa-solid fa-clock' },
+      { label: 'Europe or Africa', desc: 'Prefer overlap with Europe or Africa.', value: 'Europe/Africa', icon: 'fa-solid fa-clock' },
+      { label: 'Asia or Oceania', desc: 'Prefer overlap with Asia or Oceania.', value: 'Asia/Oceania', icon: 'fa-solid fa-clock' }
+    ]
+  },
+  {
+    id: 'healthcarePreference', stage: 1, stageName: 'Location & Practical Fit', question: 'What healthcare setup suits you?',
+    subtitle: 'Country-level model only; coverage and costs depend on eligibility and location.', category: 'openness',
+    options: [
+      { label: 'Public or universal coverage', desc: 'Prefer broad public coverage.', value: 'public', icon: 'fa-solid fa-hospital' },
+      { label: 'Affordable private clinics', desc: 'I’m comfortable paying directly for care.', value: 'affordable-private', icon: 'fa-solid fa-stethoscope' },
+      { label: 'I can budget for private insurance', desc: 'Private coverage is acceptable.', value: 'private-required', icon: 'fa-solid fa-shield-heart' },
+      { label: 'No preference', desc: 'Don’t score healthcare fit.', value: 'no-preference', icon: 'fa-solid fa-asterisk', isNoPreference: true }
+    ]
+  },
+  {
+    id: 'taxPreference', stage: 1, stageName: 'Location & Practical Fit', question: 'How do you weigh taxes and public services?',
+    subtitle: 'Tax depends on residency, income source, and personal circumstances.', category: 'openness',
+    options: [
+      { label: 'Higher taxes with broad public services', desc: 'I value the service package.', value: 'higher-services', icon: 'fa-solid fa-building-columns' },
+      { label: 'Lower-tax or territorial systems', desc: 'I prioritize financial flexibility.', value: 'lower-territorial', icon: 'fa-solid fa-coins' },
+      { label: 'No preference', desc: 'Don’t score tax fit.', value: 'no-preference', icon: 'fa-solid fa-asterisk', isNoPreference: true }
+    ]
+  },
+  {
+    id: 'environmentPreference', stage: 1, stageName: 'Location & Practical Fit', question: 'How much environmental variability can you accept?',
+    subtitle: 'Water, air quality, and hazards vary within countries and by season.', category: 'openness',
+    options: [
+      { label: 'Prefer lower exposure', desc: 'I favor places with fewer common environmental disruptions.', value: 'lower', icon: 'fa-solid fa-leaf' },
+      { label: 'I can adapt to regional or seasonal issues', desc: 'I’m comfortable checking local conditions.', value: 'flexible', icon: 'fa-solid fa-cloud-sun' },
+      { label: 'No preference', desc: 'Don’t score environmental fit.', value: 'no-preference', icon: 'fa-solid fa-asterisk', isNoPreference: true }
+    ]
+  },
+  {
+    id: "visaPath", stage: 1, stageName: "Essentials & Dealbreakers",
+    question: "What relocation route could you realistically use?",
+    subtitle: "This is a broad fit estimate; eligibility depends on your passport, age, income, and work situation.", category: "career",
+    options: [
+      { label: "Remote-work / digital-nomad route", desc: "I expect to keep working remotely.", value: "remote", icon: "fa-solid fa-laptop" },
+      { label: "Working holiday, study, or youth mobility", desc: "I may qualify for a temporary work or study route.", value: "mobility", icon: "fa-solid fa-plane" },
+      { label: "Local job with employer sponsorship", desc: "I plan to find eligible local employment.", value: "sponsored", icon: "fa-solid fa-briefcase" },
+      { label: "Citizenship / permanent residence", desc: "I already have a right to live there.", value: "residency", icon: "fa-solid fa-id-card" },
+      { label: "Not sure / no preference", desc: "Keep this as information, not a filter.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
+    ]
+  },
+  {
+    id: "languageComfort", stage: 1, stageName: "Essentials & Dealbreakers",
+    question: "How comfortable are you living with a language barrier?",
+    subtitle: "Think about appointments, banking, housing, and everyday errands.", category: "openness",
+    options: [
+      { label: "I need day-one independence in English", desc: "English should work for most daily tasks.", value: "english", icon: "fa-solid fa-language" },
+      { label: "I’m excited to learn the local language", desc: "I can manage with translation help while learning.", value: "learn", icon: "fa-solid fa-book-open" },
+      { label: "No preference", desc: "Language should not change my match.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
+    ]
+  },
   {
     id: "budget",
     stage: 1,
