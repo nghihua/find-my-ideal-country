@@ -3,6 +3,7 @@ import { COUNTRY_DATABASE, REGIONAL_TEMPLATES } from './countries';
 import { COUNTRY_CLIMATE_PROFILES, estimateClimateProfile } from './climateProfiles';
 import { PRACTICAL_FACTORS } from './practicalFactors';
 import { DAILY_RHYTHM } from './dailyRhythm';
+import { PROFILE_SECTIONS } from './profileSections';
 
 export interface CountryMetadata {
   name: string;
@@ -893,6 +894,7 @@ export function getCompleteCountryProfile(
   if (GLOBAL_COUNTRY_METADATA[name]) {
     const meta = GLOBAL_COUNTRY_METADATA[name];
     const rhythm = DAILY_RHYTHM[name];
+    const sections = PROFILE_SECTIONS[name];
     return {
       id: name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
       name: meta.name,
@@ -902,17 +904,17 @@ export function getCompleteCountryProfile(
       cost: meta.cost,
       wlb: meta.wlb,
       safety: meta.safety,
-      culture: `Living in ${meta.name} offers immersion into ${meta.region}'s rich social traditions. ${meta.tagline}`,
-      people: `Residents of ${meta.name} value community, local hospitality, and pride in their cultural heritage.`,
-      costOfLiving: `In ${meta.name}, everyday living averages ${meta.cost}, with local dining, transport, and amenities offering good lifestyle balance.`,
+      culture: sections?.culture ?? `Living in ${meta.name} offers immersion into ${meta.region}'s rich social traditions. ${meta.tagline}`,
+      people: sections?.people ?? `Residents of ${meta.name} value community, local hospitality, and pride in their cultural heritage.`,
+      costOfLiving: sections?.costOfLiving ?? `In ${meta.name}, everyday living averages ${meta.cost}, with local dining, transport, and amenities offering good lifestyle balance.`,
       workday: rhythm?.workday ?? `A typical workday in ${meta.name} reflects regional commercial rhythms, balanced by family and social priorities.`,
       evening: rhythm?.evening ?? `Evenings in ${meta.name} bring people together at local gathering spots, markets, and neighborhood eateries.`,
-      upsides: [
+      upsides: sections?.upsides ?? [
         `Authentic cultural immersion in ${meta.region}.`,
         `Balanced quality of life with accessible daily amenities.`,
         `Direct access to regional nature and distinctive landscapes.`
       ],
-      downsides: [
+      downsides: sections?.downsides ?? [
         meta.realityCheck,
         `Language immersion is beneficial for deeper integration.`
       ],
@@ -935,6 +937,7 @@ export function getCompleteCountryProfile(
   // 3. Fallback: Algorithmic derivation based on region and latitude
   const tpl = REGIONAL_TEMPLATES[fallbackRegion] || REGIONAL_TEMPLATES["Europe"];
   const rhythm = DAILY_RHYTHM[name];
+  const sections = PROFILE_SECTIONS[name];
   const [lon, lat] = centroid;
   
   // Estimate climate from latitude
@@ -953,15 +956,15 @@ export function getCompleteCountryProfile(
     cost: tpl.cost,
     wlb: tpl.wlb,
     safety: tpl.safety,
-    culture: `Living in ${name} offers an authentic immersion into ${fallbackRegion}'s cultural fabric. ${tpl.culture}`,
-    people: `Residents of ${name} take strong pride in their heritage and local hospitality. ${tpl.people}`,
-    costOfLiving: `In ${name}, day-to-day affordability averages ${tpl.cost}. ${tpl.costOfLiving}`,
+    culture: sections?.culture ?? `Living in ${name} offers an authentic immersion into ${fallbackRegion}'s cultural fabric. ${tpl.culture}`,
+    people: sections?.people ?? `Residents of ${name} take strong pride in their heritage and local hospitality. ${tpl.people}`,
+    costOfLiving: sections?.costOfLiving ?? `In ${name}, day-to-day affordability averages ${tpl.cost}. ${tpl.costOfLiving}`,
     workday: rhythm?.workday
       ?? `A typical weekday in ${name} blends local business customs with modern routines. ${tpl.workday}`,
     evening: rhythm?.evening
       ?? `When the workday winds down in ${name}, locals head out to neighborhood gathering spots. ${tpl.evening}`,
-    upsides: tpl.upsides,
-    downsides: tpl.downsides,
+    upsides: sections?.upsides ?? tpl.upsides,
+    downsides: sections?.downsides ?? tpl.downsides,
     videos: [
       {
         title: `What Living in ${name} is Actually Like (Local & Expat Stories)`,
