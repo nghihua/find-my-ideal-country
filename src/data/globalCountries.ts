@@ -2,6 +2,7 @@ import type { CountryData, LifestyleDimensions, RegionalTemplate } from './count
 import { COUNTRY_DATABASE, REGIONAL_TEMPLATES } from './countries';
 import { COUNTRY_CLIMATE_PROFILES, estimateClimateProfile } from './climateProfiles';
 import { PRACTICAL_FACTORS } from './practicalFactors';
+import { DAILY_RHYTHM } from './dailyRhythm';
 
 export interface CountryMetadata {
   name: string;
@@ -891,6 +892,7 @@ export function getCompleteCountryProfile(
   // 2. If structured metadata exists in GLOBAL_COUNTRY_METADATA, construct rich profile
   if (GLOBAL_COUNTRY_METADATA[name]) {
     const meta = GLOBAL_COUNTRY_METADATA[name];
+    const rhythm = DAILY_RHYTHM[name];
     return {
       id: name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
       name: meta.name,
@@ -903,8 +905,8 @@ export function getCompleteCountryProfile(
       culture: `Living in ${meta.name} offers immersion into ${meta.region}'s rich social traditions. ${meta.tagline}`,
       people: `Residents of ${meta.name} value community, local hospitality, and pride in their cultural heritage.`,
       costOfLiving: `In ${meta.name}, everyday living averages ${meta.cost}, with local dining, transport, and amenities offering good lifestyle balance.`,
-      workday: `A typical workday in ${meta.name} reflects regional commercial rhythms, balanced by family and social priorities.`,
-      evening: `Evenings in ${meta.name} bring people together at local gathering spots, markets, and neighborhood eateries.`,
+      workday: rhythm?.workday ?? `A typical workday in ${meta.name} reflects regional commercial rhythms, balanced by family and social priorities.`,
+      evening: rhythm?.evening ?? `Evenings in ${meta.name} bring people together at local gathering spots, markets, and neighborhood eateries.`,
       upsides: [
         `Authentic cultural immersion in ${meta.region}.`,
         `Balanced quality of life with accessible daily amenities.`,
@@ -932,6 +934,7 @@ export function getCompleteCountryProfile(
 
   // 3. Fallback: Algorithmic derivation based on region and latitude
   const tpl = REGIONAL_TEMPLATES[fallbackRegion] || REGIONAL_TEMPLATES["Europe"];
+  const rhythm = DAILY_RHYTHM[name];
   const [lon, lat] = centroid;
   
   // Estimate climate from latitude
@@ -953,12 +956,10 @@ export function getCompleteCountryProfile(
     culture: `Living in ${name} offers an authentic immersion into ${fallbackRegion}'s cultural fabric. ${tpl.culture}`,
     people: `Residents of ${name} take strong pride in their heritage and local hospitality. ${tpl.people}`,
     costOfLiving: `In ${name}, day-to-day affordability averages ${tpl.cost}. ${tpl.costOfLiving}`,
-    workday: name === "Sweden"
-      ? "Many office days begin around 8 or 9, with focused work, relatively flat team discussions, and an unhurried lunch. Fika—coffee and something small to eat with colleagues—is a familiar pause, often shared rather than taken at a desk. Flexible hours and hybrid work are common in some sectors, and people generally try to finish in time for life outside work, though routines vary by job and region."
-      : `A typical weekday in ${name} blends local business customs with modern routines. ${tpl.workday}`,
-    evening: name === "Sweden"
-      ? "After work, the evening often shifts toward home: cooking dinner, meeting a friend for a walk or coffee, or spending time with family. In warmer, brighter months, parks, waterfront paths, and outdoor cafés stay lively; in winter, evenings tend to be cozier and more home-centered. A weeknight may include a gym visit or a casual meal out, while fika and social plans are usually arranged ahead rather than spontaneous."
-      : `When the workday winds down in ${name}, locals head out to neighborhood gathering spots. ${tpl.evening}`,
+    workday: rhythm?.workday
+      ?? `A typical weekday in ${name} blends local business customs with modern routines. ${tpl.workday}`,
+    evening: rhythm?.evening
+      ?? `When the workday winds down in ${name}, locals head out to neighborhood gathering spots. ${tpl.evening}`,
     upsides: tpl.upsides,
     downsides: tpl.downsides,
     videos: [
