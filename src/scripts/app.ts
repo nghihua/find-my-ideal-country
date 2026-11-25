@@ -4,6 +4,7 @@ import { getCompleteCountryProfile, getAllGlobalCountries } from '../data/global
 import {
   initWorldMap,
   zoomToFeature,
+  zoomToCountryPoint,
   resetZoomTransform,
   getFallbackRegion,
   resolveDisplayName,
@@ -13,6 +14,7 @@ import {
 import { renderCountryDossier, closeCountryPanel } from './dossier';
 import { initQuiz, openQuiz, closeQuiz } from './quiz';
 import { initSearch } from './search';
+import type { SearchEntry } from './search';
 import { showToast } from './toast';
 import { initAuthorModal } from './author';
 
@@ -33,6 +35,23 @@ function selectCountry(feature: any) {
   renderCountryDossier(profile);
 }
 
+/**
+ * Select a country by display name. Zooms the map when geometry exists; for
+ * catalog-only countries missing from the coarse map geometry (e.g. Singapore,
+ * Andorra), zooms to their real-world coordinates with a dot marker. Returns
+ * whether the map moved.
+ */
+function selectCountryByName(name: string): boolean {
+  const feature = worldFeatures.find((f: any) => resolveDisplayName(f.properties.name || "") === name);
+  if (feature) {
+    selectCountry(feature);
+    return true;
+  }
+  const didZoom = zoomToCountryPoint(name);
+  renderCountryDossier(getCompleteCountryProfile(name));
+  return didZoom;
+}
+
 function resetZoom() {
   resetZoomTransform();
   closeCountryPanel();
@@ -40,19 +59,46 @@ function resetZoom() {
 
 function flyToCountry(countryName: string) {
   closeQuiz();
-  const feature = worldFeatures.find((f: any) => {
-    const n = resolveDisplayName(f.properties.name);
-    return n === countryName;
-  });
-  if (feature) {
-    selectCountry(feature);
-    showToast(`Zooming into ${countryName}...`);
-  } else {
-    // If not on map geometry, still open the country profile
-    const profile = getCompleteCountryProfile(countryName);
-    renderCountryDossier(profile);
-    showToast(`Showing profile for ${countryName}`);
+  const didZoom = selectCountryByName(countryName);
+  showToast(didZoom ? `Zooming into ${countryName}...` : `Showing profile for ${countryName}`);
+}
+
+let searchEntriesCache: { featuresLength: number; entries: SearchEntry[] } | null = null;
+
+/**
+ * Searchable names = the full country catalog (Tier 1 + Tier 2) plus any map-only
+ * territories, with raw TopoJSON names kept as searchable aliases. Rebuilt once the
+ * map finishes loading (worldFeatures grows from [] to its full size).
+ */
+function getSearchEntries(): SearchEntry[] {
+  if (searchEntriesCache?.featuresLength === worldFeatures.length) {
+    return searchEntriesCache.entries;
   }
+
+  const rawByDisplayName = new Map<string, string>();
+  for (const f of worldFeatures) {
+    const rawName: string = f.properties.name || "";
+    const displayName = resolveDisplayName(rawName);
+    if (displayName && !rawByDisplayName.has(displayName)) {
+      rawByDisplayName.set(displayName, rawName);
+    }
+  }
+
+  const entries: SearchEntry[] = [];
+  const seen = new Set<string>();
+  for (const country of getAllGlobalCountries()) {
+    entries.push({ name: country.name, icon: country.icon, rawName: rawByDisplayName.get(country.name) });
+    seen.add(country.name);
+  }
+  for (const [displayName, rawName] of rawByDisplayName) {
+    if (!seen.has(displayName)) {
+      entries.push({ name: displayName, rawName });
+      seen.add(displayName);
+    }
+  }
+
+  searchEntriesCache = { featuresLength: worldFeatures.length, entries };
+  return entries;
 }
 
 window.addEventListener('load', async () => {
@@ -77,7 +123,7 @@ window.addEventListener('load', async () => {
     return catalog;
   }, flyToCountry);
 
-  initSearch(() => worldFeatures, selectCountry);
+  initSearch(getSearchEntries, selectCountryByName);
 
   await initWorldMap(selectCountry, resetZoom);
 

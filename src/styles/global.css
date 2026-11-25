@@ -115,6 +115,15 @@ body {
     stroke-width: 1.8px !important;
 }
 
+/* Search Dropdown — Keyboard-Highlighted Option (mirrors the hover state) */
+.search-option-active {
+    background-color: var(--color-hover-card);
+}
+.search-option-active .search-option-icon {
+    background-color: var(--color-primary-container);
+    color: var(--color-primary);
+}
+
 /* Google Material Elevated Card Surfaces */
 .paper-card {
     background-color: var(--color-paper-50);
