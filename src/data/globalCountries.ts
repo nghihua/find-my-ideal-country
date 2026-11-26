@@ -227,6 +227,29 @@ export const GLOBAL_COUNTRY_METADATA: Record<string, CountryMetadata> = {
     realityCheck: "Coastal towns turn quiet and shutter services during off-season winter months, and domestic wages remain low.",
     tags: ["coastal", "warm", "nature", "europe", "relaxed"]
   },
+  "Greenland": {
+    name: "Greenland",
+    region: "Northern Europe",
+    icon: "fa-solid fa-igloo",
+    tagline: "Arctic fjord sailing, Inuit hunting heritage, a village-scale capital, and light that runs the calendar.",
+    cost: "$2,600 – $3,900/mo",
+    wlb: "8.0 / 10",
+    safety: "8.6 / 10",
+    dimensions: {
+      costIndex: 4,
+      climate: 'cold-winter',
+      transit: 'car-dependent',
+      convenienceScore: 2,
+      weekendRhythm: 'quiet-sunday',
+      natureScore: 5,
+      lgbtqTier: 4,
+      religionRole: 'secular',
+      foreignerOpenness: 3,
+      paceScore: 2,
+    },
+    realityCheck: "A winter of short grey days, Danish-plus prices on nearly everything imported, and towns linked only by air and sea.",
+    tags: ["nature", "adventure", "cold-winter", "high-cost", "europe"]
+  },
   "Iceland": {
     name: "Iceland",
     region: "Northern Europe",
@@ -759,6 +782,7 @@ export const GLOBAL_COUNTRY_METADATA: Record<string, CountryMetadata> = {
   "Dominican Republic": { name: "Dominican Republic", region: "Caribbean", icon: "fa-solid fa-globe-asia", tagline: "Warm coastal living, lively music, and a strong social culture.", cost: "$1,000 – $2,000/mo", wlb: "6.0 / 10", safety: "5.0 / 10", dimensions: { costIndex: 3, climate: 'tropical', transit: 'car-dependent', convenienceScore: 3, weekendRhythm: 'standard', natureScore: 5, lgbtqTier: 2, religionRole: 'cultural-tradition', foreignerOpenness: 4, paceScore: 3 }, realityCheck: "Heat, hurricane season, and service access vary by region.", tags: ["culture", "nature", "food", "coastal"] },
   "Haiti": { name: "Haiti", region: "Caribbean", icon: "fa-solid fa-globe-asia", tagline: "A proud artistic and cultural heritage shaped by a resilient community life.", cost: "$700 – $1,500/mo", wlb: "6.0 / 10", safety: "5.0 / 10", dimensions: { costIndex: 2, climate: 'tropical', transit: 'car-dependent', convenienceScore: 3, weekendRhythm: 'standard', natureScore: 5, lgbtqTier: 2, religionRole: 'prominent', foreignerOpenness: 2, paceScore: 3 }, realityCheck: "Security, infrastructure, and healthcare access are highly variable; review current official guidance.", tags: ["culture", "nature", "food", "coastal"] },
   "Cuba": { name: "Cuba", region: "Caribbean", icon: "fa-solid fa-globe-asia", tagline: "Historic streets, music, and a distinctive community-centered daily rhythm.", cost: "$800 – $1,700/mo", wlb: "6.0 / 10", safety: "5.0 / 10", dimensions: { costIndex: 2, climate: 'tropical', transit: 'mixed-transit', convenienceScore: 3, weekendRhythm: 'standard', natureScore: 5, lgbtqTier: 2, religionRole: 'cultural-tradition', foreignerOpenness: 3, paceScore: 3 }, realityCheck: "Supply availability and access to payments and services can be constrained.", tags: ["culture", "nature", "food", "coastal"] },
+  "Puerto Rico": { name: "Puerto Rico", region: "Caribbean", icon: "fa-solid fa-castle", tagline: "Five-century fortress streets, salsa and reggaetón, a rainforest over the beach, and US mail at the door.", cost: "$1,700 – $2,900/mo", wlb: "7.0 / 10", safety: "6.0 / 10", dimensions: { costIndex: 3, climate: 'tropical', transit: 'car-dependent', convenienceScore: 4, weekendRhythm: 'vibrant-24-7', natureScore: 4, lgbtqTier: 4, religionRole: 'prominent', foreignerOpenness: 4, paceScore: 3 }, realityCheck: "Recurring blackouts, storm season every autumn, and metro-area crime rates well above the US mainland's.", tags: ["island", "coastal", "tropical", "us-territory", "food"] },
   "Ecuador": { name: "Ecuador", region: "South America", icon: "fa-solid fa-globe-asia", tagline: "Andes, Pacific coast, and Amazon landscapes within a compact country.", cost: "$900 – $1,800/mo", wlb: "6.0 / 10", safety: "5.0 / 10", dimensions: { costIndex: 2, climate: 'tropical', transit: 'mixed-transit', convenienceScore: 3, weekendRhythm: 'standard', natureScore: 5, lgbtqTier: 2, religionRole: 'cultural-tradition', foreignerOpenness: 3, paceScore: 3 }, realityCheck: "Altitude, climate, and safety conditions change significantly across regions.", tags: ["culture", "nature", "food", "coastal"] },
   "Bolivia": { name: "Bolivia", region: "South America", icon: "fa-solid fa-globe-asia", tagline: "High-altitude cities, dramatic salt flats, and strong Indigenous traditions.", cost: "$700 – $1,500/mo", wlb: "6.0 / 10", safety: "5.0 / 10", dimensions: { costIndex: 2, climate: 'four-seasons', transit: 'mixed-transit', convenienceScore: 3, weekendRhythm: 'standard', natureScore: 5, lgbtqTier: 2, religionRole: 'prominent', foreignerOpenness: 2, paceScore: 3 }, realityCheck: "Altitude and transport access can affect daily routines and health.", tags: ["culture", "nature", "food", "coastal"] },
   "Paraguay": { name: "Paraguay", region: "South America", icon: "fa-solid fa-globe-asia", tagline: "A relaxed inland pace with riverside cities and a strong local culture.", cost: "$700 – $1,400/mo", wlb: "6.0 / 10", safety: "5.0 / 10", dimensions: { costIndex: 2, climate: 'tropical', transit: 'car-dependent', convenienceScore: 3, weekendRhythm: 'standard', natureScore: 5, lgbtqTier: 2, religionRole: 'cultural-tradition', foreignerOpenness: 3, paceScore: 3 }, realityCheck: "Spanish and Guarani are important for everyday integration.", tags: ["culture", "nature", "food", "coastal"] },
@@ -866,6 +890,7 @@ export const GLOBAL_COUNTRY_METADATA: Record<string, CountryMetadata> = {
   "Tonga": { name: "Tonga", region: "Oceania", icon: "fa-solid fa-crown", tagline: "The Pacific's last kingdom: coral atolls, Sunday-quiet traditions, and royal ceremony.", cost: "$800 – $1,500/mo", wlb: "5.5 / 10", safety: "6.5 / 10", dimensions: { costIndex: 2, climate: 'tropical', transit: 'car-dependent', convenienceScore: 2, weekendRhythm: 'quiet-sunday', natureScore: 4, lgbtqTier: 1, religionRole: 'prominent', foreignerOpenness: 3, paceScore: 2 }, realityCheck: "Cyclone exposure, limited inter-island ferries, and constitution-protected Sunday closures.", tags: ["island", "tropical", "quiet", "culture"] },
   "Tuvalu": { name: "Tuvalu", region: "Oceania", icon: "fa-solid fa-globe-asia", tagline: "One of the world's smallest and remotest nations, low-lying and tightly community-knit.", cost: "$800 – $1,400/mo", wlb: "5.0 / 10", safety: "6.0 / 10", dimensions: { costIndex: 2, climate: 'tropical', transit: 'car-dependent', convenienceScore: 1, weekendRhythm: 'quiet-sunday', natureScore: 3, lgbtqTier: 1, religionRole: 'prominent', foreignerOpenness: 3, paceScore: 1 }, realityCheck: "Supply ships are infrequent, internet is limited, and king tides increasingly affect Funafuti.", tags: ["island", "remote", "tropical", "quiet"] },
   "Vanuatu": { name: "Vanuatu", region: "Oceania", icon: "fa-solid fa-volcano", tagline: "Eighty islands of active volcanoes, kastom villages, and world-famous wreck diving.", cost: "$900 – $1,700/mo", wlb: "5.5 / 10", safety: "6.0 / 10", dimensions: { costIndex: 2, climate: 'tropical', transit: 'car-dependent', convenienceScore: 2, weekendRhythm: 'quiet-sunday', natureScore: 5, lgbtqTier: 1, religionRole: 'prominent', foreignerOpenness: 3, paceScore: 2 }, realityCheck: "Cyclone season is severe, volcanic activity is real, and inter-island transport depends on weather.", tags: ["island", "nature", "diving", "adventure"] },
+  "New Caledonia": { name: "New Caledonia", region: "Oceania", icon: "fa-solid fa-water", tagline: "The Pacific's grandest lagoon, French café mornings, and Melanesian custom a short sail from the capital.", cost: "$2,000 – $3,200/mo", wlb: "7.8 / 10", safety: "6.8 / 10", dimensions: { costIndex: 3, climate: 'tropical', transit: 'car-dependent', convenienceScore: 3, weekendRhythm: 'quiet-sunday', natureScore: 5, lgbtqTier: 4, religionRole: 'moderate', foreignerOpenness: 3, paceScore: 2 }, realityCheck: "Import prices run at Australian highs, French is near-essential outside tourism, and the 2024 riots showed how fast political tension closes streets.", tags: ["island", "lagoon", "france", "tropical", "snorkeling"] },
 };
 
 /**

@@ -350,4 +350,19 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
       "Power and connectivity outside Port Vila are solar-and-signal patchy, so remote work has boundaries.",
     ],
   },
+  "New Caledonia": {
+    culture: "Two worlds share one lagoon: Nouméa is France in miniature — baguettes, gendarmes, a Renzo Piano cultural center named for Kanak leader Jean-Marie Tjibaou — while the customary Kanak world of grand cases, clan-held land, and yam-calendar ceremonies runs strong across the North and the Loyalty Islands. Between them lies a UNESCO-listed reef system of some 24,000 square kilometres, above nickel fields that have long driven the economy.",
+    people: "French is the working language everywhere and the entry ticket to everything from the mairie to the market, though greeting elders in a customary area matters more than grammar. Caldoche, Kanak, Polynesian, and metropolitan communities each keep their own circles, and an outsider who respects those boundaries — and learns which neighborhood belongs to which story — is welcomed with curiosity.",
+    costOfLiving: "Costs run Sydney-adjacent: a supermarket chicken costs what a European steak does, a Nouméa flat absorbs a third of a typical salary, and even basics are imported from France or Australia. Nickel's boom-and-bust cycle decides whether the territory feels flush or squeezed, and prices step down sharply outside the Greater Nouméa sprawl.",
+    upsides: [
+      "A UNESCO-listed lagoon is the everyday backyard, with reef snorkeling a bus ride from the office and island ferries on weekends.",
+      "French workplace protections travel with the territory — long annual leave and a social-security regime that covers workers and their families.",
+      "Aircalin flies the capital nonstop to Sydney, Auckland, and Tokyo, a rare Pacific base with routes toward both Australia and Asia."
+    ],
+    downsides: [
+      "Import prices run at Australian highs, French is near-essential outside tourism, and the 2024 riots showed how fast political tension closes streets.",
+      "Beyond Greater Nouméa the job market thins to nickel plants, public posts, and tourism, and the nickel sector itself has been shedding jobs through the 2020s.",
+      "Cyclone season runs November to April, and travel between provinces and islands waits on ferries, flights, and the weather window."
+    ],
+  },
 };

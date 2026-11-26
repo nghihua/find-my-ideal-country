@@ -127,7 +127,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       { title: "What Living in Tokyo is Actually Like (Honest Pros & Cons)", channel: "Abroad in Japan", duration: "18:42", url: "https://en.wikipedia.org/wiki/Japan" },
       { title: "A Realistic Day in the Life in Osaka, Japan", channel: "Life Where I'm From", duration: "14:15", url: "https://en.wikipedia.org/wiki/Japan" }
     ],
-    tags: ["urban", "safe", "transit", "moderate-cost", "introvert-friendly", "four-seasons", "foodie"],
+    tags: ["urban", "safe", "transit", "moderate-cost", "introvert-friendly", "four-seasons", "foodie", "reserved"],
     dimensions: {
       costIndex: 3,
       climate: 'four-seasons',
@@ -256,7 +256,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       { title: "Why Dutch Work-Life Balance is the Best in the World", channel: "Not Just Bikes", duration: "15:30", url: "https://en.wikipedia.org/wiki/Netherlands" },
       { title: "Cost of Living in Amsterdam: Realistic Budget", channel: "Dutchified", duration: "11:55", url: "https://en.wikipedia.org/wiki/Netherlands" }
     ],
-    tags: ["urban", "transit", "wlb", "safe", "high-cost", "europe"],
+    tags: ["urban", "transit", "wlb", "safe", "high-cost", "europe", "corporate-hub"],
     dimensions: {
       costIndex: 4,
       climate: 'four-seasons',
@@ -342,7 +342,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       { title: "The Reality of Living in Norway: Honest Pros & Cons", channel: "Simple Joys", duration: "16:50", url: "https://en.wikipedia.org/wiki/Norway" },
       { title: "Cost of Living in Oslo, Norway: What Things Actually Cost", channel: "Expat in Norway", duration: "12:15", url: "https://en.wikipedia.org/wiki/Norway" }
     ],
-    tags: ["nature", "safe", "wlb", "high-cost", "introvert-friendly", "four-seasons"],
+    tags: ["nature", "safe", "wlb", "high-cost", "introvert-friendly", "four-seasons", "reserved"],
     dimensions: {
       costIndex: 5,
       climate: 'cold-winter',
@@ -471,7 +471,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       { title: "Living in Canada: Honest Pros & Cons From an Immigrant", channel: "Canada Bound", duration: "17:15", url: "https://en.wikipedia.org/wiki/Canada" },
       { title: "Real Cost of Living in Vancouver vs Toronto", channel: "DownieLive", duration: "15:10", url: "https://en.wikipedia.org/wiki/Canada" }
     ],
-    tags: ["nature", "safe", "wlb", "high-cost", "four-seasons"],
+    tags: ["nature", "safe", "wlb", "high-cost", "four-seasons", "corporate-hub"],
     dimensions: {
       costIndex: 4,
       climate: 'cold-winter',
@@ -600,7 +600,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       { title: "The Truth About Living in Germany as an Expat", channel: "Wanted Adventure", duration: "16:15", url: "https://en.wikipedia.org/wiki/Germany" },
       { title: "Cost of Living in Berlin: Real Monthly Budget", channel: "Simple Germany", duration: "12:50", url: "https://en.wikipedia.org/wiki/Germany" }
     ],
-    tags: ["transit", "wlb", "safe", "moderate-cost", "europe", "four-seasons"],
+    tags: ["transit", "wlb", "safe", "moderate-cost", "europe", "four-seasons", "corporate-hub", "reserved"],
     dimensions: {
       costIndex: 3,
       climate: 'four-seasons',
@@ -727,7 +727,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
     videos: [
       { title: "Moving to the UK: Honest Pros and Cons", channel: "Evan Edinger", duration: "19:20", url: "https://en.wikipedia.org/wiki/United_Kingdom" }
     ],
-    tags: ["urban", "transit", "europe", "four-seasons", "social"],
+    tags: ["urban", "transit", "europe", "four-seasons", "social", "corporate-hub"],
     dimensions: {
       costIndex: 4,
       climate: 'four-seasons',
@@ -769,7 +769,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
     videos: [
       { title: "Living in Australia: 10 Things I Wish I Knew", channel: "Greg Snell", duration: "16:00", url: "https://en.wikipedia.org/wiki/Australia" }
     ],
-    tags: ["nature", "coastal", "wlb", "safe", "warm", "high-cost"],
+    tags: ["nature", "coastal", "wlb", "safe", "warm", "high-cost", "corporate-hub"],
     dimensions: {
       costIndex: 4,
       climate: 'warm-sun',
@@ -811,7 +811,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
     videos: [
       { title: "The Reality of Moving to Switzerland", channel: "How to Switzerland", duration: "15:35", url: "https://en.wikipedia.org/wiki/Switzerland" }
     ],
-    tags: ["nature", "safe", "transit", "high-cost", "four-seasons"],
+    tags: ["nature", "safe", "transit", "high-cost", "four-seasons", "corporate-hub", "reserved"],
     dimensions: {
       costIndex: 5,
       climate: 'four-seasons',

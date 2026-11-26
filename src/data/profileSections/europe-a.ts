@@ -560,4 +560,19 @@ export const EUROPE_A: Record<string, ProfileSections> = {
       "Daily errands mean leaving the state: groceries, schools, and ordinary routines all live on the Italian side of the wall."
     ],
   },
+  "Greenland": {
+    culture: "Life runs on the seasons: summer is boat time — halibut fishing up the fjord, family sails to abandoned settlements, a capital that takes to the water — while winter rearranges everything around darkness and the sports hall. Towns are small enough that national news is genuinely local, and the national day, June 21, doubles as a shared birthday with kaffemiks in every neighborhood. Music runs from Greenlandic rap to Danish pop without apology.",
+    people: "Kalaallisut is the connective tissue and Danish the working second language, so an outsider who learns a greeting opens real doors. Communities of a few hundred know everyone's business and help with it — the fishing catch, a broken snowmobile, a kid's confirmation. Hospitality is practical: you are fed first, interviewed second, and remembered the next time the town sees you.",
+    costOfLiving: "Nearly every shelf item arrives by ship or plane, so groceries carry import markups on top of Nordic base prices, and a modest rental in the capital eats a large share of the paycheck — public-sector and fishing wages are scaled up to match, which helps residents more than visitors. Housing is the real bottleneck: Nuuk keeps a chronic shortage, and waiting lists are a normal step in any move.",
+    upsides: [
+      "You can sail, whale-watch, or drop a fishing line within sight of your apartment on the world's largest island.",
+      "Strong labor protections and a public healthcare system apply, in towns where a bad commute means a five-minute walk.",
+      "With about 57,000 people spread along an entire Arctic coastline, towns are safe and small enough to feel familiar within weeks."
+    ],
+    downsides: [
+      "A winter of short grey days, Danish-plus prices on nearly everything imported, and towns linked only by air and sea.",
+      "Specialist care usually means the national hospital in Nuuk, and often a medical flight on to Denmark, so distance is a health factor in the settlements.",
+      "Between Kalaallisut-first workplaces, second-language paperwork, and a housing queue that can outlast your first contract, settling in takes real commitment."
+    ],
+  },
 };

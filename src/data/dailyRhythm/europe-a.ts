@@ -153,4 +153,8 @@ export const EUROPE_A: Record<string, DailyRhythm> = {
     workday: "Roughly 800 residents — mostly clergy plus the Swiss Guard — keep a day measured in liturgy: morning Mass, curial desk hours, and the noon Angelus. Nearly everyone else clocks in from Rome, and the world's smallest state empties each evening.",
     evening: "'Evening' here means floodlit colonnades, guards on night watch, and a silence you can hear across St. Peter's Square once the day's visitors have gone. The gardens have long been a pope's evening walk; everyone else dines in Rome.",
   },
+  "Greenland": {
+    workday: "The week runs on a Nordic template — offices from 8:00 to 16:00, full-time meaning 40 hours, and coffee breaks everyone actually stops for. Nuuk's paychecks lean on government jobs, the hospital, fishing plants, and shops, and meetings slide between Kalaallisut and Danish depending on who is in the room. Fridays slow into shared coffee and cake well before the clock says so.",
+    evening: "Evenings are early and home-centered, with the sports hall as the real social hub — handball and football training carry the dark months, and the whole family shows up. Summer flips it: boats head out under a sky that never fully darkens, and someone is always checking the fjord for whales. Weekend 'kaffemik' visits — long open-house coffee gatherings for birthdays, confirmations, and first days of hunting season — are the calendar's real appointments.",
+  },
 };

@@ -200,4 +200,19 @@ export const CARIBBEAN: Record<string, ProfileSections> = {
       "Municipal water arrives on an erratic schedule in many districts, so rooftop storage tanks are standard household equipment."
     ],
   },
+  "Puerto Rico": {
+    culture: "Old San Juan is the Caribbean's most walkable colonial city — pastel fortress walls, blue cobblestones, a fort you can roam at sunset — but the deeper current is musical: salsa was raised here before New York finished it, reggaeton was born here outright, and each town's patron saint festival closes streets for a weekend of stands, music, and roast pork. Christmas stretches from November through Three Kings Day in January.",
+    people: "Boricua warmth arrives fast — you are fed before you are asked anything, invited to the domino table within minutes, and coached on your Spanish as you go. Family is infrastructure: Sunday means lechón in the mountains or a beach day with three generations, and everyone will tell you their favorite kiosk. Identity is carried proudly and politically, US and Puerto Rican at once.",
+    costOfLiving: "Prices land close to mainland US levels — the dollar is local currency, warehouse stores and delivery apps all work, but electricity and imported groceries run high. Rents swing hard by neighborhood: Condado and Ocean Park price like a US city while Caguas and Bayamón stay genuinely moderate, and the recent wave of mainland arrivals pushed the most desirable blocks up another notch.",
+    upsides: [
+      "For US citizens this is a domestic move — no visa, no customs, and the same dollar, banking, and phone plans continuing as before.",
+      "El Yunque is the only tropical rainforest in the US forest system, and it sits under an hour's drive from the beach towns.",
+      "Three of the world's brightest bioluminescent bays glow around the island, led by Mosquito Bay in Vieques."
+    ],
+    downsides: [
+      "Recurring blackouts, storm season every autumn, and metro-area crime rates well above the US mainland's.",
+      "The grid remains fragile enough that generators and surge protectors are standard household equipment, and a passing storm can still darken whole suburbs.",
+      "Coastal strips popular with newcomers have seen rents outrun local wages, a tension every arriving resident inherits."
+    ],
+  },
 };

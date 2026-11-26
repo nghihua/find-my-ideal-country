@@ -1,6 +1,6 @@
-import { QUIZ_QUESTIONS } from '../data/countries';
+import { QUIZ_QUESTIONS, COUNTRY_DATABASE } from '../data/countries';
 import type { CountryData } from '../data/countries';
-import { getCompleteCountryProfile, getAllGlobalCountries } from '../data/globalCountries';
+import { getCompleteCountryProfile, getAllGlobalCountries, GLOBAL_COUNTRY_METADATA } from '../data/globalCountries';
 import {
   initWorldMap,
   zoomToFeature,
@@ -35,6 +35,17 @@ function selectCountry(feature: any) {
   renderCountryDossier(profile);
 }
 
+/** Map a display name to its catalog key. Keys are the lookup IDs for
+ *  COUNTRY_DATABASE and GLOBAL_COUNTRY_METADATA, and one metadata entry
+ *  ("Sao Tome and Principe") keys ASCII while displaying with diacritics —
+ *  so a profile assembled by display name would silently fall back to the
+ *  regional template. Keys and map-territory names pass through unchanged. */
+function resolveCatalogKey(name: string): string {
+  if (GLOBAL_COUNTRY_METADATA[name] || COUNTRY_DATABASE[name]) return name;
+  const hit = Object.entries(GLOBAL_COUNTRY_METADATA).find(([, meta]) => meta.name === name);
+  return hit ? hit[0] : name;
+}
+
 /**
  * Select a country by display name. Zooms the map when geometry exists; for
  * catalog-only countries missing from the coarse map geometry (e.g. Singapore,
@@ -48,7 +59,7 @@ function selectCountryByName(name: string): boolean {
     return true;
   }
   const didZoom = zoomToCountryPoint(name);
-  renderCountryDossier(getCompleteCountryProfile(name));
+  renderCountryDossier(getCompleteCountryProfile(resolveCatalogKey(name)));
   return didZoom;
 }
 

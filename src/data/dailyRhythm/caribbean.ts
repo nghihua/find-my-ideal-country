@@ -57,4 +57,8 @@ export const CARIBBEAN: Record<string, DailyRhythm> = {
     workday: "Port of Spain runs a Mon–Fri commuter rush — desks roughly 8:00–4:30, traffic stacking along the East–West Corridor, and a doubles stop (curried chickpeas in fried bara) for breakfast on the way in. Energy-sector and government jobs dominate paychecks, and around Carnival — the Monday and Tuesday before Ash Wednesday — productivity famously bends toward fetes and costume prep.",
     evening: "Liming — the national art of unhurried hanging out with no end time — happens at rum shops, along the Ariapita Avenue strip, or on someone's porch with a Carib. Doubles carts do steady after-work trade, and in Carnival season the lime barely starts before midnight.",
   },
+  "Puerto Rico": {
+    workday: "The week runs on US-style hours — desks and government offices from 8:00 to 5:00, with rush-hour traffic stacking on the expressways into San Juan. The job market leans on government posts, pharmaceutical plants, and tourism; lunch means a proper café con leche and pan sobao run, and meetings drift between Spanish and English without anyone flagging the switch.",
+    evening: "Thursdays through Sundays, La Placita in Santurce turns from produce market into an open-air salsa floor, and Old San Juan's bars keep going well past mainland habits. Ordinary evenings run simpler — dominoes at a chinchorro, a piragua with the kids, the beach at golden hour — and in every yard the coquí frogs start their nightly chorus right on schedule.",
+  },
 };

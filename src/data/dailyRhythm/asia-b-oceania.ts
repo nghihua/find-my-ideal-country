@@ -97,4 +97,8 @@ export const ASIA_B_OCEANIA: Record<string, DailyRhythm> = {
     workday: "Port Vila keeps early hours — government, tourism, and NGO jobs wrap by late afternoon, with a long midday break out of the sun. In the villages, 'kastom' (custom) obligations and the family garden set the schedule instead of any clock.",
     evening: "Night comes early, and it heads straight to the 'nakamal' — village meeting houses turned evening kava bars where fresh bowls are poured around sunset and drunk in low conversation. It is the country's social anchor; card games, church, and home cookouts take it from there.",
   },
+  "New Caledonia": {
+    workday: "Hours are French with a Pacific accent — offices open near 7:30, take a genuine midday break, and wind down by 16:00 on a legal week of 39 hours, longer than metropolitan France's 35. Nouméa runs on government posts, the nickel industry, and services, and the end-of-day baguette run is treated as an errand worth timing.",
+    evening: "Evenings center on the water: Anse Vata and the Baie des Citrons fill with sunset swimmers, apéro terraces, and kids on bodyboards, while restaurants split between French bistro menus and the territory's Vietnamese-Caledonian kitchens. Sundays go to the islets — Îlot Maître snorkeling, an Île des Pins ferry, a family grill under the araucaria pines — while the city itself closes down.",
+  },
 };
