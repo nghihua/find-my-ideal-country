@@ -109,7 +109,7 @@ function renderQuizStep() {
           </button>
         </div>
       ` : ''}
-      ${q.id === 'continent' ? '<div class="space-y-2"><button id="continue-region-btn" class="w-full py-3 rounded-full bg-[#1a73e8] text-white">Continue with selected continents</button><button id="skip-practical-btn" class="w-full py-2 text-xs text-[#5f6368] hover:text-[#1a73e8]">Skip optional practical filters</button></div>' : ''}
+      ${q.multiSelect ? `<div class="space-y-2"><button id="continue-selection-btn" class="w-full py-3 rounded-full bg-[#1a73e8] text-white hover:bg-[#1557b0] transition-colors">Continue with selections</button>${q.id === 'continent' ? '<button id="skip-practical-btn" class="w-full py-2 text-xs text-[#5f6368] hover:text-[#1a73e8]">Skip optional practical filters</button>' : ''}</div>` : ''}
     </div>
   `;
 
@@ -118,7 +118,7 @@ function renderQuizStep() {
     btn.addEventListener('click', () => handleQuizAnswer(q.id, btn.dataset.quizValue!));
   });
   document.getElementById('prev-quiz-btn')?.addEventListener('click', prevQuizStep);
-  document.getElementById('continue-region-btn')?.addEventListener('click', () => { currentQuizStep++; renderQuizStep(); });
+  document.getElementById('continue-selection-btn')?.addEventListener('click', () => { currentQuizStep++; renderQuizStep(); });
   document.getElementById('skip-practical-btn')?.addEventListener('click', () => {
     currentQuizStep = Math.max(0, QUIZ_QUESTIONS_REF.findIndex(question => question.id === 'visaPath'));
     renderQuizStep();
@@ -126,13 +126,19 @@ function renderQuizStep() {
 }
 
 function handleQuizAnswer(questionId: string, value: string) {
-  if (questionId === 'continent') {
-    const selected = Array.isArray(userAnswers.continent) ? [...userAnswers.continent] : [];
-    if (value === 'all') userAnswers.continent = ['all'];
-    else {
-      const withoutAll = selected.filter((item: string) => item !== 'all');
-      userAnswers.continent = withoutAll.includes(value) ? withoutAll.filter((item: string) => item !== value) : [...withoutAll, value];
+  const question = QUIZ_QUESTIONS_REF.find(q => q.id === questionId);
+  if (question?.multiSelect) {
+    const option = question.options.find(o => o.value === value);
+    let selected: string[] = Array.isArray(userAnswers[questionId]) ? [...userAnswers[questionId]] : [];
+    if (option?.isNoPreference) {
+      // "No preference" is exclusive: it clears every real selection, and any
+      // real selection clears it.
+      selected = [value];
+    } else {
+      selected = selected.filter(v => !question.options.find(o => o.value === v)?.isNoPreference);
+      selected = selected.includes(value) ? selected.filter(v => v !== value) : [...selected, value];
     }
+    userAnswers[questionId] = selected;
     renderQuizStep();
     return;
   }
@@ -181,26 +187,31 @@ function calculateQuizResult() {
     const region = c.practical?.continent || inferContinent(c.region);
     if (Array.isArray(userAnswers.continent) && !userAnswers.continent.includes('all') && userAnswers.continent.length && region && !userAnswers.continent.includes(region)) return false;
     const tz = c.practical?.timezoneRegion || (region === 'North America' || region === 'South America' ? 'Americas' : region === 'Europe' || region === 'Africa' ? 'Europe/Africa' : region ? 'Asia/Oceania' : undefined);
-    if (userAnswers.timezoneOverlap && userAnswers.timezoneOverlap !== 'all' && tz && tz !== userAnswers.timezoneOverlap) return false;
+    const timezoneAnswers = selectedValues('timezoneOverlap');
+    if (timezoneAnswers.length && tz && !timezoneAnswers.includes(tz)) return false;
 
-    // LGBTQ+ Filter
-    if (userAnswers['lgbtq'] === 'protected' && dim.lgbtqTier < 4) {
-      return false;
-    }
-    if (userAnswers['lgbtq'] === 'tolerant' && dim.lgbtqTier < 3) {
-      return false;
-    }
-
-    // Budget Ceiling Filter
-    if (userAnswers['budget'] === 'lean' && dim.costIndex > 2) {
-      return false;
-    }
-    if (userAnswers['budget'] === 'moderate' && dim.costIndex > 3) {
-      return false;
+    // LGBTQ+ Filter — the weakest selected requirement sets the bar: a country
+    // stays eligible if it satisfies ANY selected level.
+    const lgbtqSelection = selectedValues('lgbtq');
+    if (lgbtqSelection.length) {
+      const meetsSelectedLgbtq = lgbtqSelection.some(ans =>
+        (ans === 'tolerant' && dim.lgbtqTier >= 3) || (ans === 'protected' && dim.lgbtqTier >= 4));
+      if (!meetsSelectedLgbtq) return false;
     }
 
-    // Transit Filter
-    if (userAnswers['transit'] === 'walkable-rail' && dim.transit === 'car-dependent') {
+    // Budget Ceiling Filter — a country stays eligible if it fits ANY selected
+    // budget tier; the most generous selection sets the effective ceiling.
+    const budgetSelection = selectedValues('budget');
+    if (budgetSelection.length) {
+      const fitsSelectedBudget = budgetSelection.some(ans =>
+        ans === 'premium' || (ans === 'moderate' && dim.costIndex <= 3) || (ans === 'lean' && dim.costIndex <= 2));
+      if (!fitsSelectedBudget) return false;
+    }
+
+    // Transit Filter — the car-free dealbreaker applies only when walkable-rail
+    // is the sole selection; adding any second style means the user relaxed it.
+    const transitSelection = selectedValues('transit');
+    if (transitSelection.length === 1 && transitSelection[0] === 'walkable-rail' && dim.transit === 'car-dependent') {
       return false;
     }
 
@@ -220,56 +231,77 @@ function calculateQuizResult() {
     const reasons: string[] = [];
     const profileEvidence: ProfileEvidence[] = [];
 
-    // Dimension 1: Budget
-    if (userAnswers['budget'] && userAnswers['budget'] !== 'no-preference') {
+    // Dimension 1: Budget (best-match across selected ceilings)
+    const budgetAnswers = selectedValues('budget');
+    if (budgetAnswers.length) {
       maxPossible += 10;
-      if (userAnswers['budget'] === 'lean') {
-        if (dim.costIndex === 1) {
-          totalScore += 10;
-          reasons.push(`Exceptional value (<$1,400/mo) allowing comfortable living`);
-          profileEvidence.push({ label: 'Cost of living', text: firstSentence(country.costOfLiving) });
+      let bestScore = 0;
+      let bestReasons: string[] = [];
+      let bestEvidence = false;
+      for (const ans of budgetAnswers) {
+        let score = 0;
+        const rs: string[] = [];
+        let evidence = false;
+        if (ans === 'lean') {
+          if (dim.costIndex === 1) { score = 10; rs.push(`Exceptional value (<$1,400/mo) allowing comfortable living`); evidence = true; }
+          else if (dim.costIndex === 2) { score = 7; }
+        } else if (ans === 'moderate') {
+          if (dim.costIndex === 2 || dim.costIndex === 3) { score = 10; rs.push(`Comfortable mid-range living expenses (${country.cost})`); evidence = true; }
+          else if (dim.costIndex === 1) { score = 8; }
+          else if (dim.costIndex === 4) { score = 4; }
+        } else if (ans === 'premium') {
+          if (dim.costIndex >= 4) { score = 10; rs.push(`World-class public services and high-standard infrastructure`); evidence = true; }
+          else if (dim.costIndex === 3) { score = 8; }
         }
-        else if (dim.costIndex === 2) { totalScore += 7; }
-      } else if (userAnswers['budget'] === 'moderate') {
-        if (dim.costIndex === 2 || dim.costIndex === 3) {
-          totalScore += 10;
-          reasons.push(`Comfortable mid-range living expenses (${country.cost})`);
-          profileEvidence.push({ label: 'Cost of living', text: firstSentence(country.costOfLiving) });
-        }
-        else if (dim.costIndex === 1) { totalScore += 8; }
-        else if (dim.costIndex === 4) { totalScore += 4; }
-      } else if (userAnswers['budget'] === 'premium') {
-        if (dim.costIndex >= 4) {
-          totalScore += 10;
-          reasons.push(`World-class public services and high-standard infrastructure`);
-          profileEvidence.push({ label: 'Cost of living', text: firstSentence(country.costOfLiving) });
-        }
-        else if (dim.costIndex === 3) { totalScore += 8; }
+        if (score > bestScore) { bestScore = score; bestReasons = rs; bestEvidence = evidence; }
       }
+      totalScore += bestScore;
+      reasons.push(...bestReasons);
+      if (bestEvidence) profileEvidence.push({ label: 'Cost of living', text: firstSentence(country.costOfLiving) });
     }
 
-    // Dimension 2: LGBTQ+ & Inclusivity
-    if (userAnswers['lgbtq'] && userAnswers['lgbtq'] !== 'no-preference') {
+    // Dimension 2: LGBTQ+ & Inclusivity (best-match across selected levels)
+    const lgbtqAnswers = selectedValues('lgbtq');
+    if (lgbtqAnswers.length) {
       maxPossible += 10;
-      if (userAnswers['lgbtq'] === 'protected') {
-        if (dim.lgbtqTier >= 5) { totalScore += 10; reasons.push(`Global leader in equality with full marriage and civil protections`); }
-        else if (dim.lgbtqTier === 4) { totalScore += 8; reasons.push(`Legally protected and welcoming environment`); }
-      } else if (userAnswers['lgbtq'] === 'tolerant') {
-        if (dim.lgbtqTier >= 3) { totalScore += 10; }
+      let bestScore = 0;
+      let bestReasons: string[] = [];
+      for (const ans of lgbtqAnswers) {
+        let score = 0;
+        const rs: string[] = [];
+        if (ans === 'protected') {
+          if (dim.lgbtqTier >= 5) { score = 10; rs.push(`Global leader in equality with full marriage and civil protections`); }
+          else if (dim.lgbtqTier === 4) { score = 8; rs.push(`Legally protected and welcoming environment`); }
+        } else if (ans === 'tolerant') {
+          if (dim.lgbtqTier >= 3) { score = 10; }
+        }
+        if (score > bestScore) { bestScore = score; bestReasons = rs; }
       }
+      totalScore += bestScore;
+      reasons.push(...bestReasons);
     }
 
-    // Dimension 3: Transit
-    if (userAnswers['transit'] && userAnswers['transit'] !== 'no-preference') {
+    // Dimension 3: Transit (best-match across selected styles)
+    const transitAnswers = selectedValues('transit');
+    if (transitAnswers.length) {
       maxPossible += 10;
-      if (userAnswers['transit'] === dim.transit) {
-        totalScore += 10;
-        if (dim.transit === 'walkable-rail') reasons.push(`Pedestrian-first cities and extensive passenger rail`);
-        else if (dim.transit === 'motorbike-active') reasons.push(`Vibrant scooter mobility and rapid street connectivity`);
-        else if (dim.transit === 'car-dependent') reasons.push(`Scenic open highways and easy personal vehicle travel`);
-      } else if (dim.transit === 'mixed-transit') {
-        totalScore += 6;
+      let bestScore = 0;
+      let bestReasons: string[] = [];
+      for (const ans of transitAnswers) {
+        let score = 0;
+        const rs: string[] = [];
+        if (ans === dim.transit) {
+          score = 10;
+          if (dim.transit === 'walkable-rail') rs.push(`Pedestrian-first cities and extensive passenger rail`);
+          else if (dim.transit === 'motorbike-active') rs.push(`Vibrant scooter mobility and rapid street connectivity`);
+          else if (dim.transit === 'car-dependent') rs.push(`Scenic open highways and easy personal vehicle travel`);
+        } else if (dim.transit === 'mixed-transit') {
+          score = 6;
+        }
+        if (score > bestScore) { bestScore = score; bestReasons = rs; }
       }
+      totalScore += bestScore;
+      reasons.push(...bestReasons);
     }
 
     // Dimension 4: Daily Convenience vs DIY
@@ -285,38 +317,59 @@ function calculateQuizResult() {
       }
     }
 
-    // Dimension 5: Weekend Rhythms
-    if (userAnswers['weekend'] && userAnswers['weekend'] !== 'no-preference') {
+    // Dimension 5: Weekend Rhythms (best-match across selected vibes)
+    const weekendAnswers = selectedValues('weekend');
+    if (weekendAnswers.length) {
       maxPossible += 10;
-      if (userAnswers['weekend'] === dim.weekendRhythm) {
-        totalScore += 10;
-        if (dim.weekendRhythm === 'vibrant-24-7') reasons.push(`7-day vibrant commerce, bustling night markets, and late-night social spots`);
-        else if (dim.weekendRhythm === 'quiet-sunday') reasons.push(`Sacred peaceful Sundays and calm residential evenings`);
-        profileEvidence.push({ label: 'Evening rhythm', text: firstSentence(country.evening) });
-      } else if (dim.weekendRhythm === 'standard') {
-        totalScore += 6;
+      let bestScore = 0;
+      let bestReasons: string[] = [];
+      for (const ans of weekendAnswers) {
+        let score = 0;
+        const rs: string[] = [];
+        if (ans === dim.weekendRhythm) {
+          score = 10;
+          if (dim.weekendRhythm === 'vibrant-24-7') rs.push(`7-day vibrant commerce, bustling night markets, and late-night social spots`);
+          else if (dim.weekendRhythm === 'quiet-sunday') rs.push(`Sacred peaceful Sundays and calm residential evenings`);
+        } else if (dim.weekendRhythm === 'standard') {
+          score = 6;
+        }
+        if (score > bestScore) { bestScore = score; bestReasons = rs; }
       }
+      totalScore += bestScore;
+      reasons.push(...bestReasons);
+      if (bestScore === 10) profileEvidence.push({ label: 'Evening rhythm', text: firstSentence(country.evening) });
     }
 
-    // Dimension 6: Climate
-    if (userAnswers['climate'] && userAnswers['climate'] !== 'no-preference') {
+    // Dimension 6: Climate (best-match across selected climates)
+    const climateAnswers = selectedValues('climate');
+    if (climateAnswers.length) {
       maxPossible += 10;
-      if (userAnswers['climate'] === 'tropical') {
-        if (dim.climate === 'tropical') { totalScore += 10; reasons.push(`Year-round tropical sunshine and outdoor lifestyle`); }
-        else if (dim.climate === 'warm-sun') { totalScore += 8; }
-      } else if (userAnswers['climate'] === 'four-seasons') {
-        if (dim.climate === 'four-seasons') { totalScore += 10; reasons.push(`Vivid four seasons with crisp autumns and snowy winters`); }
-        else if (dim.climate === 'cold-winter') { totalScore += 8; }
-      } else if (userAnswers['climate'] === 'mild-coastal') {
-        if (dim.climate === 'mild-coastal') { totalScore += 10; reasons.push(`Temperate coastal climate with refreshing ocean breezes`); }
-        else if (dim.climate === 'warm-sun') { totalScore += 7; }
+      let bestScore = 0;
+      let bestReasons: string[] = [];
+      for (const ans of climateAnswers) {
+        let score = 0;
+        const rs: string[] = [];
+        if (ans === 'tropical') {
+          if (dim.climate === 'tropical') { score = 10; rs.push(`Year-round tropical sunshine and outdoor lifestyle`); }
+          else if (dim.climate === 'warm-sun') { score = 8; }
+        } else if (ans === 'four-seasons') {
+          if (dim.climate === 'four-seasons') { score = 10; rs.push(`Vivid four seasons with crisp autumns and snowy winters`); }
+          else if (dim.climate === 'cold-winter') { score = 8; }
+        } else if (ans === 'mild-coastal') {
+          if (dim.climate === 'mild-coastal') { score = 10; rs.push(`Temperate coastal climate with refreshing ocean breezes`); }
+          else if (dim.climate === 'warm-sun') { score = 7; }
+        }
+        if (score > bestScore) { bestScore = score; bestReasons = rs; }
       }
+      totalScore += bestScore;
+      reasons.push(...bestReasons);
     }
 
-    // Country-level weather preferences: each selected detail contributes up to five points.
-    const temperatureAnswer = userAnswers.temperature;
+    // Country-level weather preferences: each question contributes up to five
+    // points, taking the best match across the selected bands.
+    const temperatureAnswers = selectedValues('temperature');
     const temperatureRange = country.climateProfile?.temperatureRangeCelsius;
-    if (typeof temperatureAnswer === 'string' && temperatureAnswer !== 'no-preference' && temperatureRange) {
+    if (temperatureAnswers.length && temperatureRange) {
       const preferredTemperatureBands: Record<string, [number, number]> = {
         'very-cold': [-Infinity, 10],
         cool: [10, 18],
@@ -324,15 +377,18 @@ function calculateQuizResult() {
         warm: [25, 31],
         hot: [31, Infinity],
       };
-      const preferredBand = preferredTemperatureBands[temperatureAnswer];
-      if (preferredBand) {
-        const countryMidpoint = (temperatureRange[0] + temperatureRange[1]) / 2;
+      const countryMidpoint = (temperatureRange[0] + temperatureRange[1]) / 2;
+      let bestPoints = 0;
+      for (const ans of temperatureAnswers) {
+        const preferredBand = preferredTemperatureBands[ans];
+        if (!preferredBand) continue;
         const distanceFromBand = countryMidpoint < preferredBand[0]
           ? preferredBand[0] - countryMidpoint
           : countryMidpoint > preferredBand[1] ? countryMidpoint - preferredBand[1] : 0;
-        maxPossible += 5;
-        totalScore += Math.max(0, 5 - distanceFromBand * 0.5);
+        bestPoints = Math.max(bestPoints, Math.max(0, 5 - distanceFromBand * 0.5));
       }
+      maxPossible += 5;
+      totalScore += bestPoints;
     }
 
     const weatherPreferences = [
@@ -341,30 +397,44 @@ function calculateQuizResult() {
       { key: 'snowfall', value: country.climateProfile?.snowfall, scale: ['rare', 'seasonal', 'frequent'] },
     ];
     weatherPreferences.forEach(({ key, value, scale }) => {
-      const answer = userAnswers[key];
-      if (typeof answer !== 'string' || answer === 'no-preference' || !value) return;
-      const preferredLevel = scale.indexOf(answer);
+      const answers = selectedValues(key);
+      if (!answers.length || !value) return;
       const countryLevel = scale.indexOf(value);
-      if (preferredLevel < 0 || countryLevel < 0) return;
+      if (countryLevel < 0) return;
+      let bestPoints = 0;
+      for (const answer of answers) {
+        const preferredLevel = scale.indexOf(answer);
+        if (preferredLevel < 0) continue;
+        bestPoints = Math.max(bestPoints, 5 * (1 - Math.abs(preferredLevel - countryLevel) / (scale.length - 1)));
+      }
       maxPossible += 5;
-      totalScore += 5 * (1 - Math.abs(preferredLevel - countryLevel) / (scale.length - 1));
+      totalScore += bestPoints;
     });
 
-    // Dimension 7: Religion & Secularity
-    if (userAnswers['religion'] && userAnswers['religion'] !== 'no-preference') {
+    // Dimension 7: Religion & Secularity (best-match across selected roles)
+    const religionAnswers = selectedValues('religion');
+    if (religionAnswers.length) {
       maxPossible += 10;
-      const rAns = userAnswers['religion'];
-      if (rAns === 'secular') {
-        if (dim.religionRole === 'secular') { totalScore += 10; reasons.push(`Secular society with freedom from religious pressure`); }
-        else if (dim.religionRole === 'cultural-tradition') { totalScore += 7; }
-      } else if (rAns === 'cultural-tradition') {
-        if (dim.religionRole === 'cultural-tradition') { totalScore += 10; reasons.push(`Rich cultural traditions and festivals with low religious enforcement`); }
-        else if (dim.religionRole === 'secular') { totalScore += 7; }
-        else if (dim.religionRole === 'moderate') { totalScore += 6; }
-      } else if (rAns === 'prominent') {
-        if (dim.religionRole === 'prominent' || dim.religionRole === 'moderate') { totalScore += 10; reasons.push(`Active spiritual community with accessible religious facilities`); }
-        else { totalScore += 3; }
+      let bestScore = 0;
+      let bestReasons: string[] = [];
+      for (const rAns of religionAnswers) {
+        let score = 0;
+        const rs: string[] = [];
+        if (rAns === 'secular') {
+          if (dim.religionRole === 'secular') { score = 10; rs.push(`Secular society with freedom from religious pressure`); }
+          else if (dim.religionRole === 'cultural-tradition') { score = 7; }
+        } else if (rAns === 'cultural-tradition') {
+          if (dim.religionRole === 'cultural-tradition') { score = 10; rs.push(`Rich cultural traditions and festivals with low religious enforcement`); }
+          else if (dim.religionRole === 'secular') { score = 7; }
+          else if (dim.religionRole === 'moderate') { score = 6; }
+        } else if (rAns === 'prominent') {
+          if (dim.religionRole === 'prominent' || dim.religionRole === 'moderate') { score = 10; rs.push(`Active spiritual community with accessible religious facilities`); }
+          else { score = 3; }
+        }
+        if (score > bestScore) { bestScore = score; bestReasons = rs; }
       }
+      totalScore += bestScore;
+      reasons.push(...bestReasons);
     }
 
     // Dimension 8: Social Openness & Expat Ease
@@ -401,35 +471,47 @@ function calculateQuizResult() {
       }
     }
 
-    // Dimension 10: Career & Work Market
-    if (userAnswers['career'] && userAnswers['career'] !== 'no-preference') {
+    // Dimension 10: Career & Work Market (best-match across selected arrangements)
+    const careerAnswers = selectedValues('career');
+    if (careerAnswers.length) {
       maxPossible += 10;
-      const cAns = userAnswers['career'];
-      if (cAns === 'nomad') {
-        // Scored from the sourced visa-routes data: an official remote-work route
-        // is the strongest signal; lifestyle fit alone only earns partial credit.
-        const remoteRoute = country.practical?.visaRoutes?.remote;
-        if (remoteRoute === 'available') {
-          totalScore += 10;
-          reasons.push(`An official remote-work visa route exists; eligibility still depends on your circumstances`);
-          profileEvidence.push({ label: 'Workday', text: firstSentence(country.workday) });
-        } else if (remoteRoute === 'limited') {
-          totalScore += 7;
-          reasons.push(`Remote-work routes exist but carry real restrictions; check income and stay-length requirements`);
-        } else if (dim.costIndex <= 3 && dim.convenienceScore >= 4) {
-          totalScore += 6;
-        } else {
-          totalScore += 3;
+      let bestScore = 0;
+      let bestReasons: string[] = [];
+      let bestEvidence = false;
+      for (const cAns of careerAnswers) {
+        let score = 0;
+        const rs: string[] = [];
+        let evidence = false;
+        if (cAns === 'nomad') {
+          // Scored from the sourced visa-routes data: an official remote-work route
+          // is the strongest signal; lifestyle fit alone only earns partial credit.
+          const remoteRoute = country.practical?.visaRoutes?.remote;
+          if (remoteRoute === 'available') {
+            score = 10;
+            rs.push(`An official remote-work visa route exists; eligibility still depends on your circumstances`);
+            evidence = true;
+          } else if (remoteRoute === 'limited') {
+            score = 7;
+            rs.push(`Remote-work routes exist but carry real restrictions; check income and stay-length requirements`);
+          } else if (dim.costIndex <= 3 && dim.convenienceScore >= 4) {
+            score = 6;
+          } else {
+            score = 3;
+          }
+        } else if (cAns === 'corporate') {
+          if (country.tags.includes('corporate-hub')) {
+            score = 10;
+            rs.push(`Major international corporate hub with high-wage career prospects`);
+            evidence = true;
+          } else if (dim.costIndex >= 3) { score = 7; }
+        } else if (cAns === 'local') {
+          score = 8;
         }
-      } else if (cAns === 'corporate') {
-        if (country.tags.includes('corporate-hub')) {
-          totalScore += 10;
-          reasons.push(`Major international corporate hub with high-wage career prospects`);
-          profileEvidence.push({ label: 'Workday', text: firstSentence(country.workday) });
-        } else if (dim.costIndex >= 3) { totalScore += 7; }
-      } else if (cAns === 'local') {
-        totalScore += 8;
+        if (score > bestScore) { bestScore = score; bestReasons = rs; bestEvidence = evidence; }
       }
+      totalScore += bestScore;
+      reasons.push(...bestReasons);
+      if (bestEvidence) profileEvidence.push({ label: 'Workday', text: firstSentence(country.workday) });
     }
 
     // Dimension 7: Priority Boost (2.5x Multiplier = 25 pts)
@@ -460,42 +542,70 @@ function calculateQuizResult() {
     const practical = country.practical;
     // 'residency' means the user already holds the right to live there; there is
     // no route data to score, so it stays informational instead of distorting the
-    // match percentage through a generic visaFit fallback.
-    if (userAnswers.visaPath && userAnswers.visaPath !== 'no-preference' && userAnswers.visaPath !== 'residency' && practical) {
-      const route = practical.visaRoutes?.[userAnswers.visaPath as 'remote' | 'mobility' | 'sponsored'];
-      if (route === 'available' || route === 'limited') {
+    // match percentage through a generic visaFit fallback. With multiple routes
+    // selected, the best available route wins.
+    const visaAnswers = selectedValues('visaPath').filter(v => v !== 'residency');
+    if (visaAnswers.length && practical) {
+      let bestScore = 0;
+      let bestReasons: string[] = [];
+      let scored = false;
+      for (const ans of visaAnswers) {
+        const route = practical.visaRoutes?.[ans as 'remote' | 'mobility' | 'sponsored'];
+        let score = 0;
+        const rs: string[] = [];
+        if (route === 'available' || route === 'limited') {
+          score = route === 'available' ? 10 : 6;
+          rs.push(route === 'available'
+            ? 'An official route exists for this relocation path; eligibility still depends on your circumstances'
+            : 'A restricted route exists for some applicants; check passport, age, income, and sponsor requirements');
+          scored = true;
+        } else if (practical.visaFit && practical.visaFit !== 'unknown') {
+          score = practical.visaFit === 'easy' ? 10 : practical.visaFit === 'moderate' ? 6 : 2;
+          scored = true;
+        }
+        if (score > bestScore) { bestScore = score; bestReasons = rs; }
+      }
+      if (scored) {
         maxPossible += 10;
-        const points = route === 'available' ? 10 : 6;
-        totalScore += points;
-        reasons.push(route === 'available'
-          ? 'An official route exists for this relocation path; eligibility still depends on your circumstances'
-          : 'A restricted route exists for some applicants; check passport, age, income, and sponsor requirements');
-      } else if (practical.visaFit && practical.visaFit !== 'unknown') {
-        maxPossible += 10;
-        totalScore += practical.visaFit === 'easy' ? 10 : practical.visaFit === 'moderate' ? 6 : 2;
+        totalScore += bestScore;
+        reasons.push(...bestReasons);
       }
     }
     if (userAnswers.languageComfort && userAnswers.languageComfort !== 'no-preference' && practical?.englishEase) {
       maxPossible += 10;
       totalScore += userAnswers.languageComfort === 'english' ? practical.englishEase * 2 : (6 - practical.englishEase) * 2;
     }
-    if (userAnswers.healthcarePreference && userAnswers.healthcarePreference !== 'no-preference' && practical?.healthcare && practical.healthcare !== 'unknown') {
+    const healthcareAnswers = selectedValues('healthcarePreference');
+    if (healthcareAnswers.length && practical?.healthcare && practical.healthcare !== 'unknown') {
       maxPossible += 8;
-      const preference = userAnswers.healthcarePreference;
-      totalScore += practical.healthcare === preference ? 8 : practical.healthcare === 'mixed' ? 5 : 2;
+      let best = 0;
+      for (const preference of healthcareAnswers) {
+        best = Math.max(best, practical.healthcare === preference ? 8 : practical.healthcare === 'mixed' ? 5 : 2);
+      }
+      totalScore += best;
     }
-    if (userAnswers.taxPreference && userAnswers.taxPreference !== 'no-preference' && practical?.taxProfile && practical.taxProfile !== 'unknown') {
+    const taxAnswers = selectedValues('taxPreference');
+    if (taxAnswers.length && practical?.taxProfile && practical.taxProfile !== 'unknown') {
       maxPossible += 8;
-      totalScore += practical.taxProfile === userAnswers.taxPreference ? 8 : practical.taxProfile === 'mixed' ? 5 : 2;
+      let best = 0;
+      for (const preference of taxAnswers) {
+        best = Math.max(best, practical.taxProfile === preference ? 8 : practical.taxProfile === 'mixed' ? 5 : 2);
+      }
+      totalScore += best;
     }
-    if (userAnswers.environmentPreference && userAnswers.environmentPreference !== 'no-preference' && practical) {
+    const environmentAnswers = selectedValues('environmentPreference');
+    if (environmentAnswers.length && practical) {
       const indicators = [practical.tapWater, practical.airQuality, practical.hazardLevel];
       const known = indicators.filter(value => value && value !== 'unknown');
       const issues = Number(practical.tapWater === 'regional' || practical.tapWater === 'generally-not-potable') + Number(practical.airQuality === 'seasonal-issues' || practical.airQuality === 'frequent-issues') + Number(practical.hazardLevel === 'higher');
       if (known.length) {
         const knownWeight = 8 / indicators.length;
         maxPossible += knownWeight * known.length;
-        totalScore += userAnswers.environmentPreference === 'lower' ? knownWeight * (known.length - issues) : knownWeight * known.length;
+        let best = 0;
+        for (const preference of environmentAnswers) {
+          best = Math.max(best, preference === 'lower' ? knownWeight * (known.length - issues) : knownWeight * known.length);
+        }
+        totalScore += best;
       }
     }
 
@@ -537,6 +647,15 @@ function firstSentence(text?: string): string | undefined {
   return match ? match[0].trim() : trimmed;
 }
 
+/** Multi-select answers are string arrays. Returns the real selections — a bare
+ *  "no preference"/"all" pick means the dimension should not be scored. */
+function selectedValues(key: string): string[] {
+  const answer = userAnswers[key];
+  if (!answer) return [];
+  const values = Array.isArray(answer) ? answer : [answer];
+  return values.filter(v => v !== 'no-preference' && v !== 'all');
+}
+
 function inferContinent(region: string): string | undefined {
   if (/europe/i.test(region)) return 'Europe';
   if (/asia|middle east|caucasus|eurasia/i.test(region)) return 'Asia';
@@ -567,6 +686,14 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
   const c = best.country;
   const dim = c.dimensions;
   const weatherSummary = describeClimateProfile(c.climateProfile);
+  const rawVisaAnswers: string[] = Array.isArray(userAnswers.visaPath) ? userAnswers.visaPath : userAnswers.visaPath ? [userAnswers.visaPath] : [];
+  const visaCell = (country: CountryData): string => {
+    if (rawVisaAnswers.includes('residency') && rawVisaAnswers.length === 1) return 'Right of residence already held (not scored)';
+    const cells = rawVisaAnswers
+      .filter(v => v !== 'residency')
+      .map(v => country.practical?.visaRoutes?.[v as 'remote' | 'mobility' | 'sponsored'] || country.practical?.visaFit || 'Not sourced');
+    return cells.length ? [...new Set(cells)].join(' / ') : 'Not answered';
+  };
 
   document.getElementById('quiz-body')!.innerHTML = `
     <div class="space-y-5">
@@ -700,7 +827,7 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
             <span>Sunday rhythm</span><span>${readableFactor(c.dimensions.weekendRhythm)}</span><span>${readableFactor(runner.country.dimensions.weekendRhythm)}</span>
             <span>Typical weather</span><span>${describeClimateProfile(c.climateProfile)}</span><span>${describeClimateProfile(runner.country.climateProfile)}</span>
             <span>Healthcare</span><span>${readableFactor(c.practical?.healthcare)}</span><span>${readableFactor(runner.country.practical?.healthcare)}</span>
-            <span>Visa route</span><span>${userAnswers.visaPath === 'residency' ? 'Right of residence already held (not scored)' : c.practical?.visaRoutes?.[userAnswers.visaPath as 'remote' | 'mobility' | 'sponsored'] || c.practical?.visaFit || 'Not sourced'}</span><span>${userAnswers.visaPath === 'residency' ? 'Right of residence already held (not scored)' : runner.country.practical?.visaRoutes?.[userAnswers.visaPath as 'remote' | 'mobility' | 'sponsored'] || runner.country.practical?.visaFit || 'Not sourced'}</span>
+            <span>Visa route</span><span>${visaCell(c)}</span><span>${visaCell(runner.country)}</span>
             <span>Tax profile</span><span>${readableFactor(c.practical?.taxProfile)}</span><span>${readableFactor(runner.country.practical?.taxProfile)}</span>
             <span>Tap water</span><span>${readableFactor(c.practical?.tapWater)}</span><span>${readableFactor(runner.country.practical?.tapWater)}</span>
             <span>Air quality</span><span>${readableFactor(c.practical?.airQuality)}</span><span>${readableFactor(runner.country.practical?.airQuality)}</span>

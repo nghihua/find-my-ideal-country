@@ -1181,12 +1181,14 @@ export interface QuizQuestion {
   question: string;
   subtitle: string;
   category: 'budget' | 'lgbtq' | 'transit' | 'convenience' | 'weekend' | 'climate' | 'temperature' | 'humidity' | 'rainfall' | 'snowfall' | 'religion' | 'openness' | 'density' | 'career' | 'priority';
+  /** Multi-select questions toggle options, require Continue, and use best-match scoring. */
+  multiSelect?: boolean;
   options: QuizOption[];
 }
 
 export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
-    id: 'continent', stage: 1, stageName: 'Location & Practical Fit', question: 'Which continent is open to you?',
+    id: 'continent', stage: 1, multiSelect: true, stageName: 'Location & Practical Fit', question: 'Which continent is open to you?',
     subtitle: 'Select any continents you would consider. Leave everything unselected to include all regions.', category: 'openness',
     options: [
       { label: 'Anywhere', desc: 'Keep every region in the results.', value: 'all', icon: 'fa-solid fa-earth-americas', isNoPreference: true },
@@ -1194,7 +1196,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     ]
   },
   {
-    id: 'timezoneOverlap', stage: 1, stageName: 'Location & Practical Fit', question: 'Where are your clients or collaborators?',
+    id: 'timezoneOverlap', stage: 1, multiSelect: true, stageName: 'Location & Practical Fit', question: 'Where are your clients or collaborators?',
     subtitle: 'A broad timezone-region filter; countries can span multiple time zones.', category: 'openness',
     options: [
       { label: 'No timezone constraint', desc: 'Keep all destinations.', value: 'all', icon: 'fa-solid fa-clock', isNoPreference: true },
@@ -1204,7 +1206,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     ]
   },
   {
-    id: 'healthcarePreference', stage: 1, stageName: 'Location & Practical Fit', question: 'What healthcare setup suits you?',
+    id: 'healthcarePreference', stage: 1, multiSelect: true, stageName: 'Location & Practical Fit', question: 'What healthcare setup suits you?',
     subtitle: 'Country-level model only; coverage and costs depend on eligibility and location.', category: 'openness',
     options: [
       { label: 'Public or universal coverage', desc: 'Prefer broad public coverage.', value: 'public', icon: 'fa-solid fa-hospital' },
@@ -1214,7 +1216,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     ]
   },
   {
-    id: 'taxPreference', stage: 1, stageName: 'Location & Practical Fit', question: 'How do you weigh taxes and public services?',
+    id: 'taxPreference', stage: 1, multiSelect: true, stageName: 'Location & Practical Fit', question: 'How do you weigh taxes and public services?',
     subtitle: 'Tax depends on residency, income source, and personal circumstances.', category: 'openness',
     options: [
       { label: 'Higher taxes with broad public services', desc: 'I value the service package.', value: 'higher-services', icon: 'fa-solid fa-building-columns' },
@@ -1223,7 +1225,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     ]
   },
   {
-    id: 'environmentPreference', stage: 1, stageName: 'Location & Practical Fit', question: 'How much environmental variability can you accept?',
+    id: 'environmentPreference', stage: 1, multiSelect: true, stageName: 'Location & Practical Fit', question: 'How much environmental variability can you accept?',
     subtitle: 'Water, air quality, and hazards vary within countries and by season.', category: 'openness',
     options: [
       { label: 'Prefer lower exposure', desc: 'I favor places with fewer common environmental disruptions.', value: 'lower', icon: 'fa-solid fa-leaf' },
@@ -1232,7 +1234,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     ]
   },
   {
-    id: "visaPath", stage: 1, stageName: "Essentials & Dealbreakers",
+    id: "visaPath", stage: 1, multiSelect: true, stageName: "Essentials & Dealbreakers",
     question: "What relocation route could you realistically use?",
     subtitle: "This is a broad fit estimate; eligibility depends on your passport, age, income, and work situation.", category: "career",
     options: [
@@ -1255,6 +1257,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: "budget",
+    multiSelect: true,
     stage: 1,
     stageName: "Essentials & Dealbreakers",
     question: "What is your monthly budget ceiling?",
@@ -1269,6 +1272,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: "lgbtq",
+    multiSelect: true,
     stage: 1,
     stageName: "Essentials & Dealbreakers",
     question: "What level of LGBTQ+ rights and social safety is required?",
@@ -1282,6 +1286,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: "transit",
+    multiSelect: true,
     stage: 1,
     stageName: "Essentials & Dealbreakers",
     question: "How do you want to get around every day?",
@@ -1309,6 +1314,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: "weekend",
+    multiSelect: true,
     stage: 2,
     stageName: "Daily Lifestyle & Rhythms",
     question: "What should a typical weekend and evening feel like?",
@@ -1322,6 +1328,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: "climate",
+    multiSelect: true,
     stage: 2,
     stageName: "Daily Lifestyle & Rhythms",
     question: "What climate makes you feel most alive?",
@@ -1335,7 +1342,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     ]
   },
   {
-    id: 'temperature', stage: 2, stageName: 'Weather Preferences', question: 'Which daytime temperature range feels best?',
+    id: 'temperature', stage: 2, multiSelect: true, stageName: 'Weather Preferences', question: 'Which daytime temperature range feels best?',
     subtitle: 'Choose the typical daytime temperature you would be most comfortable in.', category: 'temperature',
     options: [
       { label: 'Really cold · below 10°C (50°F)', desc: 'I feel at home in long, cold winters.', value: 'very-cold', icon: 'fa-solid fa-temperature-low' },
@@ -1347,7 +1354,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     ]
   },
   {
-    id: 'humidity', stage: 2, stageName: 'Weather Preferences', question: 'How much humidity feels comfortable?',
+    id: 'humidity', stage: 2, multiSelect: true, stageName: 'Weather Preferences', question: 'How much humidity feels comfortable?',
     subtitle: 'Country-level patterns are broad; coasts, mountains, and seasons can feel very different.', category: 'humidity',
     options: [
       { label: 'Dry air', desc: 'I prefer little muggy or sticky weather.', value: 'dry', icon: 'fa-solid fa-wind' },
@@ -1357,7 +1364,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     ]
   },
   {
-    id: 'rainfall', stage: 2, stageName: 'Weather Preferences', question: 'How much rain do you like?',
+    id: 'rainfall', stage: 2, multiSelect: true, stageName: 'Weather Preferences', question: 'How much rain do you like?',
     subtitle: 'Think about the overall pattern, including wet seasons.', category: 'rainfall',
     options: [
       { label: 'Mostly dry', desc: 'I prefer places with little rain through the year.', value: 'low', icon: 'fa-solid fa-sun' },
@@ -1367,7 +1374,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     ]
   },
   {
-    id: 'snowfall', stage: 2, stageName: 'Weather Preferences', question: 'How do you feel about snow?',
+    id: 'snowfall', stage: 2, multiSelect: true, stageName: 'Weather Preferences', question: 'How do you feel about snow?',
     subtitle: 'This describes a typical national pattern; local elevation and region matter a lot.', category: 'snowfall',
     options: [
       { label: 'I would rather avoid it', desc: 'I prefer places where snow is rare.', value: 'rare', icon: 'fa-solid fa-sun' },
@@ -1378,6 +1385,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: "religion",
+    multiSelect: true,
     stage: 3,
     stageName: "Society, Religion & People",
     question: "How should religion fit into society and everyday life?",
@@ -1418,6 +1426,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: "career",
+    multiSelect: true,
     stage: 4,
     stageName: "Work & Core Priority",
     question: "What is your primary career or work arrangement?",
