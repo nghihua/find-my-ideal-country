@@ -1,0 +1,103 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  // src/**/*.ts must be scanned: the quiz, dossier, search, and toast modules
+  // render their markup as template literals in TS, not as static Astro HTML.
+  content: ['./src/**/*.{astro,ts,js,mjs,html}'],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ["'Google Sans Text'", "'Google Sans'", 'Roboto', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        display: ["'Google Sans'", "'Google Sans Text'", 'Roboto', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        mono: ["'Roboto Mono'", 'monospace'],
+      },
+      colors: {
+        paper: {
+          50: 'var(--color-paper-50)',
+          100: 'var(--color-paper-100)',
+          200: 'var(--color-paper-200)',
+          300: 'var(--color-paper-300)',
+          800: 'var(--color-paper-800)',
+          900: 'var(--color-paper-900)',
+        },
+        google: {
+          blue: '#1a73e8',
+          'blue-hover': '#1557b0',
+          'blue-light': '#e8f0fe',
+          'blue-border': '#d2e3fc',
+          red: '#ea4335',
+          'red-hover': '#d93025',
+          'red-light': '#fce8e6',
+          yellow: '#fbbc04',
+          'yellow-light': '#fef7e0',
+          'yellow-dark': '#b06000',
+          green: '#34a853',
+          'green-hover': '#1e8e3e',
+          'green-light': '#e6f4ea',
+          'green-dark': '#137333',
+          grey: '#5f6368',
+          'grey-light': '#f1f3f4',
+          'grey-border': '#dadce0',
+        },
+        primary: {
+          DEFAULT: 'var(--color-primary)',
+          hover: 'var(--color-primary-hover)',
+          container: 'var(--color-primary-container)',
+          text: 'var(--color-primary-text)',
+        },
+        sage: {
+          DEFAULT: 'var(--color-primary)',
+          spinner: 'var(--color-map-spinner)',
+        },
+        teal: {
+          DEFAULT: 'var(--color-teal)',
+          dark: 'var(--color-teal-dark)',
+          light: 'var(--color-teal-light)',
+          bg: 'var(--color-teal-bg)',
+        },
+        coral: {
+          DEFAULT: 'var(--color-coral)',
+          light: 'var(--color-coral-light)',
+          dark: 'var(--color-coral-dark)',
+          muted: 'var(--color-coral-muted)',
+          bg: 'var(--color-coral-bg)',
+        },
+        amber: {
+          accent: 'var(--color-amber-accent)',
+          dark: 'var(--color-amber-dark)',
+          bg: 'var(--color-amber-bg)',
+          light: 'var(--color-amber-light)',
+          soft: 'var(--color-amber-soft)',
+          card: 'var(--color-amber-card)',
+        },
+        purple: {
+          accent: 'var(--color-purple-accent)',
+          dark: 'var(--color-purple-dark)',
+          light: 'var(--color-purple-light)',
+          bg: 'var(--color-purple-bg)',
+          card: 'var(--color-purple-card)',
+        },
+        green: {
+          accent: 'var(--color-green-accent)',
+          bg: 'var(--color-green-bg)',
+          dark: 'var(--color-green-text)',
+        },
+        badge: 'var(--color-badge-bg)',
+        hoverCard: 'var(--color-hover-card)',
+        hoverQuiz: 'var(--color-hover-quiz)',
+        quizIcon: 'var(--color-quiz-icon-bg)',
+      },
+      boxShadow: {
+        'google-1': '0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15)',
+        'google-2': '0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15)',
+        'google-3': '0 4px 8px 3px rgba(60,64,67,0.15), 0 1px 3px 0 rgba(60,64,67,0.3)',
+        'google-modal': '0 12px 28px 0 rgba(60,64,67,0.28), 0 4px 8px 3px rgba(60,64,67,0.15)',
+        'google-drawer': '-2px 0 12px 0 rgba(60,64,67,0.12), -4px 0 24px 0 rgba(60,64,67,0.08)',
+        'paper-sm': '0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15)',
+        'paper': '0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15)',
+        'paper-lg': '0 4px 8px 3px rgba(60,64,67,0.15), 0 1px 3px 0 rgba(60,64,67,0.3)',
+        'paper-drawer': '-2px 0 12px 0 rgba(60,64,67,0.12), -4px 0 24px 0 rgba(60,64,67,0.08)',
+      },
+    },
+  },
+  plugins: [],
+};

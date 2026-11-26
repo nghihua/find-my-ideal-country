@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
     /* Google Material 3 & Neutral Palette */
     --color-paper-50: #ffffff;
@@ -115,6 +119,24 @@ body {
 .scroll-fade-top.scroll-fade-bottom {
     -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16px, #000 calc(100% - 24px), transparent);
     mask-image: linear-gradient(to bottom, transparent, #000 16px, #000 calc(100% - 24px), transparent);
+}
+
+/* Dynamic-viewport corrections. Tailwind (JIT and the old Play CDN) emits
+   utilities in alphabetical order, so pairing a fallback with a smarter
+   sibling class cannot work: h-dvh sorts before h-screen and [90svh] before
+   [90vh], so the fallback always wins. Override the markup's vh fallbacks
+   here instead — @supports gates pre-2022 browsers out, and ID/element
+   specificity beats any single utility class regardless of rule order. */
+@supports (max-height: 90svh) {
+    #quiz-dialog,
+    #author-dialog {
+        max-height: 90svh; /* small viewport: the dialog always fits above the URL/toolbar and never resizes mid-scroll */
+    }
+}
+@supports (height: 100dvh) {
+    body.h-screen {
+        height: 100dvh; /* dynamic viewport: the app shell tracks the visible area as toolbars collapse */
+    }
 }
 
 /* Map Country Styling — Google Maps Clean Styling */

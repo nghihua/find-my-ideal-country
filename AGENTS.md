@@ -33,7 +33,8 @@ The script is the source of truth. The checks most likely to bite:
 
 ## Styling
 
-- Tailwind runs from the Play CDN (`cdn.tailwindcss.com`), not a build step — there is no `tailwind.config` file. Theme colors/fonts live in the inline `tailwind.config` inside `src/layouts/Layout.astro`; custom CSS variables in `src/styles/global.css`.
+- Tailwind is compiled at build time: `tailwind.config.js` (theme colors/fonts/shadows, migrated from the old inline `tailwind.config` in `Layout.astro`) plus `postcss.config.cjs` run through Astro's PostCSS pipeline; the `@tailwind` directives sit at the top of `src/styles/global.css`. The content globs must keep scanning `src/**/*.{astro,ts,js,html}` — the quiz, dossier, search, and toast modules render markup from template literals in `src/scripts/*.ts`, so classes appearing only in TS still need compiling. The former Play CDN setup was removed for two verified failures: it emitted utilities alphabetically (so a `max-h-[90vh]` fallback beat `max-h-[90svh]`), and it never generated classes for JS-injected markup on WebKit, which silently dropped quiz-option `gap-3.5`, `border-dashed`, hover states, and friends on iOS.
+- Tailwind's JIT sorts utilities alphabetically, so a fallback class paired with a "smarter" sibling can never win (`h-dvh` sorts before `h-screen`). Viewport-unit overrides therefore live in the `@supports` blocks at the bottom of `src/styles/global.css`, winning by ID/element specificity instead; the markup keeps plain `h-screen` / `max-h-[90vh]` as the pre-2022 fallbacks.
 - D3 and topojson are `is:inline` CDN globals (declared `any` in TS), not npm dependencies.
 
 ## Documentation

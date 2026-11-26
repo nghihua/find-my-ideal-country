@@ -17,9 +17,9 @@
 
 <!-- Quiz Modal Overlay (Google Material 3 Dialog) -->
 <div id="quiz-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-[#202124]/40 backdrop-blur-xs">
-    <!-- max-h-[90vh] is the fallback; 90svh wins on modern mobile so the dialog always
-         fits above the browser toolbar and never resizes while scrolling internally. -->
-    <div class="bg-white border border-[#dadce0] w-full max-w-2xl rounded-3xl shadow-[0_12px_28px_rgba(60,64,67,0.28)] overflow-hidden flex flex-col max-h-[90vh] max-h-[90svh] select-text">
+    <!-- max-h-[90vh] is only the fallback: 100vh ignores the mobile toolbar, so
+         global.css caps this dialog at 90svh via @supports + ID specificity. -->
+    <div id="quiz-dialog" class="bg-white border border-[#dadce0] w-full max-w-2xl rounded-3xl shadow-[0_12px_28px_rgba(60,64,67,0.28)] overflow-hidden flex flex-col max-h-[90vh] select-text">
         <!-- Google 4-Color Accent Strip -->
         <div class="google-accent-bar shrink-0"></div>
 
