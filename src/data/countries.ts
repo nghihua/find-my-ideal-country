@@ -213,7 +213,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
       { title: "The Truth About Living in Portugal in 2024", channel: "Our Rich Journey", duration: "19:10", url: "https://en.wikipedia.org/wiki/Portugal" },
       { title: "Cost of Living in Lisbon, Portugal (Honest Reality)", channel: "Expats Everywhere", duration: "13:40", url: "https://en.wikipedia.org/wiki/Portugal" }
     ],
-    tags: ["warm", "relaxed", "safe", "coastal", "moderate-cost", "europe"],
+    tags: ["warm", "relaxed", "safe", "coastal", "moderate-cost", "europe", "foodie"],
     dimensions: {
       costIndex: 2,
       climate: 'mild-coastal',
@@ -769,7 +769,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
     videos: [
       { title: "Living in Australia: 10 Things I Wish I Knew", channel: "Greg Snell", duration: "16:00", url: "https://en.wikipedia.org/wiki/Australia" }
     ],
-    tags: ["nature", "coastal", "wlb", "safe", "warm", "high-cost", "corporate-hub"],
+    tags: ["nature", "coastal", "wlb", "safe", "warm", "high-cost", "corporate-hub", "foodie"],
     dimensions: {
       costIndex: 4,
       climate: 'warm-sun',
@@ -979,7 +979,7 @@ export const COUNTRY_DATABASE: Record<string, CountryData> = {
     videos: [
       { title: "Living in Medellin, Colombia: Honest Pros and Cons", channel: "Nomad Capitalist", duration: "16:20", url: "https://en.wikipedia.org/wiki/Colombia" }
     ],
-    tags: ["affordable", "warm", "social", "nature", "energetic"],
+    tags: ["affordable", "warm", "social", "nature", "energetic", "foodie"],
     dimensions: {
       costIndex: 1,
       climate: 'warm-sun',
@@ -1239,7 +1239,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       { label: "Remote-work / digital-nomad route", desc: "I expect to keep working remotely.", value: "remote", icon: "fa-solid fa-laptop" },
       { label: "Working holiday, study, or youth mobility", desc: "I may qualify for a temporary work or study route.", value: "mobility", icon: "fa-solid fa-plane" },
       { label: "Local job with employer sponsorship", desc: "I plan to find eligible local employment.", value: "sponsored", icon: "fa-solid fa-briefcase" },
-      { label: "Citizenship / permanent residence", desc: "I already have a right to live there.", value: "residency", icon: "fa-solid fa-id-card" },
+      { label: "Citizenship / permanent residence", desc: "I already have a right to live there; this is not scored.", value: "residency", icon: "fa-solid fa-id-card" },
       { label: "Not sure / no preference", desc: "Keep this as information, not a filter.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
     ]
   },

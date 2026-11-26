@@ -153,11 +153,17 @@ function prevQuizStep() {
   }
 }
 
+interface ProfileEvidence {
+  label: string;
+  text?: string;
+}
+
 interface ScoredCountry {
   country: CountryData;
   score: number;
   matchPercent: number;
   reasons: string[];
+  profileEvidence: ProfileEvidence[];
   realityCheck: string;
 }
 
@@ -212,19 +218,32 @@ function calculateQuizResult() {
     let totalScore = 0;
     let maxPossible = 0;
     const reasons: string[] = [];
+    const profileEvidence: ProfileEvidence[] = [];
 
     // Dimension 1: Budget
     if (userAnswers['budget'] && userAnswers['budget'] !== 'no-preference') {
       maxPossible += 10;
       if (userAnswers['budget'] === 'lean') {
-        if (dim.costIndex === 1) { totalScore += 10; reasons.push(`Exceptional value (<$1,400/mo) allowing comfortable living`); }
+        if (dim.costIndex === 1) {
+          totalScore += 10;
+          reasons.push(`Exceptional value (<$1,400/mo) allowing comfortable living`);
+          profileEvidence.push({ label: 'Cost of living', text: firstSentence(country.costOfLiving) });
+        }
         else if (dim.costIndex === 2) { totalScore += 7; }
       } else if (userAnswers['budget'] === 'moderate') {
-        if (dim.costIndex === 2 || dim.costIndex === 3) { totalScore += 10; reasons.push(`Comfortable mid-range living expenses (${country.cost})`); }
+        if (dim.costIndex === 2 || dim.costIndex === 3) {
+          totalScore += 10;
+          reasons.push(`Comfortable mid-range living expenses (${country.cost})`);
+          profileEvidence.push({ label: 'Cost of living', text: firstSentence(country.costOfLiving) });
+        }
         else if (dim.costIndex === 1) { totalScore += 8; }
         else if (dim.costIndex === 4) { totalScore += 4; }
       } else if (userAnswers['budget'] === 'premium') {
-        if (dim.costIndex >= 4) { totalScore += 10; reasons.push(`World-class public services and high-standard infrastructure`); }
+        if (dim.costIndex >= 4) {
+          totalScore += 10;
+          reasons.push(`World-class public services and high-standard infrastructure`);
+          profileEvidence.push({ label: 'Cost of living', text: firstSentence(country.costOfLiving) });
+        }
         else if (dim.costIndex === 3) { totalScore += 8; }
       }
     }
@@ -273,6 +292,7 @@ function calculateQuizResult() {
         totalScore += 10;
         if (dim.weekendRhythm === 'vibrant-24-7') reasons.push(`7-day vibrant commerce, bustling night markets, and late-night social spots`);
         else if (dim.weekendRhythm === 'quiet-sunday') reasons.push(`Sacred peaceful Sundays and calm residential evenings`);
+        profileEvidence.push({ label: 'Evening rhythm', text: firstSentence(country.evening) });
       } else if (dim.weekendRhythm === 'standard') {
         totalScore += 6;
       }
@@ -352,13 +372,18 @@ function calculateQuizResult() {
       maxPossible += 10;
       const oAns = userAnswers['openness'];
       if (oAns === 'cosmopolitan') {
-        if (dim.foreignerOpenness >= 5) { totalScore += 10; reasons.push(`Cosmopolitan society with high English fluency and welcoming integration`); }
+        if (dim.foreignerOpenness >= 5) {
+          totalScore += 10;
+          reasons.push(`Cosmopolitan society with high English fluency and welcoming integration`);
+          profileEvidence.push({ label: 'People', text: firstSentence(country.people) });
+        }
         else if (dim.foreignerOpenness === 4) { totalScore += 8; }
         else if (dim.foreignerOpenness === 3) { totalScore += 4; }
       } else if (oAns === 'reserved') {
-        if (dim.foreignerOpenness <= 3 || ['Japan', 'Norway', 'Finland', 'Switzerland', 'Germany'].includes(country.name)) {
+        if (dim.foreignerOpenness <= 3 || country.tags.includes('reserved')) {
           totalScore += 10;
           reasons.push(`Polite culture that respects personal boundaries and private space`);
+          profileEvidence.push({ label: 'People', text: firstSentence(country.people) });
         } else { totalScore += 6; }
       }
     }
@@ -381,14 +406,26 @@ function calculateQuizResult() {
       maxPossible += 10;
       const cAns = userAnswers['career'];
       if (cAns === 'nomad') {
-        if (dim.costIndex <= 3 && (dim.convenienceScore >= 4 || ['Portugal', 'Spain', 'Thailand', 'Vietnam', 'Mexico', 'Costa Rica', 'Indonesia', 'Colombia'].includes(country.name))) {
+        // Scored from the sourced visa-routes data: an official remote-work route
+        // is the strongest signal; lifestyle fit alone only earns partial credit.
+        const remoteRoute = country.practical?.visaRoutes?.remote;
+        if (remoteRoute === 'available') {
           totalScore += 10;
-          reasons.push(`Top-tier digital nomad hub with great cafes and remote work lifestyle`);
-        } else { totalScore += 6; }
+          reasons.push(`An official remote-work visa route exists; eligibility still depends on your circumstances`);
+          profileEvidence.push({ label: 'Workday', text: firstSentence(country.workday) });
+        } else if (remoteRoute === 'limited') {
+          totalScore += 7;
+          reasons.push(`Remote-work routes exist but carry real restrictions; check income and stay-length requirements`);
+        } else if (dim.costIndex <= 3 && dim.convenienceScore >= 4) {
+          totalScore += 6;
+        } else {
+          totalScore += 3;
+        }
       } else if (cAns === 'corporate') {
-        if (dim.costIndex >= 3 && ['Netherlands', 'Germany', 'United Kingdom', 'United States', 'Singapore', 'Switzerland', 'Australia', 'Canada'].includes(country.name)) {
+        if (country.tags.includes('corporate-hub')) {
           totalScore += 10;
           reasons.push(`Major international corporate hub with high-wage career prospects`);
+          profileEvidence.push({ label: 'Workday', text: firstSentence(country.workday) });
         } else if (dim.costIndex >= 3) { totalScore += 7; }
       } else if (cAns === 'local') {
         totalScore += 8;
@@ -421,7 +458,10 @@ function calculateQuizResult() {
     totalScore += dim.foreignerOpenness * 0.8;
 
     const practical = country.practical;
-    if (userAnswers.visaPath && userAnswers.visaPath !== 'no-preference' && practical) {
+    // 'residency' means the user already holds the right to live there; there is
+    // no route data to score, so it stays informational instead of distorting the
+    // match percentage through a generic visaFit fallback.
+    if (userAnswers.visaPath && userAnswers.visaPath !== 'no-preference' && userAnswers.visaPath !== 'residency' && practical) {
       const route = practical.visaRoutes?.[userAnswers.visaPath as 'remote' | 'mobility' | 'sponsored'];
       if (route === 'available' || route === 'limited') {
         maxPossible += 10;
@@ -467,6 +507,7 @@ function calculateQuizResult() {
       score: totalScore,
       matchPercent,
       reasons: reasons.slice(0, 3),
+      profileEvidence: profileEvidence.filter(e => e.text).slice(0, 3),
       realityCheck: country.realityCheck || "Local language proficiency and patience with paperwork are recommended."
     });
   });
@@ -487,6 +528,13 @@ function calculateQuizResult() {
   const wildcard = scoredCountries.find((item, idx) => idx > 1 && item.country.region !== bestMatch.country.region) || scoredCountries[2] || runnerUp;
 
   renderResultsView(bestMatch, runnerUp, wildcard);
+}
+
+function firstSentence(text?: string): string | undefined {
+  if (!text) return undefined;
+  const trimmed = text.trim();
+  const match = trimmed.match(/[^.!?]+[.!?]/);
+  return match ? match[0].trim() : trimmed;
 }
 
 function inferContinent(region: string): string | undefined {
@@ -582,6 +630,32 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
         </ul>
       </div>
 
+      <!-- From the Curated Profile -->
+      <div class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 space-y-3 shadow-[0_1px_2px_rgba(60,64,67,0.06)]">
+        <div class="text-xs font-medium uppercase tracking-wider text-[#188038] flex items-center gap-1.5">
+          <i class="fa-solid fa-book-open text-[#188038]"></i> From the ${c.name} profile:
+        </div>
+        ${best.profileEvidence.length > 0 ? `
+          <ul class="space-y-2 text-xs sm:text-sm text-[#3c4043]">
+            ${best.profileEvidence.map(e => `
+              <li class="flex items-start gap-2.5">
+                <i class="fa-solid fa-quote-left text-[#188038] mt-1 text-[10px] shrink-0"></i>
+                <span><span class="font-medium">${e.label}:</span> ${e.text}</span>
+              </li>
+            `).join('')}
+          </ul>
+        ` : ''}
+        <div class="text-[10px] uppercase font-medium text-[#5f6368]">Profile highlights</div>
+        <ul class="space-y-2 text-xs sm:text-sm text-[#3c4043]">
+          ${c.upsides.slice(0, 3).map(u => `
+            <li class="flex items-start gap-2.5">
+              <i class="fa-solid fa-star text-[#f9ab00] mt-0.5 text-xs shrink-0"></i>
+              <span>${u}</span>
+            </li>
+          `).join('')}
+        </ul>
+      </div>
+
       <!-- The Honest Reality Check Callout -->
       <div class="bg-[#fef7e0] border border-[#fce8b2] border-l-4 border-l-[#fbbc04] rounded-2xl p-4 space-y-1.5 text-[#3c4043]">
         <div class="text-xs font-semibold uppercase tracking-wider text-[#b06000] flex items-center gap-1.5">
@@ -626,7 +700,7 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
             <span>Sunday rhythm</span><span>${readableFactor(c.dimensions.weekendRhythm)}</span><span>${readableFactor(runner.country.dimensions.weekendRhythm)}</span>
             <span>Typical weather</span><span>${describeClimateProfile(c.climateProfile)}</span><span>${describeClimateProfile(runner.country.climateProfile)}</span>
             <span>Healthcare</span><span>${readableFactor(c.practical?.healthcare)}</span><span>${readableFactor(runner.country.practical?.healthcare)}</span>
-            <span>Visa route</span><span>${c.practical?.visaRoutes?.[userAnswers.visaPath as 'remote' | 'mobility' | 'sponsored'] || c.practical?.visaFit || 'Not sourced'}</span><span>${runner.country.practical?.visaRoutes?.[userAnswers.visaPath as 'remote' | 'mobility' | 'sponsored'] || runner.country.practical?.visaFit || 'Not sourced'}</span>
+            <span>Visa route</span><span>${userAnswers.visaPath === 'residency' ? 'Right of residence already held (not scored)' : c.practical?.visaRoutes?.[userAnswers.visaPath as 'remote' | 'mobility' | 'sponsored'] || c.practical?.visaFit || 'Not sourced'}</span><span>${userAnswers.visaPath === 'residency' ? 'Right of residence already held (not scored)' : runner.country.practical?.visaRoutes?.[userAnswers.visaPath as 'remote' | 'mobility' | 'sponsored'] || runner.country.practical?.visaFit || 'Not sourced'}</span>
             <span>Tax profile</span><span>${readableFactor(c.practical?.taxProfile)}</span><span>${readableFactor(runner.country.practical?.taxProfile)}</span>
             <span>Tap water</span><span>${readableFactor(c.practical?.tapWater)}</span><span>${readableFactor(runner.country.practical?.tapWater)}</span>
             <span>Air quality</span><span>${readableFactor(c.practical?.airQuality)}</span><span>${readableFactor(runner.country.practical?.airQuality)}</span>
