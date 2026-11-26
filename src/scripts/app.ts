@@ -17,6 +17,7 @@ import { initSearch } from './search';
 import type { SearchEntry } from './search';
 import { showToast } from './toast';
 import { initAuthorModal } from './author';
+import { watchScrollFade } from './scrollAffordance';
 
 declare const d3: any;
 
@@ -143,6 +144,11 @@ window.addEventListener('load', async () => {
   document.getElementById('reset-zoom-btn')!.addEventListener('click', resetZoom);
   document.getElementById('open-quiz-btn')!.addEventListener('click', openQuiz);
   document.getElementById('close-quiz-btn')!.addEventListener('click', closeQuiz);
+
+  // Scroll affordance: faded edges stand in for mobile auto-hiding scrollbars.
+  watchScrollFade(document.getElementById('quiz-body')!);
+  watchScrollFade(document.getElementById('panel-content')!);
+  watchScrollFade(document.getElementById('author-body')!);
 
   // Handle responsive resize
   window.addEventListener('resize', () => {

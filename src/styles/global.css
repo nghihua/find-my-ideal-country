@@ -8,8 +8,8 @@
     --color-paper-900: #202124; /* Google primary text grey */
 
     /* Scrollbars */
-    --color-scrollbar-thumb: #dadce0;
-    --color-scrollbar-thumb-hover: #bdc1c6;
+    --color-scrollbar-thumb: #bdc1c6;
+    --color-scrollbar-thumb-hover: #9aa0a6;
 
     /* Google Maps Cartography Palette */
     --color-map-country: #ffffff; /* Clean white landmass */
@@ -81,8 +81,8 @@ body {
 
 /* Custom Scrollbar for Google Material Look */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
 }
 ::-webkit-scrollbar-track {
     background: transparent;
@@ -98,6 +98,23 @@ body {
     border-radius: 9999px;
     border: 2px solid transparent;
     background-clip: content-box;
+}
+
+/* Scroll-Edge Fades — mobile overlay scrollbars auto-hide seconds after the
+   last touch, so scrollable surfaces fade their edges instead as the "more
+   content above/below" affordance. scrollAffordance.ts toggles these classes;
+   the fades also read on desktop, where the styled scrollbar already hints. */
+.scroll-fade-top {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16px);
+    mask-image: linear-gradient(to bottom, transparent, #000 16px);
+}
+.scroll-fade-bottom {
+    -webkit-mask-image: linear-gradient(to top, transparent, #000 24px);
+    mask-image: linear-gradient(to top, transparent, #000 24px);
+}
+.scroll-fade-top.scroll-fade-bottom {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16px, #000 calc(100% - 24px), transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 16px, #000 calc(100% - 24px), transparent);
 }
 
 /* Map Country Styling — Google Maps Clean Styling */

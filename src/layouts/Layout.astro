@@ -129,7 +129,9 @@ const { title = "Find My Ideal Country — Interactive Global Lifestyle & Reloca
         }
     </script>
 </head>
-<body class="bg-paper-100 text-paper-900 overflow-hidden select-none h-screen w-screen relative font-sans">
+<!-- h-screen is the fallback for browsers without dynamic viewport units; h-dvh wins
+     on modern mobile, where 100vh spans the area hidden behind the URL/toolbar. -->
+<body class="bg-paper-100 text-paper-900 overflow-hidden select-none h-screen h-dvh w-screen relative font-sans">
     <slot />
 
     <Analytics />

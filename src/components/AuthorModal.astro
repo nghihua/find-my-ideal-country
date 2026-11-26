@@ -26,7 +26,9 @@
 
 <!-- Author Modal Overlay (Google Material 3 Dialog) -->
 <div id="author-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-[#202124]/40 backdrop-blur-xs select-text">
-    <div class="bg-white border border-[#dadce0] w-full max-w-md rounded-3xl shadow-[0_12px_28px_rgba(60,64,67,0.28)] overflow-hidden flex flex-col max-h-[90vh]">
+    <!-- max-h-[90vh] is the fallback; 90svh wins on modern mobile so the dialog always
+         fits above the browser toolbar and never resizes while scrolling internally. -->
+    <div class="bg-white border border-[#dadce0] w-full max-w-md rounded-3xl shadow-[0_12px_28px_rgba(60,64,67,0.28)] overflow-hidden flex flex-col max-h-[90vh] max-h-[90svh]">
         <!-- Google 4-Color Accent Strip -->
         <div class="google-accent-bar shrink-0"></div>
 
@@ -51,7 +53,7 @@
         </div>
 
         <!-- Modal Body -->
-        <div class="p-6 overflow-y-auto space-y-6">
+        <div id="author-body" class="p-6 overflow-y-auto space-y-6">
             <!-- Profile Identity Card -->
             <div class="flex flex-col items-center text-center">
                 <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-[#1a73e8] to-[#4285f4] text-white flex items-center justify-center font-display font-semibold text-2xl shadow-md ring-4 ring-[#e8f0fe] mb-3">
