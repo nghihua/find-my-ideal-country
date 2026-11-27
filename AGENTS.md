@@ -6,6 +6,7 @@ Single-page Astro app — "Find My Ideal Country": an interactive D3 world map, 
 - `npm run build` — production build to `dist/`. This is the main "does it compile" gate: no linter or typechecker is configured (Vite strips types without checking; `astro check` would require installing `@astrojs/check`).
 - `node scripts/qc-profile-sections.mjs` — content QC for `src/data/profileSections/*.ts`, exits 1 on errors (`--json` for machine output). Run it after any profile-copy change and keep it passing.
 - `node scripts/qc-climate-profiles.mjs` — content QC for `src/data/climateProfiles.ts`, exits 1 on errors (`--json` for machine output). Run it after any climate-entry change and keep it passing.
+- `node scripts/qc-social-warmth.mjs` — content QC for `src/data/socialWarmth.ts`, exits 1 on errors (`--json` for machine output). Run it after any social-warmth change and keep it passing.
 
 Node >= 22.23.4 required (`engines` in package.json).
 
@@ -81,3 +82,24 @@ Honesty over precision: integer degrees; a wide-but-real range anchored to Köpp
 Format: one line per country, appended grouped by region under a short `// <Region>` comment; single-word keys unquoted, multi-word single-quoted — except `"Côte d'Ivoire"`, double-quoted exactly as in `globalCountries.ts`; values single-quoted. Never reformat, reorder, or "fix" the existing entries — flag suspected errors in the report instead.
 
 Workflow that scales (used for the 2026-11 150-country pass): the orchestrator derives the uncovered list programmatically from `climateProfiles.ts` + `globalCountries.ts` (never from chat or docs), pre-extracts a cheat sheet (country → metadata region, `dimensions.climate` band, representative city, latitude, Köppen zone) into regional batch files, and runs parallel batch agents. Each agent researches its slice against the anchors, writes entry lines plus a per-country confidence/unknowns report outside the repo, and self-validates by eval'ing its snippet (exact key set, valid enums, integer ranges, categorical agreement). The orchestrator merges with assertions (exact coverage, no collisions with curated entries), then runs the gates: `node scripts/qc-climate-profiles.mjs`, `node scripts/qc-profile-sections.mjs`, `npx astro build`, then greps `dist/_astro/*.js` for new keys to confirm the bundle. Conflict-affected and data-poor states get wide-but-real ranges and low-confidence flags rather than invented precision.
+
+## Social-warmth research (`src/data/socialWarmth.ts`)
+
+`COUNTRY_SOCIAL_WARMTH` holds per-country default social-fabric assessments consumed by `getCompleteCountryProfile()` via `COUNTRY_SOCIAL_WARMTH[name]?.warmth ?? estimateSocialWarmth(...)` — all 200 countries (22 tier-1 curated, 178 tier-2 catalog) are explicitly mapped so no live dossier falls back to continental estimates.
+
+Schema semantics (`CountrySocialWarmth` in `countries.ts`):
+- `warmth` integer 1..5:
+  - 1: `privacy-first` (closed doors are the norm, personal questions at work are avoided, friendships chosen, slow, durable; Germany, Nordics, Switzerland, Austria).
+  - 2: `reserved-courteous` (boundaries respected, prying rare, in-groups dense but newcomer entry slow and context-gated; Japan, South Korea, Czechia, Poland).
+  - 3: `balanced` (courtesy first, situational warmth, friendships form through repeated shared contexts; France, UK, Canada, Australia, Singapore).
+  - 4: `friendly-open` (quick surface warmth, casual invitations, accessible street and neighborhood sociability; Ireland, Spain, Greece, Thailand, Mexico urban).
+  - 5: `community-woven` (street is the living room, neighbors are default social safety net, spontaneous invitations; Vietnam, Philippines, Indonesia, Colombia, Ghana, West Africa).
+- `newcomerNote`: single-line string (80–240 chars) naming both sides of the tradeoff — warmth comes bundled with curiosity, gossip, and social obligations; privacy comes bundled with effort, slow pacing, and loneliness risk.
+
+Model entries:
+- Fully sourced / balanced: Portugal (warmth 4, café rhythms vs family pacing), Germany (warmth 1, quiet hours vs club requirement).
+- Mixed / divergence: Australia (openness 5 vs warmth 3, casual banter vs suburban friend-circle barriers).
+- Honest hedged / conflict: Chad, Libya, North Korea (pattern-level value, hedged note acknowledging clan solidarity vs surveillance or instability).
+
+Format rules:
+One line per country, grouped by region under `// <Region>` comments; single-word keys unquoted, multi-word single-quoted — except `"Côte d'Ivoire"`, double-quoted exactly as in `globalCountries.ts`; notes single-quoted using typographic apostrophes (’) only; ends with a period. Enforced by `node scripts/qc-social-warmth.mjs`.

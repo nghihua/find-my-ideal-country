@@ -18,6 +18,11 @@ export interface CountryClimateProfile {
   rainfall: ClimateRainfall;
   snowfall: ClimateSnowfall;
 }
+export type SocialWarmthLevel = 1 | 2 | 3 | 4 | 5;
+export interface CountrySocialWarmth {
+  warmth: SocialWarmthLevel;
+  newcomerNote: string;
+}
 export type TransitArchetype = 'walkable-rail' | 'motorbike-active' | 'car-dependent' | 'mixed-transit';
 export type WeekendRhythm = 'vibrant-24-7' | 'standard' | 'quiet-sunday';
 export type ReligionRole = 'secular' | 'cultural-tradition' | 'moderate' | 'prominent';
@@ -78,6 +83,8 @@ export interface CountryData {
   tags: string[];
   dimensions: LifestyleDimensions;
   climateProfile?: CountryClimateProfile;
+  socialWarmth?: SocialWarmthLevel;
+  socialWarmthNote?: string;
   practical?: PracticalFactors;
   realityCheck: string;
   highlights?: string[];
@@ -1402,13 +1409,28 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: "openness",
     stage: 3,
     stageName: "Society, Religion & People",
-    question: "What social climate and openness to foreigners do you seek?",
-    subtitle: "Ease of making friends, English proficiency, and multicultural acceptance.",
+    question: "How international or locally immersive should your environment be?",
+    subtitle: "English accessibility, multicultural diversity, and expat infrastructure vs. deep local immersion.",
     category: "openness",
     options: [
-      { label: "Cosmopolitan, Diverse & High English Ease", desc: "Multicultural cities where English is widely spoken, low microaggressions, and foreigners integrate easily.", value: "cosmopolitan", icon: "fa-solid fa-globe" },
-      { label: "Quiet, Polite & Respectful Distance", desc: "Locals give you privacy and respect personal boundaries; quiet courtesy without intrusive small talk.", value: "reserved", icon: "fa-solid fa-user-shield" },
-      { label: "Flexible / No Preference", desc: "Happy to adapt to extroverted expat hubs or reserved homogeneous cultures.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
+      { label: "Cosmopolitan & Expat-Accessible", desc: "Multicultural hubs where English is widely spoken and foreign residents integrate smoothly into daily services.", value: "cosmopolitan", icon: "fa-solid fa-globe" },
+      { label: "Locally Immersive & Culturally Distinct", desc: "Traditional domestic culture with fewer expat bubbles; everyday life requires adapting to local language and customs.", value: "reserved", icon: "fa-solid fa-house-chimney" },
+      { label: "Flexible / No Preference", desc: "Comfortable in either global expat crossroads or deep local immersion.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
+    ]
+  },
+  {
+    id: "socialFabric",
+    multiSelect: true,
+    stage: 3,
+    stageName: "Society, Religion & People",
+    question: "How should the social world around you work?",
+    subtitle: "Warmth and privacy trade off: woven communities come with curiosity and gossip; privacy-first cultures come with slower friendships. Select any that fit.",
+    category: "openness",
+    options: [
+      { label: "Open-Door Community", desc: "Neighbors are friends, invitations come fast, and street life is social; expect curiosity about your life and local gossip.", value: "woven", icon: "fa-solid fa-door-open" },
+      { label: "Somewhere in Between", desc: "Courtesy first; friendships grow through repeated shared contexts like work, hobbies, or the neighborhood.", value: "balanced", icon: "fa-solid fa-scale-balanced" },
+      { label: "Privacy-First Courtesy", desc: "Closed doors are respected and personal questions are rare; expect friendship to take deliberate effort.", value: "private", icon: "fa-solid fa-shield-halved" },
+      { label: "Flexible / No Preference", desc: "Comfortable with either close-knit community life or privacy-first boundaries.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
     ]
   },
   {
@@ -1451,6 +1473,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       { label: "Culinary Mastery & Fresh Street Markets", desc: "Passionate food culture, fresh markets, and incredible dining at all prices.", value: "foodie", icon: "fa-solid fa-utensils" },
       { label: "Strict Work-Life Balance & Generous Time Off", desc: "Hard stop at 5 PM, 30 days holiday, and zero hustle-culture guilt.", value: "wlb", icon: "fa-solid fa-spa" },
       { label: "Immediate Access to Mountains & Nature", desc: "Living near dramatic trails, surf breaks, or alpine wilderness.", value: "nature", icon: "fa-solid fa-tree" },
+      { label: "A Community That Wraps Around Me", desc: "Neighbors as friends, spontaneous invitations, and instant belonging.", value: "warmth", icon: "fa-solid fa-people-roof" },
       { label: "Balanced Life / No Single Obsession", desc: "Value an overall healthy balance across all areas equally.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
     ]
   }

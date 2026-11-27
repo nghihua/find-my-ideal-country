@@ -1,5 +1,6 @@
 import type { CountryData } from '../data/countries';
 import { describeClimateProfilePoints } from '../data/climateProfiles';
+import { SOCIAL_WARMTH_BANDS } from '../data/socialWarmth';
 
 export function renderCountryDossier(data: CountryData) {
   document.getElementById('panel-icon')!.innerHTML = `<i class="${data.icon}"></i>`;
@@ -242,6 +243,14 @@ function buildDossierHTML(data: CountryData): string {
           The People &amp; Social Vibe
         </h4>
         <p class="text-xs sm:text-sm text-[#3c4043] leading-relaxed">${data.people}</p>
+        ${data.socialWarmth ? `
+          <div class="mt-3 pt-2.5 border-t border-[#f1f3f4]">
+            <div class="text-[10px] font-medium text-[#5f6368] uppercase tracking-wider mb-1">
+              Social Fabric: <span class="font-medium text-[#1a73e8] normal-case capitalize">${SOCIAL_WARMTH_BANDS[data.socialWarmth]?.replace(/-/g, ' ')}</span>
+            </div>
+            ${data.socialWarmthNote ? `<p class="text-xs text-[#5f6368] leading-relaxed">${data.socialWarmthNote}</p>` : ''}
+          </div>
+        ` : ''}
       </div>
       <div class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
         <h4 class="font-display font-medium text-sm sm:text-base text-[#202124] flex items-center gap-2.5 mb-2">

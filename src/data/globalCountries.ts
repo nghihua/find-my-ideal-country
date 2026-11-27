@@ -1,6 +1,7 @@
 import type { CountryData, LifestyleDimensions, RegionalTemplate } from './countries';
 import { COUNTRY_DATABASE, REGIONAL_TEMPLATES } from './countries';
 import { COUNTRY_CLIMATE_PROFILES, estimateClimateProfile } from './climateProfiles';
+import { COUNTRY_SOCIAL_WARMTH, estimateSocialWarmth } from './socialWarmth';
 import { PRACTICAL_FACTORS } from './practicalFactors';
 import { DAILY_RHYTHM } from './dailyRhythm';
 import { PROFILE_SECTIONS } from './profileSections';
@@ -904,9 +905,12 @@ export function getCompleteCountryProfile(
   // 1. If curated in Tier 1 database, return directly
   if (COUNTRY_DATABASE[name]) {
     const country = COUNTRY_DATABASE[name];
+    const warmthEntry = COUNTRY_SOCIAL_WARMTH[name];
     return {
       ...country,
       climateProfile: COUNTRY_CLIMATE_PROFILES[name] ?? estimateClimateProfile(country.dimensions.climate),
+      socialWarmth: warmthEntry?.warmth ?? estimateSocialWarmth(country.region),
+      socialWarmthNote: warmthEntry?.newcomerNote,
       practical: {
         continent: continentFromRegion(country.region),
         timezoneRegion: timezoneFromRegion(country.region),
@@ -920,6 +924,7 @@ export function getCompleteCountryProfile(
     const meta = GLOBAL_COUNTRY_METADATA[name];
     const rhythm = DAILY_RHYTHM[name];
     const sections = PROFILE_SECTIONS[name];
+    const warmthEntry = COUNTRY_SOCIAL_WARMTH[name];
     return {
       id: name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
       name: meta.name,
@@ -954,6 +959,8 @@ export function getCompleteCountryProfile(
       tags: meta.tags,
       dimensions: meta.dimensions,
       climateProfile: COUNTRY_CLIMATE_PROFILES[name] ?? estimateClimateProfile(meta.dimensions.climate),
+      socialWarmth: warmthEntry?.warmth ?? estimateSocialWarmth(meta.region),
+      socialWarmthNote: warmthEntry?.newcomerNote,
       practical: { continent: continentFromRegion(meta.region), timezoneRegion: timezoneFromRegion(meta.region), ...PRACTICAL_FACTORS[name] },
       realityCheck: meta.realityCheck
     };
@@ -1004,6 +1011,8 @@ export function getCompleteCountryProfile(
       climate: estClimate
     },
     climateProfile: estimatedWeather,
+    socialWarmth: COUNTRY_SOCIAL_WARMTH[name]?.warmth ?? estimateSocialWarmth(fallbackRegion),
+    socialWarmthNote: COUNTRY_SOCIAL_WARMTH[name]?.newcomerNote,
     practical: { continent: continentFromRegion(fallbackRegion), timezoneRegion: timezoneFromRegion(fallbackRegion) },
     realityCheck: tpl.realityCheck
   };

@@ -452,9 +452,65 @@ function calculateQuizResult() {
       } else if (oAns === 'reserved') {
         if (dim.foreignerOpenness <= 3 || country.tags.includes('reserved')) {
           totalScore += 10;
-          reasons.push(`Polite culture that respects personal boundaries and private space`);
+          reasons.push(`Authentic local immersion where living like a local takes priority over expat infrastructure`);
           profileEvidence.push({ label: 'People', text: firstSentence(country.people) });
         } else { totalScore += 6; }
+      }
+    }
+
+    // Dimension: Social Fabric & Warmth (multi-select best match)
+    const fabricAnswers = selectedValues('socialFabric');
+    if (fabricAnswers.length) {
+      maxPossible += 10;
+      let bestScore = 0;
+      let bestReasons: string[] = [];
+      const warmth = country.socialWarmth ?? 3;
+      for (const fAns of fabricAnswers) {
+        let score = 0;
+        const rs: string[] = [];
+        if (fAns === 'woven') {
+          if (warmth === 5) {
+            score = 10;
+            rs.push(`Close-knit, community-woven social fabric with spontaneous hospitality`);
+          } else if (warmth === 4) {
+            score = 8;
+            rs.push(`Warm, approachable social environment with easy neighborly connections`);
+          } else if (warmth === 3) {
+            score = 5;
+          } else {
+            score = 0;
+          }
+        } else if (fAns === 'balanced') {
+          if (warmth === 3) {
+            score = 10;
+            rs.push(`Balanced social fabric with polite situational warmth and respected boundaries`);
+          } else if (warmth === 2 || warmth === 4) {
+            score = 7;
+          } else {
+            score = 4;
+          }
+        } else if (fAns === 'private') {
+          if (warmth === 1) {
+            score = 10;
+            rs.push(`Privacy-first culture where personal space and quiet boundaries are respected`);
+          } else if (warmth === 2) {
+            score = 8;
+            rs.push(`Reserved and courteous social culture without intrusive personal questioning`);
+          } else if (warmth === 3) {
+            score = 5;
+          } else {
+            score = 0;
+          }
+        }
+        if (score > bestScore) {
+          bestScore = score;
+          bestReasons = rs;
+        }
+      }
+      totalScore += bestScore;
+      reasons.push(...bestReasons);
+      if (bestScore >= 8 && country.socialWarmthNote) {
+        profileEvidence.push({ label: 'People', text: country.socialWarmthNote });
       }
     }
 
@@ -532,6 +588,15 @@ function calculateQuizResult() {
       } else if (priority === 'nature') {
         if (dim.natureScore >= 5) { totalScore += 25; reasons.unshift(`Spectacular immediate access to mountains, coastlines, and national parks`); }
         else if (dim.natureScore === 4) { totalScore += 18; }
+      } else if (priority === 'warmth') {
+        const warmth = country.socialWarmth ?? 3;
+        if (warmth >= 4) {
+          totalScore += 25;
+          reasons.unshift(`Close-knit community fabric where neighbors become friends`);
+          if (country.socialWarmthNote) profileEvidence.push({ label: 'People', text: country.socialWarmthNote });
+        } else if (warmth === 3) {
+          totalScore += 18;
+        }
       }
     }
 
