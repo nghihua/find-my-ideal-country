@@ -2,286 +2,829 @@ import type { QuizQuestion } from '../countries';
 
 export const QUIZ_QUESTIONS_EN: QuizQuestion[] = [
   {
-    id: 'continent', stage: 1, multiSelect: true, stageName: 'Location & Practical Fit', question: 'Which continent is open to you?',
-    subtitle: 'Select any continents you would consider. Leave everything unselected to include all regions.', category: 'openness',
+    id: 'continent',
+    stage: 1,
+    multiSelect: true,
+    stageName: 'Location & Practical Fit',
+    question: 'Which continent is open to you?',
+    subtitle:
+      'Select any continents you would consider. Leave everything unselected to include all regions.',
+    category: 'openness',
     options: [
-      { label: 'Anywhere', desc: 'Keep every region in the results.', value: 'all', icon: 'fa-solid fa-earth-americas', isNoPreference: true },
-      ...['Europe','Asia','Africa','North America','South America','Oceania'].map((region, i) => ({ label: region, desc: `Include ${region} destinations.`, value: region, icon: ['fa-solid fa-landmark','fa-solid fa-torii-gate','fa-solid fa-mountain-sun','fa-solid fa-city','fa-solid fa-leaf','fa-solid fa-water'][i] }))
-    ]
+      {
+        label: 'Anywhere',
+        desc: 'Keep every region in the results.',
+        value: 'all',
+        icon: 'fa-solid fa-earth-americas',
+        isNoPreference: true,
+      },
+      ...[
+        'Europe',
+        'Asia',
+        'Africa',
+        'North America',
+        'South America',
+        'Oceania',
+      ].map((region, i) => ({
+        label: region,
+        desc: `Include ${region} destinations.`,
+        value: region,
+        icon: [
+          'fa-solid fa-landmark',
+          'fa-solid fa-torii-gate',
+          'fa-solid fa-mountain-sun',
+          'fa-solid fa-city',
+          'fa-solid fa-leaf',
+          'fa-solid fa-water',
+        ][i],
+      })),
+    ],
   },
   {
-    id: 'timezoneOverlap', stage: 1, multiSelect: true, stageName: 'Location & Practical Fit', question: 'Where are your clients or collaborators?',
-    subtitle: 'A broad timezone-region filter; countries can span multiple time zones.', category: 'openness',
+    id: 'timezoneOverlap',
+    stage: 1,
+    multiSelect: true,
+    stageName: 'Location & Practical Fit',
+    question: 'Where are your clients or collaborators?',
+    subtitle:
+      'A broad timezone-region filter; countries can span multiple time zones.',
+    category: 'openness',
     options: [
-      { label: 'No timezone constraint', desc: 'Keep all destinations.', value: 'all', icon: 'fa-solid fa-clock', isNoPreference: true },
-      { label: 'Americas', desc: 'Prefer overlap with the Americas.', value: 'Americas', icon: 'fa-solid fa-clock' },
-      { label: 'Europe or Africa', desc: 'Prefer overlap with Europe or Africa.', value: 'Europe/Africa', icon: 'fa-solid fa-clock' },
-      { label: 'Asia or Oceania', desc: 'Prefer overlap with Asia or Oceania.', value: 'Asia/Oceania', icon: 'fa-solid fa-clock' }
-    ]
+      {
+        label: 'No timezone constraint',
+        desc: 'Keep all destinations.',
+        value: 'all',
+        icon: 'fa-solid fa-clock',
+        isNoPreference: true,
+      },
+      {
+        label: 'Americas',
+        desc: 'Prefer overlap with the Americas.',
+        value: 'Americas',
+        icon: 'fa-solid fa-clock',
+      },
+      {
+        label: 'Europe or Africa',
+        desc: 'Prefer overlap with Europe or Africa.',
+        value: 'Europe/Africa',
+        icon: 'fa-solid fa-clock',
+      },
+      {
+        label: 'Asia or Oceania',
+        desc: 'Prefer overlap with Asia or Oceania.',
+        value: 'Asia/Oceania',
+        icon: 'fa-solid fa-clock',
+      },
+    ],
   },
   {
-    id: 'healthcarePreference', stage: 1, multiSelect: true, stageName: 'Location & Practical Fit', question: 'What healthcare setup suits you?',
-    subtitle: 'Country-level model only; coverage and costs depend on eligibility and location.', category: 'openness',
+    id: 'healthcarePreference',
+    stage: 1,
+    multiSelect: true,
+    stageName: 'Location & Practical Fit',
+    question: 'What healthcare setup suits you?',
+    subtitle:
+      'Country-level model only; coverage and costs depend on eligibility and location.',
+    category: 'openness',
     options: [
-      { label: 'Public or universal coverage', desc: 'Prefer broad public coverage.', value: 'public', icon: 'fa-solid fa-hospital' },
-      { label: 'Affordable private clinics', desc: 'I’m comfortable paying directly for care.', value: 'affordable-private', icon: 'fa-solid fa-stethoscope' },
-      { label: 'I can budget for private insurance', desc: 'Private coverage is acceptable.', value: 'private-required', icon: 'fa-solid fa-shield-heart' },
-      { label: 'No preference', desc: 'Don’t score healthcare fit.', value: 'no-preference', icon: 'fa-solid fa-asterisk', isNoPreference: true }
-    ]
+      {
+        label: 'Public or universal coverage',
+        desc: 'Prefer broad public coverage.',
+        value: 'public',
+        icon: 'fa-solid fa-hospital',
+      },
+      {
+        label: 'Affordable private clinics',
+        desc: 'I’m comfortable paying directly for care.',
+        value: 'affordable-private',
+        icon: 'fa-solid fa-stethoscope',
+      },
+      {
+        label: 'I can budget for private insurance',
+        desc: 'Private coverage is acceptable.',
+        value: 'private-required',
+        icon: 'fa-solid fa-shield-heart',
+      },
+      {
+        label: 'No preference',
+        desc: 'Don’t score healthcare fit.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: 'taxPreference', stage: 1, multiSelect: true, stageName: 'Location & Practical Fit', question: 'How do you weigh taxes and public services?',
-    subtitle: 'Tax depends on residency, income source, and personal circumstances.', category: 'openness',
+    id: 'taxPreference',
+    stage: 1,
+    multiSelect: true,
+    stageName: 'Location & Practical Fit',
+    question: 'How do you weigh taxes and public services?',
+    subtitle:
+      'Tax depends on residency, income source, and personal circumstances.',
+    category: 'openness',
     options: [
-      { label: 'Higher taxes with broad public services', desc: 'I value the service package.', value: 'higher-services', icon: 'fa-solid fa-building-columns' },
-      { label: 'Lower-tax or territorial systems', desc: 'I prioritize financial flexibility.', value: 'lower-territorial', icon: 'fa-solid fa-coins' },
-      { label: 'No preference', desc: 'Don’t score tax fit.', value: 'no-preference', icon: 'fa-solid fa-asterisk', isNoPreference: true }
-    ]
+      {
+        label: 'Higher taxes with broad public services',
+        desc: 'I value the service package.',
+        value: 'higher-services',
+        icon: 'fa-solid fa-building-columns',
+      },
+      {
+        label: 'Lower-tax or territorial systems',
+        desc: 'I prioritize financial flexibility.',
+        value: 'lower-territorial',
+        icon: 'fa-solid fa-coins',
+      },
+      {
+        label: 'No preference',
+        desc: 'Don’t score tax fit.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: 'environmentPreference', stage: 1, multiSelect: true, stageName: 'Location & Practical Fit', question: 'How much environmental variability can you accept?',
-    subtitle: 'Water, air quality, and hazards vary within countries and by season.', category: 'openness',
+    id: 'environmentPreference',
+    stage: 1,
+    multiSelect: true,
+    stageName: 'Location & Practical Fit',
+    question: 'How much environmental variability can you accept?',
+    subtitle:
+      'Water, air quality, and hazards vary within countries and by season.',
+    category: 'openness',
     options: [
-      { label: 'Prefer lower exposure', desc: 'I favor places with fewer common environmental disruptions.', value: 'lower', icon: 'fa-solid fa-leaf' },
-      { label: 'I can adapt to regional or seasonal issues', desc: 'I’m comfortable checking local conditions.', value: 'flexible', icon: 'fa-solid fa-cloud-sun' },
-      { label: 'No preference', desc: 'Don’t score environmental fit.', value: 'no-preference', icon: 'fa-solid fa-asterisk', isNoPreference: true }
-    ]
+      {
+        label: 'Prefer lower exposure',
+        desc: 'I favor places with fewer common environmental disruptions.',
+        value: 'lower',
+        icon: 'fa-solid fa-leaf',
+      },
+      {
+        label: 'I can adapt to regional or seasonal issues',
+        desc: 'I’m comfortable checking local conditions.',
+        value: 'flexible',
+        icon: 'fa-solid fa-cloud-sun',
+      },
+      {
+        label: 'No preference',
+        desc: 'Don’t score environmental fit.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: "visaPath", stage: 1, multiSelect: true, stageName: "Essentials & Dealbreakers",
-    question: "What relocation route could you realistically use?",
-    subtitle: "This is a broad fit estimate; eligibility depends on your passport, age, income, and work situation.", category: "career",
+    id: 'visaPath',
+    stage: 1,
+    multiSelect: true,
+    stageName: 'Essentials & Dealbreakers',
+    question: 'What relocation route could you realistically use?',
+    subtitle:
+      'This is a broad fit estimate; eligibility depends on your passport, age, income, and work situation.',
+    category: 'career',
     options: [
-      { label: "Remote-work / digital-nomad route", desc: "I expect to keep working remotely.", value: "remote", icon: "fa-solid fa-laptop" },
-      { label: "Working holiday, study, or youth mobility", desc: "I may qualify for a temporary work or study route.", value: "mobility", icon: "fa-solid fa-plane" },
-      { label: "Local job with employer sponsorship", desc: "I plan to find eligible local employment.", value: "sponsored", icon: "fa-solid fa-briefcase" },
-      { label: "Citizenship / permanent residence", desc: "I already have a right to live there; this is not scored.", value: "residency", icon: "fa-solid fa-id-card" },
-      { label: "Not sure / no preference", desc: "Keep this as information, not a filter.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
-    ]
+      {
+        label: 'Remote-work / digital-nomad route',
+        desc: 'I expect to keep working remotely.',
+        value: 'remote',
+        icon: 'fa-solid fa-laptop',
+      },
+      {
+        label: 'Working holiday, study, or youth mobility',
+        desc: 'I may qualify for a temporary work or study route.',
+        value: 'mobility',
+        icon: 'fa-solid fa-plane',
+      },
+      {
+        label: 'Local job with employer sponsorship',
+        desc: 'I plan to find eligible local employment.',
+        value: 'sponsored',
+        icon: 'fa-solid fa-briefcase',
+      },
+      {
+        label: 'Citizenship / permanent residence',
+        desc: 'I already have a right to live there; this is not scored.',
+        value: 'residency',
+        icon: 'fa-solid fa-id-card',
+      },
+      {
+        label: 'Not sure / no preference',
+        desc: 'Keep this as information, not a filter.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: "languageComfort", stage: 1, stageName: "Essentials & Dealbreakers",
-    question: "How comfortable are you living with a language barrier?",
-    subtitle: "Think about appointments, banking, housing, and everyday errands.", category: "openness",
+    id: 'languageComfort',
+    stage: 1,
+    stageName: 'Essentials & Dealbreakers',
+    question: 'How comfortable are you living with a language barrier?',
+    subtitle:
+      'Think about appointments, banking, housing, and everyday errands.',
+    category: 'openness',
     options: [
-      { label: "I need day-one independence in English", desc: "English should work for most daily tasks.", value: "english", icon: "fa-solid fa-language" },
-      { label: "I’m excited to learn the local language", desc: "I can manage with translation help while learning.", value: "learn", icon: "fa-solid fa-book-open" },
-      { label: "No preference", desc: "Language should not change my match.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
-    ]
+      {
+        label: 'I need day-one independence in English',
+        desc: 'English should work for most daily tasks.',
+        value: 'english',
+        icon: 'fa-solid fa-language',
+      },
+      {
+        label: 'I’m excited to learn the local language',
+        desc: 'I can manage with translation help while learning.',
+        value: 'learn',
+        icon: 'fa-solid fa-book-open',
+      },
+      {
+        label: 'No preference',
+        desc: 'Language should not change my match.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: "budget",
+    id: 'budget',
     multiSelect: true,
     stage: 1,
-    stageName: "Essentials & Dealbreakers",
-    question: "What is your monthly budget ceiling?",
-    subtitle: "Includes rent for a comfortable 1-bedroom flat, daily meals out, and transit.",
-    category: "budget",
+    stageName: 'Essentials & Dealbreakers',
+    question: 'What is your monthly budget ceiling?',
+    subtitle:
+      'Includes rent for a comfortable 1-bedroom flat, daily meals out, and transit.',
+    category: 'budget',
     options: [
-      { label: "Lean & High-Value (<$1,500/mo)", desc: "Dine out daily, live in a modern flat, stretch every dollar.", value: "lean", icon: "fa-solid fa-wallet" },
-      { label: "Comfortable Mid-Range ($1,500 – $2,800/mo)", desc: "Solid European or Asian living standard, quality healthcare, dining freedom.", value: "moderate", icon: "fa-solid fa-scale-balanced" },
-      { label: "Premium & High-Income ($2,800+/mo)", desc: "Spotless infrastructure, world-class public services, top salaries.", value: "premium", icon: "fa-solid fa-landmark" },
-      { label: "Flexible / No Preference", desc: "Open to anywhere that fits the lifestyle, regardless of price tier.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
-    ]
+      {
+        label: 'Lean & High-Value (<$1,500/mo)',
+        desc: 'Dine out daily, live in a modern flat, stretch every dollar.',
+        value: 'lean',
+        icon: 'fa-solid fa-wallet',
+      },
+      {
+        label: 'Comfortable Mid-Range ($1,500 – $2,800/mo)',
+        desc: 'Solid European or Asian living standard, quality healthcare, dining freedom.',
+        value: 'moderate',
+        icon: 'fa-solid fa-scale-balanced',
+      },
+      {
+        label: 'Premium & High-Income ($2,800+/mo)',
+        desc: 'Spotless infrastructure, world-class public services, top salaries.',
+        value: 'premium',
+        icon: 'fa-solid fa-landmark',
+      },
+      {
+        label: 'Flexible / No Preference',
+        desc: 'Open to anywhere that fits the lifestyle, regardless of price tier.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: "lgbtq",
+    id: 'lgbtq',
     multiSelect: true,
     stage: 1,
-    stageName: "Essentials & Dealbreakers",
-    question: "What level of LGBTQ+ rights and social safety is required?",
-    subtitle: "Legal protections and public acceptance vary drastically across borders.",
-    category: "lgbtq",
+    stageName: 'Essentials & Dealbreakers',
+    question: 'What level of LGBTQ+ rights and social safety is required?',
+    subtitle:
+      'Legal protections and public acceptance vary drastically across borders.',
+    category: 'lgbtq',
     options: [
-      { label: "Must be Legally Protected & Celebrated", desc: "Full marriage equality, anti-discrimination laws, vibrant open community.", value: "protected", icon: "fa-solid fa-rainbow" },
-      { label: "Moderate Acceptance / Safe", desc: "General social tolerance and safety, even if conservative customs linger.", value: "tolerant", icon: "fa-solid fa-shield-heart" },
-      { label: "No Preference / Not a Personal Priority", desc: "Do not filter out countries based on LGBTQ+ policies or social norms.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
-    ]
+      {
+        label: 'Must be Legally Protected & Celebrated',
+        desc: 'Full marriage equality, anti-discrimination laws, vibrant open community.',
+        value: 'protected',
+        icon: 'fa-solid fa-rainbow',
+      },
+      {
+        label: 'Moderate Acceptance / Safe',
+        desc: 'General social tolerance and safety, even if conservative customs linger.',
+        value: 'tolerant',
+        icon: 'fa-solid fa-shield-heart',
+      },
+      {
+        label: 'No Preference / Not a Personal Priority',
+        desc: 'Do not filter out countries based on LGBTQ+ policies or social norms.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: "transit",
+    id: 'transit',
     multiSelect: true,
     stage: 1,
-    stageName: "Essentials & Dealbreakers",
-    question: "How do you want to get around every day?",
-    subtitle: "Commute style dictates daily fitness, freedom, and stress levels.",
-    category: "transit",
+    stageName: 'Essentials & Dealbreakers',
+    question: 'How do you want to get around every day?',
+    subtitle:
+      'Commute style dictates daily fitness, freedom, and stress levels.',
+    category: 'transit',
     options: [
-      { label: "Walkable Towns & Punctual Rail", desc: "Hate driving. I want trains, trams, and pedestrian cobblestone avenues.", value: "walkable-rail", icon: "fa-solid fa-train-subway" },
-      { label: "Bustling Street Movement & Cheap Taxis", desc: "Scooters, motorbikes, ride-hailing apps, and dynamic street energy.", value: "motorbike-active", icon: "fa-solid fa-motorcycle" },
-      { label: "Wide Open Roads & Car Freedom", desc: "Scenic road trips, spacious parking, and freedom behind the wheel.", value: "car-dependent", icon: "fa-solid fa-car" },
-      { label: "Flexible / No Preference", desc: "Willing to adapt to whatever transit style the country offers.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
-    ]
+      {
+        label: 'Walkable Towns & Punctual Rail',
+        desc: 'Hate driving. I want trains, trams, and pedestrian cobblestone avenues.',
+        value: 'walkable-rail',
+        icon: 'fa-solid fa-train-subway',
+      },
+      {
+        label: 'Bustling Street Movement & Cheap Taxis',
+        desc: 'Scooters, motorbikes, ride-hailing apps, and dynamic street energy.',
+        value: 'motorbike-active',
+        icon: 'fa-solid fa-motorcycle',
+      },
+      {
+        label: 'Wide Open Roads & Car Freedom',
+        desc: 'Scenic road trips, spacious parking, and freedom behind the wheel.',
+        value: 'car-dependent',
+        icon: 'fa-solid fa-car',
+      },
+      {
+        label: 'Flexible / No Preference',
+        desc: 'Willing to adapt to whatever transit style the country offers.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: "convenience",
+    id: 'convenience',
     stage: 2,
-    stageName: "Daily Lifestyle & Rhythms",
-    question: "What is your expectation for daily services and convenience?",
-    subtitle: "Labor costs and cultural norms shape whether you can outsource chores or DIY.",
-    category: "convenience",
+    stageName: 'Daily Lifestyle & Rhythms',
+    question: 'What is your expectation for daily services and convenience?',
+    subtitle:
+      'Labor costs and cultural norms shape whether you can outsource chores or DIY.',
+    category: 'convenience',
     options: [
-      { label: "Ultra-High Convenience & 24/7 Delivery", desc: "Inexpensive laundry, 24/7 convenience stores, instant delivery apps.", value: "high-convenience", icon: "fa-solid fa-basket-shopping" },
-      { label: "Quiet Self-Reliance & High-Wage DIY Culture", desc: "I enjoy cooking, fixing things myself, and respecting service workers' rest.", value: "diy", icon: "fa-solid fa-screwdriver-wrench" },
-      { label: "No Preference / Comfortable with Both", desc: "Can DIY happily, but also appreciate convenience when available.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
-    ]
+      {
+        label: 'Ultra-High Convenience & 24/7 Delivery',
+        desc: 'Inexpensive laundry, 24/7 convenience stores, instant delivery apps.',
+        value: 'high-convenience',
+        icon: 'fa-solid fa-basket-shopping',
+      },
+      {
+        label: 'Quiet Self-Reliance & High-Wage DIY Culture',
+        desc: "I enjoy cooking, fixing things myself, and respecting service workers' rest.",
+        value: 'diy',
+        icon: 'fa-solid fa-screwdriver-wrench',
+      },
+      {
+        label: 'No Preference / Comfortable with Both',
+        desc: 'Can DIY happily, but also appreciate convenience when available.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: "weekend",
+    id: 'weekend',
     multiSelect: true,
     stage: 2,
-    stageName: "Daily Lifestyle & Rhythms",
-    question: "What should a typical weekend and evening feel like?",
-    subtitle: "From 24/7 neon night markets to sacred Sunday shutdowns.",
-    category: "weekend",
+    stageName: 'Daily Lifestyle & Rhythms',
+    question: 'What should a typical weekend and evening feel like?',
+    subtitle: 'From 24/7 neon night markets to sacred Sunday shutdowns.',
+    category: 'weekend',
     options: [
-      { label: "Buzzing Street Life & Open Sundays", desc: "Night markets, vibrant plazas, late cafe culture, active 7-day commerce.", value: "vibrant-24-7", icon: "fa-solid fa-martini-glass-citrus" },
-      { label: "Sacred Sunday Rest & Peaceful Evenings", desc: "Stores shut on Sundays, quiet residential evenings, peaceful silence.", value: "quiet-sunday", icon: "fa-solid fa-bed" },
-      { label: "No Preference / Happy with Either Vibe", desc: "Enjoy lively nights out as well as calm weekends at home.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
-    ]
+      {
+        label: 'Buzzing Street Life & Open Sundays',
+        desc: 'Night markets, vibrant plazas, late cafe culture, active 7-day commerce.',
+        value: 'vibrant-24-7',
+        icon: 'fa-solid fa-martini-glass-citrus',
+      },
+      {
+        label: 'Sacred Sunday Rest & Peaceful Evenings',
+        desc: 'Stores shut on Sundays, quiet residential evenings, peaceful silence.',
+        value: 'quiet-sunday',
+        icon: 'fa-solid fa-bed',
+      },
+      {
+        label: 'No Preference / Happy with Either Vibe',
+        desc: 'Enjoy lively nights out as well as calm weekends at home.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: "climate",
+    id: 'climate',
     multiSelect: true,
     stage: 2,
-    stageName: "Daily Lifestyle & Rhythms",
-    question: "What climate makes you feel most alive?",
-    subtitle: "Weather shapes wardrobe, seasonal stamina, and outdoor activities.",
-    category: "climate",
+    stageName: 'Daily Lifestyle & Rhythms',
+    question: 'What climate makes you feel most alive?',
+    subtitle:
+      'Weather shapes wardrobe, seasonal stamina, and outdoor activities.',
+    category: 'climate',
     options: [
-      { label: "Tropical Warmth & Sunshine", desc: "No winter coats, lush tropical breezes, and year-round outdoor dining.", value: "tropical", icon: "fa-solid fa-sun" },
-      { label: "Crisp Four Seasons & Snowy Winters", desc: "Cherry blossoms, golden autumn foliage, and cozy fireplace winters.", value: "four-seasons", icon: "fa-solid fa-snowflake" },
-      { label: "Mild Coastal Air & Low Humidity", desc: "Temperate ocean breeze, low mugginess, and comfortable year-round days.", value: "mild-coastal", icon: "fa-solid fa-water" },
-      { label: "No Preference / Weather Doesn't Bother Me", desc: "Comfortable in cold, heat, humidity, or seasonal rain.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
-    ]
+      {
+        label: 'Tropical Warmth & Sunshine',
+        desc: 'No winter coats, lush tropical breezes, and year-round outdoor dining.',
+        value: 'tropical',
+        icon: 'fa-solid fa-sun',
+      },
+      {
+        label: 'Crisp Four Seasons & Snowy Winters',
+        desc: 'Cherry blossoms, golden autumn foliage, and cozy fireplace winters.',
+        value: 'four-seasons',
+        icon: 'fa-solid fa-snowflake',
+      },
+      {
+        label: 'Mild Coastal Air & Low Humidity',
+        desc: 'Temperate ocean breeze, low mugginess, and comfortable year-round days.',
+        value: 'mild-coastal',
+        icon: 'fa-solid fa-water',
+      },
+      {
+        label: "No Preference / Weather Doesn't Bother Me",
+        desc: 'Comfortable in cold, heat, humidity, or seasonal rain.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: 'temperature', stage: 2, multiSelect: true, stageName: 'Weather Preferences', question: 'Which daytime temperature range feels best?',
-    subtitle: 'Choose the typical daytime temperature you would be most comfortable in.', category: 'temperature',
+    id: 'temperature',
+    stage: 2,
+    multiSelect: true,
+    stageName: 'Weather Preferences',
+    question: 'Which daytime temperature range feels best?',
+    subtitle:
+      'Choose the typical daytime temperature you would be most comfortable in.',
+    category: 'temperature',
     options: [
-      { label: 'Really cold · below 10°C (50°F)', desc: 'I feel at home in long, cold winters.', value: 'very-cold', icon: 'fa-solid fa-temperature-low' },
-      { label: 'Cool · 10–17°C (50–63°F)', desc: 'I prefer crisp air and mild summers.', value: 'cool', icon: 'fa-solid fa-cloud' },
-      { label: 'Temperate · 18–24°C (64–75°F)', desc: 'Mostly mild weather suits me best.', value: 'temperate', icon: 'fa-solid fa-cloud-sun' },
-      { label: 'Warm · 25–30°C (77–86°F)', desc: 'I like warm days and gentle winters.', value: 'warm', icon: 'fa-solid fa-sun' },
-      { label: 'Hot · 31°C+ (88°F+)', desc: 'Give me heat and very mild winters.', value: 'hot', icon: 'fa-solid fa-temperature-high' },
-      { label: 'No preference', desc: 'Temperature should not affect my matches.', value: 'no-preference', icon: 'fa-solid fa-asterisk', isNoPreference: true }
-    ]
+      {
+        label: 'Really cold · below 10°C (50°F)',
+        desc: 'I feel at home in long, cold winters.',
+        value: 'very-cold',
+        icon: 'fa-solid fa-temperature-low',
+      },
+      {
+        label: 'Cool · 10–17°C (50–63°F)',
+        desc: 'I prefer crisp air and mild summers.',
+        value: 'cool',
+        icon: 'fa-solid fa-cloud',
+      },
+      {
+        label: 'Temperate · 18–24°C (64–75°F)',
+        desc: 'Mostly mild weather suits me best.',
+        value: 'temperate',
+        icon: 'fa-solid fa-cloud-sun',
+      },
+      {
+        label: 'Warm · 25–30°C (77–86°F)',
+        desc: 'I like warm days and gentle winters.',
+        value: 'warm',
+        icon: 'fa-solid fa-sun',
+      },
+      {
+        label: 'Hot · 31°C+ (88°F+)',
+        desc: 'Give me heat and very mild winters.',
+        value: 'hot',
+        icon: 'fa-solid fa-temperature-high',
+      },
+      {
+        label: 'No preference',
+        desc: 'Temperature should not affect my matches.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: 'humidity', stage: 2, multiSelect: true, stageName: 'Weather Preferences', question: 'How much humidity feels comfortable?',
-    subtitle: 'Country-level patterns are broad; coasts, mountains, and seasons can feel very different.', category: 'humidity',
+    id: 'humidity',
+    stage: 2,
+    multiSelect: true,
+    stageName: 'Weather Preferences',
+    question: 'How much humidity feels comfortable?',
+    subtitle:
+      'Country-level patterns are broad; coasts, mountains, and seasons can feel very different.',
+    category: 'humidity',
     options: [
-      { label: 'Dry air', desc: 'I prefer little muggy or sticky weather.', value: 'dry', icon: 'fa-solid fa-wind' },
-      { label: 'Balanced', desc: 'Some humidity is fine, as long as it is not constant.', value: 'moderate', icon: 'fa-solid fa-cloud-sun' },
-      { label: 'Humid air', desc: 'I am comfortable with warm, moisture-rich air.', value: 'humid', icon: 'fa-solid fa-droplet' },
-      { label: 'No preference', desc: 'Humidity should not affect my matches.', value: 'no-preference', icon: 'fa-solid fa-asterisk', isNoPreference: true }
-    ]
+      {
+        label: 'Dry air',
+        desc: 'I prefer little muggy or sticky weather.',
+        value: 'dry',
+        icon: 'fa-solid fa-wind',
+      },
+      {
+        label: 'Balanced',
+        desc: 'Some humidity is fine, as long as it is not constant.',
+        value: 'moderate',
+        icon: 'fa-solid fa-cloud-sun',
+      },
+      {
+        label: 'Humid air',
+        desc: 'I am comfortable with warm, moisture-rich air.',
+        value: 'humid',
+        icon: 'fa-solid fa-droplet',
+      },
+      {
+        label: 'No preference',
+        desc: 'Humidity should not affect my matches.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: 'rainfall', stage: 2, multiSelect: true, stageName: 'Weather Preferences', question: 'How much rain do you like?',
-    subtitle: 'Think about the overall pattern, including wet seasons.', category: 'rainfall',
+    id: 'rainfall',
+    stage: 2,
+    multiSelect: true,
+    stageName: 'Weather Preferences',
+    question: 'How much rain do you like?',
+    subtitle: 'Think about the overall pattern, including wet seasons.',
+    category: 'rainfall',
     options: [
-      { label: 'Mostly dry', desc: 'I prefer places with little rain through the year.', value: 'low', icon: 'fa-solid fa-sun' },
-      { label: 'Seasonal rain', desc: 'Wet seasons are fine if there are drier parts of the year.', value: 'seasonal', icon: 'fa-solid fa-cloud-sun-rain' },
-      { label: 'Frequent rain', desc: 'Regular showers and lush, rainy weather suit me.', value: 'frequent', icon: 'fa-solid fa-cloud-showers-heavy' },
-      { label: 'No preference', desc: 'Rainfall should not affect my matches.', value: 'no-preference', icon: 'fa-solid fa-asterisk', isNoPreference: true }
-    ]
+      {
+        label: 'Mostly dry',
+        desc: 'I prefer places with little rain through the year.',
+        value: 'low',
+        icon: 'fa-solid fa-sun',
+      },
+      {
+        label: 'Seasonal rain',
+        desc: 'Wet seasons are fine if there are drier parts of the year.',
+        value: 'seasonal',
+        icon: 'fa-solid fa-cloud-sun-rain',
+      },
+      {
+        label: 'Frequent rain',
+        desc: 'Regular showers and lush, rainy weather suit me.',
+        value: 'frequent',
+        icon: 'fa-solid fa-cloud-showers-heavy',
+      },
+      {
+        label: 'No preference',
+        desc: 'Rainfall should not affect my matches.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: 'snowfall', stage: 2, multiSelect: true, stageName: 'Weather Preferences', question: 'How do you feel about snow?',
-    subtitle: 'This describes a typical national pattern; local elevation and region matter a lot.', category: 'snowfall',
+    id: 'snowfall',
+    stage: 2,
+    multiSelect: true,
+    stageName: 'Weather Preferences',
+    question: 'How do you feel about snow?',
+    subtitle:
+      'This describes a typical national pattern; local elevation and region matter a lot.',
+    category: 'snowfall',
     options: [
-      { label: 'I would rather avoid it', desc: 'I prefer places where snow is rare.', value: 'rare', icon: 'fa-solid fa-sun' },
-      { label: 'Some snow is nice', desc: 'A little seasonal snow is welcome.', value: 'seasonal', icon: 'fa-solid fa-cloud-snow' },
-      { label: 'Bring on snowy winters', desc: 'I enjoy places with regular, snowy winters.', value: 'frequent', icon: 'fa-solid fa-snowflake' },
-      { label: 'No preference', desc: 'Snow should not affect my matches.', value: 'no-preference', icon: 'fa-solid fa-asterisk', isNoPreference: true }
-    ]
+      {
+        label: 'I would rather avoid it',
+        desc: 'I prefer places where snow is rare.',
+        value: 'rare',
+        icon: 'fa-solid fa-sun',
+      },
+      {
+        label: 'Some snow is nice',
+        desc: 'A little seasonal snow is welcome.',
+        value: 'seasonal',
+        icon: 'fa-solid fa-cloud-snow',
+      },
+      {
+        label: 'Bring on snowy winters',
+        desc: 'I enjoy places with regular, snowy winters.',
+        value: 'frequent',
+        icon: 'fa-solid fa-snowflake',
+      },
+      {
+        label: 'No preference',
+        desc: 'Snow should not affect my matches.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: "religion",
+    id: 'religion',
     multiSelect: true,
     stage: 3,
-    stageName: "Society, Religion & People",
-    question: "How should religion fit into society and everyday life?",
-    subtitle: "Tolerance for atheists, public prayer facilities, and religious presence vary widely.",
-    category: "religion",
+    stageName: 'Society, Religion & People',
+    question: 'How should religion fit into society and everyday life?',
+    subtitle:
+      'Tolerance for atheists, public prayer facilities, and religious presence vary widely.',
+    category: 'religion',
     options: [
-      { label: "Secular Society & Freedom from Religion", desc: "Religion is strictly private/separated from laws; fully welcoming to atheists and diverse beliefs.", value: "secular", icon: "fa-solid fa-scale-balanced" },
-      { label: "Cultural Heritage & Folk Traditions", desc: "Historic temples, pagodas, or cathedrals celebrated culturally, but low daily religious pressure.", value: "cultural-tradition", icon: "fa-solid fa-torii-gate" },
-      { label: "Active Spiritual Community & Facilities", desc: "Faith is vibrant, with accessible prayer facilities, mosques/churches, and deep spiritual community.", value: "prominent", icon: "fa-solid fa-hands-praying" },
-      { label: "Flexible / No Preference", desc: "Comfortable in secular, traditional, or actively religious societies.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
-    ]
+      {
+        label: 'Secular Society & Freedom from Religion',
+        desc: 'Religion is strictly private/separated from laws; fully welcoming to atheists and diverse beliefs.',
+        value: 'secular',
+        icon: 'fa-solid fa-scale-balanced',
+      },
+      {
+        label: 'Cultural Heritage & Folk Traditions',
+        desc: 'Historic temples, pagodas, or cathedrals celebrated culturally, but low daily religious pressure.',
+        value: 'cultural-tradition',
+        icon: 'fa-solid fa-torii-gate',
+      },
+      {
+        label: 'Active Spiritual Community & Facilities',
+        desc: 'Faith is vibrant, with accessible prayer facilities, mosques/churches, and deep spiritual community.',
+        value: 'prominent',
+        icon: 'fa-solid fa-hands-praying',
+      },
+      {
+        label: 'Flexible / No Preference',
+        desc: 'Comfortable in secular, traditional, or actively religious societies.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: "openness",
+    id: 'openness',
     stage: 3,
-    stageName: "Society, Religion & People",
-    question: "How international or locally immersive should your environment be?",
-    subtitle: "English accessibility, multicultural diversity, and expat infrastructure vs. deep local immersion.",
-    category: "openness",
+    stageName: 'Society, Religion & People',
+    question:
+      'How international or locally immersive should your environment be?',
+    subtitle:
+      'English accessibility, multicultural diversity, and expat infrastructure vs. deep local immersion.',
+    category: 'openness',
     options: [
-      { label: "Cosmopolitan & Expat-Accessible", desc: "Multicultural hubs where English is widely spoken and foreign residents integrate smoothly into daily services.", value: "cosmopolitan", icon: "fa-solid fa-globe" },
-      { label: "Locally Immersive & Culturally Distinct", desc: "Traditional domestic culture with fewer expat bubbles; everyday life requires adapting to local language and customs.", value: "reserved", icon: "fa-solid fa-house-chimney" },
-      { label: "Flexible / No Preference", desc: "Comfortable in either global expat crossroads or deep local immersion.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
-    ]
+      {
+        label: 'Cosmopolitan & Expat-Accessible',
+        desc: 'Multicultural hubs where English is widely spoken and foreign residents integrate smoothly into daily services.',
+        value: 'cosmopolitan',
+        icon: 'fa-solid fa-globe',
+      },
+      {
+        label: 'Locally Immersive & Culturally Distinct',
+        desc: 'Traditional domestic culture with fewer expat bubbles; everyday life requires adapting to local language and customs.',
+        value: 'reserved',
+        icon: 'fa-solid fa-house-chimney',
+      },
+      {
+        label: 'Flexible / No Preference',
+        desc: 'Comfortable in either global expat crossroads or deep local immersion.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: "socialFabric",
+    id: 'socialFabric',
     multiSelect: true,
     stage: 3,
-    stageName: "Society, Religion & People",
-    question: "How should the social world around you work?",
-    subtitle: "Warmth and privacy trade off: woven communities come with curiosity and gossip; privacy-first cultures come with slower friendships. Select any that fit.",
-    category: "openness",
+    stageName: 'Society, Religion & People',
+    question: 'How should the social world around you work?',
+    subtitle:
+      'Warmth and privacy trade off: woven communities come with curiosity and gossip; privacy-first cultures come with slower friendships. Select any that fit.',
+    category: 'openness',
     options: [
-      { label: "Open-Door Community", desc: "Neighbors are friends, invitations come fast, and street life is social; expect curiosity about your life and local gossip.", value: "woven", icon: "fa-solid fa-door-open" },
-      { label: "Somewhere in Between", desc: "Courtesy first; friendships grow through repeated shared contexts like work, hobbies, or the neighborhood.", value: "balanced", icon: "fa-solid fa-scale-balanced" },
-      { label: "Privacy-First Courtesy", desc: "Closed doors are respected and personal questions are rare; expect friendship to take deliberate effort.", value: "private", icon: "fa-solid fa-shield-halved" },
-      { label: "Flexible / No Preference", desc: "Comfortable with either close-knit community life or privacy-first boundaries.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
-    ]
+      {
+        label: 'Open-Door Community',
+        desc: 'Neighbors are friends, invitations come fast, and street life is social; expect curiosity about your life and local gossip.',
+        value: 'woven',
+        icon: 'fa-solid fa-door-open',
+      },
+      {
+        label: 'Somewhere in Between',
+        desc: 'Courtesy first; friendships grow through repeated shared contexts like work, hobbies, or the neighborhood.',
+        value: 'balanced',
+        icon: 'fa-solid fa-scale-balanced',
+      },
+      {
+        label: 'Privacy-First Courtesy',
+        desc: 'Closed doors are respected and personal questions are rare; expect friendship to take deliberate effort.',
+        value: 'private',
+        icon: 'fa-solid fa-shield-halved',
+      },
+      {
+        label: 'Flexible / No Preference',
+        desc: 'Comfortable with either close-knit community life or privacy-first boundaries.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: "density",
+    id: 'density',
     stage: 3,
-    stageName: "Society, Religion & People",
-    question: "What population density and demographic energy suits you?",
-    subtitle: "From dense bustling skylines to tranquil, spacious countryside.",
-    category: "density",
+    stageName: 'Society, Religion & People',
+    question: 'What population density and demographic energy suits you?',
+    subtitle: 'From dense bustling skylines to tranquil, spacious countryside.',
+    category: 'density',
     options: [
-      { label: "Bustling, Dense & Youthful Dynamism", desc: "High energy, crowded street life, young population, and fast-paced city vibes.", value: "bustling", icon: "fa-solid fa-city" },
-      { label: "Spacious, Uncrowded & Low Density", desc: "Wide open nature, peaceful residential neighborhoods, zero crowd anxiety.", value: "spacious", icon: "fa-solid fa-mountain-sun" },
-      { label: "Flexible / No Preference", desc: "Comfortable in bustling capitals or quiet open valleys.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
-    ]
+      {
+        label: 'Bustling, Dense & Youthful Dynamism',
+        desc: 'High energy, crowded street life, young population, and fast-paced city vibes.',
+        value: 'bustling',
+        icon: 'fa-solid fa-city',
+      },
+      {
+        label: 'Spacious, Uncrowded & Low Density',
+        desc: 'Wide open nature, peaceful residential neighborhoods, zero crowd anxiety.',
+        value: 'spacious',
+        icon: 'fa-solid fa-mountain-sun',
+      },
+      {
+        label: 'Flexible / No Preference',
+        desc: 'Comfortable in bustling capitals or quiet open valleys.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: "career",
+    id: 'career',
     multiSelect: true,
     stage: 4,
-    stageName: "Work & Core Priority",
-    question: "What is your primary career or work arrangement?",
-    subtitle: "Visa rules, local industry strength, and expat job realism.",
-    category: "career",
+    stageName: 'Work & Core Priority',
+    question: 'What is your primary career or work arrangement?',
+    subtitle: 'Visa rules, local industry strength, and expat job realism.',
+    category: 'career',
     options: [
-      { label: "Remote Worker / Digital Nomad", desc: "Friendly nomad visas, abundant cafes/coworking, reliable fast Wi-Fi, low local tax.", value: "nomad", icon: "fa-solid fa-laptop-code" },
-      { label: "High-Wage Corporate & Tech Hub", desc: "Major multinationals, high salaries, English-speaking white-collar job market.", value: "corporate", icon: "fa-solid fa-briefcase" },
-      { label: "Local Immersion / Flexible", desc: "Willing to learn the local language for local businesses, teaching, or entrepreneurship.", value: "local", icon: "fa-solid fa-language" },
-      { label: "Flexible / No Preference", desc: "Not seeking local employment or work-dependent relocation.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
-    ]
+      {
+        label: 'Remote Worker / Digital Nomad',
+        desc: 'Friendly nomad visas, abundant cafes/coworking, reliable fast Wi-Fi, low local tax.',
+        value: 'nomad',
+        icon: 'fa-solid fa-laptop-code',
+      },
+      {
+        label: 'High-Wage Corporate & Tech Hub',
+        desc: 'Major multinationals, high salaries, English-speaking white-collar job market.',
+        value: 'corporate',
+        icon: 'fa-solid fa-briefcase',
+      },
+      {
+        label: 'Local Immersion / Flexible',
+        desc: 'Willing to learn the local language for local businesses, teaching, or entrepreneurship.',
+        value: 'local',
+        icon: 'fa-solid fa-language',
+      },
+      {
+        label: 'Flexible / No Preference',
+        desc: 'Not seeking local employment or work-dependent relocation.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
   },
   {
-    id: "priority",
+    id: 'priority',
     stage: 4,
-    stageName: "Work & Core Priority",
-    question: "What is your #1 non-negotiable priority? (Boosted 2.5×)",
-    subtitle: "The single dealbreaker that turns a foreign country into home.",
-    category: "priority",
+    stageName: 'Work & Core Priority',
+    question: 'What is your #1 non-negotiable priority? (Boosted 2.5×)',
+    subtitle: 'The single dealbreaker that turns a foreign country into home.',
+    category: 'priority',
     options: [
-      { label: "World-Class Public Safety (Safe at 3 AM)", desc: "Zero fear walking alone at night, pristine civic order and high trust.", value: "safety", icon: "fa-solid fa-shield-halved" },
-      { label: "Culinary Mastery & Fresh Street Markets", desc: "Passionate food culture, fresh markets, and incredible dining at all prices.", value: "foodie", icon: "fa-solid fa-utensils" },
-      { label: "Strict Work-Life Balance & Generous Time Off", desc: "Hard stop at 5 PM, 30 days holiday, and zero hustle-culture guilt.", value: "wlb", icon: "fa-solid fa-spa" },
-      { label: "Immediate Access to Mountains & Nature", desc: "Living near dramatic trails, surf breaks, or alpine wilderness.", value: "nature", icon: "fa-solid fa-tree" },
-      { label: "A Community That Wraps Around Me", desc: "Neighbors as friends, spontaneous invitations, and instant belonging.", value: "warmth", icon: "fa-solid fa-people-roof" },
-      { label: "Balanced Life / No Single Obsession", desc: "Value an overall healthy balance across all areas equally.", value: "no-preference", icon: "fa-solid fa-asterisk", isNoPreference: true }
-    ]
-  }
+      {
+        label: 'World-Class Public Safety (Safe at 3 AM)',
+        desc: 'Zero fear walking alone at night, pristine civic order and high trust.',
+        value: 'safety',
+        icon: 'fa-solid fa-shield-halved',
+      },
+      {
+        label: 'Culinary Mastery & Fresh Street Markets',
+        desc: 'Passionate food culture, fresh markets, and incredible dining at all prices.',
+        value: 'foodie',
+        icon: 'fa-solid fa-utensils',
+      },
+      {
+        label: 'Strict Work-Life Balance & Generous Time Off',
+        desc: 'Hard stop at 5 PM, 30 days holiday, and zero hustle-culture guilt.',
+        value: 'wlb',
+        icon: 'fa-solid fa-spa',
+      },
+      {
+        label: 'Immediate Access to Mountains & Nature',
+        desc: 'Living near dramatic trails, surf breaks, or alpine wilderness.',
+        value: 'nature',
+        icon: 'fa-solid fa-tree',
+      },
+      {
+        label: 'A Community That Wraps Around Me',
+        desc: 'Neighbors as friends, spontaneous invitations, and instant belonging.',
+        value: 'warmth',
+        icon: 'fa-solid fa-people-roof',
+      },
+      {
+        label: 'Balanced Life / No Single Obsession',
+        desc: 'Value an overall healthy balance across all areas equally.',
+        value: 'no-preference',
+        icon: 'fa-solid fa-asterisk',
+        isNoPreference: true,
+      },
+    ],
+  },
 ];
