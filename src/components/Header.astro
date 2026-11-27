@@ -1,7 +1,17 @@
 ---
 // Top-Left Header & Search Bar
-import { tFor } from '../i18n';
+import { tFor, DEFAULT_LOCALE, UI_LOCALES, LOCALE_DISPLAY_NAMES } from '../i18n';
 const t = tFor(Astro.currentLocale);
+// Language switcher (docs/i18n-plan.md §7): a no-JS <details> dropdown driven
+// by UI_LOCALES, so adding a locale needs no component change. Each entry
+// links to the same prerendered shell in that locale; in-memory state (open
+// quiz, selected country) resets by design.
+const current: string = Astro.currentLocale;
+const knownLocales = UI_LOCALES as readonly string[];
+const shownLocales: string[] = knownLocales.includes(current)
+  ? [...knownLocales]
+  : [current, ...knownLocales];
+const nameOf = (l: string) => LOCALE_DISPLAY_NAMES[l as keyof typeof LOCALE_DISPLAY_NAMES] ?? l;
 ---
 <header class="fixed top-4 left-4 right-4 md:right-auto z-30 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pointer-events-none">
     <!-- Main Branding Pill / Card -->
@@ -22,6 +32,33 @@ const t = tFor(Astro.currentLocale);
                 <p class="text-[11px] text-[#5f6368] hidden sm:block font-normal">{t('header.brand.subtitle')}</p>
             </div>
         </div>
+
+        <!-- Language switcher: prerendered dropdown over all UI_LOCALES -->
+        <details id="lang-switch" class="relative group">
+            <summary aria-label={t('header.langSwitch')} title={t('header.langSwitch')} class="list-none inline-flex h-8 items-center gap-1 px-2.5 rounded-full bg-transparent hover:bg-[#f1f3f4] active:bg-[#e8eaed] text-[#5f6368] hover:text-[#1a73e8] text-xs font-medium whitespace-nowrap cursor-pointer select-none transition-colors [&::-webkit-details-marker]:hidden">
+                {nameOf(current)}
+                <svg class="w-3 h-3 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </summary>
+            <div class="absolute right-0 top-full mt-2 w-44 bg-white border border-[#dadce0] rounded-2xl p-1.5 space-y-0.5 z-50 shadow-[0_8px_24px_rgba(60,64,67,0.2)] pointer-events-auto">
+                {shownLocales.map((l) => (
+                    <a
+                        href={`/${l}/`}
+                        lang={l}
+                        aria-current={l === current ? 'true' : undefined}
+                        class:list={["flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-sm transition-colors", l === current ? "bg-[#e8f0fe] text-[#1a73e8] font-medium" : "text-[#202124] hover:bg-[#f1f3f4]"]}
+                    >
+                        <span>{nameOf(l)}</span>
+                        {l === current && (
+                            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        )}
+                    </a>
+                ))}
+            </div>
+        </details>
 
         <!-- Reset the map to its full-world view -->
         <button id="reset-zoom-btn" type="button" aria-label={t('header.resetZoom')} title={t('header.resetZoom')} class="w-8 h-8 rounded-full bg-transparent hover:bg-[#f1f3f4] active:bg-[#e8eaed] text-[#5f6368] hover:text-[#202124] flex items-center justify-center transition-colors">

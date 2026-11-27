@@ -1,4 +1,5 @@
-import { t } from '../i18n';
+import { t, getLocale } from '../i18n';
+import { getLocalizedName } from '../i18n/countryNames';
 
 declare const d3: any;
 declare const topojson: any;
@@ -114,7 +115,7 @@ export async function initWorldMap(
       .attr("stroke", "var(--color-map-stroke)")
       .attr("stroke-width", "0.85px")
       .on("mousemove", (event: MouseEvent, d: any) => {
-        const displayName = resolveDisplayName(d.properties.name);
+        const displayName = getLocalizedName(resolveDisplayName(d.properties.name), getLocale());
         tooltip.innerHTML = `<i class="fa-solid fa-location-dot text-[#1a73e8] mr-1.5 text-xs"></i><span>${displayName}</span>`;
         tooltip.style.left = `${event.clientX}px`;
         tooltip.style.top = `${event.clientY}px`;

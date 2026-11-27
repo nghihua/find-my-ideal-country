@@ -8,7 +8,7 @@ import { VI_CARIBBEAN } from './caribbean';
 import { VI_CURATED } from './curated';
 import { VI_EUROPE_A } from './europe-a';
 
-// Vietnamese prose barrel (Phase 0 scaffold: all mirrored records are empty).
+// Vietnamese prose barrel (Phase 2 complete: all 200 country records).
 export const CONTENT_VI: Record<string, CountryDossierProse> = {
   ...VI_EUROPE_A,
   ...VI_ASIA_A,

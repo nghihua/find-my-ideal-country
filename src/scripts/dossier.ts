@@ -1,12 +1,61 @@
 import type { CountryData } from '../data/countries';
 import { describeClimateProfilePoints } from '../data/climateProfiles';
-import { SOCIAL_WARMTH_BANDS } from '../data/socialWarmth';
-import { t } from '../i18n';
+import { socialWarmthBandLabel } from '../data/socialWarmth';
+import type { Locale } from '../i18n';
+import { t, getLocale } from '../i18n';
+import { getLocalizedName } from '../i18n/countryNames';
+
+// Region chips show the metadata region string (e.g. "Central Europe");
+// localize for display. Values stay canonical — matching/filter logic is
+// untouched.
+const VI_REGION_LABELS: Record<string, string> = {
+  // continent-level (regional-template fallback regions)
+  Europe: 'châu Âu',
+  Asia: 'châu Á',
+  Americas: 'châu Mỹ',
+  Africa: 'châu Phi',
+  Oceania: 'Châu Đại Dương',
+  // Europe
+  'Central Europe': 'Trung Âu',
+  'Western Europe': 'Tây Âu',
+  'Eastern Europe': 'Đông Âu',
+  'Northern Europe': 'Bắc Âu',
+  'Southern Europe': 'Nam Âu',
+  'Southeast Europe': 'Đông Nam Âu',
+  Eurasia: 'Âu-Á',
+  Caucasus: 'Kavkaz',
+  // Asia
+  'East Asia': 'Đông Á',
+  'Southeast Asia': 'Đông Nam Á',
+  'South Asia': 'Nam Á',
+  'West Asia': 'Tây Á',
+  'Middle East': 'Trung Đông',
+  'Central Asia': 'Trung Á',
+  // Africa
+  'North Africa': 'Bắc Phi',
+  'Northeast Africa': 'Đông Bắc Phi',
+  'West Africa': 'Tây Phi',
+  'Central Africa': 'Trung Phi',
+  'East Africa': 'Đông Phi',
+  'Southern Africa': 'Nam Phi',
+  'Southeast Africa': 'Đông Nam châu Phi',
+  // Americas
+  'North America': 'Bắc Mỹ',
+  'Central America': 'Trung Mỹ',
+  'South America': 'Nam Mỹ',
+  Caribbean: 'vùng Caribe',
+};
+
+/** Localized region-chip label; canonical string for en (byte-identical). */
+export function localizedRegionLabel(region: string, locale: Locale = getLocale()): string {
+  if (locale !== 'vi') return region;
+  return VI_REGION_LABELS[region] ?? region;
+}
 
 export function renderCountryDossier(data: CountryData) {
   document.getElementById('panel-icon')!.innerHTML = `<i class="${data.icon}"></i>`;
-  document.getElementById('panel-region')!.textContent = data.region;
-  document.getElementById('panel-title')!.textContent = data.name;
+  document.getElementById('panel-region')!.textContent = localizedRegionLabel(data.region);
+  document.getElementById('panel-title')!.textContent = getLocalizedName(data.name, getLocale());
   document.getElementById('panel-tagline')!.textContent = `"${data.tagline}"`;
   document.getElementById('metric-cost')!.textContent = data.cost;
   document.getElementById('metric-wlb')!.textContent = data.wlb;
@@ -21,6 +70,94 @@ export function renderCountryDossier(data: CountryData) {
 
 export function closeCountryPanel() {
   document.getElementById('country-panel')!.classList.add('translate-x-full');
+}
+
+// Vietnamese labels for every practical-factor enum token (see
+// data/practicalFactors.ts) plus the dimension tokens shown through the same
+// comparison-table helper in quiz.ts.
+const VI_PRACTICAL_LABELS: Record<string, string> = {
+  // visaFit & hazardLevel scale
+  easy: 'dễ dàng',
+  moderate: 'trung bình',
+  difficult: 'khó',
+  lower: 'thấp',
+  higher: 'cao',
+  // visa routes
+  remote: 'làm việc từ xa',
+  mobility: 'du học, làm việc kỳ nghỉ',
+  sponsored: 'bảo trợ việc làm',
+  available: 'mở',
+  limited: 'hạn chế',
+  // healthcare
+  public: 'công lập',
+  'private-required': 'chủ yếu tư nhân',
+  'affordable-private': 'phòng khám tư giá tốt',
+  mixed: 'hỗn hợp',
+  // tap water
+  'generally-potable': 'uống được',
+  regional: 'tùy khu vực',
+  'generally-not-potable': 'không nên uống trực tiếp',
+  // air quality
+  good: 'tốt',
+  'seasonal-issues': 'vấn đề theo mùa',
+  'frequent-issues': 'vấn đề thường xuyên',
+  // hazard level scale
+  high: 'cao',
+  medium: 'trung bình',
+  low: 'thấp',
+  'very-low': 'rất thấp',
+  'no-hazard': 'không đáng kể',
+  // hazard types
+  earthquake: 'động đất',
+  'tropical-cyclone': 'bão nhiệt đới',
+  flood: 'lũ lụt',
+  'coastal-flood': 'ngập ven biển',
+  landslide: 'sạt lở đất',
+  tsunami: 'sóng thần',
+  volcano: 'núi lửa',
+  'extreme-heat': 'nắng nóng gay gắt',
+  'water-scarcity': 'thiếu nước',
+  wildfire: 'cháy rừng',
+  // tax profile
+  'higher-services': 'thuế cao, dịch vụ tốt',
+  'lower-territorial': 'thuế thấp, tính thuế theo lãnh thổ',
+  // dimension tokens rendered in the quiz comparison table
+  'walkable-rail': 'đi bộ, đi tàu',
+  'motorbike-active': 'đi xe máy',
+  'car-dependent': 'phụ thuộc ô tô',
+  'mixed-transit': 'kết hợp nhiều phương tiện',
+  'vibrant-24-7': 'sôi động 24/7',
+  'quiet-sunday': 'chủ nhật yên tĩnh',
+  standard: 'bình thường',
+  // shared fallback
+  unknown: 'chưa rõ',
+};
+
+/** Titlecase passthrough used as the English rendering and the unknown-token fallback. */
+const titlecaseFactor = (value: string): string =>
+  value.replace(/-/g, ' ').replace(/\b\w/g, letter => letter.toUpperCase());
+
+/**
+ * Readable label for a practical-factor enum token, or a composed string of
+ * "token: token" pairs joined by ', '. English keeps the historical titlecase
+ * passthrough byte-for-byte; Vietnamese uses curated labels and falls back to
+ * the same titlecase passthrough for tokens outside the map.
+ */
+export function localizedFactorLabel(value?: string, locale: Locale = getLocale()): string {
+  if (!value) return t('dossier.notSourced');
+  if (locale !== 'vi') return titlecaseFactor(value);
+  const mapped = VI_PRACTICAL_LABELS[value];
+  if (mapped) return mapped;
+  if (value.includes(': ')) {
+    return value.split(', ').map(pair => {
+      const separator = pair.indexOf(': ');
+      if (separator < 0) return VI_PRACTICAL_LABELS[pair] ?? titlecaseFactor(pair);
+      const head = pair.slice(0, separator);
+      const tail = pair.slice(separator + 2);
+      return `${VI_PRACTICAL_LABELS[head] ?? titlecaseFactor(head)}: ${VI_PRACTICAL_LABELS[tail] ?? titlecaseFactor(tail)}`;
+    }).join(', ');
+  }
+  return titlecaseFactor(value);
 }
 
 function getTransitBadge(tier?: string) {
@@ -75,7 +212,7 @@ function buildDossierHTML(data: CountryData): string {
   const climate = getClimateBadge(dim?.climate);
   const weekend = getWeekendBadge(dim?.weekendRhythm);
   const practical = data.practical;
-  const practicalValue = (value?: string) => value ? value.replace(/-/g, ' ').replace(/\b\w/g, letter => letter.toUpperCase()) : t('dossier.notSourced');
+  const practicalValue = localizedFactorLabel;
   const hazardSummary = practical?.hazardTypes
     ? Object.entries(practical.hazardTypes).map(([type, level]) => `${type}: ${level}`).join(', ')
     : practical?.hazardLevel;
@@ -248,7 +385,7 @@ function buildDossierHTML(data: CountryData): string {
         ${data.socialWarmth ? `
           <div class="mt-3 pt-2.5 border-t border-[#f1f3f4]">
             <div class="text-[10px] font-medium text-[#5f6368] uppercase tracking-wider mb-1">
-              ${t('dossier.socialFabricLabel')} <span class="font-medium text-[#1a73e8] normal-case capitalize">${SOCIAL_WARMTH_BANDS[data.socialWarmth]?.replace(/-/g, ' ')}</span>
+              ${t('dossier.socialFabricLabel')} <span class="font-medium text-[#1a73e8] ${getLocale() === 'vi' ? 'normal-case' : 'normal-case capitalize'}">${socialWarmthBandLabel(data.socialWarmth).replace(/-/g, ' ')}</span>
             </div>
             ${data.socialWarmthNote ? `<p class="text-xs text-[#5f6368] leading-relaxed">${data.socialWarmthNote}</p>` : ''}
           </div>
@@ -266,10 +403,10 @@ function buildDossierHTML(data: CountryData): string {
     </section>
 
     <section class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
-      <h3 class="font-display font-medium text-xs uppercase tracking-wider text-[#5f6368] mb-3.5">${t('dossier.learnMore', { name: data.name })}</h3>
+      <h3 class="font-display font-medium text-xs uppercase tracking-wider text-[#5f6368] mb-3.5">${t('dossier.learnMore', { name: getLocalizedName(data.name, getLocale()) })}</h3>
       <a href="${wikiUrl}" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-3 p-3 rounded-xl bg-[#f8f9fa] hover:bg-[#f1f3f4] border border-[#dadce0] transition-colors">
         <span class="w-8 h-8 rounded-full bg-[#e8f0fe] text-[#1a73e8] flex items-center justify-center font-serif text-lg">W</span>
-        <span class="text-sm font-medium text-[#202124] group-hover:text-[#1a73e8] transition-colors">${t('dossier.onWikipedia', { name: data.name })}</span>
+        <span class="text-sm font-medium text-[#202124] group-hover:text-[#1a73e8] transition-colors">${t('dossier.onWikipedia', { name: getLocalizedName(data.name, getLocale()) })}</span>
         <span aria-hidden="true" class="text-[#5f6368]">↗</span>
       </a>
     </section>

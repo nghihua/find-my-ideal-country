@@ -2,7 +2,9 @@ import type { CountryData, QuizQuestion } from '../data/countries';
 import { getAllGlobalCountries } from '../data/globalCountries';
 import { describeClimateProfile } from '../data/climateProfiles';
 import { setMatchColors } from './map';
+import { localizedFactorLabel, localizedRegionLabel } from './dossier';
 import { t, getLocale } from '../i18n';
+import { getLocalizedName } from '../i18n/countryNames';
 
 let currentQuizStep = 0;
 let userAnswers: Record<string, string | string[]> = {};
@@ -732,19 +734,15 @@ function inferContinent(region: string): string | undefined {
   return undefined;
 }
 
-function readableFactor(value?: string): string {
-  return value ? value.replace(/-/g, ' ').replace(/\b\w/g, letter => letter.toUpperCase()) : t('dossier.notSourced');
-}
-
 function summarizeTradeoff(a: CountryData, b: CountryData): string {
   const lowerCost = a.dimensions.costIndex <= b.dimensions.costIndex ? a : b;
   const higherCost = lowerCost === a ? b : a;
   const costNote = a.dimensions.costIndex === b.dimensions.costIndex
     ? t('tradeoff.similarCost')
-    : t('tradeoff.costTier', { low: lowerCost.name, high: higherCost.name });
+    : t('tradeoff.costTier', { low: getLocalizedName(lowerCost.name, getLocale()), high: getLocalizedName(higherCost.name, getLocale()) });
   const transitNote = a.dimensions.transit === b.dimensions.transit
-    ? t('tradeoff.bothTransit', { transit: readableFactor(a.dimensions.transit).toLowerCase() })
-    : t('tradeoff.transitPair', { a: a.name, transitA: readableFactor(a.dimensions.transit), b: b.name, transitB: readableFactor(b.dimensions.transit) });
+    ? t('tradeoff.bothTransit', { transit: localizedFactorLabel(a.dimensions.transit).toLowerCase() })
+    : t('tradeoff.transitPair', { a: getLocalizedName(a.name, getLocale()), transitA: localizedFactorLabel(a.dimensions.transit), b: getLocalizedName(b.name, getLocale()), transitB: localizedFactorLabel(b.dimensions.transit) });
   return `${costNote}. ${transitNote}.`;
 }
 
@@ -772,8 +770,8 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
           <div class="w-14 h-14 mx-auto mb-2 rounded-full bg-[#e8f0fe] text-[#1a73e8] flex items-center justify-center text-2xl shadow-[0_1px_3px_rgba(60,64,67,0.15)]">
             <i class="${c.icon}"></i>
           </div>
-          <span class="text-[11px] font-medium tracking-wide uppercase text-[#5f6368]">${c.region}</span>
-          <h3 class="font-display text-2xl sm:text-3xl font-medium text-[#202124] mt-0.5">${t('quiz.youShouldLiveIn', { name: c.name })}</h3>
+          <span class="text-[11px] font-medium tracking-wide uppercase text-[#5f6368]">${localizedRegionLabel(c.region)}</span>
+          <h3 class="font-display text-2xl sm:text-3xl font-medium text-[#202124] mt-0.5">${t('quiz.youShouldLiveIn', { name: getLocalizedName(c.name, getLocale()) })}</h3>
           <p class="text-xs sm:text-sm text-[#5f6368] max-w-lg mx-auto mt-1 font-normal leading-relaxed">"${c.tagline}"</p>
         </div>
       </div>
@@ -795,7 +793,7 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
       </div>
 
       <div class="bg-[#f8f9fa] border border-[#dadce0] rounded-2xl px-4 py-3">
-        <div class="text-[10px] uppercase font-medium text-[#5f6368]">${t('quiz.weatherIn', { name: c.name })}</div>
+        <div class="text-[10px] uppercase font-medium text-[#5f6368]">${t('quiz.weatherIn', { name: getLocalizedName(c.name, getLocale()) })}</div>
         <p class="text-xs sm:text-sm font-medium text-[#202124] mt-1">${weatherSummary}</p>
         <p class="text-[10px] text-[#5f6368] mt-1">${t('quiz.weatherNote')}</p>
       </div>
@@ -803,7 +801,7 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
       <!-- Why It Fits Section -->
       <div class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 space-y-2.5 shadow-[0_1px_2px_rgba(60,64,67,0.06)]">
         <div class="text-xs font-medium uppercase tracking-wider text-[#1a73e8] flex items-center gap-1.5">
-          <i class="fa-solid fa-check-double text-[#1a73e8]"></i> ${t('quiz.whyFits', { name: c.name })}
+          <i class="fa-solid fa-check-double text-[#1a73e8]"></i> ${t('quiz.whyFits', { name: getLocalizedName(c.name, getLocale()) })}
         </div>
         <ul class="space-y-2 text-xs sm:text-sm text-[#3c4043]">
           ${best.reasons.length > 0 
@@ -826,7 +824,7 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
       <!-- From the Curated Profile -->
       <div class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 space-y-3 shadow-[0_1px_2px_rgba(60,64,67,0.06)]">
         <div class="text-xs font-medium uppercase tracking-wider text-[#188038] flex items-center gap-1.5">
-          <i class="fa-solid fa-book-open text-[#188038]"></i> ${t('quiz.fromProfile', { name: c.name })}
+          <i class="fa-solid fa-book-open text-[#188038]"></i> ${t('quiz.fromProfile', { name: getLocalizedName(c.name, getLocale()) })}
         </div>
         ${best.profileEvidence.length > 0 ? `
           <ul class="space-y-2 text-xs sm:text-sm text-[#3c4043]">
@@ -862,19 +860,19 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
       <!-- Action Buttons -->
       <div class="space-y-2.5 pt-1">
         <button id="fly-best-btn" class="w-full py-3 px-6 rounded-full bg-[#1a73e8] hover:bg-[#1557b0] active:bg-[#174ea6] text-white font-medium text-sm shadow-[0_1px_2px_rgba(60,64,67,0.3)] transition-all flex items-center justify-center gap-2">
-          <span>${t('quiz.exploreOnMap', { name: c.name })}</span>
+          <span>${t('quiz.exploreOnMap', { name: getLocalizedName(c.name, getLocale()) })}</span>
           <i class="fa-solid fa-arrow-right"></i>
         </button>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           <button id="fly-runner-btn" class="py-2.5 px-3 rounded-full bg-white hover:bg-[#f8f9fa] border border-[#dadce0] text-[#202124] font-medium text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(60,64,67,0.06)]">
             <i class="${runner.country.icon} text-[#1a73e8]"></i>
-            <span>${t('quiz.runnerUp', { name: runner.country.name, percent: runner.matchPercent })}</span>
+            <span>${t('quiz.runnerUp', { name: getLocalizedName(runner.country.name, getLocale()), percent: runner.matchPercent })}</span>
           </button>
 
           <button id="fly-wildcard-btn" class="py-2.5 px-3 rounded-full bg-white hover:bg-[#f8f9fa] border border-[#dadce0] text-[#202124] font-medium text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(60,64,67,0.06)]">
             <i class="fa-solid fa-compass text-[#ea4335]"></i>
-            <span>${t('quiz.wildcard', { name: wildcard.country.name, percent: wildcard.matchPercent })}</span>
+            <span>${t('quiz.wildcard', { name: getLocalizedName(wildcard.country.name, getLocale()), percent: wildcard.matchPercent })}</span>
           </button>
         </div>
       </div>
@@ -886,18 +884,18 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
           <button id="explore-results-btn" class="text-xs px-3 py-2 rounded-full bg-[#e8f0fe] text-[#1a73e8]">${t('quiz.exploreAllMatches')}</button>
         </div>
         <div id="comparison-card" class="hidden text-left bg-[#f8f9fa] border border-[#dadce0] rounded-2xl p-4 mb-3">
-          <h4 class="font-medium text-sm mb-2">${t('quiz.comparisonTitle', { a: c.name, b: runner.country.name })}</h4>
+          <h4 class="font-medium text-sm mb-2">${t('quiz.comparisonTitle', { a: getLocalizedName(c.name, getLocale()), b: getLocalizedName(runner.country.name, getLocale()) })}</h4>
           <div class="grid grid-cols-3 gap-2 text-xs"><b>${t('quiz.comparisonFactor')}</b><b>${c.name}</b><b>${runner.country.name}</b>
             <span>${t('quiz.rowMonthlyCost')}</span><span>${c.cost}</span><span>${runner.country.cost}</span>
-            <span>${t('quiz.rowTransit')}</span><span>${readableFactor(c.dimensions.transit)}</span><span>${readableFactor(runner.country.dimensions.transit)}</span>
-            <span>${t('quiz.rowSundayRhythm')}</span><span>${readableFactor(c.dimensions.weekendRhythm)}</span><span>${readableFactor(runner.country.dimensions.weekendRhythm)}</span>
+            <span>${t('quiz.rowTransit')}</span><span>${localizedFactorLabel(c.dimensions.transit)}</span><span>${localizedFactorLabel(runner.country.dimensions.transit)}</span>
+            <span>${t('quiz.rowSundayRhythm')}</span><span>${localizedFactorLabel(c.dimensions.weekendRhythm)}</span><span>${localizedFactorLabel(runner.country.dimensions.weekendRhythm)}</span>
             <span>${t('quiz.rowTypicalWeather')}</span><span>${describeClimateProfile(c.climateProfile)}</span><span>${describeClimateProfile(runner.country.climateProfile)}</span>
-            <span>${t('quiz.rowHealthcare')}</span><span>${readableFactor(c.practical?.healthcare)}</span><span>${readableFactor(runner.country.practical?.healthcare)}</span>
+            <span>${t('quiz.rowHealthcare')}</span><span>${localizedFactorLabel(c.practical?.healthcare)}</span><span>${localizedFactorLabel(runner.country.practical?.healthcare)}</span>
             <span>${t('quiz.rowVisaRoute')}</span><span>${visaCell(c)}</span><span>${visaCell(runner.country)}</span>
-            <span>${t('quiz.rowTaxProfile')}</span><span>${readableFactor(c.practical?.taxProfile)}</span><span>${readableFactor(runner.country.practical?.taxProfile)}</span>
-            <span>${t('quiz.rowTapWater')}</span><span>${readableFactor(c.practical?.tapWater)}</span><span>${readableFactor(runner.country.practical?.tapWater)}</span>
-            <span>${t('quiz.rowAirQuality')}</span><span>${readableFactor(c.practical?.airQuality)}</span><span>${readableFactor(runner.country.practical?.airQuality)}</span>
-            <span>${t('quiz.rowNaturalHazards')}</span><span>${readableFactor(c.practical?.hazardLevel)}</span><span>${readableFactor(runner.country.practical?.hazardLevel)}</span>
+            <span>${t('quiz.rowTaxProfile')}</span><span>${localizedFactorLabel(c.practical?.taxProfile)}</span><span>${localizedFactorLabel(runner.country.practical?.taxProfile)}</span>
+            <span>${t('quiz.rowTapWater')}</span><span>${localizedFactorLabel(c.practical?.tapWater)}</span><span>${localizedFactorLabel(runner.country.practical?.tapWater)}</span>
+            <span>${t('quiz.rowAirQuality')}</span><span>${localizedFactorLabel(c.practical?.airQuality)}</span><span>${localizedFactorLabel(runner.country.practical?.airQuality)}</span>
+            <span>${t('quiz.rowNaturalHazards')}</span><span>${localizedFactorLabel(c.practical?.hazardLevel)}</span><span>${localizedFactorLabel(runner.country.practical?.hazardLevel)}</span>
             <span>${t('quiz.rowTradeOff')}</span><span class="col-span-2">${summarizeTradeoff(c, runner.country)}</span>
             <span>${t('quiz.rowRealityCheck')}</span><span>${c.realityCheck}</span><span>${runner.country.realityCheck}</span>
           </div>
@@ -922,7 +920,7 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
     const file = new File([svgCard], 'global-match.svg', { type: 'image/svg+xml' });
     const browser = navigator as any;
     if (browser.share && browser.canShare?.({ files: [file] })) {
-      await browser.share({ title: t('quiz.shareMyTitle', { name: c.name }), text: t('quiz.shareText', { percent: best.matchPercent, name: c.name }), files: [file] });
+      await browser.share({ title: t('quiz.shareMyTitle', { name: getLocalizedName(c.name, getLocale()) }), text: t('quiz.shareText', { percent: best.matchPercent, name: getLocalizedName(c.name, getLocale()) }), files: [file] });
     } else {
       const link = document.createElement('a'); link.href = URL.createObjectURL(file); link.download = file.name; link.click();
       window.setTimeout(() => URL.revokeObjectURL(link.href), 1000);

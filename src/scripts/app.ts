@@ -1,4 +1,5 @@
-import { QUIZ_QUESTIONS, COUNTRY_DATABASE } from '../data/countries';
+import { COUNTRY_DATABASE } from '../data/countries';
+import { getQuizQuestions } from '../data/quiz';
 import type { CountryData } from '../data/countries';
 import { getCompleteCountryProfile, getAllGlobalCountries, GLOBAL_COUNTRY_METADATA } from '../data/globalCountries';
 import {
@@ -19,6 +20,7 @@ import { showToast } from './toast';
 import { initAuthorModal } from './author';
 import { watchScrollFade } from './scrollAffordance';
 import { initLocale, localeFromDocument, getLocale, t } from '../i18n';
+import { getLocalizedName } from '../i18n/countryNames';
 import { loadContentLocale } from '../data/content';
 
 declare const d3: any;
@@ -101,7 +103,13 @@ function getSearchEntries(): SearchEntry[] {
   const entries: SearchEntry[] = [];
   const seen = new Set<string>();
   for (const country of getAllGlobalCountries(getLocale())) {
-    entries.push({ name: country.name, icon: country.icon, rawName: rawByDisplayName.get(country.name) });
+    const localized = getLocalizedName(country.name, getLocale());
+    entries.push({
+      name: country.name,
+      displayName: localized === country.name ? undefined : localized,
+      icon: country.icon,
+      rawName: rawByDisplayName.get(country.name),
+    });
     seen.add(country.name);
   }
   for (const [displayName, rawName] of rawByDisplayName) {
@@ -121,11 +129,12 @@ window.addEventListener('load', async () => {
   // to getCompleteCountryProfile()/t() stays synchronous in memory.
   const locale = await initLocale(localeFromDocument());
   await loadContentLocale(locale);
-
   initAuthorModal();
 
   // Init subsystems
-  initQuiz(QUIZ_QUESTIONS, () => {
+  // Quiz content is locale-selected like the dictionary (runtime chunk for vi);
+  // loaded once on boot so quiz rendering stays synchronous afterwards.
+  initQuiz(await getQuizQuestions(locale), () => {
     const catalog = getAllGlobalCountries(getLocale());
     const catalogNames = new Set(catalog.map(c => c.name));
     

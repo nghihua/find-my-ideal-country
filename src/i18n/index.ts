@@ -18,6 +18,13 @@ export type Locale = 'en' | 'vi';
 export const UI_LOCALES: Locale[] = ['en', 'vi'];
 export const DEFAULT_LOCALE: Locale = 'en';
 
+/** Native display name per locale (each language names itself); used by the
+ *  language switcher. Add the name when adding a locale. */
+export const LOCALE_DISPLAY_NAMES: Record<Locale, string> = {
+  en: 'English',
+  vi: 'Tiếng Việt',
+};
+
 type Dictionary = Partial<UIStrings>;
 
 const REGISTRY: Record<string, Dictionary> = { en };

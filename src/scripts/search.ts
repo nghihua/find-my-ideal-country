@@ -1,8 +1,10 @@
 import { t } from '../i18n';
 
 export interface SearchEntry {
-  /** Display name shown in results and passed to the selection handler. */
+  /** Canonical selection key passed to the selection handler (English catalog name). */
   name: string;
+  /** Localized label shown in results; falls back to `name` when absent. */
+  displayName?: string;
   /** Optional icon class; falls back to a location pin. */
   icon?: string;
   /** Raw TopoJSON name kept as a searchable alias (e.g. "Viet Nam" → "Vietnam"). */
@@ -85,13 +87,16 @@ export function initSearch(
     const contains: SearchEntry[] = [];
     for (const entry of entries) {
       const name = foldDiacritics(entry.name);
+      const displayName = foldDiacritics(entry.displayName ?? '');
       const rawName = foldDiacritics(entry.rawName ?? '');
-      if (name.startsWith(query) || rawName.startsWith(query)) startsWith.push(entry);
-      else if (name.includes(query) || rawName.includes(query)) contains.push(entry);
+      if (name.startsWith(query) || displayName.startsWith(query) || rawName.startsWith(query)) startsWith.push(entry);
+      else if (name.includes(query) || displayName.includes(query) || rawName.includes(query)) contains.push(entry);
     }
 
-    const byName = (a: SearchEntry, b: SearchEntry) => a.name.localeCompare(b.name);
-    matches = [...startsWith.sort(byName), ...contains.sort(byName)].slice(0, 8);
+    matches = [
+      ...startsWith.sort((a, b) => (a.displayName ?? a.name).localeCompare(b.displayName ?? b.name)),
+      ...contains.sort((a, b) => (a.displayName ?? a.name).localeCompare(b.displayName ?? b.name)),
+    ].slice(0, 8);
     activeIndex = -1;
 
     if (matches.length === 0) {
@@ -103,7 +108,7 @@ export function initSearch(
             <div class="search-option-icon w-6 h-6 rounded-full bg-[#f1f3f4] group-hover:bg-[#e8f0fe] text-[#5f6368] group-hover:text-[#1a73e8] flex items-center justify-center shrink-0 transition-colors">
               <i class="${entry.icon || 'fa-solid fa-location-dot'} text-xs"></i>
             </div>
-            <span class="font-medium truncate">${entry.name}</span>
+            <span class="font-medium truncate">${entry.displayName ?? entry.name}</span>
           </button>
         `;
       }).join('');

@@ -15,6 +15,7 @@ export const en = {
   'header.resetZoom': 'Reset map zoom',
   'header.searchLabel': 'Search destinations',
   'header.searchPlaceholder': 'Search destinations...',
+  'header.langSwitch': 'Switch language',
 
   // Country panel (side dossier sheet)
   'panel.regionFallback': 'Region',

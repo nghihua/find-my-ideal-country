@@ -1,6 +1,6 @@
 # i18n Plan
 
-**Status:** Phase 0 complete (2026-11-27) — ready for Phase 1
+**Status:** Phase 3 complete (2026-11-27) — Vietnamese localization finished (all planned phases done)
 **Scope:** English + Vietnamese first; other languages later
 **Updated:** 2026-11-27
 
@@ -270,37 +270,41 @@ flowchart TD
 
 The QC locale gate from Phase 0 is a precondition for 1F. Steps 1A–1E are independent of each other and can be done in any order.
 
-1. **1A — UI chrome:** Translate `src/i18n/vi.ts` for Header, CountryPanel, QuizModal, AuthorModal, Toast, and the Layout title/meta tags. Gate: `qc-i18n.mjs` key parity + `/vi/` renders.
-2. **1B — Runtime strings:** Translate the template literals in `src/scripts/` — quiz result cards, dossier section headings and badge labels, search, map, and toast. Gate: visual pass on `/vi/` with no English literals left in the Vietnamese path.
-3. **1C — Quiz content:** Split `QUIZ_QUESTIONS` into `src/data/quiz/{en,vi}.ts`, translate labels, descriptions, and stage names, and leave the `value` enums untouched. Gate: identical scoring for a fixed answer set in both locales.
-4. **1D — Exonyms & search:** Populate `src/i18n/countryNames.ts` (~45 established exonyms) and verify diacritic folding. Gate: `nhat ban` → Japan, `Áo` → Austria.
-5. **1E — Composer labels:** Translate the categorical descriptors in `climateProfiles.ts`, the dossier badges in `dossier.ts`, `SOCIAL_WARMTH_BANDS`, and the `practicalValue()` labels. Gate: visual pass.
-6. **1F — Tier-1 dossiers (22):** Batch in five groups — Europe 10 (2×5), Asia 6, Americas 4, Oceania 2. Each batch runs handoff sheet → MT draft → review → merge into `src/data/content/vi/curated.ts` with `downsides[0] === realityCheck` → `--locale vi` QC.
-7. **1G — Phase gate:** `qc-profile-sections.mjs --locale vi` + `npm run build` + bundle-size check + visual QA of `/vi/` dossiers.
+**Completed:** 2026-11-27
+
+1. ✅ **1A — UI chrome:** `src/i18n/vi.ts` header/panel/quiz-modal-chrome/author/layout keys translated (natural sentence-case Vietnamese; brand kept as a proper noun only in `author.role`). Gate: `qc-i18n.mjs` parity + `/vi/` renders — passed.
+2. ✅ **1B — Runtime strings:** all remaining `vi.ts` keys translated (118: quiz result cards, reasons, evidence, trade-offs, badges, dossier labels, search/map/toast). Share heading uses Vietnamese uppercase; `{var}` tokens preserved.
+3. ✅ **1C — Quiz content:** `QUIZ_QUESTIONS` moved out of `countries.ts` into `src/data/quiz/{en,vi}.ts` with a locale-aware `getQuizQuestions(locale)` loader (`en` static, `vi` dynamic chunk); `app.ts` boot awaits it. Value enums, ids, stage, multiSelect, category byte-identical across locales (asserted programmatically); scoring logic untouched.
+4. ✅ **1D — Exonyms & search:** `countryNames.ts` populated with 36 established Vietnamese exonyms (catalog-verified); `SearchEntry` gained `displayName` (localized label; canonical `name` stays the selection key), matched after `foldDiacritics` and shown in results. Gates: `nhat ban` → `Nhật Bản`, `ao` → `Áo` verified in-browser; đ-folding verified (`Đức`, `Đài Loan`, `Bồ Đào Nha`).
+5. ✅ **1E — Composer labels:** `describeClimateProfile(Points)` localized via locale param (default `getLocale()`); `socialWarmthBandLabel()` added to `socialWarmth.ts`; `dossier.ts` enum-label lookup (`localizedFactorLabel`, 45 tokens incl. hazard/visa-route vocab) replaces the titlecase passthrough; comparison-table helper in `quiz.ts` reuses it; `{name}` vars resolved through `getLocalizedName` (Wikipedia URL stays canonical). EN output byte-identical.
+6. ✅ **1F — Tier-1 dossiers (22):** five parallel batches merged into `src/data/content/vi/curated.ts` with cross-batch opener-variety coordination; all lengths in VI ranges, `downsides[0] === realityCheck` verbatim, zero banned tokens. `--locale vi` QC: 22/22 pass.
+7. ✅ **1G — Phase gate:** all four QC scripts pass (`--locale en` 200/200, `--locale vi` 22/22, i18n parity 203 keys, climate + social-warmth); `npm run build` 3 pages; bundle check: English main chunk stays ~1.1 MB and Vietnamese dictionary/quiz/prose ship as separate `vi.*.js` chunks (≈14/25/63 KB) fetched only on `/vi/`; browser pass on `/vi/`: quiz flow (multi-select steps), dossier panel (Vietnamese prose, climate lines, practical labels), search exonyms — zero console errors.
 
 ---
 
 ### Phase 2 — Full Catalog Dossiers (~2,500 strings)
 *Goal: Full coverage of all 178 Tier-2 countries and fallback templates.*
 
-1. **Batch Generation:** Export handoff sheets for each of the 7 regions.
-2. **Translation & Review:** MT draft + review pass per region.
-3. **Validation & Merge:** Merge into `src/data/content/vi/{region}.ts` ensuring verbatim `realityCheck === downsides[0]`.
-4. **Regional Templates:** Translate fallback strings in `REGIONAL_TEMPLATES`.
-5. **Gate:** 200/200 country profiles pass QC under `--locale vi` + bundle size check.
+**Completed:** 2026-11-27
+
+1. ✅ **Batch Generation & Translation:** coverage list derived programmatically from `content/en/*.ts` (178 keys); 15 parallel batches (9–15 countries each) translated spirit-first into scratch files with programmatic self-assertion (same rule set as Phase 1F).
+2. ✅ **Validation & Merge:** per-region merge script asserted exact key set, key order vs the EN file, and verbatim `downsides[0] === realityCheck`; files re-serialized as mirrored `src/data/content/vi/{region}.ts` (all 7, 178 countries). `--locale vi` QC: 200/200 pass (5 benign consecutive-opener warnings, below the error threshold).
+3. ✅ **Regional Templates:** `src/data/content/vi/templates.ts` adds `REGIONAL_TEMPLATES_VI` (5 regions; machine fields copied verbatim, prose translated) plus `FALLBACK_SENTENCES_VI` — the assembler's interpolated scaffolds for map-only territories. Registry wiring: `content/index.ts` (`getRegionalTemplateRegistry`, `getRegionalFallbackSentences`, loaded in the same lazy `loadContentLocale('vi')` import) and `globalCountries.ts` fallback path 3 selects templates + scaffolds by `locale`. Template assertions: 5/5 pass (period endings, no double quotes, banned tokens, machine fields byte-identical); Bun runtime test confirms vi fallback output for a map-only territory and untouched EN output.
+4. ✅ **Decisions recorded (user):** money notation keeps `$` ranges (as Phase 1); Vietnamese prose ships as a single lazy chunk (no per-region splitting); user reviews translations in one final pass.
+5. ✅ **Gate:** `--locale en` 200/200 + `--locale vi` 200/200, `qc-i18n.mjs` 203 keys OK, climate + social-warmth QC pass, `npm run build` 3 pages. Bundle: English main chunk ~1.1 MB and unchanged; Vietnamese prose is now `vi.*.js` ≈660 KB (≈135 KB estimated gz) + dictionary/quiz/templates chunks, fetched only on `/vi/`; browser pass on `/vi/`: Tier-2 dossier (Kazakhstan) and Tier-1 dossier (Japan) render Vietnamese prose + localized climate lines, zero console errors.
 
 ---
 
 ### Phase 3 — Relocation Notes (~1,000 strings)
 *Goal: Localize the most nuanced, hedged content layer.*
 
-1. **Locked Glossary:** Define standard Vietnamese translations for mandatory honesty phrases:
-   - `"not confirmed in this pass"` -> `"chưa được xác nhận trong đợt đối soát này"`
-   - `"Not personal advice."` -> `"Không phải tư vấn cá nhân."`
-2. **Translate Notes:**
-   - Localize notes in `practicalFactors.ts` (visa, healthcare, tax, hazard, air, water).
-   - Localize `newcomerNote` in `socialWarmth.ts`.
-3. **Gate:** Full build and QC pass across all scripts.
+**Completed:** 2026-11-27
+
+1. ✅ **Locked Glossary:** standard Vietnamese renderings enforced programmatically (not just documented): 'not confirmed in this pass' → 'chưa được xác nhận trong đợt đối soát này'; 'Not personal advice.' → 'Không phải tư vấn cá nhân.'; EF EPI ranked/not-ranked templates, the IQAir measured note, the air-quality unknown note, and the ThinkHazard standard closing all have locked VI renderings with correct band words/values. Matched case-insensitively (the locked template itself opens sentences with a capital 'Chưa'); ThinkHazard's EN variants ('flags…', 'across a vast territory') are checked as faithful-variant rules, not verbatim.
+2. ✅ **Translate Notes:** coverage list derived programmatically (200 countries × 6 practical notes + 200 newcomerNotes = 1,400 strings); 10 parallel batches (20 countries each) with per-batch programmatic self-assertion; merged into `src/data/content/vi/practicalNotes.ts` and `src/data/content/vi/socialNotes.ts` (normalized, EN key order).
+3. ✅ **QC Extension:** new `scripts/qc-notes-vi.mjs` validates both files against the EN sources: full key/field coverage, VI length ranges (practical 60–320, social 90–300), period endings, no double quotes/straight apostrophes, VI banned tokens, untranslated-leak detection, country-name-opening warnings, and the locked glossary. Exit 1 on errors. Current state: 200/200 + 200/200 pass, 4 benign country-name-opening warnings.
+4. ✅ **Assembler Wiring:** `content/index.ts` registers both note chunks in the same lazy `loadContentLocale('vi')` import (`getLocalizedPracticalNotes`, `getLocalizedSocialWarmthNotes`); `globalCountries.ts` overlays notes per field over the English sources in all three assembly paths (tier-1, tier-2, template fallback) — enums, sources, verifiedAt untouched.
+5. ✅ **Gate:** all six QC scripts pass (profiles en 200/200 + vi 200/200, i18n parity 203 keys, climate, social warmth, vi notes); `npm run build` 3 pages; bundle: notes ship as separate lazy chunks (`practicalNotes` ≈307 KB + `socialNotes` ≈60 KB) fetched only on `/vi/`, English main chunk unchanged and clean; Bun runtime test (Portugal/Japan/Kazakhstan VI notes render, EN untouched); browser pass on `/vi/`: Portugal dossier shows VI practical notes, EF EPI VI template, warmth band, and VI prose with zero console errors.
 
 ---
 

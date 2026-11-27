@@ -1,5 +1,7 @@
 import type { CountrySocialWarmth, SocialWarmthLevel } from './countries';
 export type { CountrySocialWarmth, SocialWarmthLevel };
+import type { Locale } from '../i18n';
+import { getLocale } from '../i18n';
 
 export const SOCIAL_WARMTH_BANDS: Record<SocialWarmthLevel, string> = {
   1: 'privacy-first',
@@ -8,6 +10,23 @@ export const SOCIAL_WARMTH_BANDS: Record<SocialWarmthLevel, string> = {
   4: 'friendly-open',
   5: 'community-woven',
 };
+
+const SOCIAL_WARMTH_BANDS_VI: Record<SocialWarmthLevel, string> = {
+  1: 'giữ khoảng cách, riêng tư',
+  2: 'lịch sự, dè dặt',
+  3: 'cân bằng',
+  4: 'thân thiện, cởi mở',
+  5: 'gắn kết cộng đồng',
+};
+
+/**
+ * Readable band label for a social-warmth level. English keeps the canonical
+ * slug; Vietnamese renders the natural phrasing used in the dossier.
+ */
+export function socialWarmthBandLabel(level: SocialWarmthLevel, locale: Locale = getLocale()): string {
+  if (locale === 'vi') return SOCIAL_WARMTH_BANDS_VI[level];
+  return SOCIAL_WARMTH_BANDS[level];
+}
 
 /**
  * Continental fallback for catalog additions. Live countries are fully covered.

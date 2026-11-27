@@ -1,4 +1,6 @@
 import type { ClimateCategory, CountryClimateProfile } from './countries';
+import type { Locale } from '../i18n';
+import { getLocale } from '../i18n';
 
 /**
  * Broad country-level fit labels and approximate daytime temperature ranges.
@@ -246,17 +248,28 @@ export function estimateClimateProfile(climate: ClimateCategory, latitude?: numb
   };
 }
 
-export function describeClimateProfile(profile?: CountryClimateProfile): string {
-  return describeClimateProfilePoints(profile).join(' · ');
+export function describeClimateProfile(profile?: CountryClimateProfile, locale: Locale = getLocale()): string {
+  return describeClimateProfilePoints(profile, locale).join(' · ');
 }
 
-export function describeClimateProfilePoints(profile?: CountryClimateProfile): string[] {
-  if (!profile) return ['Climate profile not available'];
+export function describeClimateProfilePoints(profile?: CountryClimateProfile, locale: Locale = getLocale()): string[] {
+  if (!profile) return locale === 'vi' ? ['Chưa có hồ sơ khí hậu cho quốc gia này'] : ['Climate profile not available'];
+  const [minC, maxC] = profile.temperatureRangeCelsius;
+  const toFahrenheit = (celsius: number) => Math.round(celsius * 9 / 5 + 32);
+  if (locale === 'vi') {
+    const humidity = ({ dry: 'khô', moderate: 'cân bằng', humid: 'ẩm' } as const)[profile.humidity];
+    const rainfall = ({ low: 'ít mưa', seasonal: 'mưa theo mùa', frequent: 'mưa thường xuyên' } as const)[profile.rainfall];
+    const snowfall = ({ rare: 'hiếm khi có tuyết', seasonal: 'có tuyết theo mùa', frequent: 'tuyết thường xuyên' } as const)[profile.snowfall];
+    return [
+      `Nhiệt độ: khoảng ${minC}–${maxC}°C ban ngày (${toFahrenheit(minC)}–${toFahrenheit(maxC)}°F)`,
+      `Độ ẩm: ${humidity}`,
+      `Mưa: ${rainfall}`,
+      `Tuyết: ${snowfall}`,
+    ];
+  }
   const humidity = ({ dry: 'Dry air', moderate: 'Balanced humidity', humid: 'Humid air' } as const)[profile.humidity];
   const rainfall = ({ low: 'Little rain', seasonal: 'Seasonal rain', frequent: 'Frequent rain' } as const)[profile.rainfall];
   const snowfall = ({ rare: 'Rare snow', seasonal: 'Seasonal snow', frequent: 'Frequent snow' } as const)[profile.snowfall];
-  const [minC, maxC] = profile.temperatureRangeCelsius;
-  const toFahrenheit = (celsius: number) => Math.round(celsius * 9 / 5 + 32);
   return [
     `Temperature: Approx. daytime highs ${minC}–${maxC}°C (${toFahrenheit(minC)}–${toFahrenheit(maxC)}°F)`,
     `Humidity: ${humidity}`,

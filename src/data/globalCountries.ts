@@ -3,7 +3,7 @@ import { COUNTRY_DATABASE, REGIONAL_TEMPLATES } from './countries';
 import { COUNTRY_CLIMATE_PROFILES, estimateClimateProfile } from './climateProfiles';
 import { COUNTRY_SOCIAL_WARMTH, estimateSocialWarmth } from './socialWarmth';
 import { PRACTICAL_FACTORS } from './practicalFactors';
-import { getContentRegistry } from './content';
+import { getContentRegistry, getRegionalTemplateRegistry, getRegionalFallbackSentences, getLocalizedPracticalNotes, getLocalizedSocialWarmthNotes } from './content';
 
 export interface CountryMetadata {
   name: string;
@@ -840,6 +840,10 @@ export function getCompleteCountryProfile(
   const content = registry.en[name];
   const localized = locale !== 'en' ? registry[locale]?.[name] : undefined;
   const warmthEntry = COUNTRY_SOCIAL_WARMTH[name];
+  // Relocation-note localization (Phase 3): per-field overlay of localized
+  // notes over the English sources; undefined for en.
+  const notesVi = locale !== 'en' ? getLocalizedPracticalNotes(locale) : undefined;
+  const socialNotesVi = locale !== 'en' ? getLocalizedSocialWarmthNotes(locale) : undefined;
 
   // 1. If curated in Tier 1 database, return assembled profile
   if (COUNTRY_DATABASE[name]) {
@@ -864,11 +868,12 @@ export function getCompleteCountryProfile(
       dimensions: meta.dimensions,
       climateProfile: COUNTRY_CLIMATE_PROFILES[name] ?? estimateClimateProfile(meta.dimensions.climate),
       socialWarmth: warmthEntry?.warmth ?? estimateSocialWarmth(meta.region),
-      socialWarmthNote: warmthEntry?.newcomerNote,
+      socialWarmthNote: socialNotesVi?.[name]?.newcomerNote ?? warmthEntry?.newcomerNote,
       practical: {
         continent: continentFromRegion(meta.region),
         timezoneRegion: timezoneFromRegion(meta.region),
         ...PRACTICAL_FACTORS[name],
+        ...notesVi?.[name],
       },
       realityCheck: localized?.realityCheck ?? content?.realityCheck ?? "",
     };
@@ -905,16 +910,20 @@ export function getCompleteCountryProfile(
       dimensions: meta.dimensions,
       climateProfile: COUNTRY_CLIMATE_PROFILES[name] ?? estimateClimateProfile(meta.dimensions.climate),
       socialWarmth: warmthEntry?.warmth ?? estimateSocialWarmth(meta.region),
-      socialWarmthNote: warmthEntry?.newcomerNote,
-      practical: { continent: continentFromRegion(meta.region), timezoneRegion: timezoneFromRegion(meta.region), ...PRACTICAL_FACTORS[name] },
+      socialWarmthNote: socialNotesVi?.[name]?.newcomerNote ?? warmthEntry?.newcomerNote,
+      practical: { continent: continentFromRegion(meta.region), timezoneRegion: timezoneFromRegion(meta.region), ...PRACTICAL_FACTORS[name], ...notesVi?.[name] },
       realityCheck: localized?.realityCheck ?? content?.realityCheck ?? `Language immersion is beneficial for deeper integration.`
     };
   }
 
   // 3. Fallback: Algorithmic derivation based on region and latitude
-  const tpl = REGIONAL_TEMPLATES[fallbackRegion] || REGIONAL_TEMPLATES["Europe"];
+  // Regional templates localize per locale (Phase 2); English stays the
+  // static fallback and the vi scaffolds mirror the inline English ones.
+  const templates = getRegionalTemplateRegistry()[locale];
+  const fb = locale !== 'en' ? getRegionalFallbackSentences(locale) : undefined;
+  const tpl = templates?.[fallbackRegion] ?? templates?.['Europe'] ?? REGIONAL_TEMPLATES[fallbackRegion] ?? REGIONAL_TEMPLATES["Europe"];
   const [lon, lat] = centroid;
-  
+
   // Estimate climate from latitude
   let estClimate = tpl.dimensions.climate;
   if (Math.abs(lat) <= 23.5) estClimate = 'tropical';
@@ -927,17 +936,17 @@ export function getCompleteCountryProfile(
     name,
     icon: "fa-solid fa-location-dot",
     region: fallbackRegion,
-    tagline: localized?.tagline ?? content?.tagline ?? `Everyday rhythms, local traditions, and real-world living insights in ${name}.`,
+    tagline: localized?.tagline ?? content?.tagline ?? (fb ? fb.tagline(name) : `Everyday rhythms, local traditions, and real-world living insights in ${name}.`),
     cost: tpl.cost,
     wlb: tpl.wlb,
     safety: tpl.safety,
-    culture: localized?.culture ?? content?.culture ?? `Living in ${name} offers an authentic immersion into ${fallbackRegion}'s cultural fabric. ${tpl.culture}`,
-    people: localized?.people ?? content?.people ?? `Residents of ${name} take strong pride in their heritage and local hospitality. ${tpl.people}`,
-    costOfLiving: localized?.costOfLiving ?? content?.costOfLiving ?? `In ${name}, day-to-day affordability averages ${tpl.cost}. ${tpl.costOfLiving}`,
+    culture: localized?.culture ?? content?.culture ?? (fb ? fb.culture(name, fallbackRegion, tpl.culture) : `Living in ${name} offers an authentic immersion into ${fallbackRegion}'s cultural fabric. ${tpl.culture}`),
+    people: localized?.people ?? content?.people ?? (fb ? fb.people(name, tpl.people) : `Residents of ${name} take strong pride in their heritage and local hospitality. ${tpl.people}`),
+    costOfLiving: localized?.costOfLiving ?? content?.costOfLiving ?? (fb ? fb.costOfLiving(name, tpl.cost, tpl.costOfLiving) : `In ${name}, day-to-day affordability averages ${tpl.cost}. ${tpl.costOfLiving}`),
     workday: localized?.workday ?? content?.workday
-      ?? `A typical weekday in ${name} blends local business customs with modern routines. ${tpl.workday}`,
+      ?? (fb ? fb.workday(name, tpl.workday) : `A typical weekday in ${name} blends local business customs with modern routines. ${tpl.workday}`),
     evening: localized?.evening ?? content?.evening
-      ?? `When the workday winds down in ${name}, locals head out to neighborhood gathering spots. ${tpl.evening}`,
+      ?? (fb ? fb.evening(name, tpl.evening) : `When the workday winds down in ${name}, locals head out to neighborhood gathering spots. ${tpl.evening}`),
     upsides: localized?.upsides ?? content?.upsides ?? tpl.upsides,
     downsides: localized?.downsides ?? content?.downsides ?? tpl.downsides,
     tags: [fallbackRegion.toLowerCase(), estClimate],
@@ -947,7 +956,7 @@ export function getCompleteCountryProfile(
     },
     climateProfile: estimatedWeather,
     socialWarmth: COUNTRY_SOCIAL_WARMTH[name]?.warmth ?? estimateSocialWarmth(fallbackRegion),
-    socialWarmthNote: COUNTRY_SOCIAL_WARMTH[name]?.newcomerNote,
+    socialWarmthNote: socialNotesVi?.[name]?.newcomerNote ?? COUNTRY_SOCIAL_WARMTH[name]?.newcomerNote,
     practical: { continent: continentFromRegion(fallbackRegion), timezoneRegion: timezoneFromRegion(fallbackRegion) },
     realityCheck: localized?.realityCheck ?? content?.realityCheck ?? tpl.realityCheck
   };
