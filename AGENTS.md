@@ -4,7 +4,8 @@ Single-page Astro app — "Find My Ideal Country": an interactive D3 world map, 
 
 - `npx astro dev --background` — start the dev server as a background process (port 4321). Manage it with `astro dev stop`, `astro dev status`, and `astro dev logs`. Prefer this over a foreground dev server.
 - `npm run build` — production build to `dist/`. This is the main "does it compile" gate: no linter or typechecker is configured (Vite strips types without checking; `astro check` would require installing `@astrojs/check`).
-- `node scripts/qc-profile-sections.mjs` — content QC for `src/data/profileSections/*.ts`, exits 1 on errors (`--json` for machine output). Run it after any profile-copy change and keep it passing.
+- `node scripts/qc-profile-sections.mjs` — content QC for `src/data/content/{locale}/*.ts`, exits 1 on errors (`--json` for machine output). Run it after any profile-copy change and keep it passing. It checks all 200 countries, including the 22 Tier-1 entries in `curated.ts`. `--locale en` (the default) validates the English tree; `--locale vi` validates the Vietnamese mirror tree with scaled length ranges and Vietnamese token bans.
+- `node scripts/qc-i18n.mjs` — UI-dictionary key-parity checker for `src/i18n/{en,vi}.ts`, exits 1 on any missing/extra key, key-order drift, or `{var}` mismatch. Run it after any UI-dictionary change and keep it passing (Vite strips types, so the `vi: UIStrings` annotation alone does not enforce parity).
 - `node scripts/qc-climate-profiles.mjs` — content QC for `src/data/climateProfiles.ts`, exits 1 on errors (`--json` for machine output). Run it after any climate-entry change and keep it passing.
 - `node scripts/qc-social-warmth.mjs` — content QC for `src/data/socialWarmth.ts`, exits 1 on errors (`--json` for machine output). Run it after any social-warmth change and keep it passing.
 
@@ -12,25 +13,27 @@ Node >= 22.23.4 required (`engines` in package.json).
 
 ## Architecture
 
-One route: `src/pages/index.astro` composes the components in `src/components/` — static markup shells only. All behavior is client-side TypeScript in `src/scripts/`, bundled from `Layout.astro`'s `<script src="../scripts/app.ts">`; `app.ts` orchestrates the map, quiz, search, dossier, toast, and author modules. The whole country catalog ships in that client bundle.
+Two locales (`en`, `vi`) under Astro's built-in i18n routing (`astro.config.mjs`): `src/pages/[locale]/index.astro` renders the app shell at `/en/` and `/vi/`, and `src/pages/index.astro` is a static meta-refresh redirect to `/en/` (the file is required by Astro i18n; `redirectToDefaultLocale` is deliberately off because its redirect route would PrerenderRouteConflict with the required index page). The components in `src/components/` are static markup shells only — their strings come from the i18n dictionary (`tFor(Astro.currentLocale)`). All behavior is client-side TypeScript in `src/scripts/`, bundled from `Layout.astro`'s `<script src="../scripts/app.ts">`; `app.ts` orchestrates the map, quiz, search, dossier, toast, and author modules. The whole country catalog ships in that client bundle.
+
+i18n plumbing (Phase 0 of `docs/i18n-plan.md`, zero Vietnamese translation yet): `src/i18n/` holds the isomorphic UI dictionary (`en.ts` is the key source of truth; `vi.ts` still carries English placeholder copy; `countryNames.ts` scaffolds exonyms). `app.ts` calls `await initLocale(localeFromDocument())` and `await loadContentLocale(locale)` once on boot before any UI renders, so every later `t()` / `getCompleteCountryProfile()` call stays synchronous; only the active locale's dictionary and prose chunk are ever downloaded (English users never fetch the `vi` chunks). Canonical English country names remain the internal keys and search selection identifiers everywhere.
 
 Data flow:
 
-- `src/data/countries.ts` — types, `COUNTRY_DATABASE` (tier-1 countries with full hand-written copy), `REGIONAL_TEMPLATES`, `QUIZ_QUESTIONS`.
-- `src/data/globalCountries.ts` — `GLOBAL_COUNTRY_METADATA` (tier-2 catalog) and `getCompleteCountryProfile()`, the single assembler that merges metadata + climate + practical factors + daily rhythm + profile sections, falling back to regional templates (`estimateClimateProfile` infers climate where no explicit profile exists).
-- Region content files must stay key-aligned: `src/data/dailyRhythm/{region}.ts` and `src/data/profileSections/{region}.ts` cover the same seven regions (europe-a, asia-a, asia-b-oceania, africa-a, africa-b, americas-a, caribbean) with the same country keys in the same order. Adding a region means updating both `index.ts` barrels and the `FILES` array in `scripts/qc-profile-sections.mjs`.
-- `curated.ts` (in both directories) derives tier-1 entries from `COUNTRY_DATABASE`. Never hand-edit it — change `COUNTRY_DATABASE` instead.
+- `src/data/countries.ts` — types (`CountryDossierProse`, `FlagshipCountryMetadata`, etc.), `COUNTRY_DATABASE` (tier-1 flagship metadata), `REGIONAL_TEMPLATES`, `QUIZ_QUESTIONS`.
+- `src/data/globalCountries.ts` — `GLOBAL_COUNTRY_METADATA` (tier-2 catalog metadata) and `getCompleteCountryProfile()`, the single assembler that merges metadata + climate + practical factors + unified content (`CONTENT_EN`), falling back to regional templates (`estimateClimateProfile` infers climate where no explicit profile exists).
+- Region content files live in `src/data/content/en/{region}.ts` covering the seven regions (europe-a, asia-a, asia-b-oceania, africa-a, africa-b, americas-a, caribbean) plus `curated.ts` (tier-1 flagship prose). Adding a region means updating the `index.ts` barrel and the `FILES` array in `scripts/qc-profile-sections.mjs`.
+- `curated.ts` holds the tier-1 flagship country prose in the same `CountryDossierProse` schema and is gated by the same checks as the region files.
 - Map geometry is fetched at runtime from `world-atlas@2` (countries-110m) on a CDN, so map shapes need network access in dev. Countries absent from that coarse atlas (microstates, small islands) get dot markers via `MAP_POINT_CENTROIDS` in `src/scripts/map.ts`.
 
 ## Content rules (enforced by the QC script)
 
 The script is the source of truth. The checks most likely to bite:
 
-- `downsides[0]` must equal the country's `realityCheck` from `GLOBAL_COUNTRY_METADATA`, verbatim.
-- Exactly 3 upsides and 3 downsides; culture 250–450 chars, people and costOfLiving 200–400, each bullet 30–260; every string ends with a period.
-- No double-quote characters; straight quotes only, no curly quotes.
+- `downsides[0]` must equal the country's `realityCheck` verbatim (both live in the same `content/{locale}/` object).
+- Exactly 3 upsides and 3 downsides; per-locale length ranges: EN — culture 250–450 chars, people and costOfLiving 200–400, bullets 30–260; VI — culture 280–550, people and costOfLiving 230–500, bullets 30–320; every string ends with a period.
+- No double-quote characters; EN prose uses straight quotes only (curly singles banned); VI prose may use typographic apostrophes.
 - Copy must not open with the country name and must not repeat any 6-word run from the tagline, workday, or evening.
-- Banned tokens (e.g. "hidden gem", "something for everyone", placeholder markers); "vibrant" ≤ 1 and "bustling" ≤ 2 per file.
+- Banned tokens are per-locale (e.g. EN "hidden gem", VI "viên ngọc ẩn"; placeholder markers in both); "vibrant" ≤ 1 and "bustling" ≤ 2 per file.
 
 ## Styling
 

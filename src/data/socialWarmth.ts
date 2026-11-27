@@ -9,14 +9,6 @@ export const SOCIAL_WARMTH_BANDS: Record<SocialWarmthLevel, string> = {
   5: 'community-woven',
 };
 
-export const SOCIAL_WARMTH_DESCRIPTORS: Record<SocialWarmthLevel, string> = {
-  1: 'Closed doors are the norm; personal boundaries are respected; friendships are chosen and slow.',
-  2: 'Boundaries respected and quiet courtesy; close friendships develop gradually over shared context.',
-  3: 'Courtesy first with situational warmth; friendships form through repeated shared contexts.',
-  4: 'Quick surface warmth and casual invitations; approachable neighborhood sociability.',
-  5: 'Street-level community where neighbors are friends and invitations are spontaneous.',
-};
-
 /**
  * Continental fallback for catalog additions. Live countries are fully covered.
  */

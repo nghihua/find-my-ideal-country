@@ -1,3 +1,5 @@
+import { t } from '../i18n';
+
 declare const d3: any;
 declare const topojson: any;
 
@@ -131,7 +133,7 @@ export async function initWorldMap(
   } catch (err) {
     console.error("Map load error:", err);
     document.getElementById('map-loader')!.innerHTML = `
-      <p class="text-rose-600 font-medium">Unable to load map geometry. Please check your connection.</p>
+      <p class="text-rose-600 font-medium">${t('map.loadError')}</p>
     `;
   }
 }

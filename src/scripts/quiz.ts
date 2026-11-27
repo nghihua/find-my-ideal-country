@@ -2,11 +2,12 @@ import type { CountryData, QuizQuestion } from '../data/countries';
 import { getAllGlobalCountries } from '../data/globalCountries';
 import { describeClimateProfile } from '../data/climateProfiles';
 import { setMatchColors } from './map';
+import { t, getLocale } from '../i18n';
 
 let currentQuizStep = 0;
 let userAnswers: Record<string, string | string[]> = {};
 let QUIZ_QUESTIONS_REF: QuizQuestion[] = [];
-let getCountriesCatalog: () => CountryData[] = () => getAllGlobalCountries();
+let getCountriesCatalog: () => CountryData[] = () => getAllGlobalCountries(getLocale());
 let onFlyToCountry: (name: string) => void = () => {};
 
 export function initQuiz(
@@ -46,7 +47,7 @@ function renderQuizStep() {
   const pct = ((currentQuizStep + 1) / total) * 100;
 
   document.getElementById('quiz-progress')!.style.width = `${pct}%`;
-  document.getElementById('quiz-subtitle')!.textContent = `Stage ${q.stage}: ${q.stageName} • Question ${currentQuizStep + 1} of ${total}`;
+  document.getElementById('quiz-subtitle')!.textContent = t('quiz.subtitleStage', { stage: q.stage, stageName: q.stageName, n: currentQuizStep + 1, total });
 
   const currentSelection = userAnswers[q.id];
 
@@ -92,7 +93,7 @@ function renderQuizStep() {
                   <span class="font-display font-medium text-sm sm:text-base text-[#202124] group-hover:text-[#1a73e8] transition-colors">
                     ${opt.label}
                   </span>
-                  ${isNoPref ? '<span class="text-[10px] px-2 py-0.5 rounded-full bg-[#f1f3f4] text-[#5f6368] font-normal">Skip Filter</span>' : ''}
+                  ${isNoPref ? `<span class="text-[10px] px-2 py-0.5 rounded-full bg-[#f1f3f4] text-[#5f6368] font-normal">${t('quiz.skipFilter')}</span>` : ''}
                 </div>
                 <div class="text-xs sm:text-sm text-[#5f6368] mt-0.5 leading-snug">${opt.desc}</div>
               </div>
@@ -105,11 +106,11 @@ function renderQuizStep() {
       ${currentQuizStep > 0 ? `
         <div class="pt-2 flex justify-start">
           <button id="prev-quiz-btn" class="text-xs font-medium text-[#5f6368] hover:text-[#1a73e8] flex items-center gap-1.5 transition-colors">
-            <i class="fa-solid fa-arrow-left"></i> Previous Question
+            <i class="fa-solid fa-arrow-left"></i> ${t('quiz.prevQuestion')}
           </button>
         </div>
       ` : ''}
-      ${q.multiSelect ? `<div class="space-y-2"><button id="continue-selection-btn" class="w-full py-3 rounded-full bg-[#1a73e8] text-white hover:bg-[#1557b0] transition-colors">Continue with selections</button>${q.id === 'continent' ? '<button id="skip-practical-btn" class="w-full py-2 text-xs text-[#5f6368] hover:text-[#1a73e8]">Skip optional practical filters</button>' : ''}</div>` : ''}
+      ${q.multiSelect ? `<div class="space-y-2"><button id="continue-selection-btn" class="w-full py-3 rounded-full bg-[#1a73e8] text-white hover:bg-[#1557b0] transition-colors">${t('quiz.continueSelections')}</button>${q.id === 'continent' ? `<button id="skip-practical-btn" class="w-full py-2 text-xs text-[#5f6368] hover:text-[#1a73e8]">${t('quiz.skipPractical')}</button>` : ''}</div>` : ''}
     </div>
   `;
 
@@ -175,7 +176,7 @@ interface ScoredCountry {
 
 function calculateQuizResult() {
   document.getElementById('quiz-progress')!.style.width = "100%";
-  document.getElementById('quiz-subtitle')!.textContent = "Your Global Relocation Match";
+  document.getElementById('quiz-subtitle')!.textContent = t('quiz.resultSubtitle');
 
   const allCountries = getCountriesCatalog();
   const scoredCountries: ScoredCountry[] = [];
@@ -243,21 +244,21 @@ function calculateQuizResult() {
         const rs: string[] = [];
         let evidence = false;
         if (ans === 'lean') {
-          if (dim.costIndex === 1) { score = 10; rs.push(`Exceptional value (<$1,400/mo) allowing comfortable living`); evidence = true; }
+          if (dim.costIndex === 1) { score = 10; rs.push(t('reason.budget.lean')); evidence = true; }
           else if (dim.costIndex === 2) { score = 7; }
         } else if (ans === 'moderate') {
-          if (dim.costIndex === 2 || dim.costIndex === 3) { score = 10; rs.push(`Comfortable mid-range living expenses (${country.cost})`); evidence = true; }
+          if (dim.costIndex === 2 || dim.costIndex === 3) { score = 10; rs.push(t('reason.budget.moderate', { cost: country.cost })); evidence = true; }
           else if (dim.costIndex === 1) { score = 8; }
           else if (dim.costIndex === 4) { score = 4; }
         } else if (ans === 'premium') {
-          if (dim.costIndex >= 4) { score = 10; rs.push(`World-class public services and high-standard infrastructure`); evidence = true; }
+          if (dim.costIndex >= 4) { score = 10; rs.push(t('reason.budget.premium')); evidence = true; }
           else if (dim.costIndex === 3) { score = 8; }
         }
         if (score > bestScore) { bestScore = score; bestReasons = rs; bestEvidence = evidence; }
       }
       totalScore += bestScore;
       reasons.push(...bestReasons);
-      if (bestEvidence) profileEvidence.push({ label: 'Cost of living', text: firstSentence(country.costOfLiving) });
+      if (bestEvidence) profileEvidence.push({ label: t('evidence.costOfLiving'), text: firstSentence(country.costOfLiving) });
     }
 
     // Dimension 2: LGBTQ+ & Inclusivity (best-match across selected levels)
@@ -270,8 +271,8 @@ function calculateQuizResult() {
         let score = 0;
         const rs: string[] = [];
         if (ans === 'protected') {
-          if (dim.lgbtqTier >= 5) { score = 10; rs.push(`Global leader in equality with full marriage and civil protections`); }
-          else if (dim.lgbtqTier === 4) { score = 8; rs.push(`Legally protected and welcoming environment`); }
+          if (dim.lgbtqTier >= 5) { score = 10; rs.push(t('reason.lgbtq.leader')); }
+          else if (dim.lgbtqTier === 4) { score = 8; rs.push(t('reason.lgbtq.protected')); }
         } else if (ans === 'tolerant') {
           if (dim.lgbtqTier >= 3) { score = 10; }
         }
@@ -292,9 +293,9 @@ function calculateQuizResult() {
         const rs: string[] = [];
         if (ans === dim.transit) {
           score = 10;
-          if (dim.transit === 'walkable-rail') rs.push(`Pedestrian-first cities and extensive passenger rail`);
-          else if (dim.transit === 'motorbike-active') rs.push(`Vibrant scooter mobility and rapid street connectivity`);
-          else if (dim.transit === 'car-dependent') rs.push(`Scenic open highways and easy personal vehicle travel`);
+          if (dim.transit === 'walkable-rail') rs.push(t('reason.transit.walkableRail'));
+          else if (dim.transit === 'motorbike-active') rs.push(t('reason.transit.motorbike'));
+          else if (dim.transit === 'car-dependent') rs.push(t('reason.transit.car'));
         } else if (dim.transit === 'mixed-transit') {
           score = 6;
         }
@@ -308,11 +309,11 @@ function calculateQuizResult() {
     if (userAnswers['convenience'] && userAnswers['convenience'] !== 'no-preference') {
       maxPossible += 10;
       if (userAnswers['convenience'] === 'high-convenience') {
-        if (dim.convenienceScore >= 5) { totalScore += 10; reasons.push(`24/7 convenience stores, rapid delivery apps, and affordable services`); }
+        if (dim.convenienceScore >= 5) { totalScore += 10; reasons.push(t('reason.convenience.high')); }
         else if (dim.convenienceScore === 4) { totalScore += 8; }
         else if (dim.convenienceScore === 3) { totalScore += 4; }
       } else if (userAnswers['convenience'] === 'diy') {
-        if (dim.convenienceScore <= 2) { totalScore += 10; reasons.push(`Strong self-reliance culture with respect for service workers' leisure`); }
+        if (dim.convenienceScore <= 2) { totalScore += 10; reasons.push(t('reason.convenience.diy')); }
         else if (dim.convenienceScore === 3) { totalScore += 8; }
       }
     }
@@ -328,8 +329,8 @@ function calculateQuizResult() {
         const rs: string[] = [];
         if (ans === dim.weekendRhythm) {
           score = 10;
-          if (dim.weekendRhythm === 'vibrant-24-7') rs.push(`7-day vibrant commerce, bustling night markets, and late-night social spots`);
-          else if (dim.weekendRhythm === 'quiet-sunday') rs.push(`Sacred peaceful Sundays and calm residential evenings`);
+          if (dim.weekendRhythm === 'vibrant-24-7') rs.push(t('reason.weekend.vibrant'));
+          else if (dim.weekendRhythm === 'quiet-sunday') rs.push(t('reason.weekend.quiet'));
         } else if (dim.weekendRhythm === 'standard') {
           score = 6;
         }
@@ -337,7 +338,7 @@ function calculateQuizResult() {
       }
       totalScore += bestScore;
       reasons.push(...bestReasons);
-      if (bestScore === 10) profileEvidence.push({ label: 'Evening rhythm', text: firstSentence(country.evening) });
+      if (bestScore === 10) profileEvidence.push({ label: t('evidence.eveningRhythm'), text: firstSentence(country.evening) });
     }
 
     // Dimension 6: Climate (best-match across selected climates)
@@ -350,13 +351,13 @@ function calculateQuizResult() {
         let score = 0;
         const rs: string[] = [];
         if (ans === 'tropical') {
-          if (dim.climate === 'tropical') { score = 10; rs.push(`Year-round tropical sunshine and outdoor lifestyle`); }
+          if (dim.climate === 'tropical') { score = 10; rs.push(t('reason.climate.tropical')); }
           else if (dim.climate === 'warm-sun') { score = 8; }
         } else if (ans === 'four-seasons') {
-          if (dim.climate === 'four-seasons') { score = 10; rs.push(`Vivid four seasons with crisp autumns and snowy winters`); }
+          if (dim.climate === 'four-seasons') { score = 10; rs.push(t('reason.climate.fourSeasons')); }
           else if (dim.climate === 'cold-winter') { score = 8; }
         } else if (ans === 'mild-coastal') {
-          if (dim.climate === 'mild-coastal') { score = 10; rs.push(`Temperate coastal climate with refreshing ocean breezes`); }
+          if (dim.climate === 'mild-coastal') { score = 10; rs.push(t('reason.climate.mildCoastal')); }
           else if (dim.climate === 'warm-sun') { score = 7; }
         }
         if (score > bestScore) { bestScore = score; bestReasons = rs; }
@@ -421,14 +422,14 @@ function calculateQuizResult() {
         let score = 0;
         const rs: string[] = [];
         if (rAns === 'secular') {
-          if (dim.religionRole === 'secular') { score = 10; rs.push(`Secular society with freedom from religious pressure`); }
+          if (dim.religionRole === 'secular') { score = 10; rs.push(t('reason.religion.secular')); }
           else if (dim.religionRole === 'cultural-tradition') { score = 7; }
         } else if (rAns === 'cultural-tradition') {
-          if (dim.religionRole === 'cultural-tradition') { score = 10; rs.push(`Rich cultural traditions and festivals with low religious enforcement`); }
+          if (dim.religionRole === 'cultural-tradition') { score = 10; rs.push(t('reason.religion.tradition')); }
           else if (dim.religionRole === 'secular') { score = 7; }
           else if (dim.religionRole === 'moderate') { score = 6; }
         } else if (rAns === 'prominent') {
-          if (dim.religionRole === 'prominent' || dim.religionRole === 'moderate') { score = 10; rs.push(`Active spiritual community with accessible religious facilities`); }
+          if (dim.religionRole === 'prominent' || dim.religionRole === 'moderate') { score = 10; rs.push(t('reason.religion.prominent')); }
           else { score = 3; }
         }
         if (score > bestScore) { bestScore = score; bestReasons = rs; }
@@ -444,16 +445,16 @@ function calculateQuizResult() {
       if (oAns === 'cosmopolitan') {
         if (dim.foreignerOpenness >= 5) {
           totalScore += 10;
-          reasons.push(`Cosmopolitan society with high English fluency and welcoming integration`);
-          profileEvidence.push({ label: 'People', text: firstSentence(country.people) });
+          reasons.push(t('reason.openness.cosmopolitan'));
+          profileEvidence.push({ label: t('evidence.people'), text: firstSentence(country.people) });
         }
         else if (dim.foreignerOpenness === 4) { totalScore += 8; }
         else if (dim.foreignerOpenness === 3) { totalScore += 4; }
       } else if (oAns === 'reserved') {
         if (dim.foreignerOpenness <= 3 || country.tags.includes('reserved')) {
           totalScore += 10;
-          reasons.push(`Authentic local immersion where living like a local takes priority over expat infrastructure`);
-          profileEvidence.push({ label: 'People', text: firstSentence(country.people) });
+          reasons.push(t('reason.openness.reserved'));
+          profileEvidence.push({ label: t('evidence.people'), text: firstSentence(country.people) });
         } else { totalScore += 6; }
       }
     }
@@ -471,10 +472,10 @@ function calculateQuizResult() {
         if (fAns === 'woven') {
           if (warmth === 5) {
             score = 10;
-            rs.push(`Close-knit, community-woven social fabric with spontaneous hospitality`);
+            rs.push(t('reason.fabric.woven5'));
           } else if (warmth === 4) {
             score = 8;
-            rs.push(`Warm, approachable social environment with easy neighborly connections`);
+            rs.push(t('reason.fabric.woven4'));
           } else if (warmth === 3) {
             score = 5;
           } else {
@@ -483,7 +484,7 @@ function calculateQuizResult() {
         } else if (fAns === 'balanced') {
           if (warmth === 3) {
             score = 10;
-            rs.push(`Balanced social fabric with polite situational warmth and respected boundaries`);
+            rs.push(t('reason.fabric.balanced3'));
           } else if (warmth === 2 || warmth === 4) {
             score = 7;
           } else {
@@ -492,10 +493,10 @@ function calculateQuizResult() {
         } else if (fAns === 'private') {
           if (warmth === 1) {
             score = 10;
-            rs.push(`Privacy-first culture where personal space and quiet boundaries are respected`);
+            rs.push(t('reason.fabric.private1'));
           } else if (warmth === 2) {
             score = 8;
-            rs.push(`Reserved and courteous social culture without intrusive personal questioning`);
+            rs.push(t('reason.fabric.private2'));
           } else if (warmth === 3) {
             score = 5;
           } else {
@@ -510,7 +511,7 @@ function calculateQuizResult() {
       totalScore += bestScore;
       reasons.push(...bestReasons);
       if (bestScore >= 8 && country.socialWarmthNote) {
-        profileEvidence.push({ label: 'People', text: country.socialWarmthNote });
+        profileEvidence.push({ label: t('evidence.people'), text: country.socialWarmthNote });
       }
     }
 
@@ -519,10 +520,10 @@ function calculateQuizResult() {
       maxPossible += 10;
       const dAns = userAnswers['density'];
       if (dAns === 'bustling') {
-        if (dim.paceScore >= 4) { totalScore += 10; reasons.push(`Bustling, dense urban dynamism and youthful street life`); }
+        if (dim.paceScore >= 4) { totalScore += 10; reasons.push(t('reason.density.bustling')); }
         else if (dim.paceScore === 3) { totalScore += 6; }
       } else if (dAns === 'spacious') {
-        if (dim.paceScore <= 3 && dim.natureScore >= 4) { totalScore += 10; reasons.push(`Peaceful, uncrowded landscapes with plenty of breathing room`); }
+        if (dim.paceScore <= 3 && dim.natureScore >= 4) { totalScore += 10; reasons.push(t('reason.density.spacious')); }
         else if (dim.paceScore <= 3) { totalScore += 8; }
       }
     }
@@ -544,11 +545,11 @@ function calculateQuizResult() {
           const remoteRoute = country.practical?.visaRoutes?.remote;
           if (remoteRoute === 'available') {
             score = 10;
-            rs.push(`An official remote-work visa route exists; eligibility still depends on your circumstances`);
+            rs.push(t('reason.career.nomadRemote'));
             evidence = true;
           } else if (remoteRoute === 'limited') {
             score = 7;
-            rs.push(`Remote-work routes exist but carry real restrictions; check income and stay-length requirements`);
+            rs.push(t('reason.career.nomadLimited'));
           } else if (dim.costIndex <= 3 && dim.convenienceScore >= 4) {
             score = 6;
           } else {
@@ -557,7 +558,7 @@ function calculateQuizResult() {
         } else if (cAns === 'corporate') {
           if (country.tags.includes('corporate-hub')) {
             score = 10;
-            rs.push(`Major international corporate hub with high-wage career prospects`);
+            rs.push(t('reason.career.corporate'));
             evidence = true;
           } else if (dim.costIndex >= 3) { score = 7; }
         } else if (cAns === 'local') {
@@ -567,7 +568,7 @@ function calculateQuizResult() {
       }
       totalScore += bestScore;
       reasons.push(...bestReasons);
-      if (bestEvidence) profileEvidence.push({ label: 'Workday', text: firstSentence(country.workday) });
+      if (bestEvidence) profileEvidence.push({ label: t('evidence.workday'), text: firstSentence(country.workday) });
     }
 
     // Dimension 7: Priority Boost (2.5x Multiplier = 25 pts)
@@ -576,24 +577,24 @@ function calculateQuizResult() {
       maxPossible += 25;
       if (priority === 'safety') {
         const sVal = parseFloat(country.safety) || 8.0;
-        if (sVal >= 9.0) { totalScore += 25; reasons.unshift(`World-leading personal safety (Safety: ${country.safety})`); }
+        if (sVal >= 9.0) { totalScore += 25; reasons.unshift(t('reason.priority.safety', { value: country.safety })); }
         else if (sVal >= 8.0) { totalScore += 18; }
       } else if (priority === 'foodie') {
-        if (country.tags.includes('foodie')) { totalScore += 25; reasons.unshift(`Celebrated culinary traditions and renowned food culture`); }
+        if (country.tags.includes('foodie')) { totalScore += 25; reasons.unshift(t('reason.priority.foodie')); }
         else { totalScore += 12; }
       } else if (priority === 'wlb') {
         const wVal = parseFloat(country.wlb) || 8.0;
-        if (wVal >= 8.8) { totalScore += 25; reasons.unshift(`Superb work-life balance and protected employee leisure (${country.wlb})`); }
+        if (wVal >= 8.8) { totalScore += 25; reasons.unshift(t('reason.priority.wlb', { value: country.wlb })); }
         else if (wVal >= 8.0) { totalScore += 18; }
       } else if (priority === 'nature') {
-        if (dim.natureScore >= 5) { totalScore += 25; reasons.unshift(`Spectacular immediate access to mountains, coastlines, and national parks`); }
+        if (dim.natureScore >= 5) { totalScore += 25; reasons.unshift(t('reason.priority.nature')); }
         else if (dim.natureScore === 4) { totalScore += 18; }
       } else if (priority === 'warmth') {
         const warmth = country.socialWarmth ?? 3;
         if (warmth >= 4) {
           totalScore += 25;
-          reasons.unshift(`Close-knit community fabric where neighbors become friends`);
-          if (country.socialWarmthNote) profileEvidence.push({ label: 'People', text: country.socialWarmthNote });
+          reasons.unshift(t('reason.priority.warmth'));
+          if (country.socialWarmthNote) profileEvidence.push({ label: t('evidence.people'), text: country.socialWarmthNote });
         } else if (warmth === 3) {
           totalScore += 18;
         }
@@ -621,8 +622,8 @@ function calculateQuizResult() {
         if (route === 'available' || route === 'limited') {
           score = route === 'available' ? 10 : 6;
           rs.push(route === 'available'
-            ? 'An official route exists for this relocation path; eligibility still depends on your circumstances'
-            : 'A restricted route exists for some applicants; check passport, age, income, and sponsor requirements');
+            ? t('reason.visa.available')
+            : t('reason.visa.limited'));
           scored = true;
         } else if (practical.visaFit && practical.visaFit !== 'unknown') {
           score = practical.visaFit === 'easy' ? 10 : practical.visaFit === 'moderate' ? 6 : 2;
@@ -683,7 +684,7 @@ function calculateQuizResult() {
       matchPercent,
       reasons: reasons.slice(0, 3),
       profileEvidence: profileEvidence.filter(e => e.text).slice(0, 3),
-      realityCheck: country.realityCheck || "Local language proficiency and patience with paperwork are recommended."
+      realityCheck: country.realityCheck || t('quiz.realityCheckFallback')
     });
   });
 
@@ -694,7 +695,7 @@ function calculateQuizResult() {
   scoredCountries.forEach((item, index) => colors.set(item.country.name, index < 5 ? '#d9f2e3' : item.matchPercent >= 80 ? '#fff0c2' : '#f1f3f4'));
   setMatchColors(colors);
   if (!scoredCountries.length) {
-    document.getElementById('quiz-body')!.innerHTML = '<p>No destinations match those filters. Retake the quiz and relax one or more dealbreakers.</p>';
+    document.getElementById('quiz-body')!.innerHTML = `<p>${t('quiz.emptyFilters')}</p>`;
     return;
   }
 
@@ -732,18 +733,18 @@ function inferContinent(region: string): string | undefined {
 }
 
 function readableFactor(value?: string): string {
-  return value ? value.replace(/-/g, ' ').replace(/\b\w/g, letter => letter.toUpperCase()) : 'Not sourced';
+  return value ? value.replace(/-/g, ' ').replace(/\b\w/g, letter => letter.toUpperCase()) : t('dossier.notSourced');
 }
 
 function summarizeTradeoff(a: CountryData, b: CountryData): string {
   const lowerCost = a.dimensions.costIndex <= b.dimensions.costIndex ? a : b;
   const higherCost = lowerCost === a ? b : a;
   const costNote = a.dimensions.costIndex === b.dimensions.costIndex
-    ? 'Similar cost tiers'
-    : `${lowerCost.name} is in a lower cost tier; ${higherCost.name} costs more`;
+    ? t('tradeoff.similarCost')
+    : t('tradeoff.costTier', { low: lowerCost.name, high: higherCost.name });
   const transitNote = a.dimensions.transit === b.dimensions.transit
-    ? `Both have ${readableFactor(a.dimensions.transit).toLowerCase()}`
-    : `${a.name}: ${readableFactor(a.dimensions.transit)}; ${b.name}: ${readableFactor(b.dimensions.transit)}`;
+    ? t('tradeoff.bothTransit', { transit: readableFactor(a.dimensions.transit).toLowerCase() })
+    : t('tradeoff.transitPair', { a: a.name, transitA: readableFactor(a.dimensions.transit), b: b.name, transitB: readableFactor(b.dimensions.transit) });
   return `${costNote}. ${transitNote}.`;
 }
 
@@ -753,11 +754,11 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
   const weatherSummary = describeClimateProfile(c.climateProfile);
   const rawVisaAnswers: string[] = Array.isArray(userAnswers.visaPath) ? userAnswers.visaPath : userAnswers.visaPath ? [userAnswers.visaPath] : [];
   const visaCell = (country: CountryData): string => {
-    if (rawVisaAnswers.includes('residency') && rawVisaAnswers.length === 1) return 'Right of residence already held (not scored)';
+    if (rawVisaAnswers.includes('residency') && rawVisaAnswers.length === 1) return t('quiz.visaResidency');
     const cells = rawVisaAnswers
       .filter(v => v !== 'residency')
-      .map(v => country.practical?.visaRoutes?.[v as 'remote' | 'mobility' | 'sponsored'] || country.practical?.visaFit || 'Not sourced');
-    return cells.length ? [...new Set(cells)].join(' / ') : 'Not answered';
+      .map(v => country.practical?.visaRoutes?.[v as 'remote' | 'mobility' | 'sponsored'] || country.practical?.visaFit || t('dossier.notSourced'));
+    return cells.length ? [...new Set(cells)].join(' / ') : t('quiz.visaNotAnswered');
   };
 
   document.getElementById('quiz-body')!.innerHTML = `
@@ -765,14 +766,14 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
       <!-- Match Header Banner (Google Flights / Travel Styled Summary) -->
       <div class="text-center space-y-2.5">
         <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#e6f4ea] text-[#137333] border border-[#ceead6] text-xs font-semibold">
-          <i class="fa-solid fa-sparkles text-[#34a853]"></i> ${best.matchPercent}% Relocation Compatibility
+          <i class="fa-solid fa-sparkles text-[#34a853]"></i> ${t('quiz.matchPercent', { percent: best.matchPercent })}
         </div>
         <div>
           <div class="w-14 h-14 mx-auto mb-2 rounded-full bg-[#e8f0fe] text-[#1a73e8] flex items-center justify-center text-2xl shadow-[0_1px_3px_rgba(60,64,67,0.15)]">
             <i class="${c.icon}"></i>
           </div>
           <span class="text-[11px] font-medium tracking-wide uppercase text-[#5f6368]">${c.region}</span>
-          <h3 class="font-display text-2xl sm:text-3xl font-medium text-[#202124] mt-0.5">You Should Live in ${c.name}!</h3>
+          <h3 class="font-display text-2xl sm:text-3xl font-medium text-[#202124] mt-0.5">${t('quiz.youShouldLiveIn', { name: c.name })}</h3>
           <p class="text-xs sm:text-sm text-[#5f6368] max-w-lg mx-auto mt-1 font-normal leading-relaxed">"${c.tagline}"</p>
         </div>
       </div>
@@ -780,29 +781,29 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
       <!-- Quick Metrics Strip -->
       <div class="grid grid-cols-3 gap-2.5 bg-[#f8f9fa] border border-[#dadce0] rounded-2xl p-3 text-center">
         <div>
-          <div class="text-[10px] uppercase font-medium text-[#5f6368]">Monthly Budget</div>
+          <div class="text-[10px] uppercase font-medium text-[#5f6368]">${t('quiz.monthlyBudget')}</div>
           <div class="text-xs sm:text-sm font-semibold text-[#202124] mt-0.5">${c.cost}</div>
         </div>
         <div>
-          <div class="text-[10px] uppercase font-medium text-[#5f6368]">Work-Life</div>
+          <div class="text-[10px] uppercase font-medium text-[#5f6368]">${t('quiz.workLife')}</div>
           <div class="text-xs sm:text-sm font-semibold text-[#137333] mt-0.5">${c.wlb}</div>
         </div>
         <div>
-          <div class="text-[10px] uppercase font-medium text-[#5f6368]">Safety Score</div>
+          <div class="text-[10px] uppercase font-medium text-[#5f6368]">${t('quiz.safetyScore')}</div>
           <div class="text-xs sm:text-sm font-semibold text-[#1a73e8] mt-0.5">${c.safety}</div>
         </div>
       </div>
 
       <div class="bg-[#f8f9fa] border border-[#dadce0] rounded-2xl px-4 py-3">
-        <div class="text-[10px] uppercase font-medium text-[#5f6368]">Typical weather in ${c.name}</div>
+        <div class="text-[10px] uppercase font-medium text-[#5f6368]">${t('quiz.weatherIn', { name: c.name })}</div>
         <p class="text-xs sm:text-sm font-medium text-[#202124] mt-1">${weatherSummary}</p>
-        <p class="text-[10px] text-[#5f6368] mt-1">Approximate seasonal range; conditions vary by region, elevation, and season.</p>
+        <p class="text-[10px] text-[#5f6368] mt-1">${t('quiz.weatherNote')}</p>
       </div>
 
       <!-- Why It Fits Section -->
       <div class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 space-y-2.5 shadow-[0_1px_2px_rgba(60,64,67,0.06)]">
         <div class="text-xs font-medium uppercase tracking-wider text-[#1a73e8] flex items-center gap-1.5">
-          <i class="fa-solid fa-check-double text-[#1a73e8]"></i> Why ${c.name} fits your lifestyle:
+          <i class="fa-solid fa-check-double text-[#1a73e8]"></i> ${t('quiz.whyFits', { name: c.name })}
         </div>
         <ul class="space-y-2 text-xs sm:text-sm text-[#3c4043]">
           ${best.reasons.length > 0 
@@ -815,7 +816,7 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
             : `
                 <li class="flex items-start gap-2.5">
                   <i class="fa-solid fa-circle-check text-[#34a853] mt-0.5 text-xs shrink-0"></i>
-                  <span>Balanced quality of life matching your lifestyle priorities</span>
+                  <span>${t('quiz.balancedFallback')}</span>
                 </li>
               `
           }
@@ -825,7 +826,7 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
       <!-- From the Curated Profile -->
       <div class="bg-white border border-[#dadce0] rounded-2xl p-4 sm:p-5 space-y-3 shadow-[0_1px_2px_rgba(60,64,67,0.06)]">
         <div class="text-xs font-medium uppercase tracking-wider text-[#188038] flex items-center gap-1.5">
-          <i class="fa-solid fa-book-open text-[#188038]"></i> From the ${c.name} profile:
+          <i class="fa-solid fa-book-open text-[#188038]"></i> ${t('quiz.fromProfile', { name: c.name })}
         </div>
         ${best.profileEvidence.length > 0 ? `
           <ul class="space-y-2 text-xs sm:text-sm text-[#3c4043]">
@@ -837,7 +838,7 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
             `).join('')}
           </ul>
         ` : ''}
-        <div class="text-[10px] uppercase font-medium text-[#5f6368]">Profile highlights</div>
+        <div class="text-[10px] uppercase font-medium text-[#5f6368]">${t('quiz.profileHighlights')}</div>
         <ul class="space-y-2 text-xs sm:text-sm text-[#3c4043]">
           ${c.upsides.slice(0, 3).map(u => `
             <li class="flex items-start gap-2.5">
@@ -851,7 +852,7 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
       <!-- The Honest Reality Check Callout -->
       <div class="bg-[#fef7e0] border border-[#fce8b2] border-l-4 border-l-[#fbbc04] rounded-2xl p-4 space-y-1.5 text-[#3c4043]">
         <div class="text-xs font-semibold uppercase tracking-wider text-[#b06000] flex items-center gap-1.5">
-          <i class="fa-solid fa-triangle-exclamation text-[#f29900]"></i> The Reality Check & Trade-offs:
+          <i class="fa-solid fa-triangle-exclamation text-[#f29900]"></i> ${t('quiz.realityCheckTitle')}
         </div>
         <p class="text-xs sm:text-sm text-[#3c4043] leading-relaxed">
           ${best.realityCheck}
@@ -861,50 +862,50 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
       <!-- Action Buttons -->
       <div class="space-y-2.5 pt-1">
         <button id="fly-best-btn" class="w-full py-3 px-6 rounded-full bg-[#1a73e8] hover:bg-[#1557b0] active:bg-[#174ea6] text-white font-medium text-sm shadow-[0_1px_2px_rgba(60,64,67,0.3)] transition-all flex items-center justify-center gap-2">
-          <span>Explore ${c.name} on Map</span>
+          <span>${t('quiz.exploreOnMap', { name: c.name })}</span>
           <i class="fa-solid fa-arrow-right"></i>
         </button>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           <button id="fly-runner-btn" class="py-2.5 px-3 rounded-full bg-white hover:bg-[#f8f9fa] border border-[#dadce0] text-[#202124] font-medium text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(60,64,67,0.06)]">
             <i class="${runner.country.icon} text-[#1a73e8]"></i>
-            <span>Runner-up: ${runner.country.name} (${runner.matchPercent}%)</span>
+            <span>${t('quiz.runnerUp', { name: runner.country.name, percent: runner.matchPercent })}</span>
           </button>
-          
+
           <button id="fly-wildcard-btn" class="py-2.5 px-3 rounded-full bg-white hover:bg-[#f8f9fa] border border-[#dadce0] text-[#202124] font-medium text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(60,64,67,0.06)]">
             <i class="fa-solid fa-compass text-[#ea4335]"></i>
-            <span>Wildcard: ${wildcard.country.name} (${wildcard.matchPercent}%)</span>
+            <span>${t('quiz.wildcard', { name: wildcard.country.name, percent: wildcard.matchPercent })}</span>
           </button>
         </div>
       </div>
 
       <div class="text-center pt-1">
         <div class="flex flex-wrap gap-2 justify-center mb-3">
-          <button id="compare-btn" class="text-xs px-3 py-2 rounded-full border border-[#dadce0]">Compare top two</button>
-          <button id="share-card-btn" class="text-xs px-3 py-2 rounded-full border border-[#dadce0]">Download persona card</button>
-          <button id="explore-results-btn" class="text-xs px-3 py-2 rounded-full bg-[#e8f0fe] text-[#1a73e8]">Explore all matches on map</button>
+          <button id="compare-btn" class="text-xs px-3 py-2 rounded-full border border-[#dadce0]">${t('quiz.compareTopTwo')}</button>
+          <button id="share-card-btn" class="text-xs px-3 py-2 rounded-full border border-[#dadce0]">${t('quiz.downloadCard')}</button>
+          <button id="explore-results-btn" class="text-xs px-3 py-2 rounded-full bg-[#e8f0fe] text-[#1a73e8]">${t('quiz.exploreAllMatches')}</button>
         </div>
         <div id="comparison-card" class="hidden text-left bg-[#f8f9fa] border border-[#dadce0] rounded-2xl p-4 mb-3">
-          <h4 class="font-medium text-sm mb-2">${c.name} vs. ${runner.country.name}</h4>
-          <div class="grid grid-cols-3 gap-2 text-xs"><b>Factor</b><b>${c.name}</b><b>${runner.country.name}</b>
-            <span>Monthly cost</span><span>${c.cost}</span><span>${runner.country.cost}</span>
-            <span>Transit</span><span>${readableFactor(c.dimensions.transit)}</span><span>${readableFactor(runner.country.dimensions.transit)}</span>
-            <span>Sunday rhythm</span><span>${readableFactor(c.dimensions.weekendRhythm)}</span><span>${readableFactor(runner.country.dimensions.weekendRhythm)}</span>
-            <span>Typical weather</span><span>${describeClimateProfile(c.climateProfile)}</span><span>${describeClimateProfile(runner.country.climateProfile)}</span>
-            <span>Healthcare</span><span>${readableFactor(c.practical?.healthcare)}</span><span>${readableFactor(runner.country.practical?.healthcare)}</span>
-            <span>Visa route</span><span>${visaCell(c)}</span><span>${visaCell(runner.country)}</span>
-            <span>Tax profile</span><span>${readableFactor(c.practical?.taxProfile)}</span><span>${readableFactor(runner.country.practical?.taxProfile)}</span>
-            <span>Tap water</span><span>${readableFactor(c.practical?.tapWater)}</span><span>${readableFactor(runner.country.practical?.tapWater)}</span>
-            <span>Air quality</span><span>${readableFactor(c.practical?.airQuality)}</span><span>${readableFactor(runner.country.practical?.airQuality)}</span>
-            <span>Natural hazards</span><span>${readableFactor(c.practical?.hazardLevel)}</span><span>${readableFactor(runner.country.practical?.hazardLevel)}</span>
-            <span>Trade-off</span><span class="col-span-2">${summarizeTradeoff(c, runner.country)}</span>
-            <span>Reality check</span><span>${c.realityCheck}</span><span>${runner.country.realityCheck}</span>
+          <h4 class="font-medium text-sm mb-2">${t('quiz.comparisonTitle', { a: c.name, b: runner.country.name })}</h4>
+          <div class="grid grid-cols-3 gap-2 text-xs"><b>${t('quiz.comparisonFactor')}</b><b>${c.name}</b><b>${runner.country.name}</b>
+            <span>${t('quiz.rowMonthlyCost')}</span><span>${c.cost}</span><span>${runner.country.cost}</span>
+            <span>${t('quiz.rowTransit')}</span><span>${readableFactor(c.dimensions.transit)}</span><span>${readableFactor(runner.country.dimensions.transit)}</span>
+            <span>${t('quiz.rowSundayRhythm')}</span><span>${readableFactor(c.dimensions.weekendRhythm)}</span><span>${readableFactor(runner.country.dimensions.weekendRhythm)}</span>
+            <span>${t('quiz.rowTypicalWeather')}</span><span>${describeClimateProfile(c.climateProfile)}</span><span>${describeClimateProfile(runner.country.climateProfile)}</span>
+            <span>${t('quiz.rowHealthcare')}</span><span>${readableFactor(c.practical?.healthcare)}</span><span>${readableFactor(runner.country.practical?.healthcare)}</span>
+            <span>${t('quiz.rowVisaRoute')}</span><span>${visaCell(c)}</span><span>${visaCell(runner.country)}</span>
+            <span>${t('quiz.rowTaxProfile')}</span><span>${readableFactor(c.practical?.taxProfile)}</span><span>${readableFactor(runner.country.practical?.taxProfile)}</span>
+            <span>${t('quiz.rowTapWater')}</span><span>${readableFactor(c.practical?.tapWater)}</span><span>${readableFactor(runner.country.practical?.tapWater)}</span>
+            <span>${t('quiz.rowAirQuality')}</span><span>${readableFactor(c.practical?.airQuality)}</span><span>${readableFactor(runner.country.practical?.airQuality)}</span>
+            <span>${t('quiz.rowNaturalHazards')}</span><span>${readableFactor(c.practical?.hazardLevel)}</span><span>${readableFactor(runner.country.practical?.hazardLevel)}</span>
+            <span>${t('quiz.rowTradeOff')}</span><span class="col-span-2">${summarizeTradeoff(c, runner.country)}</span>
+            <span>${t('quiz.rowRealityCheck')}</span><span>${c.realityCheck}</span><span>${runner.country.realityCheck}</span>
           </div>
-          <p class="text-[10px] text-[#5f6368] mt-3">Country-level screening only: visa eligibility, tax treatment, healthcare access, and environmental conditions vary by person and location. Confirm current details for your situation and destination.</p>
-          <div class="text-[10px] mt-2 space-y-1">${[...new Set([...(c.practical?.sources || []), ...(runner.country.practical?.sources || [])])].map((source, i) => `<a class="block text-[#1a73e8] underline" href="${source}" target="_blank" rel="noopener noreferrer">Source ${i + 1}</a>`).join('')}</div>
+          <p class="text-[10px] text-[#5f6368] mt-3">${t('quiz.comparisonNote')}</p>
+          <div class="text-[10px] mt-2 space-y-1">${[...new Set([...(c.practical?.sources || []), ...(runner.country.practical?.sources || [])])].map((source, i) => `<a class="block text-[#1a73e8] underline" href="${source}" target="_blank" rel="noopener noreferrer">${t('quiz.sourceN', { n: i + 1 })}</a>`).join('')}</div>
         </div>
         <button id="retake-quiz-btn" class="text-xs font-medium text-[#1a73e8] hover:underline">
-          Retake Quiz with Different Preferences
+          ${t('quiz.retake')}
         </button>
       </div>
     </div>
@@ -916,11 +917,12 @@ function renderResultsView(best: ScoredCountry, runner: ScoredCountry, wildcard:
   document.getElementById('explore-results-btn')!.addEventListener('click', closeQuiz);
   document.getElementById('compare-btn')!.addEventListener('click', () => document.getElementById('comparison-card')!.classList.toggle('hidden'));
   document.getElementById('share-card-btn')!.addEventListener('click', async () => {
-    const svgCard = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="100%" height="100%" fill="#e8f0fe"/><text x="70" y="150" font-size="34" font-family="Arial" fill="#5f6368">MY GLOBAL MATCH</text><text x="70" y="280" font-size="72" font-family="Arial" font-weight="bold" fill="#202124">${c.name} · ${best.matchPercent}%</text><text x="70" y="370" font-size="32" font-family="Arial" fill="#1a73e8">The ${c.dimensions.transit === 'walkable-rail' ? 'Car-Free Urbanite' : c.dimensions.transit === 'motorbike-active' ? 'Street-Life Explorer' : 'Global Citizen'} profile</text></svg>`;
+    const persona = c.dimensions.transit === 'walkable-rail' ? t('quiz.persona.carFree') : c.dimensions.transit === 'motorbike-active' ? t('quiz.persona.streetLife') : t('quiz.persona.globalCitizen');
+    const svgCard = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="100%" height="100%" fill="#e8f0fe"/><text x="70" y="150" font-size="34" font-family="Arial" fill="#5f6368">${t('quiz.shareHeading')}</text><text x="70" y="280" font-size="72" font-family="Arial" font-weight="bold" fill="#202124">${c.name} · ${best.matchPercent}%</text><text x="70" y="370" font-size="32" font-family="Arial" fill="#1a73e8">${t('quiz.sharePersonaLine', { persona })}</text></svg>`;
     const file = new File([svgCard], 'global-match.svg', { type: 'image/svg+xml' });
     const browser = navigator as any;
     if (browser.share && browser.canShare?.({ files: [file] })) {
-      await browser.share({ title: `My global match: ${c.name}`, text: `${best.matchPercent}% match — ${c.name}`, files: [file] });
+      await browser.share({ title: t('quiz.shareMyTitle', { name: c.name }), text: t('quiz.shareText', { percent: best.matchPercent, name: c.name }), files: [file] });
     } else {
       const link = document.createElement('a'); link.href = URL.createObjectURL(file); link.download = file.name; link.click();
       window.setTimeout(() => URL.revokeObjectURL(link.href), 1000);

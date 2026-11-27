@@ -1,218 +1,270 @@
-import type { ProfileSections } from './index';
+import type { CountryDossierProse } from '../../countries';
 
-/**
- * Profile-section copy for the Caribbean island states.
- * Keys match country names in GLOBAL_COUNTRY_METADATA exactly.
- */
-export const CARIBBEAN: Record<string, ProfileSections> = {
+export const CARIBBEAN: Record<string, CountryDossierProse> = {
   "Antigua and Barbuda": {
+    tagline: "A sailing-nation twin-island state famous for 365 beaches and English Harbour history.",
+    realityCheck: "Hurricane exposure, imported costs, and dry-season water restrictions on small islands.",
     culture: "Greetings come before transactions — a proper 'good morning' opens every counter, bank line, and bus, and skipping it reads as cold. Church shapes the week, with Anglican and Methodist choirs anchoring Sundays, and the summer Carnival season marks emancipation with calypso tents and costumed street bands. Everything else runs on small-island time, a pace locals treat as a feature rather than a flaw.",
     people: "Small enough that a newcomer becomes a known quantity within weeks — reputation travels faster than you do. Islanders are courteous and quick to tease once the first greeting lands, and invitations tend to arrive through church, work, or a neighbor's boat. Outsiders are received warmly, especially once they slow to island rhythm.",
     costOfLiving: "Local produce and fresh-caught fish keep the food bill reasonable, while anything packaged, bottled, or mechanical arrives by container and is priced accordingly. Rent is the swing variable: modest apartments away from the coast sit near the band's floor, while homes around the marinas and resort coasts run to the top. Utilities and gasoline land on the expensive side of an import economy.",
+    workday: "Most paychecks come from tourism or government: resort shifts near Dickenson Bay and Jolly Harbour start at 7:00 AM, while St John's offices run 8:00–4:30 and empty fast. From December into spring, the English Harbour sailing season — capped by Antigua Sailing Week in late April — fills marina, charter, and restaurant jobs around Nelson's Dockyard with longer, livelier days.",
+    evening: "Rum shops are the default after-work stop — a cold Wadadli, dominoes on a worn table, and cricket on the radio. Sunday afternoons belong to the Shirley Heights lookout party above English Harbour: barbecue, steel drums, rum punch, and a whole hillside watching the sun drop behind the boats.",
     upsides: [
       "Direct flights from London, New York, and Toronto keep North America and Europe a single leg away.",
       "The citizenship-by-investment program offers one of the region's more affordable routes to a second passport.",
-      "Cricket heritage runs deep — the island produced Sir Vivian Richards, and the stadium bearing his name still hosts international matches."
+      "Cricket heritage runs deep — the island produced Sir Vivian Richards, and the stadium bearing his name still hosts international matches.",
     ],
     downsides: [
       "Hurricane exposure, imported costs, and dry-season water restrictions on small islands.",
       "A car is close to mandatory — bus routes barely exist outside the capital, and insurance and repairs add up fast.",
-      "Errand windows are short: banks close mid-afternoon, many shops shutter by early evening, and Sunday commerce nearly disappears."
+      "Errand windows are short: banks close mid-afternoon, many shops shutter by early evening, and Sunday commerce nearly disappears.",
     ],
   },
   "Bahamas": {
+    tagline: "Hundreds of island cays, pink-sand beaches, and offshore-finance life with American convenience.",
+    realityCheck: "Hurricane season, high import prices, and inter-island logistics between Family Islands.",
     culture: "Church anchors Sundays everywhere — Baptist, Anglican, and a deep gospel tradition — and most commerce respectfully shuts down with it. Junkanoo is the year's other anchor: months of workshop preparation pay off in the Boxing Day and New Year's morning rush-outs that shake downtown Nassau at dawn. Out on the Family Islands the pace drops to village time, where a church bazaar counts as the social event of the season.",
     people: "Visitors are old news here — half the economy exists to host them, so small talk comes easily and outsiders slide into social life without ceremony. Church networks do the matchmaking, and a Sunday invitation is the real marker of acceptance. On the Family Islands, the welcome is quieter but even more personal.",
     costOfLiving: "Groceries start life in Florida — most supermarket shelves are stocked from Miami, so prices track American levels plus freight. Fresh fish from the docks and roadside produce soften the bill. Rent splits the band: modest Nassau apartments sit mid-range, Family Island houses can dip lower, and anything near the water climbs quickly.",
+    workday: "Government desks in Nassau run conventional weekday hours, but the other pillar of the economy starts much earlier — hotel and resort shifts begin by 6:00 or 7:00 AM to beat the breakfast crowd. On the Family Islands, the week still bends around mailboat and ferry days.",
+    evening: "Arawak Cay's Fish Fry — a strip of wooden shacks west of downtown Nassau — pulls after-work crowds for cracked conch, conch salad, and sky juice (gin, coconut water, condensed milk). From late December, Junkanoo rehearsals turn ordinary weeknights into drum-and-brass street practice ahead of Boxing Day.",
     upsides: [
       "There is no personal income tax — earnings are taxed indirectly through VAT and import duties instead.",
       "Miami sits under an hour's flight away, which makes stateside weekends genuinely routine.",
-      "Family Island real estate offers village-scale waterfront living at prices Nassau and the resort cays rarely match."
+      "Family Island real estate offers village-scale waterfront living at prices Nassau and the resort cays rarely match.",
     ],
     downsides: [
       "Hurricane season, high import prices, and inter-island logistics between Family Islands.",
       "Electricity ranks among the region's most expensive — cooling a house through summer is a budget event, and many households ration the thermostat.",
-      "Sundays shut down hard: beyond church, little is open, so a missed Saturday grocery run has to last until Monday."
+      "Sundays shut down hard: beyond church, little is open, so a missed Saturday grocery run has to last until Monday.",
     ],
   },
   "Barbados": {
+    tagline: "Rum-shop afternoons, cricket culture, and polished Caribbean infrastructure.",
+    realityCheck: "Import costs, hurricane exposure, and seasonal tourism swings shape prices and crowds.",
     culture: "Bajan identity is its own thing — British-era formality wrapped around an unmistakably Caribbean core, from the left-side driving to the courtesy titles that survive in everyday speech. Crop Over runs each summer, weeks of calypso tents and craft markets building to the Grand Kadooment parade on the first Monday of August. Between festivals, the Landship — a dance guild styled on the old Royal Navy — still drills to tuk-band drums.",
     people: "Formality comes first, then the humor: Bajans are unfailingly polite until the guard drops, at which point the wit is dry and quick. The island has hosted outsiders long enough to be unimpressed by them, which reads as ease rather than coldness. Friendships build through work, church, and weekend sport, and an invitation to a family Sunday lunch is the genuine welcome.",
     costOfLiving: "Prices sit on the region's upper shelf: rents are often quoted in US dollars, and the grocery bill carries the same freight markups as every import island. Offsets exist — market produce and fresh fish keep a home-cooked week affordable. Cars, utilities, and imported conveniences push a comfort-heavy lifestyle toward the band's ceiling.",
+    workday: "Bridgetown offices lean British-formal — roughly 8:30–4:30, proper titles, and a flying-fish cutter (salt-bread sandwich) at lunch. Government, tourism, and offshore finance set the pace across a standard Mon–Fri week.",
+    evening: "Friday night means Oistins Fish Fry — the whole south coast converges on the fishing town's bay-side grills for mahi, macaroni pie, rum punch, and dancing between the stalls. The rest of the week it's a rum-shop stool, dominoes, and a cold Banks in hand.",
     upsides: [
       "Flat-fare public buses thread the whole island, a genuine rarity in the Caribbean.",
       "Nonstop flights to London, Toronto, and the US East Coast keep the island unusually well connected for its size.",
-      "Everyday healthcare is credible for the region — a main public hospital in Bridgetown plus a wide spread of private clinics."
+      "Everyday healthcare is credible for the region — a main public hospital in Bridgetown plus a wide spread of private clinics.",
     ],
     downsides: [
       "Import costs, hurricane exposure, and seasonal tourism swings shape prices and crowds.",
       "Long-term rentals compete with villa tourism: the same coastal houses earn more by the week from visitors, which squeezes the year-round market.",
-      "Rush hour on the ABC Highway and the coast roads turns short commutes into long ones at both peaks."
+      "Rush hour on the ABC Highway and the coast roads turns short commutes into long ones at both peaks.",
     ],
   },
   "Cuba": {
+    tagline: "Historic streets, music, and a distinctive community-centered daily rhythm.",
+    realityCheck: "Supply availability and access to payments and services can be constrained.",
     culture: "Scarcity is a daily fact here — lines, empty shelves, and improvised meals — yet neighborhoods run on an extraordinary social density: doors stay open, elders get greeted first, and a café con leche at a window counter remains a small ritual of ordinary life. Music functions like civic infrastructure, from free conservatory training to the quartet rehearsing three doors down, and dominoes settles most porch debates.",
     people: "Cubans meet hardship with wit that borders on performance art — conversation is fast, warm, and generous with what little there is. 'Resolver' (making do, figuring it out) is both a verb and a national philosophy, and guests are fed before they are questioned. Outsiders who try their Spanish are received with curiosity and patience.",
     costOfLiving: "Two price worlds coexist: peso markets and state services stay cheap, while dollar-priced private shops and anything tourist-facing matches the region's costlier islands. Newcomers live mostly in the dollar lane, so a foreign resident's budget tends toward the band's upper half — tourism runs on hard-currency pricing; the peso economy runs on patience.",
+    workday: "State employment still anchors most paychecks on a legal 44-hour week — 8:00–5:00 shifts, with some workplaces adding alternate Saturday mornings. Peso salaries are small, so the day weaves in queues at the bodega, stretching the libreta (ration book), and remittances from family abroad, while private licenses for cafés, repairs, and rooms keep widening.",
+    evening: "The malecón seawall stroll is the evening institution — families, couples, guitars, and cheap ice cream at sunset. From there it drifts to a plaza or casa de la música for live son and trova, a porch where a bottle of rum goes around, or a queue outside the bakery when word spreads that bread has arrived.",
     upsides: [
       "Primary care is neighborhood-based by design — family-doctor clinics within walking distance — even as shortages strain the system.",
       "Literacy sits near-universal and the book culture is real: street book fairs, neighborhood libraries, and a public that reads.",
-      "The colonial cores of Old Havana and Camagüey are UNESCO-listed and built for walking — living districts, not ticketed zones."
+      "The colonial cores of Old Havana and Camagüey are UNESCO-listed and built for walking — living districts, not ticketed zones.",
     ],
     downsides: [
       "Supply availability and access to payments and services can be constrained.",
       "Power cuts run long and arrive unannounced, and because water pumps need electricity, the blackout schedule quietly becomes the water schedule.",
-      "Home internet is scarce, slow, and costly; online life still clusters at public Wi-Fi spots and phone data top-ups."
+      "Home internet is scarce, slow, and costly; online life still clusters at public Wi-Fi spots and phone data top-ups.",
     ],
   },
   "Dominica": {
+    tagline: "The 'Nature Island': boiling lakes, rainforest trails, and a small, creative community.",
+    realityCheck: "Hurricane reconstruction continues, medical care is basic, and ferry schedules depend on weather.",
     culture: "Rural village life is the center of gravity — multiple generations share one yard, gardens feed the neighbors, and a proper greeting buys more than money does. The Kalinago Territory on the east coast remains the Caribbean's only Indigenous-governed land, its own chief and council still sitting. Bush medicine — the herbal pharmacy of leaves, barks, and roots — is a living discipline taught at home rather than school.",
     people: "A farmer's directness governs talk here — weather, road conditions, and who grew what count as the real news. Islanders are courteous but unhurried, and newcomers are rare enough to be genuinely interesting. Invitations arrive through church, village associations, and the simple fact of being nearby when something good is cooking.",
     costOfLiving: "Costs sit near the Caribbean's floor: farm-gate produce and roadside stands make eating cheap, rents outside Roseau are modest, and utilities stay manageable. The trade-off is retail — imported groceries, hardware, and cars carry heavy freight markups, and housing stock is limited enough that good places go by word of mouth.",
+    workday: "Agriculture and eco-tourism set the clock: farm days in the hills start before sunrise, guides and hotel staff in Roseau and Portsmouth run to visitors' schedules, and government offices hold steady 8:00–4:00 desks. Market women are in Roseau by dawn, laying out dasheen, bay leaves, and cocoa sticks.",
+    evening: "Weekends belong to the rivers — families carry pots and coal pots up-valley for a cook-up (one-pot rice, peas, and salted meat) over open fires and a soak in the river pools. Weekday evenings are quieter: rum-shop dominoes, porches, and church on Sunday.",
     upsides: [
       "The Waitukubuli National Trail stitches coast to summit across the island's length, a multi-day hike reachable from a village road.",
       "Resident sperm whales work the offshore deeps year-round, and the island has made their protection a national commitment.",
-      "Ferry routes connect the French islands of Guadeloupe and Martinique, putting a different, French-Creole Caribbean within a day's sailing."
+      "Ferry routes connect the French islands of Guadeloupe and Martinique, putting a different, French-Creole Caribbean within a day's sailing.",
     ],
     downsides: [
       "Hurricane reconstruction continues, medical care is basic, and ferry schedules depend on weather.",
       "Heavy rain can close a valley road for hours — the terrain that makes the island beautiful also makes its transport fragile.",
-      "Retail is thin: single importers hold whole product categories, so shopping runs on patience and backup plans."
+      "Retail is thin: single importers hold whole product categories, so shopping runs on patience and backup plans.",
     ],
   },
   "Dominican Republic": {
+    tagline: "Warm coastal living, lively music, and a strong social culture.",
+    realityCheck: "Heat, hurricane season, and service access vary by region.",
     culture: "Family anchors the week — long Sunday lunches, godparent networks that function, and a Catholic-plus-evangelical church calendar giving every month its feast. Santiago keeps its own highland identity, self-contained and proudly so, while Santo Domingo runs at full capital speed. Mangú (mashed plantain) with eggs and salami is the republic's breakfast, and February's carnival fills the streets with masked diablos cojuelos (limping devils).",
     people: "Greetings are physical and immediate — a handshake or cheek kiss comes before anything else, and a stranger is 'mi hermano' within five minutes. Dominican warmth is emphatic: you will be offered food twice and expected to accept once. The Cibao region's accent and self-regard are a running national joke the Cibaeños fully enjoy.",
     costOfLiving: "Among the region's better values: outside the all-inclusive coasts, rent in pesos stays gentle and a neighborhood lunch costs a fraction of any hotel zone. Imported cars, electronics, and brand groceries carry island markups, and Santo Domingo rents split sharply by neighborhood — the capital's pleasant districts price well above provincial cities like Santiago.",
+    workday: "Mon–Fri offices run 8:00–5:00 with a genuine lunch hour — la bandera (rice, beans, and stewed meat) at a neighborhood comedor or delivered to desks. The colmado anchors every barrio: the corner store sells your morning coffee on credit, keeps the Presidente cold, and doubles as the neighborhood's news desk.",
+    evening: "Plastic chairs at the colmado fill by 7:00 PM — Presidente beers sweating in a bucket, dominoes slamming on concrete, and bachata on the speakers. Weekends stretch into baseball, merengue, and late street food like yaniqueques and chimis.",
     upsides: [
       "Santo Domingo's Zona Colonial is the oldest European-built city quarter in the Americas, and it remains a living neighborhood rather than a museum piece.",
       "The island is one of the best-connected in the Caribbean — New York, Miami, and Madrid are short, frequent hops.",
-      "Winter-league baseball turns even small-town stadiums into weekly community rituals all season long."
+      "Winter-league baseball turns even small-town stadiums into weekly community rituals all season long.",
     ],
     downsides: [
       "Heat, hurricane season, and service access vary by region.",
       "Grid power dips enough that inverters and generators are standard household appliances — factor one into any housing budget.",
-      "Friday and Sunday beach traffic chokes the highways out of the capital, so weekend plans start with a departure time."
+      "Friday and Sunday beach traffic chokes the highways out of the capital, so weekend plans start with a departure time.",
     ],
   },
   "Grenada": {
+    tagline: "The Spice Isle: nutmeg-scented hills, underwater sculpture parks, and calm town life.",
+    realityCheck: "Isolation, import costs, and hurricane-season logistics; university-term rhythms shape St George's.",
     culture: "Nutmeg ends up in everything — ice cream, punch, the evening tea — a spice heritage carried from the hills into ordinary cooking. The island's cocoa feeds a homegrown bean-to-bar chocolate scene, small fermentaries turning out bars you buy at the Saturday stalls. Parish churches organize much of the social calendar, ministers greet congregants by name, and town life stays genuinely small-scale.",
     people: "Gentle-spoken by Caribbean standards but no less warm — courtesy is expected, and patience is assumed. Everyone is related to someone you know, which makes reputation a communal asset and kindness a strategy. Newcomers get adopted through church, school runs, and the neighbor who insists you take the extra mangoes.",
     costOfLiving: "Spices, produce, and fresh fish stay genuinely cheap at the source, and minibus fares around the island cost pocket change. Anything packaged or mechanical carries the freight bill twice — once to the island, once to a shopkeeper's margin — and utilities err expensive. Rents range from modest village houses to pricier pockets near the harbor and the south-coast bays.",
+    workday: "St George's work clusters around the Carenage and the market — government desks, tourism, and trade, mostly 8:00–4:30. Rural mornings still follow the nutmeg: spice estates and small farms in the hills, cocoa beans drying on wooden trays, and a nutmeg pod on the national flag for good reason.",
+    evening: "On Fridays, Gouyave becomes one long street grill — lionfish, lambi (conch), breadfruit, and local bands between the stalls draw the whole west coast into town for Fish Friday. Sunday is oil-down time: the breadfruit, salted-meat, and coconut-milk stew simmering long over a yard fire while neighbors drift in.",
     upsides: [
       "Grand Anse's long white arc gives the capital a beach suburb — calm, swimmable, and lined with casual food shacks.",
       "Grand Etang's crater lake and its mona monkeys sit half an hour's drive from town, rainforest included.",
-      "August's Spicemas Carnival keeps the jab-jab (devil masquerade) tradition alive in one of the region's most distinctive street festivals."
+      "August's Spicemas Carnival keeps the jab-jab (devil masquerade) tradition alive in one of the region's most distinctive street festivals.",
     ],
     downsides: [
       "Isolation, import costs, and hurricane-season logistics; university-term rhythms shape St George's.",
       "Many businesses keep small-island hours — early closing, a half-speed Saturday — so a missed errand means waiting for the next window.",
-      "Serious medical cases usually mean a flight — to Trinidad, Barbados, or Miami — so planning around that is part of residence."
+      "Serious medical cases usually mean a flight — to Trinidad, Barbados, or Miami — so planning around that is part of residence.",
     ],
   },
   "Haiti": {
+    tagline: "A proud artistic and cultural heritage shaped by a resilient community life.",
+    realityCheck: "Security, infrastructure, and healthcare access are highly variable; review current official guidance.",
     culture: "Amid severe strain, an extraordinary culture holds: Kreyòl (the Creole language) carries the street while French holds the paperwork, and family life revolves around the lakou, a shared courtyard of extended kin. Vodou endures as a living religion of drums, song, and obligation, honored openly alongside Catholic saints. Craft traditions — hammered-oil-drum sculpture, sequined flags — are still made by hand for a trade older than any crisis.",
     people: "Haitians are direct, funny, and fiercely attached to dignity — hospitality survives hard times because feeding a guest is non-negotiable. Warmth comes with candor; you will be told exactly what is thought. Effort in Kreyòl opens doors that formality alone never will.",
     costOfLiving: "In provincial towns life can run startlingly cheap — market produce, street food, and rents sit near the region's floor — but prices now swing hard with supply conditions. Anything imported — fuel, cooking gas, medicine, packaged goods — can be scarce or suddenly dear, and budgeting is a weekly exercise.",
+    workday: "Insecurity in Port-au-Prince now shapes the day as much as any clock: trips are planned for daylight, tap-taps (brightly painted shared taxis) run the main routes, and markets like Croix-des-Bossales do their heaviest trade early. Mon–Fri office hours exist, but most livelihoods are market stalls, moto taxis, and shopfronts.",
+    evening: "In the capital, errands and visits wrap before dark, and social life pulls indoors or into familiar neighborhoods. Further out, rum-shop dominoes carries ordinary evenings, and in Lenten season, rara bands — horns, drums, and bamboo trumpets — own the roads at night.",
     upsides: [
       "The Citadelle Laferrière, the vast mountain fortress raised by the first free Black republic, still crowns the northern peaks as a national monument.",
       "Nowhere else in the Americas do African-rooted language, religion, and visual art remain this unbroken and this central to ordinary life.",
-      "Provincial routines persist — market days, church Sundays, football on any flat ground — and they remain the rhythm most people hold onto."
+      "Provincial routines persist — market days, church Sundays, football on any flat ground — and they remain the rhythm most people hold onto.",
     ],
     downsides: [
       "Security, infrastructure, and healthcare access are highly variable; review current official guidance.",
       "State power is sporadic even where it exists, so generators hum through every compound and business that can afford fuel.",
-      "Fuel and cooking-gas queues recur without warning, and households that can manage it keep storage tanks and a backup supply."
+      "Fuel and cooking-gas queues recur without warning, and households that can manage it keep storage tanks and a backup supply.",
     ],
   },
   "Jamaica": {
+    tagline: "Reggae's homeland: Blue Mountain coffee, street-food culture, and unmistakable creative energy.",
+    realityCheck: "Crime varies sharply by neighborhood; housing security and current local guidance matter.",
     culture: "Music functions as daily infrastructure — ska and rocksteady laid the groove the whole world borrowed, and the island has never stopped playing it. Rastafari shapes ordinary life well beyond symbolism, from ital (natural, unprocessed) cooking to the deliberate, Sabbath-keeping rhythm of some households. Church culture runs just as deep: Sunday best is literal, and gospel practice nights carry the midweek.",
     people: "Banter is the national instrument — wit comes fast, teasing is affection, and silence in a group reads as something wrong. Warmth is immediate; trust is earned by consistency. 'Irie' (all good, at peace) is the standard blessing, and living up to it is an actual social expectation.",
     costOfLiving: "Outside the resort enclaves, life is affordable: market produce is cheap, street food is a full meal for a few US dollars, and local transport costs a few coins. Imported groceries, brand goods, and gasoline carry container markups, and a decent Kingston apartment with real security runs the band's upper half.",
+    workday: "Kingston offices run roughly 8:30–4:30 with lunch from a cook shop — brown stew chicken, rice and peas — and a patty stand within walking distance. A huge share of work is informal and runs on its own clock: market stalls, route taxis, jerk pans, and shops, where 'soon come' is less an excuse than a schedule.",
+    evening: "Roadside bars fill with dominoes — the slam of the winning tile is practically percussion — over Red Stripe, Dragon Stout, or a white-rum 'nip'. Weekends go to dancehall street sessions and sound systems in open lots, with jerk pans grilling till the crowd thins.",
     upsides: [
       "Reggae holds UNESCO-listed heritage status, and Kingston still runs the studios, museums, and record shops that built it.",
       "The food canon is its own — ackee and saltfish breakfasts, soursop juice from the fruit stall, a cuisine with national confidence.",
-      "Daily nonstops to New York, Toronto, and London keep the diaspora routes full and the fares competitive."
+      "Daily nonstops to New York, Toronto, and London keep the diaspora routes full and the fares competitive.",
     ],
     downsides: [
       "Crime varies sharply by neighborhood; housing security and current local guidance matter.",
       "Supermarket imports sting — packaged goods, brand foods, and gasoline all carry container-freight pricing.",
-      "June through November, the whole island keeps half an eye on storm tracks, with shutters and water storage as annual chores."
+      "June through November, the whole island keeps half an eye on storm tracks, with shutters and water storage as annual chores.",
     ],
   },
   "Saint Kitts and Nevis": {
+    tagline: "A compact two-island federation of fortress history, peak hikes, and a small expat scene.",
+    realityCheck: "Small-island logistics, hurricane season, and limited specialized healthcare.",
     culture: "Two islands, two temperaments: St. Kitts runs on government and tourism paychecks while Nevis guards a slower, self-contained identity it is openly proud of. Nevis's summertime Culturama festival keeps African-rooted masquerade alive around the emancipation season. Church still structures the week on both islands, and a Sunday invitation is the week's anchor social event.",
     people: "Church networks do the introducing here — the federation is small enough that a newcomer becomes a known quantity within a month. People are courteous, quick to tease, and generous with directions, gossip, and mangoes from the yard. Nevisians and Kittitians will each happily explain why their island is the better one.",
     costOfLiving: "Produce and fresh fish stay reasonable, while anything packaged or mechanical arrives by container and is priced like it. Basseterre apartments sit mid-band, Nevis trades slightly lower on rent, and villa-district housing runs to the ceiling. Utilities and imported gasoline err expensive.",
+    workday: "Sugar closed in 2005, so the old estate rhythms gave way to a compact government-and-retail workday in Basseterre — desks and shops roughly 8:00–4:00, with tourism jobs along the southeast peninsula resorts. The former cane railway now runs sightseeing trips on the same tracks.",
+    evening: "Friday nights run from Basseterre out to the Strip at Frigate Bay — a line of beach bars, lobster off the grill, soca, and a 'Ting with a Sting' (local rum and grapefruit soda). Sundays are quieter: goat-water stew after church, cricket on TV, and family yards.",
     upsides: [
       "Brimstone Hill Fortress, the eighteenth-century 'Gibraltar of the West Indies', is a UNESCO-listed garrison with harbor views you can visit on a slow afternoon.",
       "The federation runs the region's original citizenship-by-investment program, in place since 1984.",
-      "Nevis's Bath hot springs have drawn bathers since the eighteenth century, and the soak remains an ordinary neighborhood ritual."
+      "Nevis's Bath hot springs have drawn bathers since the eighteenth century, and the soak remains an ordinary neighborhood ritual.",
     ],
     downsides: [
       "Small-island logistics, hurricane season, and limited specialized healthcare.",
       "Career lanes are narrow — government, tourism, banking, and health dominate, and ambitious tracks often lead off-island.",
-      "The channel crossing between St. Kitts and Nevis cancels on rough days, so inter-island plans carry a standing weather clause."
+      "The channel crossing between St. Kitts and Nevis cancels on rough days, so inter-island plans carry a standing weather clause.",
     ],
   },
   "Saint Lucia": {
+    tagline: "The twin Piton peaks, drive-in volcano valleys, and a strong tourism-anchored rhythm.",
+    realityCheck: "Import prices, hurricane exposure, and winding island roads slow daily logistics.",
     culture: "Swapped between Britain and France so often both left deep marks, the island keeps a genuinely double culture: English runs the offices while Kwéyòl (the French-based Creole) carries market banter and proverbs. October's Creole Heritage Month closes with Jounen Kwéyòl on the last Sunday, a day of madras plaid, drumming, and long food tables. The older La Rose and La Marguerite flower societies still keep rival feast days of song and satin.",
     people: "Bilingual banter is the baseline — Lucians switch between English and Kwéyòl mid-sentence and expect warmth in both. Village reception is famously open; the capital is brisker but still easy. Invitations to a riverside cook or a church fundraiser arrive quickly for anyone who shows up twice.",
     costOfLiving: "Market produce keeps a home-cooked week affordable, while imports — fuel, packaged goods, cars — carry heavy markups. Rent splits between worker-priced Castries quarters and the villa-and-marina lane up north, which tops the band. Minibuses thread the main routes for loose coins.",
+    workday: "Tourism sets the tempo — hotel and tour-boat shifts around Castries, Rodney Bay, and Soufrière start early, while government offices keep standard weekday desks. Banana trucks still thread the winding roads from the planting valleys, so farm mornings begin before the buses do.",
+    evening: "Friday is jump-up night: Gros Islet closes its streets to cars and fills them with grilled fish, rum shops, DJs, and steel pan till late, while Anse La Raye runs a quieter fish fry the same night. Ordinary evenings mean a rum-shop lime — Piton beer, dominoes, and talk that runs long.",
     upsides: [
       "Marigot Bay remains one of the Caribbean's classic hurricane-hole anchorages, a mangrove-fringed harbor that doubles as the weekend social scene for the boating set.",
       "The Soufrière mud baths stay open to residents on ordinary afternoons — a working spa courtesy of the volcano itself.",
-      "The endemic St Lucia parrot came back from near-extinction and is now the national bird, a conservation win you can spot in the rainforest canopy."
+      "The endemic St Lucia parrot came back from near-extinction and is now the national bird, a conservation win you can spot in the rainforest canopy.",
     ],
     downsides: [
       "Import prices, hurricane exposure, and winding island roads slow daily logistics.",
       "Services cluster in Castries and the north — from Soufrière or Vieux Fort, a specialist appointment or major errand means a day trip.",
-      "Summer sargassum drift can bury the windward beaches for weeks, and the whole east coast smells like it."
+      "Summer sargassum drift can bury the windward beaches for weeks, and the whole east coast smells like it.",
     ],
   },
   "Saint Vincent and the Grenadines": {
+    tagline: "A volcanic main island scattered across thirty-two sailing islets.",
+    realityCheck: "Volcanic eruptions have displaced northern island communities, and ferry logistics shape everything.",
     culture: "Garifuna heritage is the national spine — this is the homeland of the Black Carib people, and their descendants still keep language, drumming, and foodways alive in the northern villages. Breadfruit trees shade half the yards, and roasted breadfruit with fried jackfish is the Sunday plate. Kingstown retains a working-port character, unpretentious and busy, while the southern Grenadines carry the islands' sailing life.",
     people: "Community-first courtesy governs everything — help with the boxes, a seat in the shade, an unsolicited history lesson on the boat ride. Church and fishing-boat networks organize the social world, and newcomers get pulled into both within a season. Pride in the island's survival — storms, eruptions, everything — comes up fast in conversation.",
     costOfLiving: "Farm plots and fruit trees keep the food bill gentle — breadfruit from a neighbor's yard costs a favor at most — while imports and gasoline carry the freight. Kingstown rents sit modestly within the band; the southern Grenadine isles run pricier, supplied largely by boat.",
+    workday: "Kingstown is small enough that government, bank, and market jobs are a walk or minibus ride away — desks around 8:00–4:00 with a proper cooked lunch. Farm mornings in the banana-growing Mesopotamia valleys start earlier, and Bequia's ferry-and-sailing trade keeps its own timetable.",
+    evening: "Rum-shop evenings — barbecue smoke, Hairoun beer, and dominoes — carry the week toward Friday. Come mid-December, the calendar flips for Nine Mornings: from the 16th, Vincentians rise around 4:00 AM for sea baths, street concerts, and sorrel and ginger beer, then head to work anyway.",
     upsides: [
       "The Tobago Cays marine park protects five uninhabited islets and turtle-grass shallows that locals treat as their own weekend archipelago.",
       "La Soufrière's trail climbs from farmland through cloud forest to a crater rim that still steams — one of the region's most vivid half-day hikes.",
-      "The Grenadines support a working waterfront culture of boatbuilders, charters, and ferries rather than a resort-only coastline."
+      "The Grenadines support a working waterfront culture of boatbuilders, charters, and ferries rather than a resort-only coastline.",
     ],
     downsides: [
       "Volcanic eruptions have displaced northern island communities, and ferry logistics shape everything.",
       "Retail depth is thin — one or two importers often hold an entire category, and 'not in stock' can mean weeks.",
-      "Private-sector careers are scarce; the working economy runs on government, farming, fishing, and port trade."
+      "Private-sector careers are scarce; the working economy runs on government, farming, fishing, and port trade.",
     ],
   },
   "Trinidad and Tobago": {
+    tagline: "Caribbean island life, lively festivals, and a diverse food culture.",
+    realityCheck: "Costs and safety vary by island and neighborhood; check local guidance.",
     culture: "Carnival anchors the year, but the deeper texture is dual heritage: Indo-Trinidadian traditions share the national calendar — Divali is a public holiday, and Hosay's drum-led processions fill St. James each Muharram — alongside emancipation day. Pelau (chicken and pigeon peas in one caramelized pot) is the beach-day standard, and Tobago, the slower sister island, keeps its 'Sunday School' street party in Buccoo going into Monday morning.",
     people: "A Trini treats conversation as a craft — gatherings have no scheduled end, and keeping talk going past midnight is a point of pride. Humor is rapid and multi-referential, flipping between English and Trinbagonian Creole, and outsiders are welcomed through the food first. Indo- and Afro-Trinidadian friendships interlace casually at work, school, and the beach house.",
     costOfLiving: "The region's top shelf among these islands, softened by cheap local food and produce markets. Imported groceries and brand goods run expensive, and the western Port of Spain suburbs price the band's ceiling, while the east trades cheaper rent for longer commutes.",
+    workday: "Port of Spain runs a Mon–Fri commuter rush — desks roughly 8:00–4:30, traffic stacking along the East–West Corridor, and a doubles stop (curried chickpeas in fried bara) for breakfast on the way in. Energy-sector and government jobs dominate paychecks, and around Carnival — the Monday and Tuesday before Ash Wednesday — productivity famously bends toward fetes and costume prep.",
+    evening: "Liming — the national art of unhurried hanging out with no end time — happens at rum shops, along the Ariapita Avenue strip, or on someone's porch with a Carib. Doubles carts do steady after-work trade, and in Carnival season the lime barely starts before midnight.",
     upsides: [
       "The oil-and-gas economy supports the Caribbean's most industrialized job market — energy, finance, manufacturing, and a real private sector.",
       "The food culture runs Indian, African, Chinese, and Syrian-Lebanese threads in one street-food ecosystem found nowhere else in the region.",
-      "The University of the West Indies' St. Augustine campus anchors a genuine academic and cultural life on-island."
+      "The University of the West Indies' St. Augustine campus anchors a genuine academic and cultural life on-island.",
     ],
     downsides: [
       "Costs and safety vary by island and neighborhood; check local guidance.",
       "The wet season floods low-lying Port of Spain streets with a regularity locals treat as routine.",
-      "Municipal water arrives on an erratic schedule in many districts, so rooftop storage tanks are standard household equipment."
+      "Municipal water arrives on an erratic schedule in many districts, so rooftop storage tanks are standard household equipment.",
     ],
   },
   "Puerto Rico": {
+    tagline: "Five-century fortress streets, salsa and reggaetón, a rainforest over the beach, and US mail at the door.",
+    realityCheck: "Recurring blackouts, storm season every autumn, and metro-area crime rates well above the US mainland's.",
     culture: "Old San Juan is the Caribbean's most walkable colonial city — pastel fortress walls, blue cobblestones, a fort you can roam at sunset — but the deeper current is musical: salsa was raised here before New York finished it, reggaeton was born here outright, and each town's patron saint festival closes streets for a weekend of stands, music, and roast pork. Christmas stretches from November through Three Kings Day in January.",
     people: "Boricua warmth arrives fast — you are fed before you are asked anything, invited to the domino table within minutes, and coached on your Spanish as you go. Family is infrastructure: Sunday means lechón in the mountains or a beach day with three generations, and everyone will tell you their favorite kiosk. Identity is carried proudly and politically, US and Puerto Rican at once.",
     costOfLiving: "Prices land close to mainland US levels — the dollar is local currency, warehouse stores and delivery apps all work, but electricity and imported groceries run high. Rents swing hard by neighborhood: Condado and Ocean Park price like a US city while Caguas and Bayamón stay genuinely moderate, and the recent wave of mainland arrivals pushed the most desirable blocks up another notch.",
+    workday: "The week runs on US-style hours — desks and government offices from 8:00 to 5:00, with rush-hour traffic stacking on the expressways into San Juan. The job market leans on government posts, pharmaceutical plants, and tourism; lunch means a proper café con leche and pan sobao run, and meetings drift between Spanish and English without anyone flagging the switch.",
+    evening: "Thursdays through Sundays, La Placita in Santurce turns from produce market into an open-air salsa floor, and Old San Juan's bars keep going well past mainland habits. Ordinary evenings run simpler — dominoes at a chinchorro, a piragua with the kids, the beach at golden hour — and in every yard the coquí frogs start their nightly chorus right on schedule.",
     upsides: [
       "For US citizens this is a domestic move — no visa, no customs, and the same dollar, banking, and phone plans continuing as before.",
       "El Yunque is the only tropical rainforest in the US forest system, and it sits under an hour's drive from the beach towns.",
-      "Three of the world's brightest bioluminescent bays glow around the island, led by Mosquito Bay in Vieques."
+      "Three of the world's brightest bioluminescent bays glow around the island, led by Mosquito Bay in Vieques.",
     ],
     downsides: [
       "Recurring blackouts, storm season every autumn, and metro-area crime rates well above the US mainland's.",
       "The grid remains fragile enough that generators and surge protectors are standard household equipment, and a passing storm can still darken whole suburbs.",
-      "Coastal strips popular with newcomers have seen rents outrun local wages, a tension every arriving resident inherits."
+      "Coastal strips popular with newcomers have seen rents outrun local wages, a tension every arriving resident inherits.",
     ],
   },
 };

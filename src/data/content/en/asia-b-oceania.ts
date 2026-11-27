@@ -1,14 +1,14 @@
-import type { ProfileSections } from './index';
+import type { CountryDossierProse } from '../../countries';
 
-/**
- * Profile-section copy for East and Southeast Asia and the Pacific-island nations of Oceania (Japan, Vietnam, Thailand, South Korea, Taiwan, Indonesia, Australia and New Zealand live in other files).
- * Keys match country names in GLOBAL_COUNTRY_METADATA exactly.
- */
-export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
+export const ASIA_B_OCEANIA: Record<string, CountryDossierProse> = {
   "Brunei": {
+    tagline: "A tranquil oil-rich sultanate of gilded mosques and rainforest along Borneo's north coast.",
+    realityCheck: "Sharia law shapes social life, alcohol is banned, and evening entertainment is famously quiet.",
     culture: "Quiet prosperity sets the mood: fuel is among the region's cheapest, housing is subsidized for citizens, and the 'MIB' philosophy — Melayu Islam Beraja, Malay Islamic Monarchy — runs through schooling and public life. Gilded mosques anchor every town, and rainforest begins almost at the city's edge. Daily life is calm, orderly, and unhurried to a degree that surprises arrivals from busier capitals.",
     people: "Soft-spoken courtesy is the default, and English is widely used, so day-to-day interaction comes easy. Family networks are the real social map, and an invitation to a home meal arrives sooner than you expect. Warmth is genuine but unhurried; conversation leans on food, family, and football rather than small talk.",
     costOfLiving: "Subsidized petrol, cheap utilities, and modest rents keep the basics gentle — filling a tank costs less than dinner almost anywhere else on Earth. Eating out is inexpensive though the range is limited, and imported groceries and electronics carry a markup. Many residents do their bigger shopping across the border in Miri or Kota Kinabalu.",
+    workday: "Runs the world's only non-contiguous workweek: Monday–Thursday plus Saturday, with Friday reserved for Jumu'ah prayers and Sunday for family. Government is the dominant employer alongside oil and gas, and even private firms bend their schedules around Friday prayers.",
+    evening: "Social life is food-centered and alcohol-free: satay and kueh at Gadong's night market, drives along the waterfront, and visits to relatives in Kampong Ayer, the stilted water village. Malls stay open late as the default meeting space — and that is about the extent of nightlife.",
     upsides: [
       "Ulu Temburong's rainforest is a longboat ride away — pristine national park at weekend-trip distance.",
       "Almost no income tax, plus subsidized fuel and services, makes saving unusually easy for residents.",
@@ -21,9 +21,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Cambodia": {
+    tagline: "Temple heritage, Mekong life, and a warm, social urban rhythm.",
+    realityCheck: "Heat, rainy seasons, and healthcare access vary by place.",
     culture: "Theravada Buddhism sets the calendar: monks' dawn alms rounds thread the streets, pagodas anchor every village, and 'Pchum Ben' (the ancestors' festival) sends city workers home to the provinces each autumn. The checkered 'krama' scarf is the all-purpose object — sling, towel, headwrap, basket. Khmer New Year in April brings three days of water-throwing that double as the year's biggest family reunion.",
     people: "Warmth arrives with laughter: teasing is a sign of acceptance, and guests are fed well past full. Greetings run through the 'sampeah' (palms together with a slight bow), though a handshake does fine too. Curiosity about outsiders is genuine, and invitations follow quickly once someone decides they like you.",
     costOfLiving: "One of the region's gentlest budgets: street meals cost a couple of dollars, tuk-tuk hops are small change, and a comfortable apartment in Phnom Penh or Siem Reap rents for modest money outside the tourist cores. The economy runs semi-dollars — prices appear in both riel and US notes — which spares newcomers a currency lesson.",
+    workday: "Heat-paced and early: offices fill around 8:00, many split the day into morning and afternoon shifts, and garment factories — the biggest formal employer — run long six-day weeks on Phnom Penh's outskirts. Lunch means rice with grilled pork or beef from a street stall, eaten fast and together.",
+    evening: "The riverside is the ritual: Phnom Penh families stroll Sisowath Quay at sunset with iced coffee and fried snacks, then drift into beer gardens where fifty-cent draughts keep the talk going. Outside the capital, evenings simply end early.",
     upsides: [
       "The Angkor temples become a weekend habit rather than a once-in-a-lifetime trip for Siem Reap residents.",
       "A heavily dollarized economy means no exchange-rate learning curve for American earners.",
@@ -36,9 +40,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "China": {
+    tagline: "Vast, fast-changing cities, deep regional cultures, and extraordinary landscapes.",
+    realityCheck: "Daily life varies greatly by city; Mandarin ability, internet restrictions, and local regulations can strongly shape the experience.",
     culture: "Daily commerce lives on a phone: QR payments cover everything from street vendors to metro turnstiles, and cash — still legal, and now explicitly protected by rule — has become a curiosity in big cities. Regional food pride is identity: Sichuan heat, Cantonese dim sum, and Xi'an noodles are birthrights, not menu options. The lunar calendar still rules the year, from Qingming tomb-sweeping to the Spring Festival gala on every TV.",
     people: "Under the app economy, old hospitality survives: the greeting 'chī le ma' (have you eaten?) still opens conversations, and neighbors share dishes as a reflex. Being introduced matters more than approaching cold. Dialect loyalty runs deep — people switch to Mandarin for business and back to home speech for jokes.",
     costOfLiving: "Everyday costs stay modest outside the tier-1 cores: metro rides and delivery meals are famously cheap, and second-tier cities deliver big-city life at a fraction of Shanghai rents. Within Beijing, Shanghai, and Shenzhen, housing absorbs a serious share of income. High-speed rail undercuts the price of driving between cities.",
+    workday: "Nominal 9:00–6:00 office hours with a long lunch, but tech runs hotter — the notorious '996' schedule (9 AM–9 PM, six days) persists even after the country's top court declared it illegal in 2021. After-lunch desk naps ('xiuxi') are openly accepted: lights dim, heads go down, nobody blinks.",
+    evening: "Evenings run long and social: hotpot dinners that stretch for hours, night-market grazing, and 'guangchangwu' (plaza square-dancing) troupes taking over public squares after dark. Most of it gets organized in WeChat group chats — dinners, karaoke, weekend hikes and all.",
     upsides: [
       "The world's largest high-speed rail network turns the whole country into weekend-trip range.",
       "Street food and delivery apps deliver extraordinary quality-to-price ratios at every hour of the day.",
@@ -51,9 +59,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Laos": {
+    tagline: "A slower-paced land of river towns, mountains, and Buddhist heritage.",
+    realityCheck: "Rural transport and healthcare access are limited compared with the capital.",
     culture: "Dawn alms rounds ('tak bat') still thread Luang Prabang's streets, and the lunar 'boun' festival calendar gives every month a ritual — rocket festivals to call the rains, boat races to close them. Sticky rice in woven baskets anchors meals, and the pace is unhurried everywhere. A stranger at a village temple is a guest before anything else.",
     people: "Gentle and soft-spoken to a degree that surprises newcomers: raised voices cost face, and 'bo penh nyang' (never mind, it's fine) settles small daily frictions. Hospitality is matter-of-fact — guests get the best plate without ceremony. First meetings stay formal, then loosen into teasing warmth once trust is earned.",
     costOfLiving: "Among the cheapest countries in Asia: market meals and everyday living cost very little, and a comfortable Vientiane apartment rents for modest money. Imported goods, from cheese to electronics, carry painful markups. Transport is cheap but slow — distance here costs time rather than cash.",
+    workday: "Among the slowest official paces anywhere in Asia: offices open around 8:00, take a generous lunch, and empty by 5:00, with the economy running on civil service, small trade, and hydropower. Midday heat resets everything, and nobody apologizes for it.",
+    evening: "Beerlao by the Mekong at sunset is the near-daily ritual in Vientiane, and the riverside night market does steady trade — but this is one of Asia's earliest-closing capitals: most venues shut by 11:00 under the official midnight curfew, and streets empty well before that.",
     upsides: [
       "Waterfalls and karst sit at weekend range — Kuang Si's falls from Luang Prabang, Vang Vieng's cliffs a bus ride from the capital.",
       "Vientiane's French-colonial quarter and riverside cafés keep a calm that bigger capitals lost decades ago.",
@@ -66,9 +78,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Malaysia": {
+    tagline: "Legendary hawker food harmony, lush rainforests, modern high-rises, and warm multicultural ease.",
+    realityCheck: "Heavy car dependency outside central Kuala Lumpur rail lines, and conservative federal laws regarding LGBTQ+ issues.",
     culture: "Three culinary heritages — Malay, Chinese, Indian — share one table, and the festival calendar stacks: Hari Raya open houses, Lunar New Year reunions, Deepavali feasts, with neighbors of other faiths expected at every one. Durian devotion is a culture of its own, with seasonal varieties argued over like football standings. East-coast states keep a more Malay-Islamic rhythm than the multicultural west-coast cities.",
     people: "Multicultural ease is the national skill: English is the shared second language, code-switching is constant, and meals are the universal invitation. Politeness norms reward gentleness — the right hand gives, calm outweighs confrontation. Outsiders get absorbed quickly; a foreign face is unremarkable in Kuala Lumpur or Penang.",
     costOfLiving: "Excellent value for money: hawker meals cost little, KL rents outside the golden center are moderate, and rideshare trips are cheap. Cars are the odd exception — import duties make motoring expensive. Domestic flights and produce markets keep travel and groceries gentle on any budget.",
+    workday: "Mostly 9:00–5:00, Monday–Friday — though Kelantan, Terengganu and Kedah keep Friday–Saturday weekends for prayers. Friday lunch everywhere stretches into mid-afternoon so Muslim colleagues can attend mosque, and the morning mamak run for roti canai and teh tarik is practically an office rite.",
+    evening: "Mamak stalls — Indian-Muslim cafés that stay open 24 hours — anchor the night: refilled teh tarik, flung-flat roti canai, and standing-room football crowds when the English Premier League is on. Neighborhood pasar malam night markets rotate daily for satay, char kway teow, and household odds and ends.",
     upsides: [
       "George Town on Penang is one of Asia's great livable heritage cities — shophouses, street food, and a walking-scale center.",
       "English works everywhere, from clinics to landlords, so setup friction is close to zero.",
@@ -81,9 +97,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Mongolia": {
+    tagline: "Wide-open steppe, nomadic herding culture, and a fast-changing capital of contrasts.",
+    realityCheck: "Ulaanbaatar's winter air is among the world's most polluted, and distances between services are enormous.",
     culture: "On the steppe, hospitality is law without police: a stranger at a ger door gets milk tea, mutton, and floor space without questions. Summer is 'airag' (fermented mare's milk) season, when herding families ride hours to check on far-flung neighbors — distance redefines what nearby means. Even city-born Mongolians keep the pastoral calendar, holding summer camps outside town.",
     people: "Direct in a way that reads as bluntness until you learn it as honesty: questions about age, work, and family are conversation openers, not intrusions. Urban youth are cosmopolitan and multilingual, while elders in the countryside may speak only Mongolian. Hospitality is competitive — being a good host carries real status.",
     costOfLiving: "Cheap by any regional standard: meat and dairy are abundant, restaurant meals in Ulaanbaatar are modest, and city rents stay reasonable. Imported goods and out-of-season vegetables carry a premium. Winter heating is the seasonal line item every household budgets around.",
+    workday: "Ulaanbaatar runs a 9:00–6:00 day around government, banking, and mining, with a proper hot lunch away from the desk. Out on the steppe the day belongs to the animals — herding follows weather and season, not office hours.",
+    evening: "In winter, coal smoke over the ger-district suburbs pushes everyone indoors early — malls, cafés, apartment dinners. Summer flips it: parks full until late, Naadam festival crowds in July, and a young Ulaanbaatar crowd packing a surprisingly strong bar scene.",
     upsides: [
       "One of the last landscapes where a day's drive can end at a ger with people you met an hour ago.",
       "Cashmere is a domestic industry — serious sweaters and coats sell at factory-outlet prices.",
@@ -96,9 +116,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Myanmar": {
+    tagline: "Distinctive Buddhist heritage, river plains, and varied regional cultures.",
+    realityCheck: "Security conditions and access to services are volatile; check current official guidance.",
     culture: "Gold pagodas are living rooms, not monuments: Shwedagon's terraces fill with families at dusk, and lunar-calendar pagoda festivals are the year's real holidays. Nearly everyone wears the 'longyi' (a wrapped tube of cloth), and 'thanaka' (ground sandalwood bark) shades cheeks against the sun. Thingyan, the April water festival, resets the year in soaked, joyful chaos.",
     people: "Formal politeness, gentle humor, and startling generosity with food — a guest's plate refills before it empties. Curiosity about outsiders is open and unguarded. Families carry both deep Buddhist patience and a running dark humor about circumstances; conversation is warmer than headlines suggest.",
     costOfLiving: "Daily costs sit among Asia's lowest: market meals, tailoring, and trishaw rides cost small change. The economy runs largely informal and cash-based, though, and imported goods are pricey and scarce. Prices move with fuel and the exchange rate, so budgeting is a weekly habit rather than a set-and-forget.",
+    workday: "Since the 2021 coup, jobs have vanished or gone informal, scheduled blackouts stretch across the day, and many who still work do so from home or abroad — yet markets and offices keep moving. The tea shop remains the day's true center: 'lahpet yay' (sweet milk tea) and 'lahpet thohk' (tea-leaf salad) fuel every deal and conversation.",
+    evening: "Power cuts set the schedule — generators hum outside restaurants, and candlelit tea shops stay open regardless. Social life stays close and quiet: family dinners, monastery visits, and calls with relatives scattered by the upheaval.",
     upsides: [
       "Regional variety is huge for one country — Inle's lake villages, Shan hill towns, and the delta each keep distinct food and dialect.",
       "English survives from an older schooling era, and professionals often converse comfortably.",
@@ -111,9 +135,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "North Korea": {
+    tagline: "One of the world's most closed states, defined by monumental Pyongyang and total state control.",
+    realityCheck: "Independent relocation is not possible; presence is limited to approved tours or postings under strict supervision.",
     culture: "The calendar itself is political: newspapers carry two year-counts, the Gregorian and 'Juche' (the state's own, anchored to Kim Il-sung's birth), and the biggest holidays are leaders' birthdays rather than lunar festivals. When mass games run, tens of thousands move as a single image across a stadium — spectacle at a scale no other country attempts. Daily culture organizes around work units and neighborhoods rather than individuals.",
     people: "Social life runs through assigned circles — work colleagues, study sessions, neighborhood units — so friendship looks allotted rather than chosen, and it is warm within those bounds. Encounters with foreigners are monitored rather than forbidden; genuine curiosity flows both ways, expressed with care. Humor is real and careful.",
     costOfLiving: "Money behaves differently here: most citizens receive state-assigned housing and rationed basics, so cash expenses are narrow. Approved foreign residents live in a parallel economy — assigned housing, a few import shops, and prices unrelated to local wages. In practice, costs depend almost entirely on who is paying and under what arrangement.",
+    workday: "Work is state-assigned and the week runs six days — Saturdays are normal working days in factories, cooperative farms, and state offices, often followed by organized study sessions. Life runs on state timetables, and even Pyongyang's electricity cuts out intermittently.",
+    evening: "Evenings are organized rather than spontaneous: workers' group meetings, approved television serials, and periodic mass dances in city squares. Private nightlife in the Western sense barely exists; homes make do with whatever power is on that night.",
     upsides: [
       "Pyongyang's metro doubles as a deep palace — chandeliers and murals far underground, among the world's deepest stations.",
       "When mass games are staged, residents get front-row seats to a form of spectacle that exists nowhere else on Earth.",
@@ -126,9 +154,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Philippines": {
+    tagline: "7,000 tropical islands, English fluency, infectious karaoke joy, and boundless hospitality.",
+    realityCheck: "Notorious traffic congestion in Metro Manila, typhoon season downpours, and variable domestic internet infrastructure.",
     culture: "Family is the operating system: households span generations, 'balikbayan' (homecoming Filipinos) arrive with boxes of gifts, and the Christmas season starts in September. Jeepneys — painted, lengthened descendants of US military jeeps — remain the commute's workhorse. Every barangay has a fiesta and a basketball court, and both get used.",
     people: "Warmth is instant and performative: humor is the default coping style, teasing means acceptance, and a stranger at a family gathering ends up in the photos. English fluency makes friendship frictionless. 'Bayanihan' (neighbors pitching in) survives in city form — a whole street helps carry your couch.",
     costOfLiving: "Very affordable outside Makati's towers: market meals and jeepney fares cost coins, and provincial rents are a fraction of Metro Manila's. Imported goods, electronics, and reliable air conditioning carry markups. Domestic flights make island-hopping feasible on a modest budget.",
+    workday: "Two shifts run at once. Offices and government keep 8:00–5:00 with a 'merienda' (afternoon snack) around 3:00 — turon, puto, or noodles from the lobby vendor — while the BPO industry, well over a million strong, works American overnight hours and sleeps through the heat of the day.",
+    evening: "Malls are the evening infrastructure — air-conditioned SM and Ayala complexes stay open late as gyms, hangouts, and dinner destinations — before videoke with the family or inihaw (street-grilled barbecue) and a San Miguel by the roadside.",
     upsides: [
       "English-language everything — contracts, clinics, small talk — removes the relocation learning curve entirely.",
       "Remittances from one of the world's largest diasporas underwrite households, showing up as generosity toward guests and spending on schooling.",
@@ -141,9 +173,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Singapore": {
+    tagline: "Futuristic garden city, world-class street hawkers, spotless efficiency, and financial powerhouse.",
+    realityCheck: "Exorbitant private housing rents and car ownership costs, intense tropical humidity year-round, and competitive work pace.",
     culture: "Order is the local etiquette: fines trained a generation's habits, trains ban durians with politely firm signage, and public space runs spotless by default. Housing is a public triumph — most residents live in HDB flats, whose ground-level void decks host weddings, wakes, and chess games. 'Kiasu' (the fear of losing out) drives everything from tuition queues to buffets.",
     people: "Efficient, multilingual, and warmer than the reputation: colleagues feed you before they befriend you, and queue etiquette is near-sacred. Small talk is short; directness is normal, not rude. Social life gathers over meals and malls rather than at home, especially early in a friendship.",
     costOfLiving: "The great regional contradiction: rent and the car-certificate system sit among the world's priciest, yet a hawker-centre meal still runs about S$4–6 and the MRT costs pocket change. Alcohol and condos bend budgets; eating out does not have to. Public services — libraries, pools, transit — punch far above their price.",
+    workday: "Banks and tech set the tempo — official hours run 9:00–6:00, but the lights stay on well past that, and leaving at 6:00 sharp can read as a lack of commitment. Lunch is the day's highlight: hawker-centre queues for chicken rice or Katong laksa that cost less than a latte anywhere else.",
+    evening: "Hawker-centre dinners, evening runs around the Marina Bay waterfront loop, and drinks around Clarke Quay or a kopitiam corner fill the week. Weekends mean budget flights out, or the bus across the causeway to Johor for cheaper everything.",
     upsides: [
       "Hawker culture is UNESCO-recognized and daily — the cheapest great food scene on Earth, steps from home.",
       "The MRT plus walking covers nearly all of life, making a car genuinely optional.",
@@ -156,9 +192,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Timor-Leste": {
+    tagline: "Southeast Asia's youngest nation: reef-rich coasts, mountain coffee country, and quiet resilience.",
+    realityCheck: "Infrastructure and healthcare are limited outside Dili, and Tetum or Portuguese is essential for services.",
     culture: "Sovereignty is young — independent only since 2002 — and the identity layers Portuguese colonial facades, Tetum village life, Catholic ritual, and a resistance history every family shares. 'Tais' (handwoven textiles) are worn and gifted at each ceremony. Independence holidays organize the public year more than commerce does.",
     people: "Quiet dignity and unhurried warmth: greetings matter, elders are greeted first, and conversation runs long and easy. Trust builds through repeated small favors rather than quick charm. Ceremonies are open affairs — a stranger with patience and a polite greeting gets a seat.",
     costOfLiving: "Cheap at the base — market produce, rice, and fresh fish cost little, and modest Dili rentals stay gentle. Imported groceries and restaurant meals cost more than across the Indonesian border, a function of small scale and thin shipping. Skilled trades are scarce, so repairs take time or money.",
+    workday: "The formal economy is tiny and public — ministries, NGOs, and offices funded by petroleum money, nearly all of it in Dili — while the rest of the country farms, fishes, or grows coffee, the main cash crop. Days start early to beat the heat.",
+    evening: "Sunset pulls Dili to the beachfront: grilled-fish stalls and cold drinks at Areia Branca, sand volleyball, and long conversation over the water. Beyond the capital, the evening belongs to the family compound and the church calendar.",
     upsides: [
       "One of the world's youngest populations gives daily life a student-heavy, energetic feel.",
       "Reef snorkeling off the north coast and the cool Maubisse hills sit within one Saturday's drive of each other.",
@@ -171,9 +211,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Fiji": {
+    tagline: "Three hundred and thirty islands of coral lagoons and famously warm 'bula' welcome.",
+    realityCheck: "Cyclone season (Nov–Apr), inter-island logistics, and communal land-lease rules for outsiders.",
     culture: "Two heritages share the islands: iTaukei village life runs on the 'vanua' — land, people, and chiefdom as one system — with 'sevusevu' (presenting kava root) the required courtesy when entering a village; Indo-Fijian families, descended from indentured sugar workers, add Hindi temples, Diwali as a national public holiday, and a shared love of curry. Rugby binds both communities, and match days are community events.",
     people: "Greetings are loud, smiles come easy, and humor is physical and constant. Visitors get pulled into village life rather than hosted beside it. Indirectness rules conflict — a gentle 'maybe' usually means no — and elders and chiefs are owed a formality outsiders are wise to mirror.",
     costOfLiving: "Two food economies: market produce, fresh fish, and bus rides cost little, while imported groceries, fuel, and hardware carry island markups. Suva and Nadi rents stay reasonable for the region. Local wage levels are modest, so the ratio matters more than any single price.",
+    workday: "Civil-service jobs are the backbone, with flexible morning starts between 7:00 and 9:00 AM — and kava is formally banned from government offices, which tells you exactly when it happens instead. Village and church obligations freely punctuate the week.",
+    evening: "The 'grog' session is the evening institution — kava (yaqona) circles in community halls, garages, and homes that run from dusk deep into the night, with guitars and card games between rounds. Sunday is church, full stop.",
     upsides: [
       "Rugby is the social glue — children grow up with a ball in hand, and test weekends are national occasions.",
       "Diwali, Eid, and Christmas all sit on the national calendar — a genuinely shared festive year.",
@@ -186,9 +230,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Kiribati": {
+    tagline: "Equatorial atolls spread across the central Pacific, on the frontline of climate change.",
+    realityCheck: "Fresh water and supply shipments are fragile, and king tides increasingly flood parts of Tarawa.",
     culture: "Choir singing is close to a national art; harmonies fill churches on every atoll, and religious festivals set the year's calendar. Land passes down family lines that never sell, so belonging, not buying, is how anyone puts down roots. Humor runs dry and self-deprecating about remoteness, which newcomers learn to match.",
     people: "Gentle, funny, and community-bound: an outsider is fed and included within a day of arrival, and eating alone is quietly considered odd. Conversation rewards listening over assertiveness. Compliments are deflected; contributions to the group are remembered.",
     costOfLiving: "The local half of life costs almost nothing — fish, coconuts, and family land cover the basics — while the ship-brought aisle carries freight prices. South Tarawa, where a large share of the nation lives along one road, is pricier but holds nearly all the real shops.",
+    workday: "Wage work means the government in South Tarawa; on the outer islands it means copra, coconuts, and the reef at low tide. The 'maneaba' — the open-sided meeting house at the heart of every village — still organizes island life, hosting council meetings, celebrations, and disputes.",
+    evening: "The maneaba doubles as the evening venue — talk, singing, and community meetings under its roof, with Radio Kiribati drifting from someone's speaker. Reef-fishing runs at low tide fill the gaps, and Sunday belongs entirely to church.",
     upsides: [
       "An ocean domain of millions of square kilometers surrounds a handful of atolls — the sea is the country, and it is everywhere.",
       "The Line Islands sit so far east that Kiritimati greets each new day before almost anywhere else on Earth.",
@@ -201,9 +249,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Marshall Islands": {
+    tagline: "An atoll nation of master navigators and divers, closely tied to the United States.",
+    realityCheck: "Compact-of-Free-Association residence rules, typhoon exposure, and thin freshwater lenses.",
     culture: "Navigation heritage runs deep: Marshallese sailors once read swells through stick charts — palm ribs and shells mapping wave patterns rather than islands — and canoe building is being revived as a school subject. Church fills the week, and Marshallese and English share the signs, forms, and hymn boards. Many households hold family in Springdale, Arkansas as firmly as in Majuro.",
     people: "Family obligations are absolute — a visiting relative is housed, fed, and funded without discussion. Humor is dry and constant, and church is the social spine. Outsiders are welcomed warmly but always as someone's guest rather than as free agents.",
     costOfLiving: "Higher than the setting suggests: nearly everything arrives through Majuro, so groceries carry freight prices while lagoon fish and breadfruit stay cheap. Government payroll anchors most household budgets, with fishing and informal trade filling gaps. Fresh produce is limited enough that it becomes a talking point.",
+    workday: "Majuro runs a public-sector workday by default — lately an even shorter one, as fuel shortages have pushed government offices to close by mid-afternoon with pay intact. Beyond the payroll, the week fills with fishing, copra, and extended-family obligations.",
+    evening: "Low-key and family-centered: volleyball games, church gatherings, and card games under generator light, with the bars along Majuro's single main road filling briefly on payday weekends. Outer-island evenings belong to dusk fishing and turning in early.",
     upsides: [
       "Kwajalein's US Army base jobs pay American-scale wages to Marshallese workers — a rare local ladder.",
       "The lagoon life is real: fishing, diving, and weaving evenings cost nothing but time.",
@@ -216,9 +268,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Micronesia": {
+    tagline: "Four states spread across a vast ocean: lagoon wreck diving, village life, and US ties.",
+    realityCheck: "Inter-island flights are scarce and pricey; the four states differ as much as separate countries.",
     culture: "Nan Madol's stone ruins rise from Pohnpei's lagoon, Yap's giant 'rai' discs still change hands ceremonially, and each state keeps its own language, food, and etiquette. Clan custom outranks paperwork in land and ceremony alike. The federation holding all four states together sits lightly on village routines.",
     people: "Village hospitality is the baseline: an outsider is fed, housed, and adopted into a family network within days. Formality matters — respect toward chiefs and elders is taught young and expected of visitors too. Pohnpeian, Yapese, Chuukese, and Kosraean identities stay distinct, and locals will tell you exactly how.",
     costOfLiving: "Import prices set the tone: groceries arrive by ship and cost accordingly, while the state capitals run pricier than the villages around them. The US dollar and US-linked wages anchor the whole spread. Anything beyond basics — electronics, cars, wine — tends to be a Guam or Hawaii purchase.",
+    workday: "Public-sector jobs are the prize across all four states, and a 40-hour week is standard — except in Kosrae, where 32 hours counts as full-time. Blackouts are routine, so many families keep gardens and fishing lines as the reliable half of the economy.",
+    evening: "In Pohnpei the evening centers on 'sakau' (the local kava), pounded fresh after dark and drunk in near-silence at neighborhood bars. Yap stays conservative, Chuuk runs family-first, and in Kosrae the church keeps the calendar — village nights end early everywhere.",
     upsides: [
       "Nan Madol and Yap's stone money sit in daily-visit distance — world-scale heritage without crowds.",
       "English is official alongside the local languages, so paperwork and small talk share one common ground.",
@@ -231,9 +287,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Nauru": {
+    tagline: "A single raised-coral island of tight-knit community life and complicated phosphate history.",
+    realityCheck: "Tiny land area, imported water and power, and strict visa caps on visitor numbers.",
     culture: "A single ring road circles the entire island, and most of life happens along it. The phosphate boom mined the interior into 'topside' — a stark plateau of coral pinnacles — leaving the coastal strip to hold nearly every home, plus one green pocket of inland water at Buada Lagoon. On an island this size, community is the social scene: everyone is on a first-name basis, including the politicians.",
     people: "Tight-knit barely covers it: family lines own every patch of land, so belonging is inherited rather than rented. Visitors are rare enough to be a mild event, and curiosity about the outside world is genuine and endless. Hospitality is matter-of-fact — you eat what the household eats and hear what everyone thinks.",
     costOfLiving: "Almost nothing is grown or made here, so the weekly shop arrives with freight built in; reef fish and family gardens offset it. Public-service wages keep households afloat. There is little to spend money on, which suits the pace.",
+    workday: "One payroll dominates: the public service supports most households, with thin pickings in a revived phosphate operation and small family shops. The island is small enough that any commute is minutes, and the workweek stays unhurried.",
+    evening: "Evenings revolve around church, family compounds, and the island's genuine obsession: Australian-rules football, played under lights and argued about at every gathering. The social map is people's front yards, and everyone is on it.",
     upsides: [
       "Connectivity has leapt ahead — nationwide 5G and satellite links now outpace many bigger islands.",
       "The reef is the park, the gym, and the pantry — shore fishing is a daily skill, not a hobby.",
@@ -246,9 +306,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Palau": {
+    tagline: "Rock Island lagoons, Jellyfish Lake, and one of the world's most committed marine sanctuaries.",
+    realityCheck: "Limited flights, high import costs, and strict environmental rules that also shape daily routines.",
     culture: "Stewardship is identity: every arriving visitor signs the Palau Pledge — an environmental promise stamped into the passport — and schoolchildren recite it in class. Society runs matrilineally, with clan land and chiefly titles passing through women's lines. The ocean is the default subject, larder, and horizon; conversations get there eventually.",
     people: "Warm, direct, and proud of their stewardship without being preachy about it. Family obligations shape the week, and newcomers get folded into village routines quickly. English is universal alongside Palauan, a legacy of US ties.",
     costOfLiving: "Fish, taro, and local produce stay reasonable; the imported basket does not. Groceries, fuel, and hardware arrive by ship and are priced for it, while Koror rents stay manageable for a working resident. US-dollar wages in government and tourism anchor household budgets.",
+    workday: "Dive boats and government desks split the economy — tourism, overwhelmingly scuba, is the biggest earner while the state is the largest single employer. A workday means either an early boat briefing to the Rock Islands or an office in Koror, the one real town.",
+    evening: "Koror winds down early — family dinners, church fundraisers, pickup basketball — and most kitchens close by 9:00. Weekends belong to boats: picnics and diving trips around the Rock Islands are the local version of getting out of town.",
     upsides: [
       "The 'bul' tradition — chiefs closing reefs to let them recover — makes conservation local law, not imported ideology.",
       "US ties keep practical life smooth: the dollar, familiar banking, and easy onward links to Guam and Hawaii.",
@@ -261,9 +325,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Papua New Guinea": {
+    tagline: "Eight hundred languages, highland cultures, and wild river and reef wilderness.",
+    realityCheck: "Personal security requires planning, customary land rules shape housing, and services differ by province.",
     culture: "No two provinces share a tongue — daily life runs on 'Tok Pisin', an English-based creole that makes markets, buses, and radio comprehensible to outsiders within weeks. Highland 'singsings', massed dancers in feathered regalia, anchor the festival calendar and village pride. Christianity weaves into ancestral custom so thoroughly that church and clan form one set of obligations.",
     people: "Within kin circles, generosity is total and obligations go unspoken; outside them, formality rules first meetings. Handshakes are long and firm, and questions about family establish trust fast. Humor is ribald, physical, and constant once you are in.",
     costOfLiving: "Deceptively expensive for the region: imported goods in Port Moresby carry heavy freight and security costs, while morning markets — kaukau (sweet potato), greens, pineapple — are wonderfully cheap. Local wage levels sit far below foreigner pricing, so two economies share every street.",
+    workday: "Formal employment means government desks, mines, and LNG plants, while most livelihoods are gardens and market stalls; the 'wantok' (kinship) network quietly decides who gets hired, lent money, or taken in. Port Moresby commutes start early and end early, planned around traffic and security alike.",
+    evening: "After dark, life moves inside compounds and wantok gatherings rather than along the street — 'kai bars' (takeaway joints) and betel-nut ('buai') stalls being the visible commerce. Village evenings run quieter: lamps, guitars, and church on the calendar.",
     upsides: [
       "Tok Pisin hands English speakers a working second language within months — a rare linguistic gift.",
       "The Highlands sit at spring-like elevations — Goroka and Mount Hagen residents wear fleeces, not fans.",
@@ -276,9 +344,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Samoa": {
+    tagline: "Fa'a Sāmoa village life, volcanic swimming holes, and an unhurried pace under the palms.",
+    realityCheck: "Sundays are fully reserved for church and family, and cyclone season runs Nov–Apr.",
     culture: "The 'aiga (extended family) is the country's operating system, and obligations to it are budgeted like rent — family events called 'fa'alavelave' arrive with genuine donation expectations. Traditional tattooing stays sacred: the 'pe'a', a full-body design, is earned through long sessions and worn with lifelong pride. Ceremony is ordinary competence here, with speeches, titles, and gifts following known forms.",
     people: "Warm, formal-then-funny: first meetings honor titles and elders, then loosen into church-picnic humor. Hospitality is physical — visitors are fed first and most, and second helpings are not optional. Invitations arrive through church and village rather than through nightlife.",
     costOfLiving: "Modest at the base: market produce and bus fares cost little, and Apia-area rents stay reasonable by regional standards. Imported groceries, fuel, and hardware carry freight prices. Village gardens and shared meals keep many food bills low.",
+    workday: "A government desk in Apia is the steady job, and 'fa'a Sāmoa' — the village way — means chiefly titles, church funerals, and family obligations can legitimately outrank any meeting. The pace is unhurried, and remittances from relatives abroad prop up household budgets.",
+    evening: "Many villages still sound a conch or bell at dusk for the evening 'sa' — a short curfew when traffic and play pause for family prayers — before life drifts back to open-air fale time. Sunday's 'to'ona'i' feast, eaten in shifts around the house, is the week's fixed point.",
     upsides: [
       "The 'ava ceremony — kava mixed and served in strict ritual order — turns a newcomer's welcome into an event.",
       "To Sua's ocean trench and the lava-field coasts of Savai'i are day-trip range from Apia.",
@@ -291,9 +363,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Solomon Islands": {
+    tagline: "WWII wreck lagoons, custom land, and village-island life across nine provinces.",
+    realityCheck: "Inter-island travel and services are basic, and Honiara security requires neighborhood awareness.",
     culture: "Pijin — the English-based creole — makes the country navigable within weeks, across dozens of vernaculars. Shell-disk money is still crafted and ceremonially exchanged on Malaita. History sits close: elders hand down wartime stories from Guadalcanal as family lore, and place names still carry the war's vocabulary.",
     people: "Gentle and community-first: visitors are absorbed into village routines fast, and shared meals are the currency of friendship. Conversation is indirect — a request may arrive wrapped in a story. Pride in province and custom runs strong under a soft-spoken surface.",
     costOfLiving: "Cheap where it's local — market produce, fresh fish, and bus rides cost little — while Honiara's imported groceries run startlingly high for the region. Fuel and anything shipped carry freight markups. A locally anchored household spends little; an imported lifestyle adds up fast.",
+    workday: "Honiara holds most of the formal jobs — government, NGOs, logging firms — while the rest of the country works its garden and reef, with market days setting the rhythm. Custom land obligations and church commitments can overrule any schedule, and everyone knows it.",
+    evening: "Choir practice is a serious weekly commitment — church choirs are a point of national pride — alongside fresh fish with rice, kava bars in Honiara, and generators doing the lighting everywhere else in the islands.",
     upsides: [
       "Marovo Lagoon — among the world's largest saltwater lagoons — is a weekend trip for Western Province residents.",
       "Pijin makes daily life genuinely manageable without formal language study.",
@@ -306,9 +382,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Tonga": {
+    tagline: "The Pacific's last kingdom: coral atolls, Sunday-quiet traditions, and royal ceremony.",
+    realityCheck: "Cyclone exposure, limited inter-island ferries, and constitution-protected Sunday closures.",
     culture: "Formality is the national art: men wear the 'ta'ovala' — a woven pandanus mat cinched at the waist — for church and state occasions, and funerals mobilize villages with formal gifts of tapa cloth and fine mats. Ceremonial speech runs long and beautifully; ranking people and occasions is done with humor and precision. The royal calendar gives the year its public punctuation.",
     people: "Regal politeness with a ready laugh: strangers are greeted formally, then teased warmly once acquaintance begins. Feeding visitors is competitive sport, and family obligations are the accepted first reason for anything. Age is honored; the eldest voice in the room settles most family questions.",
     costOfLiving: "Root crops, market produce, and fresh fish keep the table cheap; Nuku'alofa rents stay reasonable for a capital. Imported goods — fuel, dairy, hardware — arrive by ship and are priced for it. Extended-family sharing does much of the work shops do elsewhere.",
+    workday: "Nuku'alofa's office world is small and largely public-sector, and shops trading on Saturday mornings is still a normal part of the week. Sunday is total: no trading, no work, no international flights — even the petrol stations stay shut.",
+    evening: "'Faikava' circles — kava, guitars, and long debates over village and church business — run late, especially toward weekends. Otherwise evenings are family suppers, church youth groups, and a slow stroll along the Nuku'alofa waterfront.",
     upsides: [
       "Humpback whales calve around Vava'u each year — locals swim with them as a seasonal habit, not a bucket-list trip.",
       "The 'umu (earth-oven) feast turns any occasion into an all-afternoon event worth clearing a day for.",
@@ -321,9 +401,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Tuvalu": {
+    tagline: "One of the world's smallest and remotest nations, low-lying and tightly community-knit.",
+    realityCheck: "Supply ships are infrequent, internet is limited, and king tides increasingly affect Funafuti.",
     culture: "The 'fatele' — group songs with layered, stomping dancers — marks every celebration, and the whole village joins: weddings, church feasts, a delegation's welcome. Land belongs to families in perpetuity, which makes every household a landlord and nobody a tenant. Doors go unlocked; a person approaching is somebody's cousin, and that settles the question.",
     people: "Soft-spoken, formal in greeting, and quick to make a visitor useful — participation is the fastest route to belonging. Standing in the community is real but gently enforced; shame, not scolding, corrects behavior. Humor about remoteness is relaxed and self-owned.",
     costOfLiving: "Fish, coconuts, and taro from family land cost almost nothing; the ship-brought aisle — rice, tinned goods, fuel — carries freight prices. Cash economy and subsistence run side by side, and the ratio between them decides comfort.",
+    workday: "Almost all salaried work is a government post in Funafuti, and even that keeps island hours; remittances from seafarers abroad carry many households. On the outer islands the day is fishing, coconuts, and the 'falekaupule' — the assembly of elders that still outranks any ministry.",
+    evening: "At 6:45 each evening the country pauses: traffic, work, and play stop for the Church of Tuvalu's evening devotion, a nationally observed quarter hour of prayer. After that it is family time under the open fale, with church filling most other evenings.",
     upsides: [
       "Community density means childcare, eldercare, and daily meals are shared without being negotiated.",
       "The scale means your contributions are visible — help with one fundraiser and the whole country knows within the week.",
@@ -336,9 +420,13 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "Vanuatu": {
+    tagline: "Eighty islands of active volcanoes, kastom villages, and world-famous wreck diving.",
+    realityCheck: "Cyclone season is severe, volcanic activity is real, and inter-island transport depends on weather.",
     culture: "More than a hundred vernaculars are stitched together by Bislama, a cheerful English-rooted pidgin that lets an English speaker be understood within days. Land is custom-held — communities, not the state, hold title — so every lease begins with the owning family's consent. Each southern autumn on Pentecost, young men dive from timber towers with vines at their ankles in the 'naghol', the original bungee jump, timed to the yam harvest.",
     people: "Rank and custom earn real deference — chiefs settle disputes that courts never see — yet conversation is easygoing and humor constant. Visitors are welcomed through village channels: an introduction, a gift, then full inclusion. Port Vila adds a French-Anglo professional layer to island sociability.",
     costOfLiving: "Two-tiered: rural life runs on subsistence and small cash crops, while Port Vila prices track imports — groceries, fuel, and housing cost more than the scenery suggests. The main market in Port Vila is excellent and cheap for produce; everything else on a shelf has freight in the price.",
+    workday: "Port Vila keeps early hours — government, tourism, and NGO jobs wrap by late afternoon, with a long midday break out of the sun. In the villages, 'kastom' (custom) obligations and the family garden set the schedule instead of any clock.",
+    evening: "Night comes early, and it heads straight to the 'nakamal' — village meeting houses turned evening kava bars where fresh bowls are poured around sunset and drunk in low conversation. It is the country's social anchor; card games, church, and home cookouts take it from there.",
     upsides: [
       "Bislama is the fastest functional language an English speaker can acquire — fluency is measured in weeks.",
       "The 'naghol' season on Pentecost runs Saturdays from April into June, villages in full voice.",
@@ -351,18 +439,22 @@ export const ASIA_B_OCEANIA: Record<string, ProfileSections> = {
     ],
   },
   "New Caledonia": {
+    tagline: "The Pacific's grandest lagoon, French café mornings, and Melanesian custom a short sail from the capital.",
+    realityCheck: "Import prices run at Australian highs, French is near-essential outside tourism, and the 2024 riots showed how fast political tension closes streets.",
     culture: "Two worlds share one lagoon: Nouméa is France in miniature — baguettes, gendarmes, a Renzo Piano cultural center named for Kanak leader Jean-Marie Tjibaou — while the customary Kanak world of grand cases, clan-held land, and yam-calendar ceremonies runs strong across the North and the Loyalty Islands. Between them lies a UNESCO-listed reef system of some 24,000 square kilometres, above nickel fields that have long driven the economy.",
     people: "French is the working language everywhere and the entry ticket to everything from the mairie to the market, though greeting elders in a customary area matters more than grammar. Caldoche, Kanak, Polynesian, and metropolitan communities each keep their own circles, and an outsider who respects those boundaries — and learns which neighborhood belongs to which story — is welcomed with curiosity.",
     costOfLiving: "Costs run Sydney-adjacent: a supermarket chicken costs what a European steak does, a Nouméa flat absorbs a third of a typical salary, and even basics are imported from France or Australia. Nickel's boom-and-bust cycle decides whether the territory feels flush or squeezed, and prices step down sharply outside the Greater Nouméa sprawl.",
+    workday: "Hours are French with a Pacific accent — offices open near 7:30, take a genuine midday break, and wind down by 16:00 on a legal week of 39 hours, longer than metropolitan France's 35. Nouméa runs on government posts, the nickel industry, and services, and the end-of-day baguette run is treated as an errand worth timing.",
+    evening: "Evenings center on the water: Anse Vata and the Baie des Citrons fill with sunset swimmers, apéro terraces, and kids on bodyboards, while restaurants split between French bistro menus and the territory's Vietnamese-Caledonian kitchens. Sundays go to the islets — Îlot Maître snorkeling, an Île des Pins ferry, a family grill under the araucaria pines — while the city itself closes down.",
     upsides: [
       "A UNESCO-listed lagoon is the everyday backyard, with reef snorkeling a bus ride from the office and island ferries on weekends.",
       "French workplace protections travel with the territory — long annual leave and a social-security regime that covers workers and their families.",
-      "Aircalin flies the capital nonstop to Sydney, Auckland, and Tokyo, a rare Pacific base with routes toward both Australia and Asia."
+      "Aircalin flies the capital nonstop to Sydney, Auckland, and Tokyo, a rare Pacific base with routes toward both Australia and Asia.",
     ],
     downsides: [
       "Import prices run at Australian highs, French is near-essential outside tourism, and the 2024 riots showed how fast political tension closes streets.",
       "Beyond Greater Nouméa the job market thins to nickel plants, public posts, and tourism, and the nickel sector itself has been shedding jobs through the 2020s.",
-      "Cyclone season runs November to April, and travel between provinces and islands waits on ferries, flights, and the weather window."
+      "Cyclone season runs November to April, and travel between provinces and islands waits on ferries, flights, and the weather window.",
     ],
   },
 };

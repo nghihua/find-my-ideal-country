@@ -1,3 +1,5 @@
+import { t } from '../i18n';
+
 import { showToast } from './toast';
 
 export function openAuthorModal() {
@@ -74,9 +76,9 @@ export function initAuthorModal() {
           document.execCommand('copy');
           document.body.removeChild(textArea);
         }
-        showToast('Email address copied to clipboard!');
+        showToast(t('author.copiedToast'));
       } catch (err) {
-        showToast(`Email: ${email}`);
+        showToast(t('author.emailFallbackToast', { email }));
       }
     });
   }

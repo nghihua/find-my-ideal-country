@@ -1,20 +1,27 @@
 ---
 import '../styles/global.css';
 import Analytics from '@vercel/analytics/astro';
+import { t, DEFAULT_LOCALE } from '../i18n';
 
 interface Props {
-  title?: string;
+  locale?: string;
 }
 
-const { title = "Find My Ideal Country — Interactive Global Lifestyle & Relocation Atlas" } = Astro.props;
+// Localized document head: <html lang>, <title>, and meta description resolve
+// through the i18n dictionary (see docs/i18n-plan.md, Phase 0). Canonical and
+// hreflang alternates are deferred until a `site` URL is configured.
+const { locale = DEFAULT_LOCALE } = Astro.props;
+const title = t('layout.title', undefined, locale);
+const description = t('layout.description', undefined, locale);
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang={locale}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
+    <meta name="description" content={description}>
     <!-- Tailwind is compiled at build time (tailwind.config.js + postcss.config.cjs);
          theme colors/fonts/shadows and the content globs live in tailwind.config.js. -->
     <!-- D3.js & TopoJSON for Interactive World Map -->

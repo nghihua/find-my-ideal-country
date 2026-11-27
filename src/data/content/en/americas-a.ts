@@ -1,14 +1,14 @@
-import type { ProfileSections } from './index';
+import type { CountryDossierProse } from '../../countries';
 
-/**
- * Profile-section copy for mainland Americas countries (North, Central, and South America; Mexico, Canada, Costa Rica, and Colombia are covered elsewhere).
- * Keys match country names in GLOBAL_COUNTRY_METADATA exactly.
- */
-export const AMERICAS_A: Record<string, ProfileSections> = {
+export const AMERICAS_A: Record<string, CountryDossierProse> = {
   "Argentina": {
+    tagline: "Sultry tango, legendary asado barbecues, Parisian architecture in BA, and Patagonian glaciers.",
+    realityCheck: "Economic volatility and currency shifts require managing cash and parallel exchange rates (dólar blue).",
     culture: "Sundays revolve around the 'asado': one person holds court at the 'parrilla' (grill) for hours while cousins multiply, Fernet-and-Coke flows, and nobody checks a watch. Mate circles turn park benches into living rooms, and the Italian grandparent generation still sets the table. Prices are re-labeled so often that menus carry their date of validity, and big purchases come quoted in 'cuotas' (installments) more than totals.",
     people: "Affectionate and argumentative in equal measure — a kiss on the cheek is the standard hello, and guests get folded into the table within minutes. Debate is a form of intimacy here: politics, fútbol, and inflation are all fair game at a first meeting. Dark humor about the economy is the national coping style, and it is genuinely funny.",
     costOfLiving: "Steak, Malbec, and a night on the town cost a fraction of what they would in Paris or New York, which is why foreign-income residents live startlingly well. Leases are often quoted in dollars, and landlords prefer greenbacks to pesos. Anything imported — electronics, brand clothing — carries markups that locals route around with Miami suitcases and courier networks.",
+    workday: "In Buenos Aires the workday genuinely runs late — 9:00–6:30 or 7:00 — with a 'merienda' revival around 5:00: coffee and medialunas (buttery croissants) that bridge the gap to a very late dinner. Lunch is usually a quick 'menú ejecutivo' near the office.",
+    evening: "Dinner rarely starts before 10:00 PM, and kitchens plan for it. Evenings belong to corner cafés, league-night fútbol on TV, and late milongas (tango dance halls) where dancing continues into the small hours.",
     upsides: [
       "A food culture where the steak-and-Malbec dinner is a Tuesday routine, not a splurge, and wine country sits a bus ride from the capital.",
       "Buenos Aires works without a car: the 'subte' subway, buses, and dense walkable neighborhoods cover most daily life.",
@@ -21,9 +21,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "Belize": {
+    tagline: "Caribbean coast, the hemisphere's barrier reef, and a laid-back English-speaking cultural mix.",
+    realityCheck: "Hurricane exposure, rainy-season roads, and limited specialized healthcare outside Belize City.",
     culture: "English-speaking, Caribbean-facing, and easygoing to the bone, with Kriol (the local creole) coloring every conversation. Garifuna culture — the Afro-Indigenous tradition that arrived by boat from St. Vincent — supplies the drums, punta dancing, and coastal kitchens, while Maya and Mestizo communities inland keep their own markets and corn-based cooking. June and July bring lobster festivals, and turnout is close to mandatory.",
     people: "Small enough that faces become familiar within weeks, and names by the second visit. Hospitality is casual and immediate — invitations land by word of mouth, church and family ties organize the calendar, and nobody rushes a goodbye. Outsiders who slow to local tempo get received as neighbors, not customers.",
     costOfLiving: "Market produce, fresh fish, and mainland rents run modest for the region, while the cayes and anything tourist-adjacent prices in US dollars. Cooking at home is cheap; eating out drifts toward Caribbean prices fast.",
+    workday: "Runs on unhurried 'Belize time' — offices open around 8:00, and the day bends around tourism, farming, and government payrolls. Lunch is a plate of rice and beans with stew chicken, and the midday heat makes the after-lunch stretch move at its own speed.",
+    evening: "Once the workday ends, seaside bars pour cold Belikin with fresh ceviche or fried snapper, and dominoes tables fill up outside. Weekends mean boat runs out to the cayes; hurricane season (June–November) quietly shapes everyone's calendar.",
     upsides: [
       "Contracts, clinics, and small talk all run in English — rare in the region, and it removes an entire layer of relocation friction.",
       "The hemisphere's largest barrier reef sits within boat reach of your doorstep, with diving and fishing as everyday options rather than bucket-list trips.",
@@ -36,9 +40,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "Bolivia": {
+    tagline: "High-altitude cities, dramatic salt flats, and strong Indigenous traditions.",
+    realityCheck: "Altitude and transport access can affect daily routines and health.",
     culture: "Highland life runs on thin-air consequences: coca tea ('mate de coca') is offered like coffee, water boils at a polite simmer, and the sun burns through a hat by noon. Aymara and Quechua tradition is lived, not curated — 'cholitas' in bowler hats run the markets and headline wrestling nights in El Alto, Oruro's February carnival is UNESCO-listed, and Pachamama offerings bless new trucks and new babies alike.",
     people: "Respect travels through greetings — a formal 'buenos días' before any request — and patience for ceremonial, unhurried ways of doing things. Foreigners draw curiosity more than polish; English is thin outside tourism, so basic Spanish earns real warmth. Invitations arrive around food, and the rule is to accept what is offered.",
     costOfLiving: "Among the cheapest capitals in South America for rent, market food, and transport. The problem is access, not price: imported electronics, cars, and brand goods carry brutal duties and thin selection, so the money question is whether the thing exists here at all. Fresh produce markets are glorious and nearly free by Northern standards.",
+    workday: "In La Paz, at nearly 12,000 feet, the altitude sets the pace — mornings begin briskly, and many offices take a long midday break for the set 'almuerzo' of soup, a main plate, and dessert. Mid-morning belongs to salteñas, juicy meat-filled pastries eaten hot with tea.",
+    evening: "Andean evenings turn cold fast, so street food runs hot: carts selling api (warm purple-corn drink) with fried pastels, and stalls doing tucumanas and papa rellena. Families eat early by Latin American standards — often 7:00–8:00 PM — and streets quiet down by 10:00.",
     upsides: [
       "Mi Teleférico turns the commute into a gondola ride over the canyon — aerial transit strung across the whole city.",
       "Living culture deeper than folklore: Aymara and Quechua languages, festivals, and market economies shape an ordinary Tuesday.",
@@ -51,9 +59,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "Brazil": {
+    tagline: "Samba rhythm, Amazonian majesty, passionate football worship, and warm infectious joy.",
+    realityCheck: "Safety requires strict local awareness in major metropolitan areas, and Portuguese fluency is essential.",
     culture: "A continent with a shared accent of joy: gaúcho cattle culture and European-looking towns in the south, candomblé and Afro-Bahian rhythm in the northeast, river towns in the Amazonian north, and São Paulo's work-hard sprawl stitching it all together. Saturday 'feijoada' (black-bean and pork stew) is the recurring family appointment, and Carnival is the calendar's hinge — months of buildup, then a week in which the country agrees to stop.",
     people: "Physical and quick to laugh — conversation comes with arm-touching and loud tables, and personal space is a suggestion. Foreigners get pulled into group plans almost immediately, though deep friendship runs on Portuguese: without the language you remain a pleasant guest. Regional pride is fierce, teasing is affection, and everyone argues about which state does everything best.",
     costOfLiving: "Produce, corner-bar meals, and rideshare fares cost a fraction of any Western city, and regional capitals rent far below Rio and São Paulo. Imported electronics and cars carry heavy duties, so secondhand markets and cross-border runs are normal middle-class behavior. Weekly street markets make the bean-and-rice base of the diet nearly free.",
+    workday: "The CLT labor code caps the week at 44 hours, typically 8:00 or 9:00–6:00 with a proper sit-down lunch — the day's big meal, a 'prato executivo' of rice, beans, salad, and a protein. Offices in Rio thin out earlier when the beach calls, especially on Fridays.",
+    evening: "Thursday is the unofficial happy-hour night: botecos (corner bars) fill with chopp (draft beer), petiscos (bar snacks), and loud debate over futebol. Weekend meals stretch late around a backyard churrasco grill or a crowded churrascaria.",
     upsides: [
       "The '13º salário' (13th-month salary) is a legal annual bonus, and even ordinary jobs carry statutory vacation the culture actually respects.",
       "A regional menu of possible lives — southern wine country, northeast beach culture, or Amazon river cities — inside one border.",
@@ -66,9 +78,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "Chile": {
+    tagline: "Andes mountain backdrop, Pacific coastlines, modern stability, and Patagonian wilderness.",
+    realityCheck: "Rapid Chilean Spanish dialect takes time to understand, and winter smog in Santiago valley can linger.",
     culture: "The longest country on Earth lives with its geology: strict seismic codes, a shared vocabulary of 'temblor' (tremor), and buildings engineered to sway after the record 1960 Valdivia quake. Wine valleys sit an hour from the capital, and September's Fiestas Patrias turn parks into 'fondas' (pop-up party huts) for cueca dancing and grilled skewers. Mapuche language and territory questions stay part of everyday civic conversation in the south.",
     people: "More reserved than the regional stereotype — queues form, schedules hold, and small talk is brief before business. Warmth arrives by invitation: inside the circle, hosts are generous and gatherings run long. Regional rivalry between Santiago and everywhere else is standard dinner material, and outsiders who keep up with the fast local slang are quietly admired.",
     costOfLiving: "Santiago's nicer districts price like Southern Europe — rent, brunch, and wine bars all skew high — while produce markets and neighborhood services stay gentle. Provincial cities undercut the capital by a wide margin, and Chilean supermarket wine is one of the world's great daily-value groceries.",
+    workday: "Santiago's Metro does the heavy lifting, packed by 7:30 AM, and offices run roughly 8:30 or 9:00–6:30. The afternoon 'once' — tea with bread, ham, and palta (avocado) — is the break that carries everyone to the evening.",
+    evening: "The evening meal is late and often light: 'once-comida' — bread, cheese, and tea around 9:00 PM — replaces a cooked dinner on many weeknights. Weekends open up with asados, pisco sours, and friends dropping by with little notice.",
     upsides: [
       "First-world daily fabric — drinkable tap water, honest queues, services that show up — rare at this latitude.",
       "Ski runs in the Andes above the city and Pacific surf within the same weekend; few capitals offer both.",
@@ -81,9 +97,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "Ecuador": {
+    tagline: "Andes, Pacific coast, and Amazon landscapes within a compact country.",
+    realityCheck: "Altitude, climate, and safety conditions change significantly across regions.",
     culture: "Three countries in one — Pacific coast, sierra, and Amazon — close enough that a long weekend crosses climates. The hats Panama made famous are woven here from 'toquilla' straw, and Quito's Lent processions fill the streets with 'cucuruchos' (purple-robed penitents). Kichwa and mestizo heritage share the calendar with market days and fanesca, the twelve-grain Easter soup that still commands the family stove.",
     people: "Warm but initially formal — greetings matter, and invitations arrive through family or work rather than cold. Indigenous communities keep a polite, unhurried pace and expect the same in return. Foreigners are treated kindly the moment the effort shows: basic Spanish converts strangers into allies.",
     costOfLiving: "Dollarization removed exchange-rate math but imported some US pricing: produce markets and bus fares run cheap, while packaged imports and electronics skew high. Quito and Cuenca rent modestly for the quality of life; Galápagos and tourist towns price for visitors.",
+    workday: "Starts early — 8:00 or 8:30 in Quito's offices — and centers on the city-center 'almuerzo': a set lunch of soup, a rice plate, and fresh juice for a few dollars. The old siesta habit varies by city and is fading in office life; most workers take a standard hour.",
+    evening: "Family time owns the evening — dinner around 7:30, then slow laps around Quito's Parque La Carolina or Guayaquil's Malecón 2000 esplanade. Weekend plans default to ceviche, cold beer, and whoever's house has the space.",
     upsides: [
       "Galápagos sits within domestic flight range, and volcano hikes start at the edge of towns like Baños and Quito.",
       "Microclimates on demand: spring-like sierra, hot coast, or rainforest living inside one border.",
@@ -96,9 +116,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "El Salvador": {
+    tagline: "Pacific beaches, volcanic scenery, and a compact, energetic urban life.",
+    realityCheck: "Check current local safety guidance and seasonal weather before choosing a location.",
     culture: "Small, dense, and caffeinated: remittances from family in the US thread through daily life, and August's saints' week — 'fiestas patronales' in every town — still anchors the calendar. The 2021 bitcoin experiment put the country on every fintech front page; a 2025 reform scaled it back to voluntary acceptance, but surf towns like El Zonte still take it alongside dollars. Catholic processions and a young population give the place a post-boom buzz.",
     people: "Quick to joke and quicker to feed you — hospitality is loud and unpretentious, and the diaspora means everyone has a cousin abroad who can help with anything. English is spotty outside the business class, so Spanish carries the day, but warmth does not require fluency. Ties run through family and church, and guests get the good plate.",
     costOfLiving: "Prices read like a US trip on sale — the dollar has been official since 2001, so there is no currency math, just import markups on anything packaged or electronic. Market food and bus fares cost little; San Salvador runs pricier than the towns, and the surf coast has learned to charge visitors.",
+    workday: "Keeps US hours — the same clock as Central Time, and San Salvador's call centers match American schedules to serve clients up north. Offices run 8:00–5:00, and lunch is a proper plate of rice, beans, and tortillas, not a sandwich at the desk.",
+    evening: "Pupusas own the evening: pupuserías grill thick corn tortillas stuffed with cheese, loroco, or chicharrón, served with curtido (tangy pickled cabbage), and families queue from 6:00 onward. Weekends add fútbol on TV and surf trips to El Tunco.",
     upsides: [
       "The Pacific surf coast sits under an hour from the capital — dawn-patrol commutes are a real lifestyle here.",
       "Compact geography keeps everything close: volcano hikes, colonial towns, and the beach within an hour of each other.",
@@ -111,9 +135,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "Guatemala": {
+    tagline: "Highland communities, Mayan heritage, and colorful historic cities.",
+    realityCheck: "Altitude, rainy seasons, and safety conditions vary by destination.",
     culture: "Maya living culture sets the country apart: more than twenty Mayan languages are spoken daily, market towns keep rotating 'día de mercado' (market days), and Antigua's Lent processions lay 'alfombras' — street-length sawdust carpets — built overnight and swept away by one procession. November 1 brings Sumpango's giant kites, flown to carry messages to the dead. Catholic and Maya calendars overlap everywhere, and saints' days quiet whole towns.",
     people: "Gentle with strangers, and quick to share food once rapport forms. Maya communities expect respectful greetings and an unhurried pace; ladino urban life runs faster and louder. Family logistics govern invitations — everything includes kids, cousins, and an aunt who arrived unannounced.",
     costOfLiving: "Among the region's best values: market produce, bus fares, and highland rents cost little, and household help is affordable on even a modest foreign income. Antigua and the capital's nicer districts price for foreigners, and imported electronics and cars carry steep duties.",
+    workday: "Aligns with the US workday — offices 8:00–5:00 — with the afternoon 'refacción' as the sacred pause: coffee with sweet bread around 4:00. Lunch is the big meal, often tortillas, beans, and grilled meat eaten close to home or the office.",
+    evening: "After dark, plans concentrate in air-conditioned malls like Oakland or at home with relatives, since city security keeps evening outings cautious. Friday means Pollo Campero runs and fútbol on TV — the fried-chicken queue is a real social institution.",
     upsides: [
       "Antigua and Lake Atitlán offer colonial-and-volcano living with a long-established foreign-resident playbook — bilingual schools, clinics, and people who know the paperwork.",
       "Highland cities run spring-like year-round — no heating bills, no air conditioning, low utilities.",
@@ -126,9 +154,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "Guyana": {
+    tagline: "Atlantic coast, rainforest, and a multicultural English-speaking society.",
+    realityCheck: "Infrastructure and healthcare access are limited outside major centers.",
     culture: "A Caribbean tempo on a South American map: Hindu, Muslim, and Christian holidays share the calendar — Diwali lights the streets, Phagwah paints them — and pepperpot anchors Christmas breakfast. Most of the coast sits below sea level behind Dutch-engineered 'kokers' (sluice gates) and drainage canals, managed without drama every rainy season. African, Indian, Indigenous, and mixed heritages share one small capital and each other's holidays.",
     people: "Greetings open everything here — a proper good morning before any business — and elders are deferred to without discussion. Hospitality runs on food and favors, and invitations arrive through church, family, or a coworker who has decided you count. Outsiders are rare enough to be genuinely interesting, and patience with you is real.",
     costOfLiving: "Oil-sector demand is bidding up Georgetown rents and restaurant prices while average local pay lags far behind, so the city costs more than its neighborhood profile suggests. Market produce and river fish stay reasonable; imported groceries, building materials, and electronics carry container-freight markups.",
+    workday: "The offshore oil boom has rewired Georgetown: government offices and old trading firms now share the city with energy contractors and foreign banks, and the East Bank road commute has only gotten slower. Workplaces stay formal and hierarchical — greetings come before business.",
+    evening: "Evenings pull people toward the seawall — Georgetown's sea-defense promenade — for breeze, cricket talk, and rum-shop rounds with Banks beer and cook-up rice (coconut one-pot rice). The oil money shows in new restaurants, but Sunday remains family cookout day.",
     upsides: [
       "English-language everything — contracts, clinics, courts, and small talk — on an otherwise Spanish-and-Portuguese continent.",
       "An interior of rainforest and rivers that most South Americans never see, with Indigenous villages and lodges reached by plane or boat.",
@@ -141,9 +173,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "Honduras": {
+    tagline: "Caribbean and Pacific coastlines with mountain towns and a lively local culture.",
+    realityCheck: "Safety and public services vary by city and region; check current local guidance.",
     culture: "Two coasts and a mountain middle: highland towns run coffee and cattle under a permanent spring climate, while the Caribbean north coast moves to Garifuna drums and punta. The Bay Islands — Roatán, Utila, Guanaja — kept English, easygoing island time, and a colonial history apart from the Spanish mainland; Maya ruins at Copán sit in a quiet western valley. Village 'ferias' and saints' days organize the interior calendar.",
     people: "Warm, self-deprecating, and family-organized — plans bend without apology for a cousin's graduation or a saint's day. Hospitality is unpolished but total: you are fed before you are asked anything. Outside the big cities a foreign face is still an event, and the attention is friendly.",
     costOfLiving: "Mainland living runs at the region's floor — rent, market produce, and bus fares cost very little, and coffee-town highlands offer the best cheap quality of life. The Bay Islands price in tourism dollars, and fuel, electronics, and imported goods all skew high.",
+    workday: "Business hours follow the US clock, and the day pauses for a long lunch — the main meal, often baleadas (thick tortillas folded around beans, cheese, and cream). Tegucigalpa spills across hills, so commutes are slow and winding enough that people leave early.",
+    evening: "Nightlife leans toward trusted neighborhoods and indoors — security shapes the evening map — so malls, family barbecues, and fútbol carry the week, with baleada and pollo frito spots staying busy till late.",
     upsides: [
       "The Mesoamerican reef off the Bay Islands delivers serious diving at backpacker prices — Utila's certification courses are a global rite of passage.",
       "Coffee-country highland towns like Marcala or Santa Rosa de Copán pair spring climate with bottom-tier rents.",
@@ -156,9 +192,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "Nicaragua": {
+    tagline: "Lakes, volcanoes, and a relaxed rhythm across historic cities and coastal towns.",
+    realityCheck: "Heat, seasonal storms, and local conditions vary by region.",
     culture: "Volcano geography shapes the map: Granada and León are colonial grid towns beneath big cones, Ometepe is an island made of two volcanoes, and the Pacific coast sells the best surf value in the Americas. Poetry is a national possession — Rubén Darío's face is on the banknotes. Since 2018 politics has split families and pushed many Nicaraguans abroad, even as budget-minded newcomers keep settling into Granada and San Juan del Sur.",
     people: "Unhurried and kind, with a rural politeness that survives city life. Baseball is the shared language across generations, and invitations center on family compounds and saints'-day parties. Foreign residents get genuine welcome alongside quiet curiosity about why here.",
     costOfLiving: "Among the hemisphere's lowest costs across the board: colonial-town rents, market meals, and bus fares all run at the floor. Tourist strips like San Juan del Sur price separately, and imported electronics and cars carry duties plus thin availability.",
+    workday: "Managua keeps US Central Time at an unhurried tempo — offices 8:00–5:00, gallo pinto (rice and beans) at lunch, and a mid-afternoon coffee break that nobody rushes. Government and agriculture set the pace more than urgency does.",
+    evening: "When the heat breaks, front-porch rocking chairs — a genuine national habit — fill up, and families head to Puerto Salvador Allende, Managua's waterfront malecón, for vigorón (yucca, pork rinds, and cabbage) by the water. Granada's La Calzada street takes over on weekends.",
     upsides: [
       "Lake and volcano country within day-trip range of the capital — Ometepe's twin cones, Masaya's lava-lit crater, and crater lakes you can swim in.",
       "Granada and León deliver big-city colonial beauty at small-town costs, with established foreign-resident networks to shortcut the learning curve.",
@@ -171,9 +211,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "Panama": {
+    tagline: "Canal crossroads, gleaming waterfront skyline, USD economy, and lush tropical islands.",
+    realityCheck: "Heavy tropical humidity and afternoon storms, with sharp contrast between modern capital and rural areas.",
     culture: "The canal made a crossroads: a banking-capital skyline, a former US Zone whose bungalow neighborhoods still shape the city, and Guna communities who run their own 'comarca' (autonomous territory) in the San Blas islands. Carnival in Las Tablas is the collective national blowout, and the 'mola' — reverse-applique textile art — is the craft everyone brings home. The US dollar is the only paper money; the balboa survives as coins.",
     people: "Business-formal in the capital, beach-loose on the coasts — the same country holds both. Politeness is brisk-transactional in banks and warm-expansive at family Sundays. The Guna host San Blas on their own terms, permits and all, and outsiders are commonplace enough to be unremarkable, which has its own comfort.",
     costOfLiving: "The capital splits sharply: tower-district rents and fine dining skew toward Miami, while local markets, 'fondas' (cheap set-meal eateries), and provincial towns stay affordable. The dollar economy means US-style pricing for imported everything.",
+    workday: "Banks, the Canal Authority, and corporate offices all run on US Eastern Time — the whole country syncs to New York. The workday is 8:00–5:00 with a real lunch away from the desk, though 'el tráfico' stretches Panama City commutes into an hour each way.",
+    evening: "As the heat fades, the Cinta Costera fills with joggers, families, and food trucks selling ceviche and raspao (shaved ice). Fridays drift into Casco Viejo's rooftop bars; Sunday is for sancocho (chicken soup) at home with the extended family.",
     upsides: [
       "Dollarized, canal-anchored infrastructure — banking, shipping, and logistics that outclass the region.",
       "The Guna-governed San Blas islands offer autonomous-Indigenous Caribbean you visit on the community's terms.",
@@ -186,9 +230,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "Paraguay": {
+    tagline: "A relaxed inland pace with riverside cities and a strong local culture.",
+    realityCheck: "Spanish and Guarani are important for everyday integration.",
     culture: "Bilingual to the bone: Guaraní and Spanish share official status, and daily speech is 'jopara' — a mix leaning Guaraní for feelings and Spanish for paperwork. The Guaraní myth of Yvy Marane'ỹ, the land without evil, is taught in schools; 'chipa' (manioc-cheese bread) sells at every traffic light; and Encarnación's riverfront carnival is the southern cone's beach party. Itaipú's hydro keeps electricity almost too cheap to meter.",
     people: "Shy-practical on first meeting, warm-fast after: greetings are formal — 'buen día' and a handshake — but invitations arrive quickly once you are known. Family is the operating system, and Sunday lunch is not optional. Foreigners draw friendly questions, and even broken Guaraní earns delighted surprise.",
     costOfLiving: "Rents, market food, and utilities run at South America's floor, and Itaipú's hydro keeps power bills negligible. Imported electronics and cars pay heavily at the border; Asunción's dining scene is rising but still modest. River beaches and provincial towns are the value end.",
+    workday: "Tereré defines the workday — ice-cold herbal mate passed around the office in guampas (metal cups) with a shared bombilla straw, mid-morning and again mid-afternoon. Asunción hours run roughly 8:00–6:00, softened by a proper family lunch in between.",
+    evening: "Evening life retreats into air-conditioned malls like Paseo La Galería and Shopping del Sol, and weekend asados carry the family calendar. The Carmelitas bar strip does fire up — just not before 11:00 PM, when the night owls finally arrive.",
     upsides: [
       "Itaipú's hydro output means some of the continent's cheapest electricity — a real edge for heavy AC or a home workshop.",
       "A living Indigenous language as everyday national speech — Guaraní is co-official, taught, and used on street corners.",
@@ -201,9 +249,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "Peru": {
+    tagline: "Pacific coast, Andean highlands, and a rich regional food culture.",
+    realityCheck: "Altitude, climate, and infrastructure vary substantially by region.",
     culture: "Cuisine is the national identity project: ceviche at lunch, 'chifa' (Chinese-Peruvian) wok cooking as comfort food, and October's Señor de los Milagros, when much of Lima wears purple and one of the world's largest Catholic processions walks the streets. Microclimates organize identity — Limeños joke about the gray 'garúa' drizzle, highlanders bundle up, and the Amazon side steams. Marinera dance competitions keep regional pride loud.",
     people: "Cordial and family-first, with a formality that softens fast over food. Punctuality is elastic for parties and rigid for buses; invitations revolve around long lunches rather than drinks. Foreigners get genuine curiosity, and every region sells you its hometown dish within minutes.",
     costOfLiving: "Produce markets are cheap and glorious, transport is remarkably affordable, and residential Lima rents run fair for a capital; Miraflores and tourist-heavy Cusco price for visitors. Imported electronics carry duties, and Amazon-region logistics add cost to everything.",
+    workday: "In Lima the day starts early to beat traffic that adds real hours to every commute, and offices run 9:00–6:00. Lunch is sacred and affordable: the 'menú' — soup, a main, and chicha morada (purple-corn drink) — at a set price from neighborhood kitchens.",
+    evening: "Anticucho carts grill marinated beef heart on street corners from dusk — smoky, cheap, with boiled potatoes on the side. On weekends, Lima's Barranco district takes over: colonial balconies, pisco bars, and criolla kitchens going until late.",
     upsides: [
       "A food scene that competes globally at everyday prices — Lima's kitchens earn the reputation nightly.",
       "Weekend-range landscapes from Andean treks to the Huacachina desert oasis and Amazon gateway towns.",
@@ -216,9 +268,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "Suriname": {
+    tagline: "A small, multicultural society with rainforest and river landscapes.",
+    realityCheck: "Dutch is the official language; services are concentrated in Paramaribo.",
     culture: "A Dutch-Creole country inside the Amazon: paperwork runs in Dutch, the street runs on Sranan Tongo, and 'no spans!' (never mind) is the national philosophy. Maroon nations — descendants of escaped enslaved people who won autonomy by treaty in the 1760s — still govern their own river territories. In Paramaribo a mosque and a synagogue share a street, and Hindu, Muslim, Javanese, and Indigenous holidays all appear on the official calendar.",
     people: "Soft-spoken, easygoing, and multicultural as the default — most families carry three or four heritages and the cooking to prove it. Greetings matter, pressure does not; commitments are real but flexible about timing. Outsiders are rare and warmly received, especially with any Dutch or Sranan phrases.",
     costOfLiving: "Paramaribo runs mid-range for the region, with container-freight markups on nearly everything and thin selection outside the capital. Local produce, river fish, and market food stay affordable; cars, electronics, and specialty imports are scarce and priced accordingly.",
+    workday: "Dutch is the office language, but Sranan Tongo carries the hallway talk; government posts, gold and timber firms, and new offshore oil money anchor Paramaribo's economy. The week runs Monday–Friday, with a roti lunch — flatbread and curry from the Javanese or Indian stall around the corner.",
+    evening: "Paramaribo's Waterkant, the riverside promenade, is the evening ritual: stalls selling Javanese bami, Chinese-Surinamese plates, and cold dawet while the river breeze works. Most nights wind down family-sized; pom (a baked chicken-and-taro casserole) marks the celebrations.",
     upsides: [
       "Rainforest covers most of the country and is genuinely accessible — river trips to Maroon villages and jungle lodges run on local logistics, not package tourism.",
       "A UNESCO-listed wooden historic core in Paramaribo, one of the quietest capitals you will ever wander.",
@@ -231,9 +287,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "United States": {
+    tagline: "Vast economic opportunity, cinematic landscapes, entrepreneurial drive, and cultural diversity.",
+    realityCheck: "Heavy car dependency outside NYC/SF, high cost of private healthcare, and aggressive tipping culture.",
     culture: "Huge and self-varied: Thanksgiving is the true national homecoming — airports jam, every table fills — and the Super Bowl unites the rest as the secular holiday. Regional identity runs deep enough that moving states feels like changing countries: Texas barbecue, campus-football Saturdays in the South, county-fair summers in the Midwest. Tipping is a hard social rule, not a flourish, and religion varies by region rather than by rule.",
     people: "Fast-friendly: cashiers chat, strangers compliment your dog, and one shared activity — a gym class, a kid's soccer sideline — makes a friend. Depth takes longer in a country where people relocate for work every few years, so circles keep churning. Invitations are casual and literal: 'coffee sometime' means it, if you follow up.",
     costOfLiving: "The band is wide: a Midwest or Sun Belt one-bedroom can cost half what the same unit runs in a coastal job hub, and groceries stay cheaper than in most of Western Europe. Car ownership is the quiet second rent — payment, insurance, gas, repairs. Housing is the line that decides whether the country feels expensive or easy.",
+    workday: "The 9-to-5 is real but stretches — lunch is often a salad eaten at the desk between meetings, and after-hours emails are a known cost of at-will jobs with no federal paid-leave guarantee. Most commutes are solo drives; leaving at 5:00 sharp is quietly aspirational.",
+    evening: "Happy hour runs 5:00–7:00 on discounted drinks, then splits by life stage: parents shuttle between youth-soccer practice and weeknight dinners, while suburban evenings default to the gym, then streaming. Weekend brunch is a full daytime event.",
     upsides: [
       "The national-park and public-lands system is a genuine inheritance — wilderness within a weekend drive of most metros.",
       "Whatever your profession, a city exists that runs on it — energy in Houston, film in Atlanta, biotech in Boston — and switching cities does not switch countries.",
@@ -246,9 +306,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "Uruguay": {
+    tagline: "Calm Atlantic beaches, mate tea rituals, progressive civil liberties, and stable democracy.",
+    realityCheck: "Prices for groceries, tech, and electronics are quite high due to import tariffs, and the winter coastal wind is damp.",
     culture: "Quietly confident and beef-fed: candombe drums — the Afro-Uruguayan rhythm UNESCO lists — roll through Montevideo's Barrio Sur on summer Sundays, and Carnaval stretches for weeks of 'murga' satirical theater in every neighborhood. Secular by law and custom — church and state parted ways early and stayed apart. Evenings belong to unhurried family tables and the working assumption that nobody is in a rush.",
     people: "Kind with Scandinavian calibration — genuinely warm, low-drama, and slow to impose. Friendship runs on repeated low-key presence: the same café, the same beach, the same circle. Directness is gentle but real, gossip is a low-intensity sport, and outsiders are welcomed and then quickly trusted with honest opinions.",
     costOfLiving: "Montevideo runs higher than its size suggests — dining out and capital rents approach European levels, though Tannat wine and local beef stay remarkably fair for the quality. Punta del Este goes full seasonal luxury; smaller coastal towns rent for a fraction off-season.",
+    workday: "Look for the thermos under every arm — mate is sipped all day at the desk, refilled hot and shared in rounds mid-morning and mid-afternoon. Offices run 9:00–6:00, and lunch is a proper sit-down affair rather than a desk sandwich.",
+    evening: "The rambla — Montevideo's seaside promenade — does the evening work: strolling, fishing off the rocks, and mate shared at sunset over the River Plate. Weekends center on family asados, and torta frita (fried dough) appears the moment it rains.",
     upsides: [
       "A level of everyday public trust rare in the region — you walk home at night without a strategy.",
       "Legal same-sex marriage and recreational cannabis have been settled law since 2013, backed by a live-and-let-live culture.",
@@ -261,9 +325,13 @@ export const AMERICAS_A: Record<string, ProfileSections> = {
     ],
   },
   "Venezuela": {
+    tagline: "Caribbean coastline, mountain landscapes, and rich cultural traditions.",
+    realityCheck: "Economic conditions, security, and services vary; check current official advice.",
     culture: "The economic collapse hollowed out daily life — millions of family members now live abroad, and what any given store stocks varies week to week — yet the social fabric is famously intact. December brings 'gaitas' (Zulia-region party music) and all-day hallaca-making sessions where the extended family wraps Christmas corn parcels in production lines. Baseball, not soccer, is the emotional ledger, and every block argues about big-league prospects.",
     people: "Loud-hospitable and fast with affection: you are fed within minutes of arriving anywhere, and 'chamo' (buddy) enters your vocabulary by day two. Family networks do the work institutions cannot — a cousin's cousin finds the medicine, the mechanic, the answer. Humor about hardship is dark, constant, and genuinely funny.",
     costOfLiving: "The defining cost reality is availability more than price: imports are scarce and marked up, and anything specific means checking several stores or waiting for it to surface. Fresh produce and everyday services stay cheap for dollar-earners; Caracas is the priciest point, and provincial cities run cheaper with thinner selection.",
+    workday: "The crisis rewired work: much of the economy now runs informally, many professionals log into US or European employers remotely for dollar wages, and remittances prop up household budgets. Formal offices still keep 8:00–5:00 hours, bookended by strong 'guayoyo' coffee.",
+    evening: "Arepas remain the evening constant — areperas stay open late, grilling corn cakes stuffed with shredded beef, white cheese, or 'reina pepiada' chicken salad. Even on tight budgets, plaza gatherings and fútbol broadcasts keep the social muscle alive.",
     upsides: [
       "Caracas is built against El Ávila, a national park you can hike to from the city — a capital with a wild ridge for a backyard.",
       "Caribbean coast within an hour of the capital keeps the beach an ordinary weekend ritual rather than a trip.",

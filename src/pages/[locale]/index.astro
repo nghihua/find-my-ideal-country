@@ -1,0 +1,36 @@
+---
+// Localized app shell: /en/ and /vi/ render this route (see docs/i18n-plan.md,
+// Phase 0). Astro i18n derives Astro.currentLocale from the URL, so every
+// component below resolves its strings for the right locale.
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import MapContainer from '../../components/MapContainer.astro';
+import CountryPanel from '../../components/CountryPanel.astro';
+import QuizModal from '../../components/QuizModal.astro';
+import Toast from '../../components/Toast.astro';
+import AuthorModal from '../../components/AuthorModal.astro';
+import { initLocale } from '../../i18n';
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: 'en' } },
+    { params: { locale: 'vi' } },
+  ];
+}
+
+const locale = Astro.params.locale === 'vi' ? 'vi' : 'en';
+
+// Loads the locale dictionary synchronously for this render so SSR t() lookups
+// resolve it (dynamic import happens once per build/locale, and once per
+// client boot — English users never download the Vietnamese chunk).
+await initLocale(locale);
+---
+
+<Layout locale={locale}>
+    <Header />
+    <MapContainer />
+    <CountryPanel />
+    <QuizModal />
+    <Toast />
+    <AuthorModal />
+</Layout>

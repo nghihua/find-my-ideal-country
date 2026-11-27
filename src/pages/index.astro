@@ -1,18 +1,18 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import MapContainer from '../components/MapContainer.astro';
-import CountryPanel from '../components/CountryPanel.astro';
-import QuizModal from '../components/QuizModal.astro';
-import Toast from '../components/Toast.astro';
-import AuthorModal from '../components/AuthorModal.astro';
+// Root URL redirect. Astro i18n requires this file to exist when
+// prefixDefaultLocale: true is set; its only job is to send / to the
+// default-locale route /en/ (see docs/i18n-plan.md, Phase 0).
+//
+// A static meta-refresh page is used instead of `redirectToDefaultLocale`
+// because the built-in i18n redirect route then conflicts with this required
+// file during prerender (PrerenderRouteConflict) — and this page works on
+// every static host without an adapter.
 ---
-
-<Layout>
-    <Header />
-    <MapContainer />
-    <CountryPanel />
-    <QuizModal />
-    <Toast />
-    <AuthorModal />
-</Layout>
+<!doctype html>
+<title>Redirecting to: /en/</title>
+<meta http-equiv="refresh" content="0;url=/en/">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="/en/">
+<body>
+	<a href="/en/">Redirecting from <code>/</code> to <code>/en/</code></a>
+</body>

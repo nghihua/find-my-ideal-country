@@ -1,3 +1,5 @@
+import { t } from '../i18n';
+
 export interface SearchEntry {
   /** Display name shown in results and passed to the selection handler. */
   name: string;
@@ -5,6 +7,18 @@ export interface SearchEntry {
   icon?: string;
   /** Raw TopoJSON name kept as a searchable alias (e.g. "Viet Nam" → "Vietnam"). */
   rawName?: string;
+}
+
+/** Accent-insensitive match key (docs/i18n-plan.md §3.5): Vietnamese users
+ *  often type without accents ("nhat ban" instead of "Nhật Bản"), so
+ *  diacritics are folded before comparison. đ/Đ do not decompose under NFD
+ *  and are mapped by hand. */
+export function foldDiacritics(str: string): string {
+  return str
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[đĐ]/g, (m) => (m === 'đ' ? 'd' : 'D'))
+    .toLowerCase();
 }
 
 export function initSearch(
@@ -59,7 +73,7 @@ export function initSearch(
   }
 
   function runSearch() {
-    const query = searchInput.value.trim().toLowerCase();
+    const query = foldDiacritics(searchInput.value.trim());
     if (!query) {
       matches = [];
       hideResults();
@@ -70,8 +84,8 @@ export function initSearch(
     const startsWith: SearchEntry[] = [];
     const contains: SearchEntry[] = [];
     for (const entry of entries) {
-      const name = entry.name.toLowerCase();
-      const rawName = (entry.rawName ?? '').toLowerCase();
+      const name = foldDiacritics(entry.name);
+      const rawName = foldDiacritics(entry.rawName ?? '');
       if (name.startsWith(query) || rawName.startsWith(query)) startsWith.push(entry);
       else if (name.includes(query) || rawName.includes(query)) contains.push(entry);
     }
@@ -81,7 +95,7 @@ export function initSearch(
     activeIndex = -1;
 
     if (matches.length === 0) {
-      searchResults.innerHTML = `<div role="status" class="px-4 py-3 text-xs text-[#5f6368] font-sans">No matching country found</div>`;
+      searchResults.innerHTML = `<div role="status" class="px-4 py-3 text-xs text-[#5f6368] font-sans">${t('search.noResults')}</div>`;
     } else {
       searchResults.innerHTML = matches.map(entry => {
         return `

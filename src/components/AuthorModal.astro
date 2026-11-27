@@ -1,26 +1,28 @@
 ---
 // Author Information: Bottom-left Attribution Pill & Google Material 3 Modal Dialog
+import { tFor } from '../i18n';
+const t = tFor(Astro.currentLocale);
 ---
 
 <!-- Bottom-Left Creator Attribution Pill -->
 <div id="author-pill" class="fixed bottom-5 left-4 z-20 pointer-events-auto flex items-center gap-2 bg-white/95 backdrop-blur-xs border border-[#dadce0] px-3 py-1.5 rounded-full text-xs text-[#5f6368] shadow-[0_2px_6px_rgba(60,64,67,0.15)] hover:shadow-[0_4px_8px_3px_rgba(60,64,67,0.15)] transition-all">
-    <div class="w-2 h-2 rounded-full bg-[#34a853] shrink-0" title="Active Project"></div>
+    <div class="w-2 h-2 rounded-full bg-[#34a853] shrink-0" title={t('author.activeProjectTitle')}></div>
     <span class="truncate">
-        By <button id="open-author-chip-btn" type="button" class="font-medium text-[#202124] hover:text-[#1a73e8] hover:underline cursor-pointer transition-colors" title="View Author Profile">Nghi Hua</button>
+        {t('author.byPrefix')} <button id="open-author-chip-btn" type="button" class="font-medium text-[#202124] hover:text-[#1a73e8] hover:underline cursor-pointer transition-colors" title={t('author.viewProfileTitle')}>Nghi Hua</button>
     </span>
     <span class="text-[#dadce0] select-none">|</span>
-    <a href="https://www.nghihua.io.vn/" target="_blank" rel="noopener noreferrer" class="hover:text-[#1a73e8] transition-colors flex items-center gap-1" title="Visit Personal Website (nghihua.io.vn)">
+    <a href="https://www.nghihua.io.vn/" target="_blank" rel="noopener noreferrer" class="hover:text-[#1a73e8] transition-colors flex items-center gap-1" title={t('author.websiteTitle')}>
         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
         </svg>
-        <span class="hidden sm:inline">Website</span>
+        <span class="hidden sm:inline">{t('author.website')}</span>
     </a>
     <span class="text-[#dadce0] select-none">|</span>
-    <a href="mailto:huanhatgianghi@gmail.com" class="hover:text-[#1a73e8] transition-colors flex items-center gap-1" title="Send Email (huanhatgianghi@gmail.com)">
+    <a href="mailto:huanhatgianghi@gmail.com" class="hover:text-[#1a73e8] transition-colors flex items-center gap-1" title={t('author.emailTitle')}>
         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
         </svg>
-        <span class="hidden sm:inline">Contact</span>
+        <span class="hidden sm:inline">{t('author.contact')}</span>
     </a>
 </div>
 
@@ -41,11 +43,11 @@
                     </svg>
                 </div>
                 <div>
-                    <h3 class="font-display font-medium text-lg text-[#202124]">About the Creator</h3>
-                    <p class="text-xs text-[#5f6368] font-normal">Author & Project Details</p>
+                    <h3 class="font-display font-medium text-lg text-[#202124]">{t('author.modalTitle')}</h3>
+                    <p class="text-xs text-[#5f6368] font-normal">{t('author.modalSubtitle')}</p>
                 </div>
             </div>
-            <button id="close-author-btn" type="button" title="Close" class="w-9 h-9 rounded-full bg-transparent hover:bg-[#f1f3f4] active:bg-[#e8eaed] text-[#5f6368] hover:text-[#202124] flex items-center justify-center transition-colors cursor-pointer">
+            <button id="close-author-btn" type="button" title={t('author.closeTitle')} class="w-9 h-9 rounded-full bg-transparent hover:bg-[#f1f3f4] active:bg-[#e8eaed] text-[#5f6368] hover:text-[#202124] flex items-center justify-center transition-colors cursor-pointer">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
@@ -60,9 +62,9 @@
                     NH
                 </div>
                 <h4 class="font-display text-xl font-medium text-[#202124]">Nghi Hua</h4>
-                <p class="text-xs sm:text-sm text-[#1a73e8] font-medium mt-0.5">Creator of Find My Ideal Country</p>
+                <p class="text-xs sm:text-sm text-[#1a73e8] font-medium mt-0.5">{t('author.role')}</p>
                 <p class="text-xs text-[#5f6368] mt-2 max-w-sm leading-relaxed">
-                    Passionate about building intuitive web applications, interactive cartography, and lifestyle exploration tools.
+                    {t('author.bio')}
                 </p>
             </div>
 
@@ -79,7 +81,7 @@
                             </svg>
                         </div>
                         <div>
-                            <div class="text-[11px] font-medium text-[#5f6368] uppercase tracking-wider">Website</div>
+                            <div class="text-[11px] font-medium text-[#5f6368] uppercase tracking-wider">{t('author.website')}</div>
                             <div class="text-xs sm:text-sm font-medium text-[#202124] group-hover:text-[#1a73e8] transition-colors">
                                 nghihua.io.vn
                             </div>
@@ -101,7 +103,7 @@
                             </svg>
                         </div>
                         <div class="overflow-hidden">
-                            <div class="text-[11px] font-medium text-[#5f6368] uppercase tracking-wider">Email</div>
+                            <div class="text-[11px] font-medium text-[#5f6368] uppercase tracking-wider">{t('author.emailLabel')}</div>
                             <a href="mailto:huanhatgianghi@gmail.com" class="text-xs sm:text-sm font-medium text-[#202124] hover:text-[#1a73e8] transition-colors truncate block">
                                 huanhatgianghi@gmail.com
                             </a>
@@ -109,14 +111,14 @@
                     </div>
                     <div class="flex items-center gap-1.5 shrink-0 ml-2">
                         <!-- Copy Button -->
-                        <button id="copy-author-email-btn" type="button" title="Copy email address" class="px-2.5 py-1.5 rounded-full text-xs font-medium text-[#5f6368] hover:text-[#202124] hover:bg-white active:bg-[#e8eaed] border border-transparent hover:border-[#dadce0] transition-all flex items-center gap-1 cursor-pointer">
+                        <button id="copy-author-email-btn" type="button" title={t('author.copyEmailTitle')} class="px-2.5 py-1.5 rounded-full text-xs font-medium text-[#5f6368] hover:text-[#202124] hover:bg-white active:bg-[#e8eaed] border border-transparent hover:border-[#dadce0] transition-all flex items-center gap-1 cursor-pointer">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                             </svg>
-                            <span>Copy</span>
+                            <span>{t('author.copy')}</span>
                         </button>
                         <!-- Mailto Button -->
-                        <a href="mailto:huanhatgianghi@gmail.com" title="Open Mail Client" class="w-8 h-8 rounded-full flex items-center justify-center text-[#5f6368] hover:text-[#1a73e8] hover:bg-white border border-transparent hover:border-[#dadce0] transition-colors">
+                        <a href="mailto:huanhatgianghi@gmail.com" title={t('author.openMailTitle')} class="w-8 h-8 rounded-full flex items-center justify-center text-[#5f6368] hover:text-[#1a73e8] hover:bg-white border border-transparent hover:border-[#dadce0] transition-colors">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                             </svg>
@@ -127,9 +129,9 @@
 
             <!-- Mission / About Project Note -->
             <div class="p-4 bg-[#e8f0fe]/60 border border-[#d2e3fc] rounded-2xl text-xs text-[#3c4043] leading-relaxed">
-                <span class="font-medium text-[#174ea6]">Have feedback or suggestions?</span>
+                <span class="font-medium text-[#174ea6]">{t('author.feedbackHeading')}</span>
                 <p class="mt-1 text-[#5f6368]">
-                    Whether you want to suggest new destination features, update cost-of-living metrics, or share your own relocation story, your input is always welcome!
+                    {t('author.feedbackBody')}
                 </p>
             </div>
         </div>
@@ -137,7 +139,7 @@
         <!-- Modal Footer -->
         <div class="p-4 bg-[#f8f9fa] border-t border-[#dadce0] flex justify-end shrink-0">
             <button id="close-author-modal-footer-btn" type="button" class="px-5 py-2 rounded-full text-xs font-medium text-[#5f6368] hover:text-[#202124] hover:bg-[#e8eaed] transition-colors cursor-pointer">
-                Close
+                {t('author.close')}
             </button>
         </div>
     </div>

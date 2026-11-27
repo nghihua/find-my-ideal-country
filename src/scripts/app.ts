@@ -18,16 +18,18 @@ import type { SearchEntry } from './search';
 import { showToast } from './toast';
 import { initAuthorModal } from './author';
 import { watchScrollFade } from './scrollAffordance';
+import { initLocale, localeFromDocument, getLocale, t } from '../i18n';
+import { loadContentLocale } from '../data/content';
 
 declare const d3: any;
 
 // Build complete dossier object using global profile engine
 function getCountryProfile(feature: any): CountryData {
-  const rawName: string = feature.properties.name || "Unknown Territory";
+  const rawName: string = feature.properties.name || t('app.unknownTerritory');
   const name = resolveDisplayName(rawName);
   const centroid = d3.geoCentroid(feature);
   const region = getFallbackRegion(centroid);
-  return getCompleteCountryProfile(name, region, centroid);
+  return getCompleteCountryProfile(name, region, centroid, getLocale());
 }
 
 function selectCountry(feature: any) {
@@ -60,7 +62,7 @@ function selectCountryByName(name: string): boolean {
     return true;
   }
   const didZoom = zoomToCountryPoint(name);
-  renderCountryDossier(getCompleteCountryProfile(resolveCatalogKey(name)));
+  renderCountryDossier(getCompleteCountryProfile(resolveCatalogKey(name), 'Europe', [0, 0], getLocale()));
   return didZoom;
 }
 
@@ -72,7 +74,7 @@ function resetZoom() {
 function flyToCountry(countryName: string) {
   closeQuiz();
   const didZoom = selectCountryByName(countryName);
-  showToast(didZoom ? `Zooming into ${countryName}...` : `Showing profile for ${countryName}`);
+  showToast(didZoom ? t('app.toast.zooming', { name: countryName }) : t('app.toast.showingProfile', { name: countryName }));
 }
 
 let searchEntriesCache: { featuresLength: number; entries: SearchEntry[] } | null = null;
@@ -98,7 +100,7 @@ function getSearchEntries(): SearchEntry[] {
 
   const entries: SearchEntry[] = [];
   const seen = new Set<string>();
-  for (const country of getAllGlobalCountries()) {
+  for (const country of getAllGlobalCountries(getLocale())) {
     entries.push({ name: country.name, icon: country.icon, rawName: rawByDisplayName.get(country.name) });
     seen.add(country.name);
   }
@@ -114,11 +116,17 @@ function getSearchEntries(): SearchEntry[] {
 }
 
 window.addEventListener('load', async () => {
+  // App boot preload (docs/i18n-plan.md §3.4): resolve the locale and load its
+  // dictionary + prose chunk once, before any UI renders, so every later call
+  // to getCompleteCountryProfile()/t() stays synchronous in memory.
+  const locale = await initLocale(localeFromDocument());
+  await loadContentLocale(locale);
+
   initAuthorModal();
 
   // Init subsystems
   initQuiz(QUIZ_QUESTIONS, () => {
-    const catalog = getAllGlobalCountries();
+    const catalog = getAllGlobalCountries(getLocale());
     const catalogNames = new Set(catalog.map(c => c.name));
     
     // Merge any additional map features loaded from world-atlas

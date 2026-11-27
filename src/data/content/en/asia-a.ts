@@ -1,14 +1,14 @@
-import type { ProfileSections } from './index';
+import type { CountryDossierProse } from '../../countries';
 
-/**
- * Profile-section copy for the Middle East, the Caucasus, Central Asia and South Asia.
- * Keys match country names in GLOBAL_COUNTRY_METADATA exactly.
- */
-export const ASIA_A: Record<string, ProfileSections> = {
+export const ASIA_A: Record<string, CountryDossierProse> = {
   "Afghanistan": {
+    tagline: "A land of dramatic mountain landscapes and longstanding cultural traditions.",
+    realityCheck: "Security conditions, restrictions on daily life, and access to services can change quickly; consult current official travel guidance before considering a visit or move.",
     culture: "Hospitality is a code here, not a courtesy: 'melmastia', the Pashtunwali tenet of welcoming any guest, still governs how households receive strangers. Bread is treated as sacred — never wasted, never left on the floor — and poetry and proverbs thread through ordinary conversation. Twice a year Eid rewrites the calendar with new clothes, house-hopping visits and reconciliations.",
     people: "Warm but formal with outsiders: questions arrive freely, invitations sincerely, and the guest's seat is the best seat in the room. Social life is heavily gendered, and women visitors move mostly through family settings. Trust builds through introductions rather than small talk.",
     costOfLiving: "One of the world's lowest cost bases: bazaar food, tailoring, taxis and household help cost a fraction of almost anywhere. What stings is scarcity — fuel, medicine and electronics are imported, irregular and priced accordingly. Nearly everything runs on cash.",
+    workday: "The week bends around Friday, the one full day off. Under Taliban rule the economy is thin — aid work, trade and farming — and many women are barred from offices and girls from schools, a fact that reshapes every workplace and every home. Tea is poured constantly, and work happens early, before the afternoon heat.",
+    evening: "Nightlife barely exists: evenings are family-only and conservative — long home dinners of kabuli pulao and chai, TV dramas, and visits between relatives on Fridays. Social life happens inside courtyards and guest rooms, and nights end early.",
     upsides: [
       "The Hindu Kush supplies some of Asia's most dramatic mountain scenery as a daily backdrop rather than a distant attraction.",
       "A modest budget buys household help, tailoring and fresh bazaar produce that would be luxuries almost anywhere else.",
@@ -21,9 +21,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Armenia": {
+    tagline: "Mountain scenery, historic towns, and a close-knit cultural life.",
+    realityCheck: "Winters can be cold, and services are concentrated in major cities.",
     culture: "Bread is identity: 'lavash', the paper-thin flatbread baked in tandoor ovens, is UNESCO-listed and still the base of most meals. Apricots are a point of national pride — the fruit's Latin name points here — and summer tables pile high with them. The Apostolic faith, adopted in 301 AD, still paces the calendar with feasts and fasts, and Mount Ararat watches over the skyline from across the border.",
     people: "Reserved at first, warm fast: home invitations come with homemade fruit vodka and long conversations, and the huge global diaspora means outsiders are old news rather than novelties. English and Russian carry most daily interactions. Formality softens within a coffee or two.",
     costOfLiving: "Cheap by any European yardstick: produce markets, taxis and restaurant meals cost a fraction of Western prices, and rents outside central Yerevan stay gentle. Central Yerevan has climbed with the recent relocation waves but remains far below EU or Gulf levels. Imported cars and electronics carry the usual markups.",
+    workday: "A Monday–Friday, 9-to-6 rhythm on a legally heavy 45-hour week, softened by unhurried coffee rounds — thick Armenian surj brewed in little pots and poured into thimble cups. IT and services drive Yerevan's office economy; smaller towns run on schools, shops and farming.",
+    evening: "Yerevan evenings mean the Cascade steps and Northern Avenue strolls, café terraces, backgammon on the sidewalk — and most people home by 11. Family dinners are the day's main event; the café scene is lively but modest by big-city standards.",
     upsides: [
       "Up to 180 days of visa-free stay each year for many passports makes trying life here unusually low-commitment.",
       "Lake Sevan's beaches and Tatev's record-length cable car sit within cheap weekend range of the capital.",
@@ -36,9 +40,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Azerbaijan": {
+    tagline: "Caspian coastline, historic towns, and a fast-changing capital.",
+    realityCheck: "Climate and daily life differ between Baku and rural regions.",
     culture: "The 'Land of Fire' name still fits: natural gas once burned from hillside vents like Yanar Dag, and Caspian oil now runs the economy. Novruz, the spring new year, is the biggest home festival — four ceremonial Wednesdays, bonfire-jumping and pastries before the equinox feast. Carpets are family heirlooms, pomegranate season is a minor holiday, and Baku's walled old city sits inside the modern capital like a courtyard within a skyline.",
     people: "Formal courtesy first, quick warmth after: meetings open with family questions, and the third meeting is a friendship. Azerbaijani and Russian share the day, with English easy in Baku's professional world. Guests are pressed toward seconds and thirds until they learn the polite refusal.",
     costOfLiving: "Baku undercuts any Gulf capital: restaurant meals, taxis and produce cost a fraction of Moscow or Dubai equivalents, and rent is the main line that climbs. Imported electronics carry Caspian-freight markups. Outside the capital prices fall again — and so does variety.",
+    workday: "Offices run Monday to Friday, roughly 9:00–6:00, with government desks and the oil-and-gas sector setting the tone in Baku. Workplace tea is a small ceremony — black çay in pear-shaped glasses, served with jam — and it opens meetings as reliably as a handshake.",
+    evening: "The Baku Boulevard seafront stroll is close to a national institution: from sunset until late, families walk the Caspian promenade past tea-houses, popcorn carts and the glowing Ferris wheel. On weekends it feels like the whole city is out there.",
     upsides: [
       "Mud volcanoes and burning gas vents sit within weekend-drive range of the capital — one of the world's stranger natural backyards.",
       "Sheki's caravanserais and the Gabala mountains make the northwest a regular, cheap escape from Baku.",
@@ -51,9 +59,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Bahrain": {
+    tagline: "A compact, socially relaxed Gulf island known for motorsport weekends and a strong expat scene.",
+    realityCheck: "High summer humidity, weekend-Friday rhythms, and rules that differ sharply for locals and expatriates.",
     culture: "Before oil there were pearls: the diving heritage survives as museums, festivals and family pride, and the sea still frames the calendar. Bahrain is the Gulf's most socially relaxed address — churches, a Hindu temple and licensed bars coexist with the island's mosque-centered rhythm. Ramadan's month of late nights peaks with 'ghabga' (post-fast family feasts) that carry households past midnight.",
     people: "The Gulf's easiest small talk: Bahrainis move from courtesy to humor quickly, and mixed local-expat friendships form more naturally than in stricter neighbors. English is the working language nearly everywhere. Invitations home mean generous, unhurried meals and a seat kept ready for the guest.",
     costOfLiving: "Gulf pricing without Dubai excess: fuel, eating out and household services stay affordable, and the pain concentrates in rent. Family-sized villas and decent compounds carry premiums that swallow allowances. Imported groceries cost what imported groceries cost anywhere on an island.",
+    workday: "Sundays feel like Mondays here: the workweek runs Sunday to Thursday, with government desks on short morning shifts while finance and tech offices in Manama hold closer to 9-to-5. Muslim employees get shortened roughly six-hour days during Ramadan by law.",
+    evening: "Evenings cluster in Adliya's Block 338 café lanes and around Manama Souq — karak tea runs, sheesha, late dinners. The Friday–Saturday weekend fills beach clubs and family majlis gatherings, and the island is small enough that every plan is a 20-minute drive.",
     upsides: [
       "The King Fahd Causeway puts Saudi Arabia's eastern province about an hour away, so weekend escapes run cross-border by default.",
       "Pearling trails, boat trips to the Hawar islands and a walkable heritage quarter give weekends real variety on one small island.",
@@ -66,9 +78,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Bangladesh": {
+    tagline: "Dense, vibrant cities and riverine landscapes shaped by Bengali culture.",
+    realityCheck: "Seasonal flooding, heat, and air quality vary by location; check local conditions.",
     culture: "The saying goes that fish and water make a Bengali — 'machhe bhate Bangali' — and the hilsa, the prized river fish, remains a national argument-starter. The calendar's emotional peaks are February 21, when the country lays flowers at Shaheed Minar memorials for Language Day, and Pohela Boishakh, the April new year with parades and fairs. Dhaka's painted rickshaws, UNESCO-recognized as an art form, turn every errand into a gallery ride.",
     people: "Curiosity arrives before formality: strangers ask your salary, your marriage plans and your opinion of the cricket side within minutes, and it all means welcome. Family invitations come fast and include the whole household. English is strong in offices and universities, softer in the markets.",
     costOfLiving: "Costs sit at South Asia's gentle end: meals, ferries, rickshaw rides and produce cost pocket change, and middle-class life runs on tailors, cooks and drivers that would be luxuries elsewhere. Dhaka rent is the one line that climbs, and imported goods carry freight-and-duty markups. Air-conditioning becomes a utility bill in its own right from April.",
+    workday: "The official week runs Sunday to Thursday with Friday–Saturday off, and government hours sit around 9:00–4:00. Dhaka's traffic defines the day — commutes swallow hours, so offices are full of people who left home at dawn. Garment factories, NGOs and government payroll form the backbone.",
+    evening: "Rooftops do double duty as evening living rooms — tea with family, laundry lines, kite season — while the corner 'tong' (tea stall) hosts post-work adda, the Bengali art of unhurried talk. Dinners run late, family-centered, heavy on rice, bhorta and whatever the market allowed.",
     upsides: [
       "Overnight launch ferries down the delta rivers turn travel into a deck-chair social event at deck-class prices.",
       "Cox's Bazar's long beach and the Bandarban hill tracts put coast and jungle mountains inside one domestic weekend.",
@@ -81,9 +97,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Bhutan": {
+    tagline: "A carbon-negative Himalayan kingdom of cliffside monasteries and deliberately slow development.",
+    realityCheck: "Daily-fee tourism rules, controlled residency, and mountain geography keep change slow and access limited.",
     culture: "Daily dress is national dress: men wear the 'gho', women the 'kira', woven patterns marking region and occasion. Masked-dance festivals called 'tsechu' fill the year and empty offices, drawing whole valleys to monastery courtyards. Tobacco sales are banned outright — smokers import their own — and the monastic rhythm of prayers, flags and chapels still structures ordinary weeks.",
     people: "Gently formal, quietly funny: conversation runs soft and unhurried, with honorifics for elders and teasing for everyone else. English is the classroom language, so younger Bhutanese switch tongues mid-sentence without noticing. Guests in villages are received with real care, and invitations mean the family table, never a restaurant.",
     costOfLiving: "Not the bargain its neighbors are: nearly everything arrives over one Himalayan supply road, so groceries carry a mountain surcharge. Local produce is cheap in season, but restaurant culture outside Thimphu and Paro barely exists. Tourism is deliberately priced high — visitors pay a $100-per-night Sustainable Development Fee — which shapes who arrives and who never does.",
+    workday: "Civil service sets the tempo: a Monday–Friday, roughly 9-to-5 week in Thimphu's offices, with farming, hydro and tourism employing most everyone else. GNH (Gross National Happiness) is a real policy frame, not just a slogan — you see it in the national dress worn at work and the plastic bans.",
+    evening: "Nights start early. Family dinners of ema datshi (chili-cheese stew) and red rice, an early bedtime, and weekend archery matches where whole villages sing, dance and heckle between shots. Cities barely stay awake past 9; the mountains own the rest of the evening.",
     upsides: [
       "Crime is so rare that unlocked doors and unattended schoolchildren read as normal, not naive.",
       "Mountain trails, fortress dzongs and traditional hot-stone baths sit within ordinary weekend range of Thimphu.",
@@ -96,9 +116,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Georgia": {
+    tagline: "Birthplace of wine, ancient mountain watchtowers, legendary feasts (Supra), and 365-day visa ease.",
+    realityCheck: "Erratic driving styles on regional mountain highways, and conservative social attitudes outside liberal Tbilisi circles.",
     culture: "The guest holds near-sacred status — an old line says a guest is sent by God — and home tables honor it. Wine is made the ancient way: 'qvevri', clay vessels buried to their rims, a craft UNESCO has recognized. Three-voice polyphony rises wherever guitars or dinner tables do, the Orthodox calendar's fasts and feasts pace the year, and 'rtveli', the autumn grape harvest, is the season's biggest home ritual.",
     people: "Friendship here arrives loudly and with food: invitations are sincere, refusals get refused, and a host's pride is measured in what you eat. Tbilisi's younger crowd is secular, English-speaking and direct; the countryside is more traditional and slower to open. Russian still helps everywhere, and English increasingly covers the capital.",
     costOfLiving: "Famously cheap for the quality of life: bazaar produce, marshrutka minibus fares, wine by the liter and restaurant meals cost a fraction of European prices, and rents outside the old town stay gentle. Tbilisi's center has climbed with relocators but undercuts any Western capital. Imported cars and electronics carry the usual markups.",
+    workday: "Monday to Friday, roughly 10:00–7:00 in private firms and closer to 9ish in government, with long khachapuri-fueled lunches and a national gift for stretching a coffee break. Tourism, ports and IT drive Tbilisi and Batumi; the provinces still run on schools and small trade.",
+    evening: "Café-and-wine culture rules: Tbilisi's old-town terraces fill with carafes and conversation, and the supra (feast) with its tamada toastmaster is the great weekend institution. Weeknights are calmer — family dinners, walks along the Mtkvari, early nights before market mornings.",
     upsides: [
       "Freelancers register fast and pay famously little, which has built one of the region's biggest remote-work communities.",
       "Gudauri's ski lifts and Batumi's Black Sea beaches bracket the country's weekend options at domestic prices.",
@@ -111,9 +135,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "India": {
+    tagline: "Sensory feast of spices, ancient spiritual philosophies, tech innovation, and unstoppable dynamism.",
+    realityCheck: "Intense urban sensory overload, noise, and seasonal air quality challenges in northern metropolitan centers.",
     culture: "No single India exists: the festival calendar shifts by state — Pongal in Tamil kitchens, Durga Puja in Kolkata, Onam in Kerala — and what counts as comfort food changes every few hundred kilometers. Apartment complexes in the metros are villages of their own, with WhatsApp groups, festival committees and gym politics. Cricket season is the one calendar everyone shares, and the monsoon's June arrival is tracked like a national event.",
     people: "Questions arrive fast and personal — salary, marriage, family — and they're hospitality, not intrusion. Guests are fed as a reflex; the maxim 'atithi devo bhava' (the guest is god) is schoolbook material and dinner-table practice. English is the connective tissue of the metros, so friendships rarely require a shared mother tongue.",
     costOfLiving: "Among the best value-for-money lifestyles on Earth at the everyday level: thali lunches, metro rides, autos and app taxis cost pocket change, and a comfortable apartment in Pune or Bangalore runs a fraction of any Western city. Mumbai is the outlier that breaks budgets. Imported cheese, wine and electronics carry duties that double them.",
+    workday: "Corporate India runs 9:30–6ish, Monday–Friday in tech and government offices, while many smaller firms, factories and shops still work Saturdays. Chai breaks are scheduled and sacred, and Mumbai's dabbawalas still ferry home-cooked lunches from suburbs to office desks with famous precision.",
+    evening: "Evenings run on street food — chaat counters, pav bhaji stalls, momo carts — plus mall walks in the heat and rooftop cafés in the cool season. Sundays belong to family: long lunches, cinema, park picnics, and calls to relatives.",
     upsides: [
       "Metro systems keep expanding across Delhi, Mumbai, Bangalore and more, making car-free big-city life genuinely workable.",
       "Regional diversity means a change of climate, cuisine and language without a change of country or visa.",
@@ -126,9 +154,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Iran": {
+    tagline: "Historic cities, varied landscapes, and strong regional traditions.",
+    realityCheck: "Entry, payment access, and local rules can be complex; check current official guidance.",
     culture: "Social life runs on 'taarof', the ritual politeness of refusing offers three times before accepting and insisting on paying for everyone. Poetry is everyday currency: Hafez gets quoted in arguments, at dinners, and consulted like an oracle by opening a book at random. Nowruz, the spring equinox new year, anchors the calendar with a week of visits and the 'haft-sin' table, while women cover their hair in public by law — visitors included.",
     people: "Warmth is enormous but channeled: private homes open wide, public space is formal, and political talk stays indoors until trust is deep. The taarof script makes hospitality unmistakable, even theatrical. Curiosity about the outside world is intense and generous once introductions are made.",
     costOfLiving: "Food, taxis, household help and rents are gentle by any global yardstick, and a good restaurant meal costs a fraction of its Istanbul equivalent. What's pricey is anything imported — cars, electronics, brand-name anything — and what's complicated is payment, since the economy runs on cash and rials. Budgeting here is a skill rather than a chore.",
+    workday: "Saturdays open the official week: full days through Wednesday, a half-day Thursday, Friday the only full day off — though many private firms quietly run their own Thursday–Friday weekend. The legal week is 44 hours, tea brews all day at every workplace, and the chaikhaneh (teahouse) remains the classic break.",
+    evening: "Family-centered by default — long dinners, teahouse visits, parks, Friday picnics anywhere green — because public nightlife is limited by rules and dress codes. The social life is real and warm; it simply happens mostly at home and in visits.",
     upsides: [
       "Mountains wrap Tehran's northern edge, so hiking starts at the city's edge and ski slopes sit within a couple of hours' drive.",
       "The Tehran metro moves millions cheaply, with women-only carriages many riders genuinely prefer.",
@@ -141,9 +173,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Iraq": {
+    tagline: "Ancient cities and diverse regional cultures across a historically significant landscape.",
+    realityCheck: "Security and services vary substantially by region; check current official guidance.",
     culture: "Mesopotamia's residue is everywhere: Babylon's ruins sit in day-trip range, and Mutanabbi Street's Friday book market still fills with poetry stalls. Breakfast means 'kahi' pastry with 'geymar' clotted cream, and the week's anchors are family lunches and wedding halls. The regional split is the daily texture — Kurdistan runs its own permissive clock with bars and mountain resorts, while the south's shrine cities pace life around pilgrimage.",
     people: "Hospitality is loud, immediate and non-negotiable: guests are fed past capacity and driven home, and arguing is a sign of comfort rather than conflict. Family questions arrive within minutes. English is scarce outside professional and Kurdish circles; Arabic plus patience is the daily currency.",
     costOfLiving: "Cheap-to-moderate by regional standards: kebabs, bread, produce and household help cost little, and restaurant meals undercut Gulf prices by far. Imported goods and decent electronics carry premiums, and Kurdistan's Erbil prices run above the rest of the country, so the same salary means different lives in different regions.",
+    workday: "The week runs Sunday to Thursday on a 40-hour norm, but power cuts and security checks still set much of the daily pace, especially outside the Kurdistan region. Oil and public payrolls anchor the economy, and tea — black, sweet, endless — is poured at every desk without asking.",
+    evening: "Dusk shifts everyone toward riverside masgouf restaurants, where carp is butterflied and grilled over open coals — a Baghdad ritual that survives everything. Between kebab counters, tea shops and family visits, the hours before a late dinner are sociable and unhurried.",
     upsides: [
       "Kurdistan offers a self-contained, greener, more permissive base with Erbil's citadel, cafés and direct flights.",
       "The domestic air network links Baghdad, Basra and Erbil fast enough that the country's distances stop mattering.",
@@ -156,9 +192,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Israel": {
+    tagline: "Startup-dense Mediterranean cities, sacred historic sites, and famously direct social energy.",
+    realityCheck: "Security developments can change daily routines quickly, and housing costs are among the world's highest.",
     culture: "Street signage runs Hebrew and Arabic by law, and the soundscape mixes both with Russian and Amharic on any bus. The Jewish calendar owns the year: Yom Kippur shuts the country down — no cars, so kids take the highways by bicycle — while Independence Day fills parks with 'mangal' barbecue smoke. An immigrant nation by design, its family tables carry Moroccan 'mufleta' pancakes at Mimouna, Ethiopian injera and Soviet-era salads side by side.",
     people: "Directness is the local dialect: 'dugri' speech says exactly what it thinks, warmth arrives without preamble, and personal questions signal interest rather than offense. Friendships form fast and run loud. English covers most professional and social life in Tel Aviv and Jerusalem.",
     costOfLiving: "Tel Aviv rents rank with the world's priciest, and restaurant dinners, cars and insurance follow. The trade is quality: produce markets are superb, public transit fares are modest, and 'Kupat Holim' (health-fund) coverage for residents is excellent and startlingly cheap by American standards. Jerusalem undercuts Tel Aviv; peripheral towns undercut both.",
+    workday: "Sunday through Thursday — Sunday genuinely feels like Monday — under a 42-hour statutory week. Friday is a short wind-down of market runs and early closures; from Friday sundown, Shabbat stills the cities, with most transport and shops pausing until Saturday night.",
+    evening: "Thursday night is the big going-out night, since Friday evenings belong to Shabbat dinners. Tel Aviv's café-bars spill onto the sidewalks for debates over hummus and arak; weekends mean beach mornings, long family lunches, then the Sunday reset.",
     upsides: [
       "Resident healthcare is universal, high-quality and cheap — a system that outperforms its price many times over.",
       "The whole country fits in a few hours' drive: desert hikes, the Galilee, three seas and ski-season Mount Hermon share one long weekend.",
@@ -171,9 +211,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Jordan": {
+    tagline: "Petra's carved canyons, Wadi Rum dunes, and famously warm Levantine hospitality.",
+    realityCheck: "Water scarcity, regional spillover risk, and a small job market outside Amman shape long-term plans.",
     culture: "November belongs to the olive press: families haul crates to village presses, and the year's oil gets bottled, argued over and given away by the case. Bedouin codes set the hospitality register — the guest is fed, seated and urged to stay past courtesy's natural end. Downtown knafeh counters pull late-night queues, and wedding halls fill with 'dabke' lines every summer.",
     people: "Formal greetings run long and sincere — 'salaam alaykum' exchanges open every encounter — and invitations mean the best room, the best dish and the longest goodbye. English is near-universal in Amman's professional world. Questions about family are politeness itself; deflection reads as cold.",
     costOfLiving: "Moderate for the region: produce markets, shared taxis ('services') and street eating cost little, and mid-range Amman dining undercuts Gulf prices easily. Rents in the capital's desirable jabals climb yearly, and imported cars, electronics and brand goods carry tax markups. Water delivery and filtering earn their own budget line.",
+    workday: "Government desks empty early in this Sunday-to-Thursday week — many ministries run roughly 8:30 to 3:00 — while private firms keep longer days near the 45-hour norm. The public sector employs a huge share of workers, lunch means falafel or foul from the neighborhood shop, and tea appears without anyone asking.",
+    evening: "Dinners are family-centered and early by regional standards — mansaf or mezze at home — plus a real café scene in Amman's Jabal Al-Weibdeh and Abdali, where freelancers and cardamom coffee share the same terraces. Summer nights stretch into rooftop shisha.",
     upsides: [
       "Weekend geography is absurd in a good way: Petra, Wadi Rum, the Dead Sea and Aqaba's reefs all sit within a few hours of Amman.",
       "Jordanian hospitals draw patients from across the region — healthcare is the quiet standout of daily life.",
@@ -186,9 +230,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Kazakhstan": {
+    tagline: "Modern cities, wide open steppe, and dramatic mountain regions.",
+    realityCheck: "Large distances and sharply seasonal temperatures affect travel and daily life.",
     culture: "Spring's biggest day is Nauryz, the March equinox new year, with 'nauryz kozhe', the seven-ingredient broth, ladled at street tables. The 'dastarkhan', the guest-feeding spread of every welcome, still governs hospitality, and the two-string 'dombra' scores every gathering. Two capitals set the tempo: leafy Almaty against snow-capped mountains, and purpose-built Astana, a steppe city of glass that takes deep-freeze winters as a design brief.",
     people: "Steppe hospitality survives city life: guests are fed at length, seated by honor and sent home with leftovers. First meetings run formal, then thaw fast, especially over food. Russian remains the lingua franca across generations, while Kazakh rises through schools and offices.",
     costOfLiving: "Gentle by any European yardstick: bazaar produce, bus and taxi fares and canteen lunches cost little, and Almaty rents stay moderate for a city of two million. Imported electronics, cars and brand goods carry the freight-and-duty tax typical of landlocked importers. Eating out is cheap enough to be the default.",
+    workday: "Nominally a 40-hour, Monday–Friday week — often longer in practice — running roughly 9-to-6. Lunch is a real event, not a sandwich at the desk: canteen plov or noodles, then chay (tea) that resets the afternoon. Government jobs, oil and mining set the rhythm from Astana to Almaty.",
+    evening: "Parks and promenades own the evenings — Almaty families stroll Zhibek Zholy (the Arbat) with ice cream even in deep frost — plus tea at home and beshbarmak for weekend gatherings. Winter pushes social life indoors early; summer stretches it past midnight.",
     upsides: [
       "Medeu's high-altitude skating rink and Shymbulak's ski gondola sit within a public-bus-and-cable-car commute of Almaty.",
       "The food scene carries layers nowhere else has: Korean carrot salad at every bazaar, Uyghur laghman noodle shops, Russian cakes.",
@@ -201,9 +249,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Kuwait": {
+    tagline: "A Gulf society balancing contemporary city life with longstanding traditions.",
+    realityCheck: "Summer heat is intense; check current residency and employment requirements.",
     culture: "Pearling built this city before oil did, and the dhow still anchors national symbolism from banknotes to festivals. Home cooking centers on 'machboos', spiced rice with meat or fish, and the souq's spice lanes make weekly shopping an event. February's back-to-back Liberation and National days turn the Gulf Road into a slow parade of flag-draped cars — the one week the whole country parties in public.",
     people: "Courtly and private: Kuwaitis keep family life behind walls and open it generously when they choose to. The expat world runs parallel — compounds, clubs, sports leagues — and crossing between the two social worlds takes effort and introductions. English is the working language of nearly every office.",
     costOfLiving: "Gulf pricing with Kuwait's own shape: fuel is among the cheapest on Earth, restaurant tiers run from cheap diner canteens to sky-high hotel dining, and housing eats budgets. Rents for decent family apartments run high for what you get. Private schooling is the quiet budget-killer for families.",
+    workday: "The public sector sets the calendar — Sunday to Thursday, famously short early shifts (many civil-service desks run roughly 7:00 to 2:00) and a roughly 35-hour week. Most workers are expatriates, so an average office mixes a dozen nationalities; Ramadan cuts Muslim employees' days to about five hours.",
+    evening: "After dinner comes the dewaniya, the evening male social institution: men gather in dedicated reception rooms to trade news, business and politics over tea until late. Malls absorb the summer heat, the corniche fills on winter evenings, and Friday picnics line the Gulf road.",
     upsides: [
       "Fuel costs less than the snacks beside the pump, so desert-camp weekends are the cheapest ritual in the national calendar.",
       "Souq Al-Mubarakiya sells saffron, gold and coffee in one covered warren within walking distance of downtown.",
@@ -216,9 +268,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Kyrgyzstan": {
+    tagline: "A mountain-centered lifestyle with strong nomadic and community traditions.",
+    realityCheck: "Mountain weather, infrastructure, and services vary outside major cities.",
     culture: "The nomadic year still structures summer: families move herds to 'jailoo' high pastures, and the felt-walled yurt remains a living institution rather than a museum piece. 'Kok-boru', horseback competition over a goat carcass, fills stadium seats; the 'Manas' epic, recited at lengths that take days, anchors the national story. 'Kymyz' (fermented mare's milk) is the summer drink, and 'shyrdak' (felt carpets) the craft most homes keep.",
     people: "Shy first, then disarming: village hospitality means the best mattress goes to the guest, and city hosts apologize for apartments 'too small' for one more chair. Russian carries nearly every conversation, with Kyrgyz marking the warm register. Curiosity about outsiders is genuine and under-filtered.",
     costOfLiving: "Among the cheapest hill-country lives available: bazaar food, marshrutka minibus fares and shared taxis cost little, and Bishkek rents undercut most capitals by half. Imported goods, winter gear and electronics carry markup, and Issyk-Kul's summer guesthouses price up sharply in high season.",
+    workday: "Most offices run Monday to Friday, roughly 9:00–6:00, with a proper hot lunch — beshbarmak (boiled meat over noodles) on special days, plov most others. The chaykhana (teahouse) break is a daily institution outside Bishkek; bazaars, government jobs and remittances anchor the economy.",
+    evening: "Bishkek evenings mean Ala-Too Square strolls, cheap café terraces and beer on the green lawns; village evenings are tea, family and TV. Weekend mountains call loudly — alpine trails sit an hour from the capital — but weeknights wind down early.",
     upsides: [
       "Issyk-Kul, a sea-sized alpine lake ringed with beaches, anchors the summer social calendar at domestic prices.",
       "The Karakol side of the lake stacks trekking valleys, hot springs and a small ski resort within weekend range.",
@@ -231,9 +287,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Lebanon": {
+    tagline: "Beirut's resilient café culture, ski-to-sea geography, and one of the world's great food traditions.",
+    realityCheck: "Economic and currency instability, power cuts, and periodic security tensions require contingency planning.",
     culture: "Three languages share one conversation — Arabic base, French phrasing, English loanwords — and code-switching is a national skill. Most Beirutis hold a family village, and weekends migrate uphill to it for long Sunday lunches two hours from the office. The 2019 collapse bent everything — salaries quoted in cash dollars, banks holding old deposits hostage — but the social core held, and the long lunch remains a legitimate use of daylight.",
     people: "Warm, funny, fast: friendships form over one dinner, gossip is a love language, and hospitality runs on 'ahla w sahla' — welcome made lavish. Everyone is a small trader of something; everyone knows a guy. Directness about politics, prices and your love life, in that order.",
     costOfLiving: "Two economies at once: anything local — produce, bread, taxis, village hospitality — stays cheap in dollar terms, while anything imported or fuel-driven floats with exchange-rate mood. Rents are quoted in cash dollars and negotiable. The restaurant tradition punches far above its prices; the collapse made good cooking a survivor's business.",
+    workday: "Beirut still runs a Monday–Friday, 9-to-5-ish week, but the surrounding economy runs on improvisation: generator schedules replace state power, salaries and prices are quoted in dollars cash, and many people juggle two jobs. The café economy keeps doing business regardless.",
+    evening: "The café-bar culture endures remarkably: Mar Mikhael's bar streets fill on weekends with mezze, arak and cigarettes, and long dinners run toward midnight. A power cut just means someone fires the generator and the music keeps playing.",
     upsides: [
       "Mediterranean beaches, cedar mountain villages and vineyard valleys all sit within a two-hour drive of the capital.",
       "The food tradition rivals any capital's at prices a modest income can afford, from mountain grills to city pastry counters.",
@@ -246,9 +306,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Maldives": {
+    tagline: "Atoll life over turquoise lagoons, split between resort islands and local-island rhythms.",
+    realityCheck: "Almost everything is imported, local laws differ by island type, and rising sea levels are a long-term threat.",
     culture: "Island life runs conservative: Islam organizes the week, alcohol is banned on inhabited islands — resorts sit apart as legal exceptions — and modest dress is the default even in the heat. Breakfast is 'mas huni', tuna and coconut with flatbread, and 'bodu beru' drum circles still carry the evening where they're welcome. Local-island tourism has opened designated 'bikini beaches', a quiet compromise letting two worlds share one shoreline.",
     people: "Small-island social math: everyone knows everyone, reputation is currency, and newcomers are welcomed formally first and personally after. Hospitality on family islands is elaborate and unshowy. Dhivehi is the language; English handles school, government and resort life.",
     costOfLiving: "Import costs structure everything: Malé groceries run at freight-plus prices, and resort life is either all-in — staff contracts bundle room and board — or premium-priced. On family islands, local produce and tuna stay reasonable. Housing in the capital is the single steepest line: dense, small and demanded.",
+    workday: "Two realities: Malé's government offices run Sunday to Thursday on morning hours — roughly 8:00 to 2:00 — in one of the world's densest little capitals, while resort staff live six-day weeks on their own islands, with staff quarters, canteens and one day off. Friday anchors both worlds.",
+    evening: "In Malé, evenings mean laps of the seafront by Jumhooree Maidan (Republic Square), tea shops selling hedhikaa (short eats), and neighborhood football until the pitches close. Resort evenings mean staff-bar barbecues; local-island evenings stay firmly family-centered.",
     upsides: [
       "Resort jobs bundle housing, meals and service-charge tips, letting staff save hard on beautiful islands without paying rent.",
       "Reefs sit at the end of most jetties — everyday snorkeling access whole countries envy.",
@@ -261,9 +325,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Nepal": {
+    tagline: "Mountain communities, lively cities, and access to the Himalayas.",
+    realityCheck: "Air pollution and seasonal hazards differ by valley and elevation.",
     culture: "Autumn's twin festivals own the year: Dashain, with kites, village swings and elders pressing rice-and-yogurt 'tika' blessings onto foreheads, then Tihar, the festival of lights, when crows, dogs and cows are fed and garlanded on their own days. The Newar towns of the valley keep their own chariot processions and masked dances. Dal bhat — rice, lentils, greens, pickle — remains the midday engine of the whole country.",
     people: "Soft-spoken and curious: greetings come palms-together in 'namaste', invitations arrive with festival sweets, and hosts decide when the meal is over, not guests. The trek-and-tourism economy makes outsiders a familiar species, and English runs strong in Kathmandu and Pokhara. Village formality runs deeper; patience repays it.",
     costOfLiving: "Gentle almost everywhere: dal bhat lunches, local buses and mountain-town rents cost a fraction of any Western equivalent, and Kathmandu cafés price in the region's cheapest tier. The pains are imported — fuel price shocks echo through everything, electronics carry mountain-freight markups, and city rents climb with each relocation wave.",
+    workday: "Long famous for a Sunday-start, six-day week, government offices and schools switched in April 2026 to a Monday–Friday, 9-to-5 rhythm with a genuine two-day weekend — a fuel-crisis move. Many private firms still keep the old habit of Saturday as the only day off; momos and Newari plates anchor city lunches.",
+    evening: "Kathmandu's cafés and rooftop bars hum till late in Thamel and Boudha; outside the valley, evenings end early — tea at home, TV, bedtimes synced to the last bus. Momos and khaja (snacks) anchor any social plan, and festival season rewrites every schedule.",
     upsides: [
       "The Himalayan trailhead network starts at local-bus prices: Nagarkot sunrises and Shivapuri ridge walks cost pocket change from Kathmandu.",
       "Tourist visas extend onshore month after month, so settling in stays low-commitment.",
@@ -276,9 +344,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Oman": {
+    tagline: "Wadis, fort towns, and unhurried Gulf politeness between fjord-like coast and desert dunes.",
+    realityCheck: "Long distances, fierce summer heat, and a quieter job market than flashier Gulf neighbors.",
     culture: "Frankincense still opens homes: resin smolders in 'mabkhara' burners, and Dhofar's trees gave this coast its ancient name. Oman's majority follows Ibadi Islam, a distinct school that locals credit for the country's quiet coexistence. Nizwa's Friday livestock market fills with goats, dates and gossip beneath the fort, and the curved 'khanjar' dagger on the national emblem appears at weddings and National Day.",
     people: "Courtly without stiffness: greetings run unhurried, questions sincere, and hospitality arrives without the performance found elsewhere in the region. Omani women are visibly present in offices and souqs. English is strong across Muscat's professional world.",
     costOfLiving: "Muscat undercuts Dubai for the same life: fuel and eating out run moderate, services stay affordable, and villas with sea-and-mountain views rent below emirate rates. The trade is distance — almost nothing is walkable and every errand drives. Imported groceries and school fees keep the expat budget honest.",
+    workday: "Expect a Sunday-to-Thursday week in which government desks open early and clear out mid-afternoon, while the private sector runs closer to 9-to-5. Workplaces feel far more Omani than in flashier Gulf neighbors, so Thursday evenings already drift toward weekend mode.",
+    evening: "After dark it's slow drives along Mutrah Corniche with the windows down, wadi picnics in cooler months, and shuwa (pit-roasted lamb) at weekend family gatherings. This is the quietest Gulf tempo — tea with dates is the standing invitation, and nobody rushes it.",
     upsides: [
       "Misfah's mud-brick terraces, Jebel Akhdar's rose villages and empty coves sit inside a two-hour loop of the capital.",
       "It ranks among the Gulf's safest addresses, with a street calm residents stop noticing after a month.",
@@ -291,9 +363,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Pakistan": {
+    tagline: "Pakistan blends energetic megacities, deep regional traditions, and dramatic mountain landscapes.",
+    realityCheck: "Air quality and security vary sharply by region; check current local and official guidance.",
     culture: "The 'mehman' — the guest — holds near-sacred status: households feed visitors past refusal, and the best dish waits for whoever might arrive. Lahore's dawn 'nihari' (slow-cooked stew) and Karachi's seafood counters anchor a food pride that turns any dinner between them into a rivalry. Sufi shrines host Thursday-night 'qawwali' (devotional music) and free kitchens feeding thousands, and truck art turns every highway into a rolling gallery.",
     people: "Loud, generous and personally curious: questions about family, salary and marriage arrive early and mean welcome, and invitations home come with the insistence of people who will not take no. English runs the professional world of Karachi, Islamabad and Lahore. Elders set the register; courtesy toward them is the social license.",
     costOfLiving: "Gentle at the everyday level: street food, produce, rides and household help cost a fraction of almost anywhere, and good-city rents stay moderate. Imported cars, electronics and fuel-scarcity spikes bend the budget. The real variability is regional — the same life prices differently in Islamabad, Karachi and the northern valleys.",
+    workday: "Federal offices and most corporates run Monday to Friday, roughly 9-to-5 with a long Friday prayer break, while many smaller businesses and schools still keep Saturdays. Chai dhaba (roadside tea-stall) breaks punctuate the day, and summer hours shift earlier to dodge the heat.",
+    evening: "Food streets take over after dark — Lahore's Fort Road and Gawalmandi fill with kebab smoke and families — plus rooftop BBQs and post-dinner chai. Cricket on TV is the default soundtrack, and dinner rarely starts before 9.",
     upsides: [
       "Hunza and Skardu put Himalayan-scale trekking inside a domestic overnight journey — mountain access few countries match at any price.",
       "English functions as an official language, so jobs, leases and paperwork can start without Urdu fluency.",
@@ -306,9 +382,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Palestine": {
+    tagline: "Ancient West Bank cities, olive terraces, and resilient community life under difficult conditions.",
+    realityCheck: "Movement restrictions, political volatility, and service access all depend heavily on current conditions.",
     culture: "October's olive harvest is the national ritual: families spend weeks among terraced groves, and the year's oil gets bottled, bragged about and gifted by the case. The calendar braids mosque and church — Ramadan lanterns and Bethlehem's Christmas crowds share the same towns — and 'tatreez', the red cross-stitch embroidery, passes mother to daughter as craft and identity. The mezze table runs long; a household is measured by what it can put out.",
     people: "Family-first by structure, not just sentiment: every door is open, every aunt knows a doctor, and guests are absorbed into households quickly and permanently. Hospitality is insistence itself. English is common in Ramallah and Bethlehem, and in anyone who has worked an NGO desk.",
     costOfLiving: "Low by regional standards: produce markets, shared 'service' taxis and town eating cost little, and village rents sit near the region's floor. The squeeze is structural — local salaries run thin while anything imported prices like an import, so households lean on remittances and extended-family pooling.",
+    workday: "Public employment dominates, the statutory week runs around 45 hours, and Friday is the one full day off. The real shaping force is movement: a checkpoint or permit queue can turn a short commute into half a working day, so schedules stay loose and phone calls replace meetings.",
+    evening: "Ramallah runs on café life — 'Stars and Bucks' coffee, co-working spaces, late kunafeh runs — while evenings elsewhere revolve around family visits and wedding halls. Sociable and family-first, built around the day everyone shares: Friday.",
     upsides: [
       "English-plus-Arabic daily life in Ramallah and Bethlehem makes settling in easy on the language side.",
       "Shared taxis ('services') stitch cities and towns together at fares that make visiting family cheap by design.",
@@ -321,9 +401,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Qatar": {
+    tagline: "A compact Gulf country with a fast-growing capital, desert coast, and international communities.",
+    realityCheck: "Extreme summer heat and local rules shape daily life.",
     culture: "Falconry is a living expense — hunting birds board specialist hospitals, and souq stalls sell them the way other countries sell sports cars — and the 'majlis' still hosts the evening's real conversation. Dhows recall the pearl-diving past that gas replaced. The 2022 World Cup left a metro, museum districts and a habit of expecting headline events — from camel races to international exhibitions — as the ordinary baseline.",
     people: "Polished courtesy over a formal register: greetings unhurried, hospitality elaborate, questions considerate. The expat half of society runs on clubs, compounds and school communities, and English covers nearly every transaction. Qatari households open generously once an introduction lands.",
     costOfLiving: "The priciest address in its own region: fuel is nearly free, taxis and delivery cheap, but family-sized housing runs Gulf-premium and international-school fees are the line parents plan around. Restaurant tiers stretch from cheap worker canteens to stratospheric hotel dining. Imported everything prices like an import.",
+    workday: "Government and most offices keep Sunday-to-Thursday hours, around 40 hours a week that shrink to roughly 25 during Ramadan. The workforce is overwhelmingly expatriate, so an average office mixes a dozen nationalities, and karak chai (milky spiced tea) runs fuel the day.",
+    evening: "Doha evenings mean corniche walks under the West Bay skyline, sheesha terraces, karak drives, and mall circuits when the heat is vicious. On the Friday–Saturday weekend, Souq Waqif fills with families eating and shopping past midnight.",
     upsides: [
       "The Doha Metro links airport, old souqs and West Bay in clean, driverless calm — a rare car-optional lane in a Gulf capital.",
       "Tax-free salaries with housing allowances as the norm let disciplined budgets save fast.",
@@ -336,9 +420,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Saudi Arabia": {
+    tagline: "Rapidly changing cities, desert landscapes, and deeply rooted local traditions.",
+    realityCheck: "Extreme heat and local laws affect daily life; check current entry and residency requirements.",
     culture: "Jeddah's 'Al-Balad', a UNESCO-listed quarter of coral-stone houses with carved screens, anchors the Hijazi coast; Riyadh runs Najdi and business-fast; Asir's fog-fed highlands feel like another country. The public sphere has loosened visibly since 2018 — women drive, cinemas run nightly, concerts sell out — and September's National Day drapes everything in green. Family remains the operating system, and long Friday lunches do the social work.",
     people: "Formal warmth with a hospitality streak that treats feeding you as an honor: invitations come with slaughter-scale generosity and send-home plates. Public gender norms have loosened alongside the legal changes, though conservative registers persist by family. English is strong in professional Riyadh and Jeddah.",
     costOfLiving: "Mid-Gulf pricing with some of the world's cheapest fuel: eating out runs cheap-to-moderate, household help is affordable, and Riyadh rents climb with the boom while still undercutting the emirates. Imported goods carry no special penalty here — school fees and compound premiums do the biting. Domestic flights open the country cheaply.",
+    workday: "Under a 48-hour legal cap, the week runs Sunday to Thursday, with Muslim employees on shortened roughly six-hour days during Ramadan. A legal ban halts outdoor work in the midday summer heat, so construction shifts early and late, and gahwa (Saudi coffee with dates) opens every meeting.",
+    evening: "Riyadh's new entertainment districts — Boulevard Riyadh City above all — pull huge evening crowds of families and friends, unthinkable a decade ago. Dinner runs late, weekends fill with desert camps and gahwa sessions, and summer heat flips days and nights entirely.",
     upsides: [
       "Asir's fog-fed highlands give the country a cool, green summer region of terraced villages and flower-crowned men.",
       "Vision-2030-era growth is creating real demand for outside talent across entertainment, tech and tourism.",
@@ -351,9 +439,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Sri Lanka": {
+    tagline: "Tea-estate hill country, ancient cities, surf coasts, and warm island sociability.",
+    realityCheck: "Post-crisis economic recovery is uneven, and fuel, power, or import shortages can recur.",
     culture: "Vesak, the spring full moon marking the Buddha's birth and enlightenment, turns towns into lantern-lit galleries, with 'dansal' stalls giving free food to anyone who stops. Ayurveda here is a household word and a state-supported system rather than a spa niche — licensed clinics fill ordinary streets. 'Ayubowan' — long life, palms together — opens encounters, and trilingual signage proves three communities share one island.",
     people: "Gentle-voiced and unhurried: hospitality means pressing a second cup of milk tea and a third without asking, and curiosity about strangers runs warm. The island's reserve softens fast with a smile and a few words of Sinhala or Tamil. Family obligations pace the calendar for everyone.",
     costOfLiving: "Among the best value-for-money islands on Earth: 'lunch packets', the island's standard wrapped midday meal, cost pocket change, three-wheeler rides are cheap, and coastal rents stay gentle outside the winter hot spots. Colombo leads on rents, and the tourist belt spikes seasonally. Basics stay cheap; anything imported stays dutifully priced.",
+    workday: "Offices keep a Monday–Friday week around 8:30–5:00, and every full-moon poya day is a public holiday — a monthly long weekend the whole island takes seriously. Tea at work is non-negotiable, and rice-and-curry lunches are generous enough to slow the afternoon on purpose.",
+    evening: "The rhythmic clatter of kottu blades chopping roti on hot griddles is the island's evening soundtrack at roadside stalls. Families stroll Galle Face Green at sunset over isso vade (prawn fritters); Sundays stay drowsy — rice-and-curry at home and long naps.",
     upsides: [
       "Government-licensed ayurveda makes traditional medicine regulated, ordinary and inexpensive rather than a wellness splurge.",
       "The hill-country rail line climbs through tea estates to cool altitudes — a day journey residents treat as a standing reset.",
@@ -366,9 +458,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Syria": {
+    tagline: "Historic cities and deep cultural heritage across varied landscapes.",
+    realityCheck: "Security, infrastructure, and access to services remain highly uncertain; consult official guidance.",
     culture: "Damascus trades on being one of the oldest continuously lived-in cities anywhere, and the Old City — Straight Street, the Umayyad Mosque's courtyard, courtyard houses turned guesthouses — still organizes daily commerce. Jasmine gives the capital its nickname and its balconies. War is the honest background to everything, yet the street-level rhythm survived it, and since the regime's fall in late 2024 families have been returning to test it.",
     people: "Curiosity about the outside world is enormous after the isolation years, and hospitality arrives with the insistence of people proud it survived everything. Conversations turn personal quickly. English was long scarce; the diaspora's return is changing that street by street.",
     costOfLiving: "Cheap in dollar terms, complicated in practice: produce, bread and transport cost little, while anything imported is scarce, sticker-shocked and sometimes simply absent. Cash rules, hard-currency income is thin, and the recovery — sanctions relief, returning traders — is early-stage and uneven by district.",
+    workday: "Formally Sunday to Thursday with 40-hour norms, but years of war have bent every schedule around electricity cuts, fuel queues and shrunken incomes — a civil-service salary is the most coveted thing in most rooms. Tea, coffee and cigarettes carry meetings through the power cuts.",
+    evening: "After dark, life leans on family visits, café tea and shawarma counters; on calm nights, Damascus cafés with mountain views still draw slow crowds. Social life stays family-first and indoors — hospitality does the work that nightlife can't.",
     upsides: [
       "Damascus's Old City is a UNESCO-listed neighborhood you live in, not a ticketed site.",
       "Fresh-produce markets run abundant and cheap in normal seasons, giving even thin budgets a generous table.",
@@ -381,9 +477,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Tajikistan": {
+    tagline: "Mountain landscapes, close-knit communities, and a strong regional identity.",
+    realityCheck: "High-altitude weather and remote transport can affect access and travel.",
     culture: "Nowruz earns a multi-day public holiday here, with 'oshi palav' — the rice dish UNESCO lists as living heritage — centering the celebration table. The Pamirs make half the country vertical: the eastern highlands follow their own Ismaili tradition, distinct from the Sunni lowlands, and summer briefly opens high passes that winter closes hard. Persian identity runs deep — Rudaki is a schoolbook hero, and the language shares roots with Iran's.",
     people: "Reserved-then-warm: hospitality means the guest's seat, the best bread and tea poured before you ask. Russian smooths paperwork and city commerce, while Tajiki marks the close register. The mountain regions move at their own courtesy and calendar.",
     costOfLiving: "Among the cheapest bases in the region: bazaar food, shared taxis and Dushanbe rents cost little by any yardstick. Mountain transport, winter heating and anything imported are the lines that climb. Remittance-funded construction keeps the capital's new towers oddly shiny against a low cost of living.",
+    workday: "Most of the country runs a Monday–Friday week, roughly 8:00–5:00 with a solid hot lunch, punctuated by tea breaks that are closer to institutions than habits. Government payrolls anchor Dushanbe; remittances from Russia keep the countryside afloat; the chaykhana (teahouse) hosts both worlds at lunch.",
+    evening: "Parks fill with multigenerational strolls in the evening, kebab stalls do brisk trade, and plates of qurutob or plov anchor any gathering. City nights stay modest — most homes run on one shared schedule and an early bedtime.",
     upsides: [
       "The Pamir Highway runs through the 'roof of the world' inside the country's own borders, with permits and seasons the only planning overhead.",
       "Nowruz's multi-day holiday makes spring's turn a reliable long break the whole country takes together.",
@@ -396,9 +496,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Turkmenistan": {
+    tagline: "White-marble Ashgabat, Silk Road ruins, and one of the world's most closed societies.",
+    realityCheck: "Entry is heavily restricted, internal movement is monitored, and much of the country requires guides.",
     culture: "Ashgabat holds the world's largest concentration of white-marble buildings — a Guinness-noted, fountain-stitched capital built as a statement, and the quietest big-city experience in Asia to live in. The Akhal-Teke golden horse is the national emblem of choice, carpet 'gul' motifs sit on the flag itself, and the ruin-city of Merv stands a day trip away. Hospitality inside homes is immense, barely mediated by the state around it.",
     people: "Guarded in public by reflex, warm in private by instinct: home doors open generously once trust clears the introduction. Russian carries older conversations, Turkmen the younger ones. Curiosity about outsiders exists but is expressed carefully — the honest texture of a closed state.",
     costOfLiving: "Officially cheap, practically two-tiered: the state prices basics gently, while the unofficial exchange rate sets the real cost of anything imported. Bazaar shopping beats hotel-and-restaurant pricing by miles. Budgeting here is a local skill — learned fast, or not at all.",
+    workday: "On paper it's Monday to Friday, roughly 9-to-5 — but the state dominates employment and sets the tempo down to small details, through ministries, gas and cotton. Officials keep rigid hours among Ashgabat's marble facades, while much real commerce happens in bazaars and family networks.",
+    evening: "Tea at home, family visits, and strolls along Ashgabat's white-marble boulevards glowing under strict order after dark. Social life is private by necessity — the chaykhana and the family table do most of the evening's work.",
     upsides: [
       "Ashgabat's marble order means uncrowded, spotless boulevards — a capital shared with very few.",
       "Merv's ruins and Kunya-Urgench's monuments rank among the great Silk Road sites, reachable with the paperwork a trip requires.",
@@ -411,9 +515,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "United Arab Emirates": {
+    tagline: "Zero income tax, futuristic desert architecture, safe cosmopolitan luxury, and global crossroads.",
+    realityCheck: "Extreme summer desert heat (often exceeding 45°C/113°F), strict legal conservative code, and high air conditioning costs.",
     culture: "Seven emirates, seven settings: Sharjah runs conservative and dry, Abu Dhabi keeps a government-town calm with museum-scale ambition, and Dubai layers old souq lanes beneath its skyline. The Friday brunch is a genuine institution — hours-long tables where the weekend is formally declared — and business happens over flat whites more than in boardrooms. National Day in December turns every neighborhood into a flag-and-light display.",
     people: "Friendly at transaction speed: nearly everyone is from somewhere, small talk is genuinely multilingual, and circles build fast around work, compounds and school runs. Emirati hosts are courteous and formal; local friendship is rarer and more treasured for it. English covers the whole country.",
     costOfLiving: "A bundle of extremes: taxis, fuel, delivery and household help run cheap by world standards, everyday groceries sit moderate, and housing is the budget — central Dubai rents compete with any capital on Earth, with school fees close behind. The math still works for most because pay arrives whole and services cost little; the rent is what it is.",
+    workday: "Runs Monday to Friday — changed from a Sunday start in 2022 — with a 4.5-day twist: federal offices work 7:30–3:30 Monday to Thursday and stop at noon on Friday. Expat-majority workplaces mean a dozen lunch cultures share one pantry, and karak chai (milky spiced tea) is the unofficial national break.",
+    evening: "Summer heat flips day into night: evenings mean corniche strolls, sheesha terraces, midnight shawarma cafeterias and mall circuits. Ramadan inverts everything again — shortened office days, then whole cities eating, shopping and socializing until dawn.",
     upsides: [
       "Violent crime is so rare that midnight jogging and phones left on café tables pass unremarked.",
       "Hub airports put most of the world within one nonstop flight, so weekend trips default to continent-hops.",
@@ -426,9 +534,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Uzbekistan": {
+    tagline: "Historic Silk Road cities, mountain escapes, and a rapidly changing urban scene.",
+    realityCheck: "Hot summers and cold winters; local language skills improve daily access.",
     culture: "The 'mahalla' — the neighborhood committee that registers weddings, settles disputes and organizes funerals — still governs daily life beneath the modern state. Bread carries an etiquette all its own: rounds of 'non' (tandoor flatbread) are never set upside-down and never wasted. Samarkand, Bukhara and Khiva live as working cities rather than museums, and the 2020s tourism surge has filled their bazaars and stations with newcomers.",
     people: "Hospitality insists: the guest gets the seat of honor, the best bread and tea before speech. First meetings run formal, then friendships move fast. Russian remains widely useful, while Uzbek and English rise with the tourism boom.",
     costOfLiving: "Gentle across the board: bazaar produce, canteen lunches, metro rides and shared taxis cost little, and Tashkent rents stay moderate while climbing with the boom. The Afrosiyob fast train to Samarkand is the one ticket priced like a premium — and worth it. Imported electronics carry the usual landlocked markups.",
+    workday: "Monday to Friday (some firms add Saturday), roughly 9-to-6, with a serious lunch culture: plov is the national dish, Tashkent's plov centers serve it by the cauldron, and Friday is the ceremonial day for it. The chaykhana (teahouse) remains the working lunch's second home.",
+    evening: "Parks and teahouses fill at dusk — families stroll, kids ride rental bikes, kebab smoke drifts from grill rows near the bazaar. Tea ends every meal and every visit, and wedding season turns whole neighborhoods into street parties.",
     upsides: [
       "The Afrosiyob fast train puts Samarkand roughly two hours from Tashkent, making Silk Road weekends an ordinary habit.",
       "Visa-free entry for more than 90 nationalities has opened the country abruptly — the paperwork reputation is history for most passports.",
@@ -441,9 +553,13 @@ export const ASIA_A: Record<string, ProfileSections> = {
     ],
   },
   "Yemen": {
+    tagline: "Mountain architecture, historic ports, and distinctive regional traditions.",
+    realityCheck: "Conflict and humanitarian conditions make travel and services highly uncertain; check official guidance.",
     culture: "Old Sana'a still lives: families inhabit UNESCO-listed tower houses of rammed earth and white gypsum filigree. Coffee history runs through here — the port of Mocha gave the world the word — and the husk brew 'qishr' steams in place of expensive beans. Men wear the curved 'jambiya' dagger at weddings, Sidr honey is the gift of honor, and a decade of war has made supply and services the daily negotiation rather than the background.",
     people: "Dignity under pressure is the register: family and tribal networks organize housing, jobs and mediation, and an introduction carries more weight than a document. Humor survives everything here. Outsiders are met with keen curiosity, filtered through the practical question of who you are and who sent you.",
     costOfLiving: "Nominally cheap, practically volatile: local produce and bread cost little when they're available, fuel-price swings pass through everything, and imported medicine, electronics and quality goods are scarce, dated or triple-priced. Cash is the entire financial system. Household budgets flex by the week rather than the month.",
+    workday: "A Sunday-to-Thursday week on paper, though war has hollowed salaries and pushed livelihoods into aid work, trading and subsistence farming. The day's true fixed point is the afternoon qat session — men gather with bundles of the leaf and work, talk and argue deep into the evening.",
+    evening: "Family, tea and saltah — the national fenugreek stew — anchor the evening, with qat sessions in many homes running far into the night; much of the country's conversation happens there. Hospitality stays lavish even when almost nothing else does.",
     upsides: [
       "Mountain terraces make this Arabia's green corner — farmed highlands with a temperate climate rather than empty dunes.",
       "Old Sana'a and Shibam's mud-brick towers are inhabited world heritage — living architecture, not ruins.",

@@ -1,5 +1,7 @@
 ---
 // Top-Left Header & Search Bar
+import { tFor } from '../i18n';
+const t = tFor(Astro.currentLocale);
 ---
 <header class="fixed top-4 left-4 right-4 md:right-auto z-30 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pointer-events-none">
     <!-- Main Branding Pill / Card -->
@@ -15,14 +17,14 @@
             </div>
             <div>
                 <h1 class="font-display font-medium text-sm sm:text-base tracking-tight text-[#202124] leading-tight">
-                    Find My Ideal Country
+                    {t('header.brand.title')}
                 </h1>
-                <p class="text-[11px] text-[#5f6368] hidden sm:block font-normal">Explore global relocation & living notes</p>
+                <p class="text-[11px] text-[#5f6368] hidden sm:block font-normal">{t('header.brand.subtitle')}</p>
             </div>
         </div>
 
         <!-- Reset the map to its full-world view -->
-        <button id="reset-zoom-btn" type="button" aria-label="Reset map zoom" title="Reset map zoom" class="w-8 h-8 rounded-full bg-transparent hover:bg-[#f1f3f4] active:bg-[#e8eaed] text-[#5f6368] hover:text-[#202124] flex items-center justify-center transition-colors">
+        <button id="reset-zoom-btn" type="button" aria-label={t('header.resetZoom')} title={t('header.resetZoom')} class="w-8 h-8 rounded-full bg-transparent hover:bg-[#f1f3f4] active:bg-[#e8eaed] text-[#5f6368] hover:text-[#202124] flex items-center justify-center transition-colors">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
             </svg>
@@ -35,7 +37,7 @@
             <svg class="w-4 h-4 text-[#5f6368] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
-            <input id="country-search" type="text" autocomplete="off" aria-label="Search destinations" placeholder="Search destinations..." class="bg-transparent border-none outline-none text-sm text-[#202124] placeholder-[#80868b] w-full sm:w-56 font-sans">
+            <input id="country-search" type="text" autocomplete="off" aria-label={t('header.searchLabel')} placeholder={t('header.searchPlaceholder')} class="bg-transparent border-none outline-none text-sm text-[#202124] placeholder-[#80868b] w-full sm:w-56 font-sans">
         </div>
 
         <!-- Autocomplete Results Dropdown -->
